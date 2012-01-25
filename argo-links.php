@@ -71,7 +71,7 @@ class ArgoLinks {
                                               'public' => true,
                                               'menu_position' => 6,
                                               'taxonomies' => array(),
-                                              'rewrite' => array( 'slug' => 'al' ),
+                                              //'rewrite' => array( 'slug' => 'al' ),
                                               )
                           );
   }
