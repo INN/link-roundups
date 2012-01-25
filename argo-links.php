@@ -82,7 +82,7 @@ class ArgoLinks {
   }
   /*Register our custom taxonomy*/
   function register_argo_links_taxonomy() {
-    register_taxonomy("argo-link-categories", array("argolinks"), array("hierarchical" => false, "label" => "Link Categories", "singular_label" => "Link Category", "rewrite" => true));
+    register_taxonomy("argo-link-tags", array("argolinks"), array("hierarchical" => false, "label" => "Link Tags", "singular_label" => "Link Tag", "rewrite" => true));
 
   }
   /*Show our custom post fields in the add/edit Argo Links admin pages*/
@@ -126,7 +126,7 @@ class ArgoLinks {
       "author" => "Author",
       "url" => "URL",
       "description" => "Description",
-      "link-categories" => "Categories",
+      "link-tags" => "Tags",
       "date" => "Date"
     );
     return $columns;
@@ -144,8 +144,8 @@ class ArgoLinks {
       case "url":
         echo $custom["argo_link_url"][0];
         break;
-      case "link-categories":
-        echo get_the_term_list($post->ID, 'argo-link-categories', '', ', ','');
+      case "link-tags":
+        echo get_the_term_list($post->ID, 'argo-link-tags', '', ', ','');
         break;
     }
   }
