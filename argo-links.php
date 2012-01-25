@@ -30,10 +30,9 @@ class ArgoLinks {
   function init() {
     /*Register the custom post type of argolinks */
     add_action('init', array(__CLASS__, 'register_post_type' ));
-
+    add_action('init', array(__CLASS__, 'register_argo_links_taxonomy'));
     /*Register our custom taxonomy of "argo-link-categories" so we can have our own tags/categories for our Argo Links post type*/
-    register_taxonomy("argo-link-categories", array("argolinks"), array("hierarchical" => false, "label" => "Link Categories", "singular_label" => "Link Category", "rewrite" => true));
-
+    
     /*Add the Argo This! sub menu*/
     add_action("admin_menu", array(__CLASS__, "add_argo_this_sub_menu"));
 
@@ -81,7 +80,11 @@ class ArgoLinks {
     add_meta_box("argo_links_meta", "Link Information", array(__CLASS__,"display_custom_fields"), "argolinks", "normal", "low");
 
   }
+  /*Register our custom taxonomy*/
+  function register_argo_links_taxonomy() {
+    register_taxonomy("argo-link-categories", array("argolinks"), array("hierarchical" => false, "label" => "Link Categories", "singular_label" => "Link Category", "rewrite" => true));
 
+  }
   /*Show our custom post fields in the add/edit Argo Links admin pages*/
   function display_custom_fields() {
     global $post;
