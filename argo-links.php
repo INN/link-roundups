@@ -30,8 +30,10 @@ class ArgoLinks {
   function init() {
     /*Register the custom post type of argolinks */
     add_action('init', array(__CLASS__, 'register_post_type' ));
-    add_action('init', array(__CLASS__, 'register_argo_links_taxonomy'));
+    
     /*Register our custom taxonomy of "argo-link-categories" so we can have our own tags/categories for our Argo Links post type*/
+    /* moved into a function per wordpress 3.0 issues with calling it directly*/
+    add_action('init', array(__CLASS__, 'register_argo_links_taxonomy'));
     
     /*Add the Argo This! sub menu*/
     add_action("admin_menu", array(__CLASS__, "add_argo_this_sub_menu"));
