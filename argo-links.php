@@ -13,7 +13,7 @@ Author URI:
 License: GPLv2
 */
 
-/* The Argo Audio Player Plugin class - so we don't have function naming conflicts */
+/* The Argo Links Plugin class - so we don't have function naming conflicts */
 class ArgoLinks {
   
   /* Install function, runs when the plugin is installed - not implemented */
@@ -79,7 +79,7 @@ class ArgoLinks {
 
   /*Tell Wordpress where to put our custom fields for our custom post type*/
   function add_custom_post_fields() {
-    add_meta_box("argo_links_meta", "Link Information", "display_custom_fields", "argolinks", "normal", "low");
+    add_meta_box("argo_links_meta", "Link Information", array(__CLASS__,"display_custom_fields"), "argolinks", "normal", "low");
     
   }
   
