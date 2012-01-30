@@ -103,20 +103,21 @@ class ArgoLinks {
     }
 ?>
     <p><label>URL:</label><br />
-    <input type='text' name='argo_link_url' value='<?php echo $argo_link_url; ?>' size='111'/></p>
+    <input type='text' name='argo_link_url' value='<?php echo $argo_link_url; ?>' style='width:98%;'/></p>
     <p><label>Description:</label><br />
-    <textarea cols="100" rows="5" name="argo_link_description"><?php echo $argo_link_description; ?></textarea></p>
+    <textarea cols="100" rows="5" name="argo_link_description" style='width:98%;'><?php echo $argo_link_description; ?></textarea></p>
 <?php
   }
 
   /*Save the custom post field data.  Very important!*/
   function save_custom_fields() {
     global $post;
+    $argo_post_id = "";
     if (isset($_POST["argo_link_url"])){
-      update_post_meta($post->ID, "argo_link_url", $_POST["argo_link_url"]);
+      update_post_meta((isset($_POST['post_id']) ? $_POST['post_id'] : $post->ID), "argo_link_url", $_POST["argo_link_url"]);
     }
     if (isset($_POST["argo_link_description"])){
-      update_post_meta($post->ID, "argo_link_description", $_POST["argo_link_description"]);
+      update_post_meta((isset($_POST['post_id']) ? $_POST['post_id'] : $post->ID), "argo_link_description", $_POST["argo_link_description"]);
     }
   }
 
@@ -160,7 +161,25 @@ class ArgoLinks {
   /*Custom page for people to pull the Argo Link This! code from (similar to Press This!)*/
   function build_argo_this_page() {
 ?>
-    <a href="javascript:var%20d=document,w=window,e=w.getSelection,k=d.getSelection,x=d.selection,s=(e?e():(k)?k():(x?x.createRange().text:0)),f='<?php echo plugins_url( 'argo-this.php', __FILE__ );?>',l=d.location,e=encodeURIComponent,u=f+'?u='+e(l.href)+'&t='+e(d.title)+'&s='+e(s)+'&v=4';a=function(){if(!w.open(u,'t','toolbar=0,resizable=1,scrollbars=1,status=1,width=720,height=570'))l.href=u;};if%20(/Firefox/.test(navigator.userAgent))%20setTimeout(a,%200);%20else%20a();void(0)">Argo This!</a>
+
+<div id="icon-tools" class="icon32"><br></div><h2>Tools</h2>
+
+<div class="tool-box">
+	<h3 class="title">Press This</h3>
+	<p>Argo Link This! is a bookmarklet: a little app that runs in your browser and lets you grab bits of the web.</p>
+
+	<p>Use Argo Link This! to clip links to any web page. Then edit and add more straight from Argo Link This! before you save or publish it in a post on your site.</p>
+	<p class="description">Drag-and-drop the following link to your bookmarks bar or right click it and add it to your favorites for a posting shortcut.</p>
+	<p class="pressthis"><a onclick="return false;" oncontextmenu="if(window.navigator.userAgent.indexOf('WebKit')!=-1||window.navigator.userAgent.indexOf('MSIE')!=-1)jQuery('.pressthis-code').show().find('textarea').focus().select();return false;" href="javascript:var%20d=document,w=window,e=w.getSelection,k=d.getSelection,x=d.selection,s=(e?e():(k)?k():(x?x.createRange().text:0)),f='<?php echo plugins_url( 'argo-this.php', __FILE__ );?>',l=d.location,e=encodeURIComponent,u=f+'?post_type=argolinks&u='+e(l.href)+'&t='+e(d.title)+'&s='+e(s)+'&v=4';a=function(){if(!w.open(u,'t','toolbar=0,resizable=1,scrollbars=1,status=1,width=720,height=570'))l.href=u;};if%20(/Firefox/.test(navigator.userAgent))%20setTimeout(a,%200);%20else%20a();void(0)"><span>Argo Link This!</span></a></p>
+	<div class="pressthis-code" style="display:none;">
+	<p class="description">If your bookmarks toolbar is hidden: copy the code below, open your Bookmarks manager, create new bookmark, type Press This into the name field and paste the code into the URL field.</p>
+	<p><textarea rows="5" cols="120" readonly="readonly">javascript:var%20d=document,w=window,e=w.getSelection,k=d.getSelection,x=d.selection,s=(e?e():(k)?k():(x?x.createRange().text:0)),f='<?php echo plugins_url( 'argo-this.php', __FILE__ );?>',l=d.location,e=encodeURIComponent,u=f+'?post_type=argolinks&u='+e(l.href)+'&t='+e(d.title)+'&s='+e(s)+'&v=4';a=function(){if(!w.open(u,'t','toolbar=0,resizable=1,scrollbars=1,status=1,width=720,height=570'))l.href=u;};if%20(/Firefox/.test(navigator.userAgent))%20setTimeout(a,%200);%20else%20a();void(0)</textarea></p>
+	</div>
+</div>
+
+
+    
+    
 <?php
   }
 }
