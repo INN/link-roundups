@@ -1,9 +1,7 @@
 <?php
 /**
- * Press This Display and Handler.
+ * Argo Link This! Display and Handler.
  *
- * @package WordPress
- * @subpackage Press_This
  */
 define('IFRAME_REQUEST' , true);
 
@@ -19,7 +17,7 @@ if ( ! current_user_can('edit_posts') )
  * Press It form handler.
  *
  * @package WordPress
- * @subpackage Press_This
+ * @subpackage Argo_Link_This
  * @since 2.6.0
  *
  * @return int Post ID
@@ -164,7 +162,7 @@ if ( !empty($_REQUEST['ajax']) ) {
 		 * Retrieve all image URLs from given URI.
 		 *
 		 * @package WordPress
-		 * @subpackage Press_This
+		 * @subpackage Argo_Link_This
 		 * @since 2.6.0
 		 *
 		 * @param string $uri
