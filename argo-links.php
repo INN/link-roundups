@@ -70,6 +70,7 @@ class ArgoLinks {
                                               'description' => 'Argo Links',
                                               'supports' => array( 'title' ),
                                               'public' => true,
+                                              'publicly_queryable' => false,
                                               'menu_position' => 6,
                                               'taxonomies' => array(),
                                               //'rewrite' => array( 'slug' => 'al' ),
@@ -148,7 +149,15 @@ class ArgoLinks {
         echo $custom["argo_link_url"][0];
         break;
       case "link-tags":
-        echo get_the_term_list($post->ID, 'argo-link-tags', '', ', ','');
+        $base_url = "edit.php?post_type=argolinks";
+        $terms = get_the_terms($post->ID, 'argo-link-tags');
+        if (count($terms) > 1) {
+          foreach ($terms as $term) {
+            echo "<a href='".$base_url."&argo-link-tags=".$term->slug."'>".$term->name."</a>,";
+          }
+        } else {
+          echo "&nbsp;";
+        }
         break;
     }
   }
