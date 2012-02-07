@@ -28,6 +28,7 @@ class ArgoLinks {
 
   /* Initialize the plugin */
   function init() {
+
     /*Register the custom post type of argolinks */
     add_action('init', array(__CLASS__, 'register_post_type' ));
     
@@ -194,4 +195,5 @@ class ArgoLinks {
 }
 /* Initialize the plugin using it's init() function */
 ArgoLinks::init();
+require_once('argo-link-roundups.php');
 ?>
