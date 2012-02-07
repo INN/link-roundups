@@ -1,4 +1,11 @@
 <?php
+/**
+  * @package Argo_Links
+  * @version 0.01
+  */
+/*
+*Argo Links - Link Roundups Meta Box Code
+*/
 /** WordPress Administration Bootstrap */
 require_once('../../../wp-admin/admin.php');
 
@@ -34,6 +41,7 @@ query_posts(
         $custom = get_post_custom($post->ID);
         ?>
         <span id='url-<?php echo get_the_ID();?>'style='font-size:10px;'><em><?php echo $custom["argo_link_url"][0]; ?></em></span>
+        <span id='description-<?php echo get_the_ID();?>'style='display:none;'><em><?php echo $custom["argo_link_description"][0]; ?></em></span>
       </td>
       <td scope="row" id="author" class="manage-column column-author sortable desc" style=""><span><?php the_author();?></span></td>
       <td scope="row" id="link-tags" class="manage-column column-link-tags" style="">
@@ -65,7 +73,7 @@ wp_reset_query();
     jQuery('#append-argo-links').bind('click',function(){
       jQuery('.argo-link').each(function(){
         if (jQuery(this).is(":checked")) {
-          var html = "\n<p><a href='"+jQuery('#url-'+jQuery(this).val()).text()+"'>"+jQuery('#title-'+jQuery(this).val()).text()+"</a></p>";
+          var html = "\n<p class='link-roundup'><a href='"+jQuery('#url-'+jQuery(this).val()).text()+"'>"+jQuery('#title-'+jQuery(this).val()).text()+"</a> <span class='description'>\""+jQuery('#description-'+jQuery(this).val()).text()+"\"</span> <em>("+jQuery('#url-'+jQuery(this).val()).text().match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/)[2]+")</em></p>";
           if (jQuery('#content').is(":visible")) {
             jQuery('#content').val(jQuery('#content').val()+html);
           } else {

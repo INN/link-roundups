@@ -50,8 +50,25 @@ class ArgoLinks {
 
     /*Populate those new columns with the custom data*/
     add_action("manage_posts_custom_column", array(__CLASS__, "data_for_custom_columns"));
+    
+    /*Add our css stylesheet into the header*/
+    add_action('wp_head', array(__CLASS__,'wp_header'));
+    add_filter('mce_css', array(__CLASS__,'plugin_mce_css'));
   }
-
+  function plugin_mce_css() {
+    if (!empty($mce_css)) {
+      $mce_css .= ',';
+    } else {
+      $mce_css = '';
+    }
+  $mce_css .= plugins_url(null,__FILE__)."/css/argo-links.css";
+  return $mce_css;
+  }
+  /*Add our css stylesheet into the header*/
+  function wp_header() {
+    echo "<link rel='stylesheet' href='".plugins_url(null,__FILE__)."/css/argo-links.css'/>\n";
+    add_editor_style("/wp-content/plugins/argo-links/css/argo-links.css");
+  }
   /*Register the Argo Links post type */
   function register_post_type() {
         register_post_type('argolinks', array(

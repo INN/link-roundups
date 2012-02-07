@@ -1,0 +1,12 @@
+p.link-roundup {
+	display:block;
+	margin-left:20px;
+	margin-bottom:10px;
+}
+p.link-roundup a {
+	font-weight:bold;
+	text-decoration:none;
+}
+p.link-roundup em {
+	color:#808080;
+}

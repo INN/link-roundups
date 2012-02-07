@@ -4,16 +4,10 @@
   * @version 0.01
   */
 /*
-Plugin Name: Argo Links - Link Roundups
-Plugin URI: https://github.com/argoproject/argo-links
-Description: The Argo Links Plugin
-Author: Project Argo, Mission Data
-Version: 0.01
-Author URI:
-License: GPLv2
+*Argo Links - Link Roundups Code
 */
 
-/* The Argo Links Plugin class - so we don't have function naming conflicts */
+/* The Argo Link Roundups class - so we don't have function naming conflicts */
 class ArgoLinkRoundups {
 
   /* Install function, runs when the plugin is installed - not implemented */
