@@ -76,7 +76,7 @@ class ArgoLinkRoundups {
     </div>
     <script type='text/javascript'>
     jQuery(function(){
-      jQuery('#argo-links-display-area').load('/wp-content/plugins/argo-links/display-argo-links.php');
+      jQuery('#argo-links-display-area').load('<?php echo home_url(); ?>/wp-content/plugins/argo-links/display-argo-links.php');
     });
     </script>
 <?php
