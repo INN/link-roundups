@@ -39,7 +39,7 @@ class ArgoLinkRoundups {
   /*Pull the argolinkroundups into the rivers for is_home, is_tag, is_category, is_archive*/
   /*Merge the post_type query var if there is already a custom post type being pulled in, otherwise do post & argolinkroundups*/
   function my_get_posts( $query ) {
-    if (is_home() || is_tag() || is_category() || is_archive()) {
+    if (is_home() || is_tag() || is_category()) {
       if (isset($query->query_vars['post_type'])) {
         $query->set( 'post_type', array_merge(array('argolinkroundups' ), $query->query_vars['post_type']) );
       } else {
