@@ -31,9 +31,24 @@ class ArgoLinkRoundups {
 
     /*Save our custom post fields! Very important!*/
     add_action('save_post', array(__CLASS__, 'save_custom_fields'));
-
+    
+    /*Make sure our custom post type gets pulled into the river*/
+    add_filter( 'pre_get_posts', array(__CLASS__,'my_get_posts') );
   }
 
+  /*Pull the argolinkroundups into the rivers for is_home, is_tag, is_category, is_archive*/
+  /*Merge the post_type query var if there is already a custom post type being pulled in, otherwise do post & argolinkroundups*/
+  function my_get_posts( $query ) {
+    if (is_home() || is_tag() || is_category() || is_archive()) {
+      if (isset($query->query_vars['post_type'])) {
+        $query->set( 'post_type', array_merge(array('argolinkroundups' ), $query->query_vars['post_type']) );
+      } else {
+        $query->set( 'post_type', array('post','argolinkroundups') );
+      }
+    }
+
+  }
+  
   function wp_head() {
         wp_enqueue_script('argo-link', '/wp-content/plugins/argo-links/js/argo-links.js', array('jquery') ); 
   }
@@ -58,6 +73,7 @@ class ArgoLinkRoundups {
                                               'public' => true,
                                               'menu_position' => 7,
                                               'taxonomies' => array('category','post_tag'),
+                                              'has_archive' => true
                                               //'rewrite' => array( 'slug' => 'al' ),
                                               )
                           );
