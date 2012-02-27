@@ -52,6 +52,7 @@ class ArgoLinks {
     add_action("manage_posts_custom_column", array(__CLASS__, "data_for_custom_columns"));
     
     /*Add our css stylesheet into the header*/
+    add_action( 'admin_head', array(__CLASS__,'wp_header') );
     add_action('wp_head', array(__CLASS__,'wp_header'));
     add_filter('mce_css', array(__CLASS__,'plugin_mce_css'));
   }

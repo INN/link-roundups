@@ -18,3 +18,19 @@ p.link-roundup a {
 p.link-roundup em {
 	color:#808080;
 }
+div.display-argo-links div.pagination {
+	height:30px;
+}
+div.display-argo-links div.pagination span, div.display-argo-links div.pagination a {
+    background: none repeat scroll 0 0 #E8E8E8;
+    border: 1px solid #000;
+    border-radius: 3px 3px 3px 3px;
+    color: #000;
+    margin: 0 2px;
+    padding: 4px 7px;
+    text-decoration: none;
+}
+div.display-argo-links div.pagination .current {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #C7C7C7;
+}
