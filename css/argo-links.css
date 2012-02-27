@@ -1,11 +1,19 @@
 p.link-roundup {
+	background:url('../img/link-roundup-icon.png') no-repeat 0px 3px;
 	display:block;
-	margin-left:20px;
+	padding-left:27px;
 	margin-bottom:10px;
+	vertical-align:top;
+	padding-top:0px;
 }
+.wp-editor p.link-roundup {
+	background-position: 0px 1px;
+}
+
 p.link-roundup a {
 	font-weight:bold;
 	text-decoration:none;
+	vertical-align:top;
 }
 p.link-roundup em {
 	color:#808080;
