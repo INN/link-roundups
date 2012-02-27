@@ -14,6 +14,21 @@ global $post;
 /*Build our query for what links to show!*/
 $posts_per_page = (isset($_REQUEST['posts_per_page']) ? $_REQUEST['posts_per_page'] : 15);
 $page = (isset($_REQUEST['argo_page']) ? $_REQUEST['argo_page']: 1);
+$default_date = array('year' => date('Y'), 'monthnum' => date('m'), 'day' => date('d'));
+/*Sort out passed filter dates*/
+if (isset($_REQUEST['link_date'])) {
+  if ($_REQUEST['link_date'] == 'today') {
+    $default_date = array('year' => date('Y'), 'monthnum' => date('m'), 'day' => date('d'));
+  } elseif ($_REQUEST['link_date'] == 'this_week') {
+    $default_date = array('year' => date('Y'), 'w' => date('W'));
+  } elseif ($_REQUEST['link_date'] == 'this_month') {
+    $default_date = array('year' => date('Y'), 'monthnum' => date('m'));
+  } elseif ($_REQUEST['link_date'] == 'this_year') {
+    $default_date = array('year' => date('Y'));
+  } elseif($_REQUEST['link_date'] == 'show_all') {
+    $default_date = array();
+  }
+}
 $args =  array(
                   'post_type' => 'argolinks',
                   'orderby' => (isset($_REQUEST['orderby']) ? $_REQUEST['orderby'] : 'date'),
@@ -21,6 +36,7 @@ $args =  array(
                   'posts_per_page' => -1
 
                   );
+$args = array_merge($args, $default_date);
 $the_posts_count_query = new WP_Query($args);
 $total_post_count = $the_posts_count_query->post_count;
 $the_posts_count_query = '';
@@ -45,59 +61,81 @@ $pagination_last = ceil($total_post_count / $posts_per_page);
 $query_url = '';
 $query_url .= (isset($_REQUEST['orderby']) ? '&orderby='.$_REQUEST['orderby']: '');
 $query_url .= (isset($_REQUEST['order']) ? '&order='.$_REQUEST['order']: '');
+$query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_date']: '');
 ?>
 <div class='display-argo-links'>
-  <div class='pagination' style='text-align:right'>
-    Displaying <?php echo $from_result;?>-<?php echo $to_result;?> of <?php echo $total_post_count;?>
-    <?php if(!($page <= 6)):?>
-      <a href='argo_page=<?php echo $pagination_first;?><?php echo $query_url; ?>'><<</a>
-    <?php endif; ?>
-    <?php if(!($page == 1)):?>
-      <a href=argo_page='<?php echo $pagination_previous;?><?php echo $query_url; ?>'><</a>
-    <?php endif; ?>
-    <?php
-      $start = 1;
-      $count = 0;
-      if ($page == 1) {
-        if ($pagination_last >= 11) {
+  <div class='pagination'>
+    <div style='float:left'>
+      <form action='' method='get' id='filter_links'>
+        <label for='link_date'><b>Show links from: </b></label>
+        <select name='link_date'>
+          <option value='today' <?php echo ((isset($_REQUEST['link_date']) && $_REQUEST['link_date'] == 'today' ) ? 'selected' : '');?>>Today</option>
+          <option value='this_week' <?php echo ((isset($_REQUEST['link_date']) && $_REQUEST['link_date'] == 'this_week' ) ? 'selected' : '');?>>This Week</option>
+          <option value='this_month' <?php echo ((isset($_REQUEST['link_date']) && $_REQUEST['link_date'] == 'this_month' ) ? 'selected' : '');?>>This Month</option>
+          <option value='this_year' <?php echo ((isset($_REQUEST['link_date']) && $_REQUEST['link_date'] == 'this_year' ) ? 'selected' : '');?>>This Year</option>
+          <option value='show_all' <?php echo ((isset($_REQUEST['link_date']) && $_REQUEST['link_date'] == 'show_all' ) ? 'selected' : '');?>>Show All</option>
+        </select>
+        <?php if(isset($_REQUEST['orderby'])):?>
+          <input type='hidden' name='orderby' value='<?php echo $_REQUEST['orderby']; ?>'/>
+        <?php endif;?>
+        <?php if(isset($_REQUEST['order'])):?>
+          <input type='hidden' name='order' value='<?php echo $_REQUEST['order']; ?>'/>
+        <?php endif;?>
+        <input type='submit' value='Filter'/>
+      </form>
+    </div>
+    <div style='float:right'>
+      Displaying <?php echo $from_result;?>-<?php echo $to_result;?> of <?php echo $total_post_count;?>
+      <?php if(!($page <= 6)):?>
+        <a href='argo_page=<?php echo $pagination_first;?><?php echo $query_url; ?>'><<</a>
+      <?php endif; ?>
+      <?php if(!($page == 1)):?>
+        <a href=argo_page='<?php echo $pagination_previous;?><?php echo $query_url; ?>'><</a>
+      <?php endif; ?>
+      <?php
+        $start = 1;
+        $count = 0;
+        if ($page == 1) {
+          if ($pagination_last >= 11) {
+            $count = $start + 11;
+          } else {
+            $count = $pagination_last;
+          }
+        } else if ($page == $pagination_last) {
+          $start = $pagination_last - 11;
           $count = $start + 11;
         } else {
-          $count = $pagination_last;
+          if (($page + 5) > $pagination_last) {
+            $start = $pagination_last - 10;
+            $count = $start + 10;
+          } else if (($page - 5) <= 0) {
+            $start = 1;
+            $count = 11;
+          } else {
+            $start = $page - 5;
+            $count = $start + 10;
+          }
         }
-      } else if ($page == $pagination_last) {
-        $start = $pagination_last - 11;
-        $count = $start + 11;
-      } else {
-        if (($page + 5) > $pagination_last) {
-          $start = $pagination_last - 10;
-          $count = $start + 10;
-        } else if (($page - 5) <= 0) {
-          $start = 1;
-          $count = 11;
-        } else {
-          $start = $page - 5;
-          $count = $start + 10;
+        while ($start <= $count) {
+          echo "<a href='argo_page=$start$query_url' class='".($start == $page ? 'current' : '')."'>$start</a> &nbsp;";
+          $start++;
         }
-      }
-      while ($start <= $count) {
-        echo "<a href='argo_page=$start$query_url' class='".($start == $page ? 'current' : '')."'>$start</a> &nbsp;";
-        $start++;
-      }
-    ?>
-    <?php if(!($page == $pagination_last)):?>
-      <a href='argo_page=<?php echo $pagination_next;?><?php echo $query_url; ?>'>></a>
-    <?php endif; ?>
-    <?php if(!($page >= ($pagination_last - 5))):?>
-      <a href='argo_page=<?php echo $pagination_last;?><?php echo $query_url; ?>'>>></a>
-    <?php endif;?>
+      ?>
+      <?php if(!($page == $pagination_last)):?>
+        <a href='argo_page=<?php echo $pagination_next;?><?php echo $query_url; ?>'>></a>
+      <?php endif; ?>
+      <?php if(!($page >= ($pagination_last - 5))):?>
+        <a href='argo_page=<?php echo $pagination_last;?><?php echo $query_url; ?>'>>></a>
+      <?php endif;?>
+    </div>
   </div>
   <table class="wp-list-table widefat fixed posts" cellspacing="0">
     <tr>
       <th scope="col" id="cb" class="manage-column column-cb check-column" style=""><input type="checkbox" id='check-all-boxes'></th>
-      <th scope="col" id="title" class="manage-column column-title <?php echo (isset($_REQUEST['orderby']) && $_REQUEST['orderby'] == 'title' ? 'sorted' : 'sortable');?> <?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'title' && $_REQUEST['order'] == 'desc' ? 'desc' : 'asc') : 'desc');?>" style=""><a href="post_type=argolinks&orderby=title&order=<?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'title' && $_REQUEST['order'] == 'desc' ? 'asc' : 'desc') : 'desc');?>"><span>Title</span><span class="sorting-indicator"></span></a></th>
-      <th scope="col" id="author" class="manage-column column-author <?php echo (isset($_REQUEST['orderby']) && $_REQUEST['orderby'] == 'author' ? 'sorted' : 'sortable');?> <?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'author' && $_REQUEST['order'] == 'desc' ? 'desc' : 'asc') : 'desc');?>" style=""><a href="post_type=argolinks&orderby=author&order=<?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'author' && $_REQUEST['order'] == 'desc' ? 'asc' : 'desc') : 'desc');?>"><span>Author</span><span class="sorting-indicator"></span></a></th>
+      <th scope="col" id="title" class="manage-column column-title <?php echo (isset($_REQUEST['orderby']) && $_REQUEST['orderby'] == 'title' ? 'sorted' : 'sortable');?> <?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'title' && $_REQUEST['order'] == 'desc' ? 'desc' : 'asc') : 'desc');?>" style=""><a href="post_type=argolinks&orderby=title&order=<?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'title' && $_REQUEST['order'] == 'desc' ? 'asc' : 'desc') : 'desc');?><?php echo (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_date']: ''); ?>"><span>Title</span><span class="sorting-indicator"></span></a></th>
+      <th scope="col" id="author" class="manage-column column-author <?php echo (isset($_REQUEST['orderby']) && $_REQUEST['orderby'] == 'author' ? 'sorted' : 'sortable');?> <?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'author' && $_REQUEST['order'] == 'desc' ? 'desc' : 'asc') : 'desc');?>" style=""><a href="post_type=argolinks&orderby=author&order=<?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'author' && $_REQUEST['order'] == 'desc' ? 'asc' : 'desc') : 'desc');?><?php echo (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_date']: ''); ?>"><span>Author</span><span class="sorting-indicator"></span></a></th>
       <th scope="col" id="link-tags" class="manage-column column-link-tags" style="">Tags</th>
-      <th scope="col" id="date" class="manage-column column-date <?php echo (isset($_REQUEST['orderby']) && $_REQUEST['orderby'] == 'date' ? 'sorted' : 'sortable');?> <?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'date' && $_REQUEST['order'] == 'desc' ? 'desc' : 'asc') : 'desc');?>" style=""><a href="post_type=argolinks&orderby=date&order=<?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'date' && $_REQUEST['order'] == 'desc' ? 'asc' : 'desc') : 'desc');?>"><span>Date</span><span class="sorting-indicator"></span></a></th>
+      <th scope="col" id="date" class="manage-column column-date <?php echo (isset($_REQUEST['orderby']) && $_REQUEST['orderby'] == 'date' ? 'sorted' : 'sortable');?> <?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'date' && $_REQUEST['order'] == 'desc' ? 'desc' : 'asc') : 'desc');?>" style=""><a href="post_type=argolinks&orderby=date&order=<?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'date' && $_REQUEST['order'] == 'desc' ? 'asc' : 'desc') : 'desc');?><?php echo (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_date']: ''); ?>"><span>Date</span><span class="sorting-indicator"></span></a></th>
     </tr>
     
     <?php $i=1; ?>
@@ -160,6 +198,10 @@ wp_reset_query();
     
     var urlOptions = jQuery(this).attr('href');
     jQuery('#argo-links-display-area').load('<?php echo home_url(); ?>/wp-content/plugins/argo-links/display-argo-links.php?'+urlOptions);
+    return false;
+  });
+  jQuery("#filter_links").bind("submit", function() {
+    jQuery('#argo-links-display-area').load('<?php echo home_url(); ?>/wp-content/plugins/argo-links/display-argo-links.php?'+jQuery(this).serialize());
     return false;
   });
 
