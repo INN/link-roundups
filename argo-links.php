@@ -193,7 +193,7 @@ class ArgoLinks {
 <div id="icon-tools" class="icon32"><br></div><h2>Tools</h2>
 
 <div class="tool-box">
-	<h3 class="title">Press This</h3>
+	<h3 class="title">Argo Link This!</h3>
 	<p>Argo Link This! is a bookmarklet: a little app that runs in your browser and lets you grab bits of the web.</p>
 
 	<p>Use Argo Link This! to clip links to any web page. Then edit and add more straight from Argo Link This! before you save or publish it in a post on your site.</p>

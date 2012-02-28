@@ -66,6 +66,7 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
 <div class='display-argo-links'>
   <div class='pagination'>
     <div style='float:left'>
+      <button id='append-argo-links'>Send links to editor window</button> 
       <form action='' method='get' id='filter_links'>
         <label for='link_date'><b>Show links from: </b></label>
         <select name='link_date'>
@@ -87,10 +88,10 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
     <div style='float:right'>
       Displaying <?php echo $from_result;?>-<?php echo $to_result;?> of <?php echo $total_post_count;?>
       <?php if(!($page <= 6)):?>
-        <a href='argo_page=<?php echo $pagination_first;?><?php echo $query_url; ?>'><<</a>
+        <a href='argo_page=<?php echo $pagination_first;?><?php echo $query_url; ?>' title='First'>&lt;lt&</a>
       <?php endif; ?>
       <?php if(!($page == 1)):?>
-        <a href=argo_page='<?php echo $pagination_previous;?><?php echo $query_url; ?>'><</a>
+        <a href='argo_page=<?php echo $pagination_previous;?><?php echo $query_url; ?>' title='Previous'>&lt;</a>
       <?php endif; ?>
       <?php
         $start = 1;
@@ -130,10 +131,10 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
         }
       ?>
       <?php if(!($page == $pagination_last)):?>
-        <a href='argo_page=<?php echo $pagination_next;?><?php echo $query_url; ?>'>></a>
+        <a href='argo_page=<?php echo $pagination_next;?><?php echo $query_url; ?>' title='Next'>&gt;</a>
       <?php endif; ?>
       <?php if(!($page >= ($pagination_last - 5))):?>
-        <a href='argo_page=<?php echo $pagination_last;?><?php echo $query_url; ?>'>>></a>
+        <a href='argo_page=<?php echo $pagination_last;?><?php echo $query_url; ?>' title='Last'>&gt;&gt;</a>
       <?php endif;?>
     </div>
   </div>
@@ -177,7 +178,65 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
       <?php $i++;?>
     <?php endwhile; ?>
   </table>
-  <button id='append-argo-links'>Send links to editor window</button>
+  
+  <div class='pagination'>
+    <div style='float:left'>
+      <button id='append-argo-links'>Send links to editor window</button>
+    </div>
+    <div style='float:right'>
+      <br />
+      Displaying <?php echo $from_result;?>-<?php echo $to_result;?> of <?php echo $total_post_count;?>
+      <?php if(!($page <= 6)):?>
+        <a href='argo_page=<?php echo $pagination_first;?><?php echo $query_url; ?>' title='First'>&lt;lt&</a>
+      <?php endif; ?>
+      <?php if(!($page == 1)):?>
+        <a href='argo_page=<?php echo $pagination_previous;?><?php echo $query_url; ?>' title='Previous'>&lt;</a>
+      <?php endif; ?>
+      <?php
+        $start = 1;
+        $count = 0;
+        if ($page == 1) {
+          if ($pagination_last >= 11) {
+            $count = $start + 10;
+          } else {
+            $count = $pagination_last;
+          }
+        } else if ($page == $pagination_last) {
+          if ($pagination_last <= 11) {
+            $start = 1;
+            $count = $pagination_last;
+          } else {
+            $start = $pagination_last - 11;
+            $count = $start + 11;
+          }
+        } else {
+          if($pagination_last <= 11) {
+            $start = 1;
+            $count = $pagination_last;
+          } else if (($page + 5) > $pagination_last) {
+            $start = $pagination_last - 10;
+            $count = $start + 10;
+          } else if (($page - 5) <= 0) {
+            $start = 1;
+            $count = 11;
+          } else {
+            $start = $page - 5;
+            $count = $start + 10;
+          }
+        }
+        while ($start <= $count) {
+          echo "<a href='argo_page=$start$query_url' class='".($start == $page ? 'current' : '')."'>$start</a> &nbsp;";
+          $start++;
+        }
+      ?>
+      <?php if(!($page == $pagination_last)):?>
+        <a href='argo_page=<?php echo $pagination_next;?><?php echo $query_url; ?>' title='Next'>&gt;</a>
+      <?php endif; ?>
+      <?php if(!($page >= ($pagination_last - 5))):?>
+        <a href='argo_page=<?php echo $pagination_last;?><?php echo $query_url; ?>' title='Last'>&gt;&gt;</a>
+      <?php endif;?>
+    </div>
+  </div>
 </div>
 <?php
 // Reset Query
@@ -186,42 +245,42 @@ wp_reset_query();
 ?>
 <script type='text/javascript'>
 
-  jQuery(function(){
-    jQuery('#append-argo-links').bind('click',function(){
-      jQuery('.argo-link').each(function(){
-        if (jQuery(this).is(":checked")) {
-          var html = "\n<p class='link-roundup'><a href='"+jQuery('#url-'+jQuery(this).val()).text()+"'>"+jQuery('#title-'+jQuery(this).val()).text()+"</a> <span class='description'>\""+jQuery('#description-'+jQuery(this).val()).text()+"\"</span></p>";
-          if (jQuery('#content').is(":visible")) {
-            jQuery('#content').val(jQuery('#content').val()+html);
-          } else {
-            parent.tinyMCE.activeEditor.setContent(parent.tinyMCE.activeEditor.getContent() + html);
-          }
-          
+jQuery(function(){
+  jQuery('#append-argo-links').bind('click',function(){
+    jQuery('.argo-link').each(function(){
+      if (jQuery(this).is(":checked")) {
+        var html = "\n<p class='link-roundup'><a href='"+jQuery('#url-'+jQuery(this).val()).text()+"'>"+jQuery('#title-'+jQuery(this).val()).text()+"</a> <span class='description'>\""+jQuery('#description-'+jQuery(this).val()).text()+"\"</span></p>";
+        if (jQuery('#content').is(":visible")) {
+          jQuery('#content').val(jQuery('#content').val()+html);
+        } else {
+          parent.tinyMCE.activeEditor.setContent(parent.tinyMCE.activeEditor.getContent() + html);
         }
-        });
-      return false;
-      });
-    jQuery('div.display-argo-links a').bind("click",function(){
-      var urlOptions = jQuery(this).attr('href');
-      jQuery('#argo-links-display-area').load('<?php echo home_url(); ?>/wp-content/plugins/argo-links/display-argo-links.php?'+urlOptions);
-      return false;
-    });
-    jQuery("#filter_links").bind("submit", function() {
-      jQuery('#argo-links-display-area').load('<?php echo home_url(); ?>/wp-content/plugins/argo-links/display-argo-links.php?'+jQuery(this).serialize());
-      return false;
-    });
-    jQuery('#check-all-boxes').change(function(){
-      if (jQuery(this).is(':checked')) {
-        jQuery('.argo-link').each(function(){
-          jQuery(this).prop("checked", true); 
-        });
-      } else {
-        jQuery('.argo-link').each(function(){
-          jQuery(this).prop("checked", false);
-        });
+        
       }
     });
+    return false;
+    });
+  jQuery('div.display-argo-links a').bind("click",function(){
+    var urlOptions = jQuery(this).attr('href');
+    jQuery('#argo-links-display-area').load('<?php echo home_url(); ?>/wp-content/plugins/argo-links/display-argo-links.php?'+urlOptions);
+    return false;
   });
+  jQuery("#filter_links").bind("submit", function() {
+    jQuery('#argo-links-display-area').load('<?php echo home_url(); ?>/wp-content/plugins/argo-links/display-argo-links.php?'+jQuery(this).serialize());
+    return false;
+  });
+  jQuery('#check-all-boxes').change(function(){
+    if (jQuery(this).is(':checked')) {
+      jQuery('.argo-link').each(function(){
+        jQuery(this).prop("checked", true); 
+      });
+    } else {
+      jQuery('.argo-link').each(function(){
+        jQuery(this).prop("checked", false);
+      });
+    }
+  });
+});
   
 
     

@@ -40,8 +40,10 @@ class ArgoLinkRoundups {
   /*Merge the post_type query var if there is already a custom post type being pulled in, otherwise do post & argolinkroundups*/
   function my_get_posts( $query ) {
     if (is_home() || is_tag() || is_category()) {
-      if (isset($query->query_vars['post_type'])) {
+      if (isset($query->query_vars['post_type']) && is_array($query->query_vars['post_type'])) {
         $query->set( 'post_type', array_merge(array('argolinkroundups' ), $query->query_vars['post_type']) );
+      } elseif (isset($query->query_vars['post_type']) && !is_array($query->query_vars['post_type'])) {
+        $query->set( 'post_type', array('argolinkroundups', $query->query_vars['post_type']) );
       } else {
         $query->set( 'post_type', array('post','argolinkroundups') );
       }
