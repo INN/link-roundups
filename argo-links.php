@@ -170,10 +170,12 @@ class ArgoLinks {
       case "link-tags":
         $base_url = "edit.php?post_type=argolinks";
         $terms = get_the_terms($post->ID, 'argo-link-tags');
-        if (count($terms) > 1) {
+        if (count($terms) > 0) {
+          $term_links = array();
           foreach ($terms as $term) {
-            echo "<a href='".$base_url."&argo-link-tags=".$term->slug."'>".$term->name."</a>,";
+            $term_links[] = "<a href='".$base_url."&argo-link-tags=".$term->slug."'>".$term->name."</a>";
           }
+          echo implode(", ",$term_links);
         } else {
           echo "&nbsp;";
         }
