@@ -97,15 +97,23 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
         $count = 0;
         if ($page == 1) {
           if ($pagination_last >= 11) {
-            $count = $start + 11;
+            $count = $start + 10;
           } else {
             $count = $pagination_last;
           }
         } else if ($page == $pagination_last) {
-          $start = $pagination_last - 11;
-          $count = $start + 11;
+          if ($pagination_last <= 11) {
+            $start = 1;
+            $count = $pagination_last;
+          } else {
+            $start = $pagination_last - 11;
+            $count = $start + 11;
+          }
         } else {
-          if (($page + 5) > $pagination_last) {
+          if($pagination_last <= 11) {
+            $start = 1;
+            $count = $pagination_last;
+          } else if (($page + 5) > $pagination_last) {
             $start = $pagination_last - 10;
             $count = $start + 10;
           } else if (($page - 5) <= 0) {
@@ -192,18 +200,29 @@ wp_reset_query();
         }
         });
       return false;
-      });  
+      });
+    jQuery('div.display-argo-links a').bind("click",function(){
+      var urlOptions = jQuery(this).attr('href');
+      jQuery('#argo-links-display-area').load('<?php echo home_url(); ?>/wp-content/plugins/argo-links/display-argo-links.php?'+urlOptions);
+      return false;
+    });
+    jQuery("#filter_links").bind("submit", function() {
+      jQuery('#argo-links-display-area').load('<?php echo home_url(); ?>/wp-content/plugins/argo-links/display-argo-links.php?'+jQuery(this).serialize());
+      return false;
+    });
+    jQuery('#check-all-boxes').change(function(){
+      if (jQuery(this).is(':checked')) {
+        jQuery('.argo-link').each(function(){
+          jQuery(this).prop("checked", true); 
+        });
+      } else {
+        jQuery('.argo-link').each(function(){
+          jQuery(this).prop("checked", false);
+        });
+      }
+    });
   });
-  jQuery('div.display-argo-links a').bind("click",function(){
-    
-    var urlOptions = jQuery(this).attr('href');
-    jQuery('#argo-links-display-area').load('<?php echo home_url(); ?>/wp-content/plugins/argo-links/display-argo-links.php?'+urlOptions);
-    return false;
-  });
-  jQuery("#filter_links").bind("submit", function() {
-    jQuery('#argo-links-display-area').load('<?php echo home_url(); ?>/wp-content/plugins/argo-links/display-argo-links.php?'+jQuery(this).serialize());
-    return false;
-  });
+  
 
     
 
