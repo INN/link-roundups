@@ -550,11 +550,12 @@ var photostorage = false;
     <div id="argo_links_meta" class="postbox " >
     <div class="handlediv" title="Click to toggle"><br /></div><h3 class='hndle'><span>Link Information</span></h3>
     <div class="inside">
-        <p><label>URL:</label><br />
-        <input type='text' name='argo_link_url' value='<?php echo $_REQUEST['u'];?>' style='width:98%;'/></p>
-        <p><label>Description:</label><br />
-    
-        <textarea cols="100" rows="5" name="argo_link_description" style='width:98%;'></textarea></p>
+      <p><label>URL:</label><br />
+      <input type='text' name='argo_link_url' value='<?php echo $_REQUEST['u'];?>' style='width:98%;'/></p>
+      <p><label>Description:</label><br />
+      <textarea cols="100" rows="5" name="argo_link_description" style='width:98%;'><?php echo $_REQUEST['s'];?></textarea></p>
+      <p><label>Source:</label><br />
+      <input type='text' name='argo_link_source'  style='width:98%;'/></p>
     </div>
 <!--------------->
 		<div id="waiting" style="display: none"><img src="<?php echo esc_url( admin_url( 'images/wpspin_light.gif' ) ); ?>" alt="" /> <?php esc_html_e( 'Loading...' ); ?></div>

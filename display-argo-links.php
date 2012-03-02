@@ -66,7 +66,7 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
 <div class='display-argo-links'>
   <div class='pagination'>
     <div style='float:left'>
-      <button id='append-argo-links'>Send links to editor window</button> 
+      <button class='append-argo-links'>Send links to editor window</button> 
       <form action='' method='get' id='filter_links'>
         <label for='link_date'><b>Show links from: </b></label>
         <select name='link_date'>
@@ -158,6 +158,8 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
           ?>
           <span id='url-<?php echo get_the_ID();?>'style='font-size:10px;'><em><?php echo (isset($custom["argo_link_url"][0]) ? $custom["argo_link_url"][0] : ''); ?></em></span>
           <span id='description-<?php echo get_the_ID();?>'style='display:none;'><em><?php echo (isset($custom["argo_link_description"][0]) ? $custom["argo_link_description"][0] : ''); ?></em></span>
+          <span id='source-<?php echo get_the_ID();?>'style='display:none;'><em><?php echo (isset($custom["argo_link_source"][0]) ? $custom["argo_link_source"][0] : ''); ?></em></span>
+        
         </td>
         <td scope="row" id="author" class="manage-column column-author sortable desc" style=""><span><?php the_author();?></span></td>
         <td scope="row" id="link-tags" class="manage-column column-link-tags" style="">
@@ -181,7 +183,7 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
   
   <div class='pagination'>
     <div style='float:left'>
-      <button id='append-argo-links'>Send links to editor window</button>
+      <button class='append-argo-links'>Send links to editor window</button>
     </div>
     <div style='float:right'>
       <br />
@@ -246,10 +248,10 @@ wp_reset_query();
 <script type='text/javascript'>
 
 jQuery(function(){
-  jQuery('#append-argo-links').bind('click',function(){
+  jQuery('.append-argo-links').bind('click',function(){
     jQuery('.argo-link').each(function(){
       if (jQuery(this).is(":checked")) {
-        var html = "\n<p class='link-roundup'><a href='"+jQuery('#url-'+jQuery(this).val()).text()+"'>"+jQuery('#title-'+jQuery(this).val()).text()+"</a> <span class='description'>\""+jQuery('#description-'+jQuery(this).val()).text()+"\"</span></p>";
+        var html = "\n<p class='link-roundup'><a href='"+jQuery('#url-'+jQuery(this).val()).text()+"'>"+jQuery('#title-'+jQuery(this).val()).text()+"</a>&ndash;<span class='description'>"+jQuery('#description-'+jQuery(this).val()).text()+"</span> <em>"+jQuery('#source-'+jQuery(this).val()).text()+"</em></p>";
         if (jQuery('#content').is(":visible")) {
           jQuery('#content').val(jQuery('#content').val()+html);
         } else {

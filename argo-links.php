@@ -121,11 +121,18 @@ class ArgoLinks {
     } else {
       $argo_link_description = "";
     }
+    if (isset($custom["argo_link_source"][0])) {
+      $argo_link_source = $custom["argo_link_source"][0];
+    } else {
+      $argo_link_source = "";
+    }
 ?>
     <p><label>URL:</label><br />
     <input type='text' name='argo_link_url' value='<?php echo $argo_link_url; ?>' style='width:98%;'/></p>
     <p><label>Description:</label><br />
     <textarea cols="100" rows="5" name="argo_link_description" style='width:98%;'><?php echo $argo_link_description; ?></textarea></p>
+    <p><label>Source:</label><br />
+    <input type='text' name='argo_link_source' value='<?php echo $argo_link_source; ?>' style='width:98%;'/></p>
 <?php
   }
 
@@ -138,6 +145,9 @@ class ArgoLinks {
     }
     if (isset($_POST["argo_link_description"])){
       update_post_meta((isset($_POST['post_id']) ? $_POST['post_id'] : $post->ID), "argo_link_description", $_POST["argo_link_description"]);
+    }
+    if (isset($_POST["argo_link_source"])){
+      update_post_meta((isset($_POST['post_id']) ? $_POST['post_id'] : $post->ID), "argo_link_source", $_POST["argo_link_source"]);
     }
   }
 
