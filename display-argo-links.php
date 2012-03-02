@@ -30,12 +30,11 @@ if (isset($_REQUEST['link_date'])) {
   }
 }
 $args =  array(
-                  'post_type' => 'argolinks',
-                  'orderby' => (isset($_REQUEST['orderby']) ? $_REQUEST['orderby'] : 'date'),
-                  'order' => (isset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc'),
-                  'posts_per_page' => -1
-
-                  );
+              'post_type' => 'argolinks',
+              'orderby' => (isset($_REQUEST['orderby']) ? $_REQUEST['orderby'] : 'date'),
+              'order' => (isset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc'),
+              'posts_per_page' => -1
+              );
 $args = array_merge($args, $default_date);
 $the_posts_count_query = new WP_Query($args);
 $total_post_count = $the_posts_count_query->post_count;
@@ -246,7 +245,6 @@ wp_reset_query();
 
 ?>
 <script type='text/javascript'>
-
 jQuery(function(){
   jQuery('.append-argo-links').bind('click',function(){
     jQuery('.argo-link').each(function(){
@@ -257,7 +255,6 @@ jQuery(function(){
         } else {
           parent.tinyMCE.activeEditor.setContent(parent.tinyMCE.activeEditor.getContent() + html);
         }
-        
       }
     });
     return false;
@@ -283,9 +280,4 @@ jQuery(function(){
     }
   });
 });
-  
-
-    
-
-
 </script>

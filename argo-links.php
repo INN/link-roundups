@@ -8,7 +8,7 @@ Plugin Name: Argo Links
 Plugin URI: https://github.com/argoproject/argo-links
 Description: The Argo Links Plugin
 Author: Project Argo, Mission Data
-Version: 0.01
+Version: 1.00
 Author URI:
 License: GPLv2
 */
@@ -62,8 +62,8 @@ class ArgoLinks {
     } else {
       $mce_css = '';
     }
-  $mce_css .= plugins_url(null,__FILE__)."/css/argo-links.css";
-  return $mce_css;
+    $mce_css .= plugins_url(null,__FILE__)."/css/argo-links.css";
+    return $mce_css;
   }
   /*Add our css stylesheet into the header*/
   function wp_header() {
@@ -72,29 +72,29 @@ class ArgoLinks {
   }
   /*Register the Argo Links post type */
   function register_post_type() {
-        register_post_type('argolinks', array(
-                                              'labels' => array(
-                                                                'name' => 'Argo Links',
-                                                                'singular_name' => 'Argo Link',
-                                                                'add_new' => 'Add New',
-                                                                'add_new_item' => 'Add New Argo Link',
-                                                                'edit' => 'Edit',
-                                                                'edit_item' => 'Edit Argo Link',
-                                                                'view' => 'View',
-                                                                'view_item' => 'View Argo Link',
-                                                                'search_items' => 'Search Argo Links',
-                                                                'not_found' => 'No Argo Links found',
-                                                                'not_found_in_trash' => 'No Argo Links found in Trash',
-                                                                ),
-                                              'description' => 'Argo Links',
-                                              'supports' => array( 'title' ),
-                                              'public' => true,
-                                              'publicly_queryable' => false,
-                                              'menu_position' => 6,
-                                              'taxonomies' => array(),
-                                              //'rewrite' => array( 'slug' => 'al' ),
-                                              )
-                          );
+    register_post_type('argolinks', array(
+                                          'labels' => array(
+                                                            'name' => 'Argo Links',
+                                                            'singular_name' => 'Argo Link',
+                                                            'add_new' => 'Add New',
+                                                            'add_new_item' => 'Add New Argo Link',
+                                                            'edit' => 'Edit',
+                                                            'edit_item' => 'Edit Argo Link',
+                                                            'view' => 'View',
+                                                            'view_item' => 'View Argo Link',
+                                                            'search_items' => 'Search Argo Links',
+                                                            'not_found' => 'No Argo Links found',
+                                                            'not_found_in_trash' => 'No Argo Links found in Trash',
+                                                            ),
+                                          'description' => 'Argo Links',
+                                          'supports' => array( 'title' ),
+                                          'public' => true,
+                                          'publicly_queryable' => false,
+                                          'menu_position' => 6,
+                                          'taxonomies' => array(),
+                                          //'rewrite' => array( 'slug' => 'al' ),
+                                          )
+                      );
   }
 
   /*Tell Wordpress where to put our custom fields for our custom post type*/
@@ -201,25 +201,20 @@ class ArgoLinks {
   /*Custom page for people to pull the Argo Link This! code from (similar to Press This!)*/
   function build_argo_this_page() {
 ?>
-
-<div id="icon-tools" class="icon32"><br></div><h2>Tools</h2>
-
-<div class="tool-box">
-	<h3 class="title">Argo Link This!</h3>
-	<p>Argo Link This! is a bookmarklet: a little app that runs in your browser and lets you grab bits of the web.</p>
-
-	<p>Use Argo Link This! to clip links to any web page. Then edit and add more straight from Argo Link This! before you save or publish it in a post on your site.</p>
-	<p class="description">Drag-and-drop the following link to your bookmarks bar or right click it and add it to your favorites for a posting shortcut.</p>
-	<p class="pressthis"><a onclick="return false;" oncontextmenu="if(window.navigator.userAgent.indexOf('WebKit')!=-1||window.navigator.userAgent.indexOf('MSIE')!=-1)jQuery('.pressthis-code').show().find('textarea').focus().select();return false;" href="javascript:var%20d=document,w=window,e=w.getSelection,k=d.getSelection,x=d.selection,s=(e?e():(k)?k():(x?x.createRange().text:0)),f='<?php echo plugins_url( 'argo-this.php', __FILE__ );?>',l=d.location,e=encodeURIComponent,u=f+'?post_type=argolinks&u='+e(l.href)+'&t='+e(d.title)+'&s='+e(s)+'&v=4';a=function(){if(!w.open(u,'t','toolbar=0,resizable=1,scrollbars=1,status=1,width=720,height=570'))l.href=u;};if%20(/Firefox/.test(navigator.userAgent))%20setTimeout(a,%200);%20else%20a();void(0)"><span>Argo Link This!</span></a></p>
-	<div class="pressthis-code" style="display:none;">
-	<p class="description">If your bookmarks toolbar is hidden: copy the code below, open your Bookmarks manager, create new bookmark, type Press This into the name field and paste the code into the URL field.</p>
-	<p><textarea rows="5" cols="120" readonly="readonly">javascript:var%20d=document,w=window,e=w.getSelection,k=d.getSelection,x=d.selection,s=(e?e():(k)?k():(x?x.createRange().text:0)),f='<?php echo plugins_url( 'argo-this.php', __FILE__ );?>',l=d.location,e=encodeURIComponent,u=f+'?post_type=argolinks&u='+e(l.href)+'&t='+e(d.title)+'&s='+e(s)+'&v=4';a=function(){if(!w.open(u,'t','toolbar=0,resizable=1,scrollbars=1,status=1,width=720,height=570'))l.href=u;};if%20(/Firefox/.test(navigator.userAgent))%20setTimeout(a,%200);%20else%20a();void(0)</textarea></p>
-	</div>
-</div>
-
-
+    <div id="icon-tools" class="icon32"><br></div><h2>Tools</h2>
     
+    <div class="tool-box">
+      <h3 class="title">Argo Link This!</h3>
+      <p>Argo Link This! is a bookmarklet: a little app that runs in your browser and lets you grab bits of the web.</p>
     
+      <p>Use Argo Link This! to clip links to any web page. Then edit and add more straight from Argo Link This! before you save or publish it in a post on your site.</p>
+      <p class="description">Drag-and-drop the following link to your bookmarks bar or right click it and add it to your favorites for a posting shortcut.</p>
+      <p class="pressthis"><a onclick="return false;" oncontextmenu="if(window.navigator.userAgent.indexOf('WebKit')!=-1||window.navigator.userAgent.indexOf('MSIE')!=-1)jQuery('.pressthis-code').show().find('textarea').focus().select();return false;" href="javascript:var%20d=document,w=window,e=w.getSelection,k=d.getSelection,x=d.selection,s=(e?e():(k)?k():(x?x.createRange().text:0)),f='<?php echo plugins_url( 'argo-this.php', __FILE__ );?>',l=d.location,e=encodeURIComponent,u=f+'?post_type=argolinks&u='+e(l.href)+'&t='+e(d.title)+'&s='+e(s)+'&v=4';a=function(){if(!w.open(u,'t','toolbar=0,resizable=1,scrollbars=1,status=1,width=720,height=570'))l.href=u;};if%20(/Firefox/.test(navigator.userAgent))%20setTimeout(a,%200);%20else%20a();void(0)"><span>Argo Link This!</span></a></p>
+      <div class="pressthis-code" style="display:none;">
+      <p class="description">If your bookmarks toolbar is hidden: copy the code below, open your Bookmarks manager, create new bookmark, type Press This into the name field and paste the code into the URL field.</p>
+      <p><textarea rows="5" cols="120" readonly="readonly">javascript:var%20d=document,w=window,e=w.getSelection,k=d.getSelection,x=d.selection,s=(e?e():(k)?k():(x?x.createRange().text:0)),f='<?php echo plugins_url( 'argo-this.php', __FILE__ );?>',l=d.location,e=encodeURIComponent,u=f+'?post_type=argolinks&u='+e(l.href)+'&t='+e(d.title)+'&s='+e(s)+'&v=4';a=function(){if(!w.open(u,'t','toolbar=0,resizable=1,scrollbars=1,status=1,width=720,height=570'))l.href=u;};if%20(/Firefox/.test(navigator.userAgent))%20setTimeout(a,%200);%20else%20a();void(0)</textarea></p>
+      </div>
+    </div> 
 <?php
   }
 }
