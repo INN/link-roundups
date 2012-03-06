@@ -553,7 +553,7 @@ var photostorage = false;
       <p><label>URL:</label><br />
       <input type='text' name='argo_link_url' value='<?php echo $_REQUEST['u'];?>' style='width:98%;'/></p>
       <p><label>Description:</label><br />
-      <textarea cols="100" rows="5" name="argo_link_description" style='width:98%;'><?php echo $_REQUEST['s'];?></textarea></p>
+      <textarea cols="100" rows="5" name="argo_link_description" style='width:98%;'><?php echo str_replace("\\\"","\"",str_replace("\\'","'",$_REQUEST['s']));?></textarea></p>
       <p><label>Source:</label><br />
       <input type='text' name='argo_link_source'  style='width:98%;'/></p>
     </div>
