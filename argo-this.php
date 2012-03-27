@@ -23,9 +23,11 @@ if ( ! current_user_can('edit_posts') )
  * @return int Post ID
  */
 function press_it() {
-
+  global $wpdb;
+  print_r($wpdb);
 	$post = get_default_post_to_edit();
 	$post = get_object_vars($post);
+
 	$post_ID = $post['ID'] = (int) $_POST['post_id'];
 
 	if ( !current_user_can('edit_post', $post_ID) )
@@ -553,7 +555,13 @@ var photostorage = false;
       <p><label>URL:</label><br />
       <input type='text' name='argo_link_url' value='<?php echo $_REQUEST['u'];?>' style='width:98%;'/></p>
       <p><label>Description:</label><br />
-      <textarea cols="100" rows="5" name="argo_link_description" style='width:98%;'><?php echo str_replace("\\\"","\"",str_replace("\\'","'",$_REQUEST['s']));?></textarea></p>
+        <?php
+          if (isset($_REQUEST['s'])) {
+            $_REQUEST['s'] = str_replace("\\\"","\"",str_replace("\\'","'",$_REQUEST['s']));
+            $_REQUEST['s'] = "\"".$_REQUEST['s']."\"";
+          }
+        ?>
+      <textarea cols="100" rows="5" name="argo_link_description" style='width:98%;'><?php echo $_REQUEST['s']; ?></textarea></p>
       <p><label>Source:</label><br />
       <input type='text' name='argo_link_source'  style='width:98%;'/></p>
     </div>

@@ -249,7 +249,7 @@ jQuery(function(){
   jQuery('.append-argo-links').bind('click',function(){
     jQuery('.argo-link').each(function(){
       if (jQuery(this).is(":checked")) {
-        var html = "\n<p class='link-roundup'><a href='"+jQuery('#url-'+jQuery(this).val()).text()+"'>"+jQuery('#title-'+jQuery(this).val()).text()+"</a>&ndash;<span class='description'>"+jQuery('#description-'+jQuery(this).val()).text()+"</span> <em>"+jQuery('#source-'+jQuery(this).val()).text()+"</em></p>";
+        var html = "\n<p class='link-roundup'><a href='"+jQuery('#url-'+jQuery(this).val()).text()+"'>"+jQuery('#title-'+jQuery(this).val()).text()+"</a> &ndash; <span class='description'>"+jQuery('#description-'+jQuery(this).val()).text()+"</span> <em>"+jQuery('#source-'+jQuery(this).val()).text()+"</em></p>";
         if (jQuery('#content').is(":visible")) {
           jQuery('#content').val(jQuery('#content').val()+html);
         } else {
