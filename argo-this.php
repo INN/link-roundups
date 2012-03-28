@@ -457,7 +457,7 @@ var photostorage = false;
 </script>
 </head>
 <body class="press-this wp-admin<?php if ( is_rtl() ) echo ' rtl'; ?>">
-<form action="<?php echo $PHP_SELF; ?>?action=post" method="post">
+<form action="<?php echo plugins_url( 'argo-this.php', __FILE__ ); ?>?action=post" method="post">
 <div id="poststuff" class="metabox-holder">
 	<div id="side-sortables" class="press-this-sidebar">
 		<div class="sleeve">
