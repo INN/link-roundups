@@ -23,8 +23,6 @@ if ( ! current_user_can('edit_posts') )
  * @return int Post ID
  */
 function press_it() {
-  global $wpdb;
-  print_r($wpdb);
 	$post = get_default_post_to_edit();
 	$post = get_object_vars($post);
 
