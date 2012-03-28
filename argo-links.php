@@ -68,7 +68,7 @@ class ArgoLinks {
   /*Add our css stylesheet into the header*/
   function wp_header() {
     echo "<link rel='stylesheet' href='".plugins_url(null,__FILE__)."/css/argo-links.css'/>\n";
-    add_editor_style("/wp-content/plugins/argo-links/css/argo-links.css");
+    add_editor_style(plugins_url(null,__FILE__)."/css/argo-links.css");
   }
   /*Register the Argo Links post type */
   function register_post_type() {

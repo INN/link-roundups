@@ -51,7 +51,7 @@ class ArgoLinkRoundups {
   }
   
   function wp_head() {
-        wp_enqueue_script('argo-link', '/wp-content/plugins/argo-links/js/argo-links.js', array('jquery') ); 
+        wp_enqueue_script('argo-link', plugin_dir_url(__FILE__).'argo-links.js', array('jquery') ); 
   }
   /*Register the Argo Links post type */
   function register_post_type() {
