@@ -554,7 +554,7 @@ var photostorage = false;
       <input type='text' name='argo_link_url' value='<?php echo $_REQUEST['u'];?>' style='width:98%;'/></p>
       <p><label>Description:</label><br />
         <?php
-          if (isset($_REQUEST['s'])) {
+          if (isset($_REQUEST['s']) && $_REQUEST['s'] != '') {
             $_REQUEST['s'] = str_replace("\\\"","\"",str_replace("\\'","'",$_REQUEST['s']));
             $_REQUEST['s'] = "\"".$_REQUEST['s']."\"";
           }
