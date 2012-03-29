@@ -261,11 +261,11 @@ jQuery(function(){
     });
   jQuery('div.display-argo-links a').bind("click",function(){
     var urlOptions = jQuery(this).attr('href');
-    jQuery('#argo-links-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>?'+urlOptions);
+    jQuery('#argo-links-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-argo-links.php?'+urlOptions);
     return false;
   });
   jQuery("#filter_links").bind("submit", function() {
-    jQuery('#argo-links-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>?'+jQuery(this).serialize());
+    jQuery('#argo-links-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-argo-links.php?'+jQuery(this).serialize());
     return false;
   });
   jQuery('#check-all-boxes').change(function(){
