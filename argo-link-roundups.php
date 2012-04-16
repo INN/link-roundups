@@ -56,28 +56,28 @@ class ArgoLinkRoundups {
   /*Register the Argo Links post type */
   function register_post_type() {
     register_post_type('argolinkroundups', array(
-                                          'labels' => array(
-                                                            'name' => 'Link Roundups',
-                                                            'singular_name' => 'Argo Link Roundup',
-                                                            'add_new' => 'Add New',
-                                                            'add_new_item' => 'Add New Argo Link Roundup',
-                                                            'edit' => 'Edit',
-                                                            'edit_item' => 'Edit Argo Link Roundup',
-                                                            'view' => 'View',
-                                                            'view_item' => 'View Argo Link Roundup',
-                                                            'search_items' => 'Search Argo Link Roundups',
-                                                            'not_found' => 'No Argo Links Roundups found',
-                                                            'not_found_in_trash' => 'No Argo Link Roundups found in Trash',
-                                                            ),
-                                          'description' => 'Argo Link Roundups',
-                                          'supports' => array( 'title', 'editor','author','thumbnail','excerpt','trackbacks','custom-fields','comments','revisions','page-attributes','post-formats'),
-                                          'public' => true,
-                                          'menu_position' => 7,
-                                          'taxonomies' => array('category','post_tag'),
-                                          'has_archive' => true
-                                          //'rewrite' => array( 'slug' => 'al' ),
-                                          )
-                      );
+        'labels' => array(
+            'name' => 'Link Roundups',
+            'singular_name' => 'Argo Link Roundup',
+            'add_new' => 'Add New',
+            'add_new_item' => 'Add New Argo Link Roundup',
+            'edit' => 'Edit',
+            'edit_item' => 'Edit Argo Link Roundup',
+            'view' => 'View',
+            'view_item' => 'View Argo Link Roundup',
+            'search_items' => 'Search Argo Link Roundups',
+            'not_found' => 'No Argo Links Roundups found',
+            'not_found_in_trash' => 'No Argo Link Roundups found in Trash',
+        ),
+        'description' => 'Argo Link Roundups',
+        'supports' => array( 'title', 'editor','author','thumbnail','excerpt','trackbacks','custom-fields','comments','revisions','page-attributes','post-formats'),
+        'public' => true,
+        'menu_position' => 7,
+        'taxonomies' => apply_filters('argolinkroundups_taxonomies', array('category','post_tag')),
+        'has_archive' => true
+        //'rewrite' => array( 'slug' => 'al' ),
+        )
+      );
   }
   
   /*Tell Wordpress where to put our custom fields for our custom post type*/
