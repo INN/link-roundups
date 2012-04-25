@@ -24,7 +24,7 @@ class ArgoLinkRoundups {
   function init() {
     /*Register the custom post type of argolinks */
     add_action('init', array(__CLASS__, 'register_post_type' ));
-    add_action('init', array(__CLASS__, 'wp_head' ));
+    // add_action('init', array(__CLASS__, 'wp_head' ));
 
     /*Add our custom post fields for our custom post type*/
     add_action("admin_init", array(__CLASS__, "add_custom_post_fields"));
@@ -51,7 +51,7 @@ class ArgoLinkRoundups {
   }
   
   function wp_head() {
-        wp_enqueue_script('argo-link', plugin_dir_url(__FILE__).'argo-links.js', array('jquery') ); 
+        wp_enqueue_script('argo-link', plugin_dir_url(__FILE__).'js/argo-links.js', array('jquery') ); 
   }
   /*Register the Argo Links post type */
   function register_post_type() {
