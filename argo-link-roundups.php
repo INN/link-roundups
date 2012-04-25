@@ -59,7 +59,7 @@ class ArgoLinkRoundups {
         'labels' => array(
             'name' => 'Link Roundups',
             'singular_name' => 'Argo Link Roundup',
-            'add_new' => 'Add New Link Roundup',
+            'add_new' => 'Add New Roundup',
             'add_new_item' => 'Add New Argo Link Roundup',
             'edit' => 'Edit',
             'edit_item' => 'Edit Argo Link Roundup',
