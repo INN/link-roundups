@@ -73,28 +73,28 @@ class ArgoLinks {
   /*Register the Argo Links post type */
   function register_post_type() {
     register_post_type('argolinks', array(
-                                          'labels' => array(
-                                                            'name' => 'Argo Links',
-                                                            'singular_name' => 'Argo Link',
-                                                            'add_new' => 'Add New',
-                                                            'add_new_item' => 'Add New Argo Link',
-                                                            'edit' => 'Edit',
-                                                            'edit_item' => 'Edit Argo Link',
-                                                            'view' => 'View',
-                                                            'view_item' => 'View Argo Link',
-                                                            'search_items' => 'Search Argo Links',
-                                                            'not_found' => 'No Argo Links found',
-                                                            'not_found_in_trash' => 'No Argo Links found in Trash',
-                                                            ),
-                                          'description' => 'Argo Links',
-                                          'supports' => array( 'title' ),
-                                          'public' => true,
-                                          'publicly_queryable' => false,
-                                          'menu_position' => 6,
-                                          'taxonomies' => array(),
-                                          //'rewrite' => array( 'slug' => 'al' ),
-                                          )
-                      );
+      'labels' => array(
+        'name' => 'Argo Links',
+        'singular_name' => 'Argo Link',
+        'add_new' => 'Add New Link',
+        'add_new_item' => 'Add New Argo Link',
+        'edit' => 'Edit',
+        'edit_item' => 'Edit Argo Link',
+        'view' => 'View',
+        'view_item' => 'View Argo Link',
+        'search_items' => 'Search Argo Links',
+        'not_found' => 'No Argo Links found',
+        'not_found_in_trash' => 'No Argo Links found in Trash',
+      ),
+      'description' => 'Argo Links',
+      'supports' => array( 'title' ),
+      'public' => true,
+      'publicly_queryable' => false,
+      'menu_position' => 6,
+      'taxonomies' => array(),
+      //'rewrite' => array( 'slug' => 'al' ),
+      )
+    );
   }
 
   /*Tell Wordpress where to put our custom fields for our custom post type*/
