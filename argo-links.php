@@ -56,7 +56,7 @@ class ArgoLinks {
     add_action('wp_head', array(__CLASS__,'wp_header'));
     add_filter('mce_css', array(__CLASS__,'plugin_mce_css'));
   }
-  function plugin_mce_css() {
+  function plugin_mce_css($mce_css) {
     if (!empty($mce_css)) {
       $mce_css .= ',';
     } else {
