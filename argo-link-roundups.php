@@ -65,7 +65,6 @@ class ArgoLinkRoundups {
         'menu_position' => 7,
         'taxonomies' => apply_filters('argolinkroundups_taxonomies', array('category','post_tag')),
         'has_archive' => true
-        //'rewrite' => array( 'slug' => 'al' ),
         )
       );
   }
@@ -89,14 +88,12 @@ class ArgoLinkRoundups {
   }
 
   /*Save the custom post field data.  Very important!*/
-  function save_custom_fields() {
-    global $post;
-    $argo_post_id = "";
+  function save_custom_fields($post_id) {
     if (isset($_POST["argo_link_url"])){
-      update_post_meta((isset($_POST['post_id']) ? $_POST['post_id'] : $post->ID), "argo_link_url", $_POST["argo_link_url"]);
+      update_post_meta((isset($_POST['post_id']) ? $_POST['post_ID'] : $post_id), "argo_link_url", $_POST["argo_link_url"]);
     }
     if (isset($_POST["argo_link_description"])){
-      update_post_meta((isset($_POST['post_id']) ? $_POST['post_id'] : $post->ID), "argo_link_description", $_POST["argo_link_description"]);
+      update_post_meta((isset($_POST['post_id']) ? $_POST['post_ID'] : $post_id), "argo_link_description", $_POST["argo_link_description"]);
     }
   }
 

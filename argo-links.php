@@ -46,6 +46,7 @@ class ArgoLinks {
     add_action('wp_head', array(__CLASS__,'wp_header'));
     add_filter('mce_css', array(__CLASS__,'plugin_mce_css'));
   }
+  
   function plugin_mce_css($mce_css) {
     if (!empty($mce_css)) {
       $mce_css .= ',';
@@ -55,11 +56,13 @@ class ArgoLinks {
     $mce_css .= plugins_url(null,__FILE__)."/css/argo-links.css";
     return $mce_css;
   }
+
   /*Add our css stylesheet into the header*/
   function wp_header() {
     echo "<link rel='stylesheet' href='".plugins_url(null,__FILE__)."/css/argo-links.css'/>\n";
     add_editor_style(plugins_url(null,__FILE__)."/css/argo-links.css");
   }
+
   /*Register the Argo Links post type */
   function register_post_type() {
     register_post_type('argolinks', array(
@@ -89,13 +92,13 @@ class ArgoLinks {
   /*Tell Wordpress where to put our custom fields for our custom post type*/
   function add_custom_post_fields() {
     add_meta_box("argo_links_meta", "Link Information", array(__CLASS__,"display_custom_fields"), "argolinks", "normal", "low");
-
   }
+
   /*Register our custom taxonomy*/
   function register_argo_links_taxonomy() {
     register_taxonomy("argo-link-tags", array("argolinks"), array("hierarchical" => false, "label" => "Link Tags", "singular_label" => "Link Tag", "rewrite" => true));
-
   }
+
   /*Show our custom post fields in the add/edit Argo Links admin pages*/
   function display_custom_fields() {
     global $post;
