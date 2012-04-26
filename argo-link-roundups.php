@@ -10,16 +10,6 @@
 /* The Argo Link Roundups class - so we don't have function naming conflicts */
 class ArgoLinkRoundups {
 
-  /* Install function, runs when the plugin is installed - not implemented */
-  function install() {
-
-  }
-
-  /* Deactivate function, runs when the plugin is deactivated - not implemented */
-  function deactivate() {
-
-  }
-
   /* Initialize the plugin */
   function init() {
     /*Register the custom post type of argolinks */
@@ -89,7 +79,6 @@ class ArgoLinkRoundups {
   function display_custom_fields() {
 ?>
     <div id='argo-links-display-area'>
-      
     </div>
     <script type='text/javascript'>
     jQuery(function(){

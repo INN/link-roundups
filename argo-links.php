@@ -16,16 +16,6 @@ License: GPLv2
 /* The Argo Links Plugin class - so we don't have function naming conflicts */
 class ArgoLinks {
 
-  /* Install function, runs when the plugin is installed - not implemented */
-  function install() {
-
-  }
-
-  /* Deactivate function, runs when the plugin is deactivated - not implemented */
-  function deactivate() {
-
-  }
-
   /* Initialize the plugin */
   function init() {
 
