@@ -42,8 +42,8 @@ class ArgoLinks {
     add_action("manage_posts_custom_column", array(__CLASS__, "data_for_custom_columns"));
     
     /*Add our css stylesheet into the header*/
-    add_action( 'admin_head', array(__CLASS__,'wp_header') );
-    add_action('wp_head', array(__CLASS__,'wp_header'));
+    add_action('admin_print_styles', array(__CLASS__,'add_styles'));
+    add_action('wp_print_styles', array(__CLASS__, 'add_styles'));
     add_filter('mce_css', array(__CLASS__,'plugin_mce_css'));
   }
   
@@ -53,14 +53,14 @@ class ArgoLinks {
     } else {
       $mce_css = '';
     }
-    $mce_css .= plugins_url(null,__FILE__)."/css/argo-links.css";
+    $mce_css .= plugins_url("css/argo-links.css", __FILE__);
     return $mce_css;
   }
 
   /*Add our css stylesheet into the header*/
-  function wp_header() {
-    echo "<link rel='stylesheet' href='".plugins_url(null,__FILE__)."/css/argo-links.css'/>\n";
-    add_editor_style(plugins_url(null,__FILE__)."/css/argo-links.css");
+  function add_styles() {
+    $css = plugins_url('css/argo-links.css', __FILE__);
+    wp_enqueue_style('argo-links', $css, array(), 1);
   }
 
   /*Register the Argo Links post type */
