@@ -244,12 +244,45 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
 wp_reset_query();
 
 ?>
+<?php
+
+
+function get_html() {
+$javascript_url = <<<JAVASCRIPT_URL
+"+jQuery('#url-'+jQuery(this).val()).text()+"
+JAVASCRIPT_URL;
+$javascript_title = <<<JAVASCRIPT_TITLE
+"+jQuery('#title-'+jQuery(this).val()).text()+"
+JAVASCRIPT_TITLE;
+$javascript_description = <<<JAVASCRIPT_DESCRIPTION
+"+jQuery('#description-'+jQuery(this).val()).text()+"
+JAVASCRIPT_DESCRIPTION;
+$javascript_source = <<<JAVASCRIPT_SOURCE
+"+jQuery('#source-'+jQuery(this).val()).text()+"
+JAVASCRIPT_SOURCE;
+$default_html = <<<EOT
+    <p class='link-roundup'><a href='#!URL!#'>#!TITLE!#</a> &ndash; <span class='description'>#!DESCRIPTION!#</span> <em>#!SOURCE!#</em></p>
+EOT;
+  if (get_option("argo_link_roundups_custom_html") != "") {
+    $argo_html = get_option("argo_link_roundups_custom_html");
+    $argo_html = preg_replace("/\"/","'",$argo_html);
+  } else {
+    $argo_html = $default_html;
+  }
+  $argo_html = str_replace("#!URL!#",$javascript_url,$argo_html);
+  $argo_html = str_replace("#!TITLE!#",$javascript_title,$argo_html);
+  $argo_html = str_replace("#!DESCRIPTION!#",$javascript_description,$argo_html);
+  $argo_html = str_replace("#!SOURCE!#",$javascript_source,$argo_html);
+  return $argo_html;
+}
+
+?>
 <script type='text/javascript'>
 jQuery(function(){
   jQuery('.append-argo-links').bind('click',function(){
     jQuery('.argo-link').each(function(){
       if (jQuery(this).is(":checked")) {
-        var html = "\n<p class='link-roundup'><a href='"+jQuery('#url-'+jQuery(this).val()).text()+"'>"+jQuery('#title-'+jQuery(this).val()).text()+"</a> &ndash; <span class='description'>"+jQuery('#description-'+jQuery(this).val()).text()+"</span> <em>"+jQuery('#source-'+jQuery(this).val()).text()+"</em></p>";
+        var html = "<?php echo get_html(); ?>";
         if (jQuery('#content').is(":visible")) {
           jQuery('#content').val(jQuery('#content').val()+html);
         } else {
