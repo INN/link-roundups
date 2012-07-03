@@ -126,7 +126,7 @@ EOT;
 
 <form method="post" action="options.php">
     <?php settings_fields( 'argolinkroundups-settings-group' ); ?>
-    <?php do_settings_fields( 'argolinkroundups-settings-group' ); ?>
+    <?php do_settings_fields( 'argolinkroundups-settings-group', null ); ?>
     <table class="form-table">
         <tr valign="top">
           <th scope="row">Custom Url Slug</th>
