@@ -21,11 +21,11 @@ class ArgoLinks {
 
     /*Register the custom post type of argolinks */
     add_action('init', array(__CLASS__, 'register_post_type' ));
-    
+
     /*Register our custom taxonomy of "argo-link-categories" so we can have our own tags/categories for our Argo Links post type*/
     /* moved into a function per wordpress 3.0 issues with calling it directly*/
     add_action('init', array(__CLASS__, 'register_argo_links_taxonomy'));
-    
+
     /*Add the Argo This! sub menu*/
     add_action("admin_menu", array(__CLASS__, "add_argo_this_sub_menu"));
 
@@ -40,13 +40,16 @@ class ArgoLinks {
 
     /*Populate those new columns with the custom data*/
     add_action("manage_posts_custom_column", array(__CLASS__, "data_for_custom_columns"));
-    
+
+    add_action('widgets_init', array(__CLASS__, 'add_argo_links_widget'));
+
     /*Add our css stylesheet into the header*/
     add_action('admin_print_styles', array(__CLASS__,'add_styles'));
     add_action('wp_print_styles', array(__CLASS__, 'add_styles'));
     add_filter('mce_css', array(__CLASS__,'plugin_mce_css'));
+
   }
-  
+
   function plugin_mce_css($mce_css) {
     if (!empty($mce_css)) {
       $mce_css .= ',';
@@ -193,11 +196,11 @@ class ArgoLinks {
   function build_argo_this_page() {
 ?>
     <div id="icon-tools" class="icon32"><br></div><h2>Tools</h2>
-    
+
     <div class="tool-box">
       <h3 class="title">Argo Link This!</h3>
       <p>Argo Link This! is a bookmarklet: a little app that runs in your browser and lets you grab bits of the web.</p>
-    
+
       <p>Use Argo Link This! to clip links to any web page. Then edit and add more straight from Argo Link This! before you save or publish it in a post on your site.</p>
       <p class="description">Drag-and-drop the following link to your bookmarks bar or right click it and add it to your favorites for a posting shortcut.</p>
       <p class="pressthis"><a onclick="return false;" oncontextmenu="if(window.navigator.userAgent.indexOf('WebKit')!=-1||window.navigator.userAgent.indexOf('MSIE')!=-1)jQuery('.pressthis-code').show().find('textarea').focus().select();return false;" href="javascript:var%20d=document,w=window,e=w.getSelection,k=d.getSelection,x=d.selection,s=(e?e():(k)?k():(x?x.createRange().text:0)),f='<?php echo plugins_url( 'argo-this.php', __FILE__ );?>',l=d.location,e=encodeURIComponent,u=f+'?post_type=argolinks&u='+e(l.href)+'&t='+e(d.title)+'&s='+e(s)+'&v=4';a=function(){if(!w.open(u,'t','toolbar=0,resizable=1,scrollbars=1,status=1,width=720,height=570'))l.href=u;};if%20(/Firefox/.test(navigator.userAgent))%20setTimeout(a,%200);%20else%20a();void(0)"><span>Argo Link This!</span></a></p>
@@ -205,11 +208,15 @@ class ArgoLinks {
       <p class="description">If your bookmarks toolbar is hidden: copy the code below, open your Bookmarks manager, create new bookmark, type Press This into the name field and paste the code into the URL field.</p>
       <p><textarea rows="5" cols="120" readonly="readonly">javascript:var%20d=document,w=window,e=w.getSelection,k=d.getSelection,x=d.selection,s=(e?e():(k)?k():(x?x.createRange().text:0)),f='<?php echo plugins_url( 'argo-this.php', __FILE__ );?>',l=d.location,e=encodeURIComponent,u=f+'?post_type=argolinks&u='+e(l.href)+'&t='+e(d.title)+'&s='+e(s)+'&v=4';a=function(){if(!w.open(u,'t','toolbar=0,resizable=1,scrollbars=1,status=1,width=720,height=570'))l.href=u;};if%20(/Firefox/.test(navigator.userAgent))%20setTimeout(a,%200);%20else%20a();void(0)</textarea></p>
       </div>
-    </div> 
+    </div>
 <?php
+  }
+  function add_argo_links_widget() {
+      register_widget( 'argo_links_widget' );
   }
 }
 /* Initialize the plugin using it's init() function */
 ArgoLinks::init();
 require_once('argo-link-roundups.php');
+require_once('argo-links-widget.php');
 ?>

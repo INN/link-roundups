@@ -34,3 +34,18 @@ div.display-argo-links div.pagination .current {
     background: none repeat scroll 0 0 #FFFFFF;
     color: #C7C7C7;
 }
+.widget.argo-links h5 {
+  margin-bottom: 2px;
+  padding: 0 3px;
+  font-size: 16px;
+}
+.widget.argo-links p {
+  font-size: 10.672px;
+  margin-bottom: 12px;
+}
+.widget.argo-links p.description {
+  margin-bottom: 2px;
+}
+.widget.argo-links p.source span {
+  font-style: italic;
+}
