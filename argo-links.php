@@ -17,7 +17,7 @@ License: GPLv2
 class ArgoLinks {
 
   /* Initialize the plugin */
-  function init() {
+  public static function init() {
 
     /*Register the custom post type of argolinks */
     add_action('init', array(__CLASS__, 'register_post_type' ));
@@ -50,7 +50,7 @@ class ArgoLinks {
 
   }
 
-  function plugin_mce_css($mce_css) {
+  public static function plugin_mce_css($mce_css) {
     if (!empty($mce_css)) {
       $mce_css .= ',';
     } else {
@@ -61,13 +61,13 @@ class ArgoLinks {
   }
 
   /*Add our css stylesheet into the header*/
-  function add_styles() {
+  public static function add_styles() {
     $css = plugins_url('css/argo-links.css', __FILE__);
     wp_enqueue_style('argo-links', $css, array(), 1);
   }
 
   /*Register the Argo Links post type */
-  function register_post_type() {
+  public static function register_post_type() {
     register_post_type('argolinks', array(
       'labels' => array(
         'name' => 'Argo Links',
@@ -93,17 +93,17 @@ class ArgoLinks {
   }
 
   /*Tell Wordpress where to put our custom fields for our custom post type*/
-  function add_custom_post_fields() {
+  public static function add_custom_post_fields() {
     add_meta_box("argo_links_meta", "Link Information", array(__CLASS__,"display_custom_fields"), "argolinks", "normal", "low");
   }
 
   /*Register our custom taxonomy*/
-  function register_argo_links_taxonomy() {
+  public static function register_argo_links_taxonomy() {
     register_taxonomy("argo-link-tags", array("argolinks"), array("hierarchical" => false, "label" => "Link Tags", "singular_label" => "Link Tag", "rewrite" => true));
   }
 
   /*Show our custom post fields in the add/edit Argo Links admin pages*/
-  function display_custom_fields() {
+  public static function display_custom_fields() {
     global $post;
     $custom = get_post_custom($post->ID);
     if (isset($custom["argo_link_url"][0])) {
@@ -132,7 +132,7 @@ class ArgoLinks {
   }
 
   /*Save the custom post field data.  Very important!*/
-  function save_custom_fields($post_id) {
+  public static function save_custom_fields($post_id) {
 
     if (isset($_POST["argo_link_url"])){
       update_post_meta((isset($_POST['post_ID']) ? $_POST['post_ID'] : $post_id), "argo_link_url", $_POST["argo_link_url"]);
@@ -146,7 +146,7 @@ class ArgoLinks {
   }
 
   /*Create the new columns to display our custom post fields*/
-  function display_custom_columns($columns){
+  public static function display_custom_columns($columns){
     $columns = array(
       "cb" => "<input type=\"checkbox\" />",
       "title" => "Link Title",
@@ -160,7 +160,7 @@ class ArgoLinks {
   }
 
   /*Fill in our custom data for the new columns*/
-  function data_for_custom_columns($column){
+  public static function data_for_custom_columns($column){
     global $post;
     $custom = get_post_custom();
 
@@ -188,12 +188,12 @@ class ArgoLinks {
   }
 
   /*Add the Argo Link This! sub menu*/
-  function add_argo_this_sub_menu() {
+  public static function add_argo_this_sub_menu() {
     add_submenu_page( "edit.php?post_type=argolinks", "Argo Link This!", "Argo Link This!", "edit_posts", "argo-this", array(__CLASS__, 'build_argo_this_page' ) );
   }
 
   /*Custom page for people to pull the Argo Link This! code from (similar to Press This!)*/
-  function build_argo_this_page() {
+  public static function build_argo_this_page() {
 ?>
     <div id="icon-tools" class="icon32"><br></div><h2>Tools</h2>
 
@@ -211,7 +211,7 @@ class ArgoLinks {
     </div>
 <?php
   }
-  function add_argo_links_widget() {
+  public static function add_argo_links_widget() {
       register_widget( 'argo_links_widget' );
   }
 }

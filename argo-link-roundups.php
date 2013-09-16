@@ -11,7 +11,7 @@
 class ArgoLinkRoundups {
 
   /* Initialize the plugin */
-  function init() {
+  public static function init() {
     /*Register the custom post type of argolinks */
     add_action('init', array(__CLASS__, 'register_post_type' ));
 
@@ -23,14 +23,14 @@ class ArgoLinkRoundups {
 
     /*Save our custom post fields! Very important!*/
     add_action('save_post', array(__CLASS__, 'save_custom_fields'));
-    
+
     /*Make sure our custom post type gets pulled into the river*/
     add_filter( 'pre_get_posts', array(__CLASS__,'my_get_posts') );
   }
 
   /*Pull the argolinkroundups into the rivers for is_home, is_tag, is_category, is_archive*/
   /*Merge the post_type query var if there is already a custom post type being pulled in, otherwise do post & argolinkroundups*/
-  function my_get_posts( $query ) {
+  public static function my_get_posts( $query ) {
     // bail out early if suppress filters is set to true
     if ($query->get('suppress_filters')) return;
 
@@ -44,9 +44,9 @@ class ArgoLinkRoundups {
       }
     }
   }
-  
+
   /*Register the Argo Links post type */
-  function register_post_type() {
+  public static function register_post_type() {
     $argolinkroundups_options = array(
         'labels' => array(
             'name' => 'Link Roundups',
@@ -73,14 +73,14 @@ class ArgoLinkRoundups {
         }
     register_post_type('argolinkroundups', $argolinkroundups_options);
   }
-  
+
   /*Tell Wordpress where to put our custom fields for our custom post type*/
-  function add_custom_post_fields() {
+  public static function add_custom_post_fields() {
     add_meta_box("argo_link_roundups_roundup", "Recent Roundup Links", array(__CLASS__,"display_custom_fields"), "argolinkroundups", "normal", "high");
 
   }
   /*Show our custom post fields in the add/edit Argo Link Roundups admin pages*/
-  function display_custom_fields() {
+  public static function display_custom_fields() {
 ?>
     <div id='argo-links-display-area'>
     </div>
@@ -93,7 +93,7 @@ class ArgoLinkRoundups {
   }
 
   /*Save the custom post field data.  Very important!*/
-  function save_custom_fields($post_id) {
+  public static function save_custom_fields($post_id) {
     if (isset($_POST["argo_link_url"])){
       update_post_meta((isset($_POST['post_id']) ? $_POST['post_ID'] : $post_id), "argo_link_url", $_POST["argo_link_url"]);
     }
@@ -102,20 +102,19 @@ class ArgoLinkRoundups {
     }
   }
   /*Add the Argo Link Roundup options sub menu*/
-  function add_argo_link_roundup_options_page() {
+  public static function add_argo_link_roundup_options_page() {
     add_submenu_page( "edit.php?post_type=argolinkroundups", "Options", "Options", "edit_posts", "argo-link-roundups-options", array(__CLASS__, 'build_argo_link_roundups_options_page' ) );
     //call register settings function
     add_action( 'admin_init', array(__CLASS__,'register_mysettings') );
   }
 
-
-  function register_mysettings() {
+  public static function register_mysettings() {
     //register our settings
     register_setting( 'argolinkroundups-settings-group', 'argo_link_roundups_custom_url' );
     register_setting( 'argolinkroundups-settings-group', 'argo_link_roundups_custom_html' );
   }
 
-  function build_argo_link_roundups_options_page() { ?>
+  public static function build_argo_link_roundups_options_page() { ?>
   <?php
 $default_html = <<<EOT
 <p class='link-roundup'><a href='#!URL!#'>#!TITLE!#</a> &ndash; <span class='description'>#!DESCRIPTION!#</span> <em>#!SOURCE!#</em></p>
@@ -148,14 +147,14 @@ EOT;
           </td>
         </tr>
     </table>
-    
+
     <p class="submit">
     <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
     </p>
 
 </form>
 </div>
-<?php } 
+<?php }
 }
 /* Initialize the plugin using it's init() function */
 ArgoLinkRoundups::init();
