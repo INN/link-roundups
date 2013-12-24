@@ -83,9 +83,8 @@ class ArgoLinks {
         'not_found_in_trash' => 'No Argo Links found in Trash',
       ),
       'description' => 'Argo Links',
-      'supports' => array( 'title' ),
+      'supports' => array( 'title', 'thumbnail' ),
       'public' => true,
-      'publicly_queryable' => true,
       'menu_position' => 6,
       'taxonomies' => array(),
       'has_archive' => true
