@@ -85,9 +85,10 @@ class ArgoLinks {
       'description' => 'Argo Links',
       'supports' => array( 'title' ),
       'public' => true,
-      'publicly_queryable' => false,
+      'publicly_queryable' => true,
       'menu_position' => 6,
       'taxonomies' => array(),
+      'has_archive' => true
       )
     );
   }
