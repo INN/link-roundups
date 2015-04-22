@@ -7,7 +7,7 @@ Argo Links was originally developed by NPR as part of [Project Argo](http://argo
 - [Corey Daley](https://github.com/corey112358)
 - [Chris Amico](https://github.com/eyeseast) [@eyeseast](https://twitter.com/eyeseast)
 - [Wesley Lindamood](https://github.com/lindamood) [@lindamood](https://twitter.com/lindamood)
-- [Adam Schweigert](https://github.com/aschweigert) [@aschweigert](https://twitter.com/aschweig)
+- [Adam Schweigert](https://github.com/aschweigert) [@aschweig](https://twitter.com/aschweig)
 - [Ben Keith](https://github.com/benlk) [@benlkeith](https://twitter.com/benlkeith)
 
 #### License
