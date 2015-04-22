@@ -1,5 +1,6 @@
 # Argo Links
 
+![docs](https://readthedocs.org/projects/docs/badge/?version=latest "Read our documentation on ReadTheDocs.org")
 
 Contributors: Project Argo, INN Nerds
 Tags: links, argo, argo-links, largo
