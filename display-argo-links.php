@@ -65,7 +65,7 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
 <div class='display-argo-links'>
   <div class='pagination'>
     <div style='float:left'>
-      <button class='append-argo-links'>Send links to editor window</button> 
+      <button class='append-argo-links'>Add links to link roundup post</button> 
       <form action='' method='get' id='filter_links'>
         <label for='link_date'><b>Show links from: </b></label>
         <select name='link_date'>
@@ -182,7 +182,7 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
   
   <div class='pagination'>
     <div style='float:left'>
-      <button class='append-argo-links'>Send links to editor window</button>
+      <button class='append-argo-links'>Add links to link roundup post</button>
     </div>
     <div style='float:right'>
       <br />
