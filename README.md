@@ -4,8 +4,8 @@
 
 Contributors: Project Argo, INN Nerds
 Tags: links, argo, argo-links, largo
-Requires at least: Only tested with 3.3.1
-Tested up to: 3.3.1
+Requires at least: 3.3.1
+Tested up to: 4.1
 Stable tag: 0.01
 
-* NOTE: The plugin has been verified to work in WordPress 3.3.1. It is no longer under active development
+For information on the development status of this plugin, check the development milestones on https://github.com/INN/argo-links/milestones
