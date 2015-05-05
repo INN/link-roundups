@@ -31,19 +31,30 @@ class ArgoLinkRoundups {
   /*Pull the argolinkroundups into the rivers for is_home, is_tag, is_category, is_archive*/
   /*Merge the post_type query var if there is already a custom post type being pulled in, otherwise do post & argolinkroundups*/
   public static function my_get_posts( $query ) {
-    // bail out early if suppress filters is set to true
-    if ($query->get('suppress_filters')) return;
+		// bail out early if suppress filters is set to true
+		if ($query->get('suppress_filters')) return;
 
-    if (is_home() || is_tag() || is_category()) {
-      if (isset($query->query_vars['post_type']) && is_array($query->query_vars['post_type'])) {
-        $query->set( 'post_type', array_merge(array('argolinkroundups' ), $query->query_vars['post_type']) );
-      } elseif (isset($query->query_vars['post_type']) && !is_array($query->query_vars['post_type'])) {
-        $query->set( 'post_type', array('argolinkroundups', $query->query_vars['post_type']) );
-      } else {
-        $query->set( 'post_type', array('post','argolinkroundups') );
-      }
-    }
-  }
+		/**
+		 * Add argolinkroundups to the post type in the query if it is not already in it.
+		 */
+
+		if ( is_home() || is_tag() || is_category() ) {
+			if (isset($query->query_vars['post_type']) && is_array($query->query_vars['post_type'])) {
+				if ( ! in_array( 'argolinkroundups', $query->query_vars['post_type'] ) ) {
+					// There is an array of post types and argolinkroundups is not in it
+					$query->set( 'post_type', array_merge(array('argolinkroundups' ), $query->query_vars['post_type']) );
+				}
+			} elseif (isset($query->query_vars['post_type']) && !is_array($query->query_vars['post_type'])) {
+				if ( $query->query_vars['post_type'] !== 'argolinkroundups' ) {
+					// There is a single post type, so we shall add it to an array
+					$query->set( 'post_type', array('argolinkroundups', $query->query_vars['post_type']) );
+				}
+			} else {
+				// Post type is not set, so it shall be post and argolinkroundups
+				$query->set( 'post_type', array('post','argolinkroundups') );
+			}
+		}
+	}
 
   /*Register the Argo Links post type */
   public static function register_post_type() {
