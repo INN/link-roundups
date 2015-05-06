@@ -7,26 +7,29 @@ class ArgoLinksTestFunctions extends WP_UnitTestCase {
 
 	function test_argolinks_activation() {
 		argolinks_activation();
-		$this->assertTrue((bool) get_option('argolinks_flush'));
+		$this->assertTrue(get_option('argolinks_flush'));
 	}
 
 	function test_argolinks_deactivation() {
-		add_option('argolinks_flush', 'true');
+		argolinks_activation();
 		argolinks_deactivation();
 		$this->assertFalse(get_option('argolinks_flush'));
 	}
 
-	function test_ArgoLinks_init_permalinks() {
+	function test_argo_flush_permalinks() {
 		global $wp_rewrite;
 
-		$wp_rewrite->set_permalink_structure('/%year%/%monthnum%/%postname%/');
 		argolinks_activation();
-		ArgoLinkRoundups::register_post_type();
-		ArgoLinks::register_post_type();
+		$ret = argo_flush_permalinks();
 
-		$after = $wp_rewrite->rewrite_rules();
-		$after = implode(' ', $after);
-		$this->assertRegExp('/argolinks/', $after, "The generated rewrite rules do not account for the argolinks post type");
-		$this->assertRegExp('/argolinkroundups/', $after, "The generated rewrite rules do not account for the argolinkroundups post type");
+		// Testing when it should run
+		$this->assertFalse(get_option('argolinks_flush'), "argo_flush_permalinks did not reset the argolinks_flush option");
+		$this->assertTrue($ret);
+		unset($ret);
+
+		// Testing when it should not run
+		$ret = argo_flush_permalinks();
+		$this->assertFalse($ret);
+
 	}
 }
