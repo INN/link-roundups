@@ -167,5 +167,3 @@ EOT;
 </div>
 <?php }
 }
-/* Initialize the plugin using it's init() function */
-ArgoLinkRoundups::init();
