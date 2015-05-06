@@ -137,6 +137,7 @@ class ArgoLinkRoundups {
 			array(__CLASS__, 'validate_mailchimp_integration')
 		);
 		register_setting('argolinkroundups-settings-group', 'argo_link_roundups_mailchimp_api_key');
+		register_setting('argolinkroundups-settings-group', 'argo_link_mailchimp_template');
 	}
 
 	public static function validate_mailchimp_integration($input) {
@@ -155,64 +156,17 @@ class ArgoLinkRoundups {
 	}
 
 	public static function build_argo_link_roundups_options_page() {
-$default_html = <<<EOT
-<p class='link-roundup'><a href='#!URL!#'>#!TITLE!#</a> &ndash; <span class='description'>#!DESCRIPTION!#</span> <em>#!SOURCE!#</em></p>
-EOT;
-?>
-<div class="wrap">
-	<h2>Argo Link Roundups</h2>
+		$mc_api_key = get_option('argo_link_roundups_mailchimp_api_key');
+		if (!empty($mc_api_key)) {
+			$opts = array('debug' => (defined('WP_DEBUG') && WP_DEBUG)? WP_DEBUG:false);
+			$mcapi = new Mailchimp($mc_api_key, $opts);
 
-	<?php settings_errors(); ?>
+			$templates = $mcapi->templates->getList(
+				array('gallery' => false, 'base' => false),
+				array('include_drag_and_drop' => true)
+			);
+		}
 
-	<form method="post" action="options.php">
-		<?php settings_fields( 'argolinkroundups-settings-group' ); ?>
-		<?php do_settings_fields( 'argolinkroundups-settings-group', null ); ?>
-		<table class="form-table">
-			<tr valign="top">
-				<th scope="row">Custom Url Slug</th>
-				<td><input type="text" name="argo_link_roundups_custom_url" value="<?php echo get_option('argo_link_roundups_custom_url'); ?>" /></td>
-			</tr>
-			<tr valign="top">
-				<th scope="row">Custom HTML</th>
-				<td><textarea name="argo_link_roundups_custom_html" cols='100' rows='5' ><?php echo (get_option('argo_link_roundups_custom_html') != "" ? get_option('argo_link_roundups_custom_html')	: $default_html); ?></textarea></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td>
-				<em>(You will need to use single quotes in your html above; all double quotes will be automatically converted to single quotes before use)</em><br />
-				You can use the above field to customize the html that is output for each link.	The following tags will be replaced with the url, title, description, and source automatically when the link is pushed into the editor.<br />
-				#!URL!#, #!TITLE!#, #!DESCRIPTION!#, #!SOURCE!#<br />
-				The current default html for reference is:<br />
-				<?php echo htmlspecialchars($default_html); ?><br />
-				<em>(Please note that you will have to update your style.css file for your theme to style your new html)</em><br />
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">MailChimp Integration</th>
-				<td>
-					<p>
-						<label for="argo_link_roundups_use_mailchimp_integration">
-							Enable MailChimp Integration?
-							<input type="checkbox" name="argo_link_roundups_use_mailchimp_integration"
-								<?php checked(get_option('argo_link_roundups_use_mailchimp_integration'), 'on', true); ?> />
-						</label>
-					</p>
-					<p>
-						<label for="argo_link_roundups_mailchimp_api_key">
-							MailChimp API Key
-							<input style="width: 300px;" type="text" name="argo_link_roundups_mailchimp_api_key"
-								value="<?php echo get_option('argo_link_roundups_mailchimp_api_key'); ?>"
-								placeholder="Mailchimp API Key" />
-						</label>
-					</p>
-				</td>
-			</tr>
-		</table>
-
-		<p class="submit">
-			<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
-		</p>
-	</form>
-</div>
-<?php }
+		include_once __DIR__ . '/templates/options.php';
+	}
 }
