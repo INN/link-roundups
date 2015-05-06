@@ -20,4 +20,12 @@ tests_add_filter('filesystem_method', function($arg) {
 	return 'direct';
 }, 1, 10);
 
+function _manually_load_environment() {
+	$plugins_to_active = array (basename(dirname(__DIR__)) . "/argo-links.php");
+
+	update_option('active_plugins', $plugins_to_active);
+
+}
+tests_add_filter('muplugins_loaded', '_manually_load_environment');
+
 require $wp_tests_dir . '/includes/bootstrap.php';

@@ -19,6 +19,8 @@ License: GPLv2
  *
  * @link https://gist.github.com/clioweb/871595
  * @since 0.2
+ * @see argolinks_deactivation
+ * @see argo_flush_permalinks
  */
 function argolinks_activation() {
 	add_option('argolinks_flush', 'true');
@@ -28,11 +30,35 @@ register_activation_hook( __FILE__, 'argolinks_activation' );
 /**
  * On deactivation, we'll remove our 'argolinks_flush' option if it is
  * still around. It shouldn't be after we register our post type.
+ *
+ * @link https://gist.github.com/clioweb/871595
+ * @since 0.2
+ * @see argolinks_activation
+ * @see argo_flush_permalinks
  */
 function argolinks_deactivation() {
     delete_option('argolinks_flush');
 }
 register_deactivation_hook( __FILE__, 'argolinks_deactivation' );
+
+/**
+ * Utility function to reset the permalinks.
+ *
+ * Called in ArgoLinks::register_permalinks() to reset the WordPress permalinks after the
+ * argolinks post type is registered in ArgoLinks::register_permalinks(), which is run after
+ * the argolinkroundups post type is registered in ArgoLinkRoundups::register_permalinks() 
+ *
+ * @link https://gist.github.com/clioweb/871595
+ * @since 0.2
+ * @see argolinks_activation
+ * @see argolinks_deactivation
+ */
+function argo_flush_permalinks() {
+	if (get_option('argolinks_flush') == 'true') {
+		flush_rewrite_rules();
+		delete_option('argolinks_flush');
+	}
+}
 
 /* The Argo Links Plugin class - so we don't have function naming conflicts */
 class ArgoLinks {
@@ -111,11 +137,9 @@ class ArgoLinks {
       'has_archive' => true
       )
     );
-	if (get_option('argolinks_flush') == 'true') {
-		flush_rewrite_rules();
-		delete_option('argolinks_flush');
-	}
+	argo_flush_permalinks();
   }
+
 
   /*Tell Wordpress where to put our custom fields for our custom post type*/
   public static function add_custom_post_fields() {
@@ -245,3 +269,12 @@ require_once('argo-link-roundups.php');
 require_once('argo-links-widget.php');
 ArgoLinks::init();
 
+/**
+ * Log anything in a human-friendly format.
+ *
+ * @param mixed $stuff the data structure to send to the error log.
+ * @since 0.2
+ */
+function al_var_log($stuff) { 
+	error_log(var_export($stuff, true));
+}

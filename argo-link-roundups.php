@@ -149,7 +149,7 @@ EOT;
         <tr>
           <td></td>
           <td>
-          <em>(You will need to use single quotes in your html above, all double quotes will be automatically converted to single quotes before use)</em><br />
+          <em>(You will need to use single quotes in your html above; all double quotes will be automatically converted to single quotes before use)</em><br />
           You can use the above field to customize the html that is output for each link.  The following tags will be replaced with the url, title, description, and source automatically when the link is pushed into the editor.<br />
           #!URL!#, #!TITLE!#, #!DESCRIPTION!#, #!SOURCE!#<br />
           The current default html for reference is:<br />
@@ -169,4 +169,3 @@ EOT;
 }
 /* Initialize the plugin using it's init() function */
 ArgoLinkRoundups::init();
-?>
