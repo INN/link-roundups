@@ -13,6 +13,27 @@ Author URI:
 License: GPLv2
 */
 
+/**
+ * On activation, we'll set an option called 'argolinks_flush' to true,
+ * so our plugin knows, on initialization, to flush the rewrite rules.
+ *
+ * @link https://gist.github.com/clioweb/871595
+ * @since 0.2
+ */
+function argolinks_activation() {
+	add_option('argolinks_flush', 'true');
+}
+register_activation_hook( __FILE__, 'argolinks_activation' );
+
+/**
+ * On deactivation, we'll remove our 'argolinks_flush' option if it is
+ * still around. It shouldn't be after we register our post type.
+ */
+function argolinks_deactivation() {
+    delete_option('argolinks_flush');
+}
+register_deactivation_hook( __FILE__, 'argolinks_deactivation' );
+
 /* The Argo Links Plugin class - so we don't have function naming conflicts */
 class ArgoLinks {
 
@@ -90,6 +111,10 @@ class ArgoLinks {
       'has_archive' => true
       )
     );
+	if (get_option('argolinks_flush') == 'true') {
+		flush_rewrite_rules();
+		delete_option('argolinks_flush');
+	}
   }
 
   /*Tell Wordpress where to put our custom fields for our custom post type*/
@@ -216,7 +241,7 @@ class ArgoLinks {
   }
 }
 /* Initialize the plugin using it's init() function */
-ArgoLinks::init();
 require_once('argo-link-roundups.php');
 require_once('argo-links-widget.php');
-?>
+ArgoLinks::init();
+
