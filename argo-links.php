@@ -1,19 +1,5 @@
 <?php
 /**
-  * @package Argo_Links
-  * @version 0.01
-  */
-/*
-Plugin Name: Argo Links
-Plugin URI: https://github.com/argoproject/argo-links
-Description: The Argo Links Plugin
-Author: Project Argo, Mission Data
-Version: 1.00
-Author URI:
-License: GPLv2
-*/
-
-/**
  * On activation, we'll set an option called 'argolinks_flush' to true,
  * so our plugin knows, on initialization, to flush the rewrite rules.
  *
@@ -264,10 +250,6 @@ class ArgoLinks {
       register_widget( 'argo_links_widget' );
   }
 }
-/* Initialize the plugin using it's init() function */
-require_once('argo-link-roundups.php');
-require_once('argo-links-widget.php');
-ArgoLinks::init();
 
 /**
  * Log anything in a human-friendly format.
