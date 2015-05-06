@@ -130,18 +130,39 @@ class ArgoLinkRoundups {
 
 	public static function register_mysettings() {
 		//register our settings
-		register_setting( 'argolinkroundups-settings-group', 'argo_link_roundups_custom_url' );
-		register_setting( 'argolinkroundups-settings-group', 'argo_link_roundups_custom_html' );
+		register_setting('argolinkroundups-settings-group', 'argo_link_roundups_custom_url');
+		register_setting('argolinkroundups-settings-group', 'argo_link_roundups_custom_html');
+		register_setting(
+			'argolinkroundups-settings-group', 'argo_link_roundups_use_mailchimp_integration',
+			array(__CLASS__, 'validate_mailchimp_integration')
+		);
+		register_setting('argolinkroundups-settings-group', 'argo_link_roundups_mailchimp_api_key');
 	}
 
-	public static function build_argo_link_roundups_options_page() { ?>
-	<?php
+	public static function validate_mailchimp_integration($input) {
+		// Can't have an empty MailChimp API Key if the integration functionality is enabled.
+		if (empty($_POST['argo_link_roundups_mailchimp_api_key']) && !empty($input)) {
+			add_settings_error(
+				'argo_link_roundups_use_mailchimp_integration',
+				'argo_link_roundups_use_mailchimp_integration_error',
+				'Please enter a valid MailChimp API Key.',
+				'error'
+			);
+			return '';
+		}
+
+		return $input;
+	}
+
+	public static function build_argo_link_roundups_options_page() {
 $default_html = <<<EOT
 <p class='link-roundup'><a href='#!URL!#'>#!TITLE!#</a> &ndash; <span class='description'>#!DESCRIPTION!#</span> <em>#!SOURCE!#</em></p>
 EOT;
-	?>
+?>
 <div class="wrap">
 	<h2>Argo Link Roundups</h2>
+
+	<?php settings_errors(); ?>
 
 	<form method="post" action="options.php">
 		<?php settings_fields( 'argolinkroundups-settings-group' ); ?>
@@ -166,10 +187,30 @@ EOT;
 				<em>(Please note that you will have to update your style.css file for your theme to style your new html)</em><br />
 				</td>
 			</tr>
+			<tr>
+				<th scope="row">MailChimp Integration</th>
+				<td>
+					<p>
+						<label for="argo_link_roundups_use_mailchimp_integration">
+							Enable MailChimp Integration?
+							<input type="checkbox" name="argo_link_roundups_use_mailchimp_integration"
+								<?php checked(get_option('argo_link_roundups_use_mailchimp_integration'), 'on', true); ?> />
+						</label>
+					</p>
+					<p>
+						<label for="argo_link_roundups_mailchimp_api_key">
+							MailChimp API Key
+							<input style="width: 300px;" type="text" name="argo_link_roundups_mailchimp_api_key"
+								value="<?php echo get_option('argo_link_roundups_mailchimp_api_key'); ?>"
+								placeholder="Mailchimp API Key" />
+						</label>
+					</p>
+				</td>
+			</tr>
 		</table>
 
 		<p class="submit">
-		<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
+			<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
 		</p>
 	</form>
 </div>

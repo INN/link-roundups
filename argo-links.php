@@ -1,4 +1,8 @@
 <?php
+
+/** Mailchimp API **/
+require_once(__DIR__ . '/vendor/mailchimp-api-php/src/Mailchimp.php');
+
 /**
   * @package Argo_Links
   * @version 0.01
@@ -69,7 +73,6 @@ function argo_flush_permalinks() {
 require_once('argo-link-roundups.php');
 require_once('argo-links-widget.php');
 require_once('argo-links-class.php');
-
 
 /* Initialize the plugin using it's init() function */
 ArgoLinkRoundups::init();
