@@ -68,6 +68,32 @@ function argo_flush_permalinks() {
 }
 
 /**
+ * Add a "Create MailChimp Campaign" button the post publish actions meta box.
+ *
+ * @since 0.2
+ */
+function argo_links_create_mailchimp_campaign_button() {
+?>
+	<style type="text/css">
+		#argo-links-publish-actions {
+		  margin: 10px 0;
+		  padding: 0 0 12px 0;
+		  border-bottom: 1px solid #dadada;
+		  text-align: center;
+		}
+	</style>
+
+	<div id="argo-links-publish-actions">
+		<input type="submit"
+			name="argo_links_create_mailchimp_campaign"
+			id="argo-links-create-mailchimp-campaign"
+			class="button button-primary button-large" value="Create MailChimp Campaign">
+	</div>
+<?php
+}
+add_action('post_submitbox_start', 'argo_links_create_mailchimp_campaign_button');
+
+/**
  * Set us up the files
  */
 require_once('argo-link-roundups.php');
