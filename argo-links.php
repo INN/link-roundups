@@ -111,11 +111,16 @@ function argo_links_enqueue_assets() {
 		array('jquery', 'underscore', 'backbone'), 0.2, true
 	);
 
+	wp_register_script(
+		'argo-link-roundups', $plugin_path . '/js/argo-link-roundups.js',
+		array('argo-links-common'), 0.2, true
+	);
+
 	wp_register_style('argo-links-common', $plugin_path . '/css/argo-links-common.css');
 
 	$screen = get_current_screen();
 	if ($screen->base == 'post' && $screen->post_type == 'argolinkroundups') {
-		wp_enqueue_script('argo-links-common');
+		wp_enqueue_script('argo-link-roundups');
 		wp_enqueue_style('argo-links-common');
 	}
 }

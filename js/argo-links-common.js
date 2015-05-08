@@ -42,6 +42,8 @@ var AL = AL || {};
             $('body').append(this.$el);
             if ($('#argo-links-modal-overlay').length == 0)
                 $('body').append('<div id="argo-links-modal-overlay" />');
+
+            return this;
         },
 
         render: function() {
