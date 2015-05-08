@@ -99,6 +99,57 @@ function argo_links_create_mailchimp_campaign_button() {
 add_action('post_submitbox_start', 'argo_links_create_mailchimp_campaign_button');
 
 /**
+ * Include CSS and Javascript files used on the post edit screen.
+ *
+ * @since 0.2
+ */
+function argo_links_enqueue_assets() {
+	$plugin_path = plugins_url(basename(__DIR__), __DIR__);
+
+	wp_register_script(
+		'argo-links-common', $plugin_path . '/js/argo-links-common.js',
+		array('jquery', 'underscore', 'backbone'), 0.2, true
+	);
+
+	wp_register_style('argo-links-common', $plugin_path . '/css/argo-links-common.css');
+
+	$screen = get_current_screen();
+	if ($screen->base == 'post' && $screen->post_type == 'argolinkroundups') {
+		wp_enqueue_script('argo-links-common');
+		wp_enqueue_style('argo-links-common');
+	}
+}
+add_action('admin_enqueue_scripts', 'argo_links_enqueue_assets');
+
+/**
+ * Print the underscore template for the AL.Modal view.
+ *
+ * @since 0.2
+ */
+function argo_links_modal_underscore_template() { ?>
+<script type="text/template" id="argo-links-modal-tmpl">
+	<div class="argo-links-modal-header">
+		<div class="argo-links-modal-close"><span class="close">&#10005;</span></div>
+	</div>
+	<div class="argo-links-modal-content"><% if (content) { %><%= content %><% } %></div>
+	<div class="argo-links-modal-actions">
+		<span class="spinner"></span>
+		<% _.each(actions, function(v, k) { %>
+			<a href="#" class="<%= k %> button button-primary"><%= k %></a>
+		<% }); %>
+	</div>
+</script><?php
+}
+
+function argo_links_add_modal_template() {
+	$screen = get_current_screen();
+	if ($screen->base == 'post' && $screen->post_type == 'argolinkroundups') {
+		argo_links_modal_underscore_template();
+	}
+}
+add_action('admin_footer', 'argo_links_add_modal_template');
+
+/**
  * Set us up the files
  */
 require_once('argo-link-roundups.php');
