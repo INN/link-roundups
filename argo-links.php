@@ -73,6 +73,11 @@ function argo_flush_permalinks() {
  * @since 0.2
  */
 function argo_links_create_mailchimp_campaign_button() {
+	global $post;
+
+	if ($post->post_type !== 'argolinkroundups')
+		return;
+
 ?>
 	<style type="text/css">
 		#argo-links-publish-actions {
