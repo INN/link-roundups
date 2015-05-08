@@ -146,10 +146,29 @@ function argo_links_modal_underscore_template() { ?>
 </script><?php
 }
 
+/**
+ * Builds an AL object with common attributes used throughout the plugin's javascript files.
+ *
+ * @since 0.2
+ */
+function argo_links_json_obj($add=array()) {
+	global $post;
+	return array_merge(array(
+		'post_id' => $post->ID,
+		'ajax_nonce' => wp_create_nonce('argo_links_ajax_nonce')
+	), $add);
+}
+
 function argo_links_add_modal_template() {
 	$screen = get_current_screen();
 	if ($screen->base == 'post' && $screen->post_type == 'argolinkroundups') {
 		argo_links_modal_underscore_template();
+
+?>
+		<script type="text/javascript">
+			var AL = <?php echo json_encode(argo_links_json_obj()); ?>;
+		</script>
+<?php
 	}
 }
 add_action('admin_footer', 'argo_links_add_modal_template');
@@ -160,6 +179,7 @@ add_action('admin_footer', 'argo_links_add_modal_template');
 require_once('argo-link-roundups.php');
 require_once('argo-links-widget.php');
 require_once('argo-links-class.php');
+require_once('argo-links-ajax.php');
 
 /* Initialize the plugin using it's init() function */
 ArgoLinkRoundups::init();

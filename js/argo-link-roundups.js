@@ -18,7 +18,36 @@ var AL = AL || {};
         },
 
         createCampaign: function() {
-            console.log('make a camapgin go go go');
+            if (typeof this.ongoing !== 'undefined' && $.inArray(this.ongoing.state(), ['resolved', 'rejected']) == -1)
+                return false;
+
+            var self = this,
+                opts = {
+                    url: ajaxurl,
+                    dataType: 'json',
+                    method: 'post',
+                    success: function(data) {
+                        self.hideSpinner();
+                        self.close();
+                        console.log('Then we will open another modal that says "edit on MailChimp"');
+                    },
+                    error: function() {
+                        self.hideSpinner();
+                        alert('Something went wrong. Please try again.');
+                    }
+                };
+
+            var data = {
+                action: 'argo_links_create_mailchimp_campaign',
+                security: AL.ajax_nonce,
+                post_id: AL.post_id
+            };
+
+            opts.data = data;
+
+            this.showSpinner();
+            this.ongoing = $.ajax(opts);
+            return this.ongoing;
         }
     });
 
