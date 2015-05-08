@@ -165,8 +165,6 @@ class ArgoLinkRoundups {
 				array('gallery' => false, 'base' => false),
 				array('include_drag_and_drop' => true)
 			);
-
-			$template_info = $mcapi->templates->info(get_option('argo_link_mailchimp_template'));
 		}
 
 		include_once __DIR__ . '/templates/options.php';

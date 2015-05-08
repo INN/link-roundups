@@ -78,6 +78,9 @@ function argo_links_create_mailchimp_campaign_button() {
 	if ($post->post_type !== 'argolinkroundups')
 		return;
 
+	if ( false == get_option('argo_link_roundups_use_mailchimp_integration') || false == get_option('argo_link_roundups_mailchimp_api_key') )
+		return;
+
 ?>
 	<style type="text/css">
 		#argo-links-publish-actions {
