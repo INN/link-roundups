@@ -157,7 +157,20 @@ class ArgoLinkRoundups {
 
 	public static function build_argo_link_roundups_options_page() {
 		$mc_api_key = get_option('argo_link_roundups_mailchimp_api_key');
-		if (!empty($mc_api_key)) {
+
+		/**
+		 * It's not possible to use this functionality if curl is not enabled in php.
+		 */
+		if ( ! function_exists('curl_init') ) {
+			add_settings_error(
+				'argo_link_roundups_use_mailchimp_integration',
+				'curl_not_enabled',
+				__('Curl is not enabled on your server. The MailChimp features will not work without curl. Please contact your server administrator to have curl enabled.', 'argo-links'),
+				'error'
+			);
+			delete_option('argo_link_roundups_use_mailchimp_integration');
+		// only query MailChimp if it's possible to do so and if plugins are enabled
+		} else if ( get_option('argo_link_roundups_use_mailchimp_integration') && !empty($mc_api_key)) {
 			$opts = array('debug' => (defined('WP_DEBUG') && WP_DEBUG)? WP_DEBUG:false);
 			$mcapi = new Mailchimp($mc_api_key, $opts);
 
