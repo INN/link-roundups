@@ -40,11 +40,17 @@ function argo_links_create_mailchimp_campaign() {
 		/**
 		 * Arguments for MailChimp
 		 */
+		$list_results = $mcapi->lists->getList(array(
+			'list_id' => get_option('argo_link_mailchimp_list')
+		));
+		$list = $list_results['data'];
+
+
 		$campaign_options = array(
-			'list_id' => '', // the list to sent this campaign to, get lists using lists/list()
+			'list_id' => get_option('argo_link_mailchimp_list'), // the list to sent this campaign to, get lists using lists/list()
 			'subject' => $post->post_title, // post title
-			'from_email' => '', // the From: email address for your campaign message
-			'from_name' => '', // the From: name for your campaign message (not an email address)
+			'from_email' => $list['default_from_email'], // the From: email address for your campaign message
+			'from_name' => $list['default_from_name'], // the From: name for your campaign message (not an email address)
 			'to_name' => '', // the To: name recipients will see (not email address)
 			'template_id' => '', // always leave blank, it overrides anything else we supply
 			'gallery_template_id' => '', // same
@@ -67,7 +73,7 @@ function argo_links_create_mailchimp_campaign() {
 		);
 
 		$response = $mcapi->campaigns->create(
-			'html', // string type of the campaign
+			'auto', // string type of the campaign
 			$campaign_options,
 			$campaign_content
 			// segment options we have no need to set

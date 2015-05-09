@@ -138,6 +138,7 @@ class ArgoLinkRoundups {
 		);
 		register_setting('argolinkroundups-settings-group', 'argo_link_roundups_mailchimp_api_key');
 		register_setting('argolinkroundups-settings-group', 'argo_link_mailchimp_template');
+		register_setting('argolinkroundups-settings-group', 'argo_link_mailchimp_list');
 	}
 
 	public static function validate_mailchimp_integration($input) {
@@ -178,6 +179,9 @@ class ArgoLinkRoundups {
 				array('gallery' => false, 'base' => false),
 				array('include_drag_and_drop' => true)
 			);
+
+			// The endpoint is lists/list, to list the lists, but there is no lists->list. getList with no args is equivalent.
+			$lists = $mcapi->lists->getList();
 		}
 
 		include_once __DIR__ . '/templates/options.php';

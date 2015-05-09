@@ -65,6 +65,20 @@ EOT;
 				</td>
 			</tr>
 			<?php } ?>
+			<?php if ((bool) get_option('argo_link_roundups_use_mailchimp_integration') && !empty($lists)) { ?>
+			<tr>
+				<th scope="row">MailChimp Lists</th>
+				<td>
+					<select name="argo_link_mailchimp_list">
+						<option value=""></option>
+						<?php foreach ($lists['data'] as $key => $list) { ?>
+							<option <?php selected(get_option('argo_link_mailchimp_list'), $list['id'], true); ?> value="<?php echo $list['id']; ?>" /><?php echo $list['name']; ?></option>
+						<?php } ?>
+					</select>
+					<p>Choose a MailChimp list that your Argo Link Roundup email campaigns will be sent to.</p>
+				</td>
+			</tr>
+			<?php } ?>
 		</table>
 
 		<p class="submit">
