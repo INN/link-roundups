@@ -81,6 +81,7 @@ function argo_links_create_mailchimp_campaign_button() {
 	if ( false == get_option('argo_link_roundups_use_mailchimp_integration') || false == get_option('argo_link_roundups_mailchimp_api_key') )
 		return;
 
+	$mc_web_id = get_post_meta($post->ID, 'mc_web_id', true);
 ?>
 	<style type="text/css">
 		#argo-links-publish-actions {
@@ -92,10 +93,16 @@ function argo_links_create_mailchimp_campaign_button() {
 	</style>
 
 	<div id="argo-links-publish-actions">
+	<?php if (empty($mc_web_id)) { ?>
 		<input type="submit"
 			name="argo_links_create_mailchimp_campaign"
 			id="argo-links-create-mailchimp-campaign"
 			class="button button-primary button-large" value="Create MailChimp Campaign">
+	<?php } else { ?>
+		<p>A MailChimp roundup campaign exists for thist post.</p>
+		<a class="button" target="blank"
+			href="https://<?php echo argo_links_get_mc_api_endpoint(); ?>.admin.mailchimp.com/campaigns/wizard/confirm?id=<?php echo $mc_web_id; ?>">Edit in MailChimp.</a>
+	<?php } ?>
 	</div>
 <?php
 }
@@ -156,9 +163,13 @@ function argo_links_modal_underscore_template() { ?>
  */
 function argo_links_json_obj($add=array()) {
 	global $post;
+
+	$mc_api_endpoint = argo_links_get_mc_api_endpoint();
+
 	return array_merge(array(
 		'post_id' => $post->ID,
-		'ajax_nonce' => wp_create_nonce('argo_links_ajax_nonce')
+		'ajax_nonce' => wp_create_nonce('argo_links_ajax_nonce'),
+		'mc_api_endpoint' => $mc_api_endpoint
 	), $add);
 }
 
@@ -175,6 +186,12 @@ function argo_links_add_modal_template() {
 	}
 }
 add_action('admin_footer', 'argo_links_add_modal_template');
+
+function argo_links_get_mc_api_endpoint() {
+	$mc_api_key = get_option('argo_link_roundups_mailchimp_api_key');
+	$mc_api_key_parts = explode('-', $mc_api_key);
+	return $mc_api_key_parts[1];
+}
 
 /**
  * Set us up the files

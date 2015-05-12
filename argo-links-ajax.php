@@ -43,18 +43,13 @@ function argo_links_create_mailchimp_campaign() {
 		$list_results = $mcapi->lists->getList(array(
 			'list_id' => get_option('argo_link_mailchimp_list')
 		));
-		$list = $list_results['data'];
-
+		$list = $list_results['data'][0];
 
 		$campaign_options = array(
 			'list_id' => get_option('argo_link_mailchimp_list'), // the list to sent this campaign to, get lists using lists/list()
 			'subject' => $post->post_title, // post title
 			'from_email' => $list['default_from_email'], // the From: email address for your campaign message
 			'from_name' => $list['default_from_name'], // the From: name for your campaign message (not an email address)
-			'to_name' => '', // the To: name recipients will see (not email address)
-			'template_id' => '', // always leave blank, it overrides anything else we supply
-			'gallery_template_id' => '', // same
-			'base_template_id' => '', //same
 			'title' => $post->post_title, // post title,
 			'generate_text' => true // automatically generate text content from HTML
 		);
@@ -66,23 +61,23 @@ function argo_links_create_mailchimp_campaign() {
 
 		$campaign_content = array(
 			'html' => $html, // the content!
-			'sections' => array(), // associative_array when using a template instead of raw HTML, each key should be the unique mc:edit area name from the template. We don't fill this because this plugin doesn't use MailChimp's sections feature, just swaps out strings in the HTML of the template that the user created in MailChimp.
 			'text' => '', // Leave blank for the auto-generated text content
-			'url' => '', // URL for MailChimp to pull content from. Not optional, but we're not using it.
-			'archive' => '', // nope, not using this.
 		);
 
 		$response = $mcapi->campaigns->create(
-			'auto', // string type of the campaign
+			'regular', // string type of the campaign
 			$campaign_options,
-			$campaign_content
-			// segment options we have no need to set
+			$campaign_content,
+			null, null// segment options we have no need to set
 			// type options we have no need to set
 		);
 
+		$mc_web_id = $response['web_id'];
+		update_post_meta($post->ID, 'mc_web_id', $mc_web_id);
+
 		print json_encode(array(
 			"success" => true,
-			"message" => $response
+			"data" => $response
 		));
 		wp_die();
 	} else {
@@ -110,9 +105,8 @@ function _argo_links_render_mailchimp_template($source, $post) {
 		'*|ROUNDUPPERMALINK|*' => get_post_permalink($post->ID)
 	);
 
-	foreach ($tags as $tag => $value) {
-		$output = str_replace($tag, $value, $source);
-	}
+	foreach ($tags as $tag => $value)
+		$source = str_replace($tag, $value, $source);
 
-	return $output;
+	return $source;
 }
