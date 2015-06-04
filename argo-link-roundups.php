@@ -65,6 +65,7 @@ class ArgoLinkRoundups {
         'supports' => array( 'title', 'editor','author','thumbnail','excerpt','trackbacks','custom-fields','comments','revisions','page-attributes','post-formats'),
         'public' => true,
         'menu_position' => 7,
+        'menu_icon' 	=> 'dashicons-list-view',
         'taxonomies' => apply_filters('argolinkroundups_taxonomies', array('category','post_tag')),
         'has_archive' => true,
         );

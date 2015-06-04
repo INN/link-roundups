@@ -86,6 +86,7 @@ class ArgoLinks {
       'supports' => array( 'title', 'thumbnail' ),
       'public' => true,
       'menu_position' => 6,
+      'menu_icon'     => 'dashicons-admin-links',
       'taxonomies' => array(),
       'has_archive' => true
       )
