@@ -267,6 +267,13 @@ class ArgoLinks {
     
   }
 
+  /**
+   * Returns a link to the source article in place of a link to the author's page.
+   * 
+   * @since 0.3
+   * 
+   * @param string $content content passed in by the filter (should be empty).
+   */
   public static function the_author_posts_link($link) {
 
     global $post;
@@ -292,7 +299,6 @@ class ArgoLinks {
     return $link;
 
   }
-
 
   /**
    * Filter argo link content.
