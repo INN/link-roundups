@@ -39,6 +39,10 @@ class ArgoLinks {
     add_filter('the_content', array(__CLASS__,'the_content') );
     add_filter('the_excerpt', array(__CLASS__,'the_excerpt') );
     add_filter('post_type_link', array(__CLASS__,'the_permalink') );
+    add_filter('author_link ', array(__CLASS__,'the_permalink') );
+    add_filter('the_author', array(__CLASS__,'the_author') );
+    add_filter('the_author_posts_link', array(__CLASS__,'the_author_posts_link'));
+
 
   }
 
@@ -235,6 +239,62 @@ class ArgoLinks {
   }
 
   /**
+   * Returns source as string instead of author.
+   * 
+   * Excerpt DOM is static:
+   *  <p class="description">#!DESCRIPTION!#</p>
+   *  <p class="source">Source:<span class="source"><a class="source" href="#!URL!#>#!SOURCE!#</a></span></p>
+   * 
+   * @since 0.3
+   * 
+   * @param string $content content passed in by the filter (should be empty).
+   */
+  public static function the_author($author) {
+
+    // Only run for argo_links
+    global $post;
+    
+    $default = '';
+
+    $meta = get_post_meta($post->ID);
+    $source = !empty($meta["argo_link_source"]) ? $meta["argo_link_source"][0] : $default;
+
+    if ( empty($source) || !( 'argolinks' == $post->post_type ) ) {
+        return $author;
+    }
+
+    return $source;
+    
+  }
+
+  public static function the_author_posts_link($link) {
+
+    global $post;
+
+    if ( !( 'argolinks' == $post->post_type ) ) {
+      return $link;
+    }
+
+    $meta = get_post_meta($post->ID);
+
+    $url = !empty($meta["argo_link_url"]) ? $meta["argo_link_url"][0] : '';
+    $title = get_the_title($post->ID);
+    $description = array_key_exists("argo_link_description",$meta) ? $meta["argo_link_description"][0] : '';;
+    $source = !empty($meta["argo_link_source"]) ? $meta["argo_link_source"][0] : '';
+
+    $link = sprintf(
+      '<a href="%1$s" title="%2$s" rel="author">%3$s</a>',
+      esc_url( $url ),
+      esc_attr( $title ),
+      $source
+    );
+
+    return $link;
+
+  }
+
+
+  /**
    * Filter argo link content.
    * 
    * Argo links have no content, so we have to generate it for inclusion on
@@ -295,7 +355,7 @@ class ArgoLinks {
     $url = !empty($meta["argo_link_url"]) ? $meta["argo_link_url"][0] : '';
     $title = get_the_title($post->ID);
     $description = array_key_exists("argo_link_description",$meta) ? $meta["argo_link_description"][0] : '';;
-    $source = !empty($meta["argo_link_source"]) ? $meta["argo_link_source"][0] : '';;
+    $source = !empty($meta["argo_link_source"]) ? $meta["argo_link_source"][0] : '';
 
     ob_start();
     ?>
@@ -350,6 +410,8 @@ class ArgoLinks {
     return $html;
     
   }
+
+
 
 }
 
