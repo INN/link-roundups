@@ -38,12 +38,10 @@ class ArgoLinks {
     /* Argo links have no content, so we have to generate it on request */
     add_filter('the_content', array(__CLASS__,'the_content') );
     add_filter('the_excerpt', array(__CLASS__,'the_excerpt') );
-    add_filter('post_type_link', array(__CLASS__,'the_permalink') );
+    add_filter('post_type_link', array(__CLASS__,'the_permalink'), 0, 2);
     add_filter('author_link ', array(__CLASS__,'the_permalink') );
     add_filter('the_author', array(__CLASS__,'the_author') );
     add_filter('the_author_posts_link', array(__CLASS__,'the_author_posts_link'));
-
-
   }
 
   public static function plugin_mce_css($mce_css) {
@@ -222,11 +220,10 @@ class ArgoLinks {
    * 
    * @param string $content content passed in by the filter (should be empty).
    */
-  public static function the_permalink($url) {
+  public static function the_permalink($url, $post=null) {
+    $post = get_post($post);
 
     // Only run for argo_links
-    global $post;
-    
     $meta = get_post_meta($post->ID);
     $remoteUrl = !empty($meta["argo_link_url"]) ? $meta["argo_link_url"][0] : '';
 
@@ -235,7 +232,6 @@ class ArgoLinks {
     }
 
     return $remoteUrl;
-
   }
 
   /**
