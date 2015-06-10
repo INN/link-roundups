@@ -35,6 +35,13 @@ class ArgoLinks {
     add_action('wp_print_styles', array(__CLASS__, 'add_styles'));
     add_filter('mce_css', array(__CLASS__,'plugin_mce_css'));
 
+    /* Argo links have no content, so we have to generate it on request */
+    add_filter('the_content', array(__CLASS__,'the_content') );
+    add_filter('the_excerpt', array(__CLASS__,'the_excerpt') );
+    add_filter('post_type_link', array(__CLASS__,'the_permalink'), 0, 2);
+    add_filter('author_link ', array(__CLASS__,'the_permalink') );
+    add_filter('the_author', array(__CLASS__,'the_author') );
+    add_filter('the_author_posts_link', array(__CLASS__,'the_author_posts_link'));
   }
 
   public static function plugin_mce_css($mce_css) {
@@ -202,6 +209,212 @@ class ArgoLinks {
   public static function add_argo_links_widget() {
       register_widget( 'argo_links_widget' );
   }
+
+  /**
+   * Filter argo link content & excerpt
+   * 
+   * Argo links have no content, so we have to generate it for inclusion on
+   * archive pages.
+   * 
+   * @since 0.3
+   * 
+   * @param string $content content passed in by the filter (should be empty).
+   */
+  public static function the_permalink($url, $post=null) {
+    $post = get_post($post);
+
+    // Only run for argo_links
+    $meta = get_post_meta($post->ID);
+    $remoteUrl = !empty($meta["argo_link_url"]) ? $meta["argo_link_url"][0] : '';
+
+    if ( empty($url) || !( 'argolinks' == $post->post_type ) ) {
+        return $url;
+    }
+
+    return $remoteUrl;
+  }
+
+  /**
+   * Returns source as string instead of author.
+   * 
+   * Excerpt DOM is static:
+   *  <p class="description">#!DESCRIPTION!#</p>
+   *  <p class="source">Source:<span class="source"><a class="source" href="#!URL!#>#!SOURCE!#</a></span></p>
+   * 
+   * @since 0.3
+   * 
+   * @param string $content content passed in by the filter (should be empty).
+   */
+  public static function the_author($author) {
+
+    // Only run for argo_links
+    global $post;
+    
+    $default = '';
+
+    $meta = get_post_meta($post->ID);
+    $source = !empty($meta["argo_link_source"]) ? $meta["argo_link_source"][0] : $default;
+
+    if ( empty($source) || !( 'argolinks' == $post->post_type ) ) {
+        return $author;
+    }
+
+    return $source;
+    
+  }
+
+  /**
+   * Returns a link to the source article in place of a link to the author's page.
+   * 
+   * @since 0.3
+   * 
+   * @param string $content content passed in by the filter (should be empty).
+   */
+  public static function the_author_posts_link($link) {
+
+    global $post;
+
+    if ( !( 'argolinks' == $post->post_type ) ) {
+      return $link;
+    }
+
+    $meta = get_post_meta($post->ID);
+
+    $url = !empty($meta["argo_link_url"]) ? $meta["argo_link_url"][0] : '';
+    $title = get_the_title($post->ID);
+    $description = array_key_exists("argo_link_description",$meta) ? $meta["argo_link_description"][0] : '';;
+    $source = !empty($meta["argo_link_source"]) ? $meta["argo_link_source"][0] : '';
+
+    $link = sprintf(
+      '<a href="%1$s" title="%2$s" rel="author">%3$s</a>',
+      esc_url( $url ),
+      esc_attr( $title ),
+      $source
+    );
+
+    return $link;
+
+  }
+
+  /**
+   * Filter argo link content.
+   * 
+   * Argo links have no content, so we have to generate it for inclusion on
+   * archive pages.
+   * 
+   * @since 0.3
+   * 
+   * @param string $content content passed in by the filter (should be empty).
+   */
+  public static function the_content($content) {
+
+    // Only run for argo_links
+    global $post;
+    if ( ! ( 'argolinks' == $post->post_type ) ) {
+        return $content;
+    }
+
+
+    return self::get_html($post);
+  }
+
+  /**
+   * Filter argo link content & excerpt
+   * 
+   * Argo links have no content, so we have to generate it for inclusion on
+   * archive pages.
+   * 
+   * @since 0.3
+   * 
+   * @param string $content content passed in by the filter (should be empty).
+   */
+  public static function the_excerpt($content) {
+
+    // Only run for argo_links
+    global $post;
+    if ( ! ( 'argolinks' == $post->post_type ) ) {
+        return $content;
+    }
+
+    return self::get_excerpt();
+  }
+
+  /**
+   * Returns DOM for an argolink post content.
+   * 
+   * DOM is generated either from the default HTML string or from a user
+   * specified dom string in argolink options.
+   * 
+   * @since 0.3
+   * 
+   * @param string $content content passed in by the filter (should be empty).
+   */
+  public static function get_html( $post = null ) {
+
+    $post = get_post($post);
+    $meta = get_post_meta($post->ID);
+
+    $url = !empty($meta["argo_link_url"]) ? $meta["argo_link_url"][0] : '';
+    $title = get_the_title($post->ID);
+    $description = array_key_exists("argo_link_description",$meta) ? $meta["argo_link_description"][0] : '';;
+    $source = !empty($meta["argo_link_source"]) ? $meta["argo_link_source"][0] : '';
+
+    ob_start();
+    ?>
+      <p class='link-roundup'>
+        <a href='#!URL!#'>#!TITLE!#</a> 
+        &ndash; 
+        <span class='description'>#!DESCRIPTION!#</span> 
+        <em>#!SOURCE!#</em>
+      </p>
+    <?php
+    $default_html = ob_get_clean();
+    
+    if (get_option("argo_link_roundups_custom_html") != "") {
+      $argo_html = get_option("argo_link_roundups_custom_html");
+      $argo_html = preg_replace("/\"/","'",$argo_html);
+    } else {
+      $argo_html = $default_html;
+    }
+    $argo_html = str_replace("#!URL!#",$url,$argo_html);
+    $argo_html = str_replace("#!TITLE!#",$title,$argo_html);
+    $argo_html = str_replace("#!DESCRIPTION!#",$description,$argo_html);
+    $argo_html = str_replace("#!SOURCE!#",$source,$argo_html);
+    return $argo_html;
+  }
+
+  /**
+   * Returns DOM for an argolink excerpt.
+   * 
+   * Excerpt DOM is static:
+   *  <p class="description">#!DESCRIPTION!#</p>
+   *  <p class="source">Source:<span class="source"><a class="source" href="#!URL!#>#!SOURCE!#</a></span></p>
+   * 
+   * @since 0.3
+   * 
+   * @param string $content content passed in by the filter (should be empty).
+   */
+  public static function get_excerpt($post) {
+
+    $post = get_post($post);
+    $custom = get_post_meta($post->ID);
+
+    ob_start();
+    if ( isset( $custom["argo_link_description"][0] ) )
+      echo '<p class="description">' . $custom["argo_link_description"][0] . '</p>';
+    if ( isset($custom["argo_link_source"][0] ) && ( $custom["argo_link_source"][0] != '' ) ) {
+          echo '<p class="source">' . __('Source: ', 'largo') . '<span>';
+          echo ( isset( $custom["argo_link_url"][0] ) ) ? '<a href="' . $custom["argo_link_url"][0] . '">' . $custom["argo_link_source"][0] . '</a>' : $custom["argo_link_source"][0];
+          echo '</span></p>';
+      }
+    $html = ob_get_clean();
+
+    return $html;
+    
+  }
+
+
+
 }
 
 /**
