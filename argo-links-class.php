@@ -99,23 +99,32 @@ class ArgoLinks {
 
   /*Show our custom post fields in the add/edit Argo Links admin pages*/
   public static function display_custom_fields() {
+
     global $post;
     $custom = get_post_custom($post->ID);
+
     if (isset($custom["argo_link_url"][0])) {
       $argo_link_url = $custom["argo_link_url"][0];
     } else {
-      $argo_link_url = "";
+      $argo_link_url = apply_filters('default_argo_link_url',"");
     }
+
     if (isset($custom["argo_link_description"][0])) {
       $argo_link_description = $custom["argo_link_description"][0];
     } else {
-      $argo_link_description = "";
+      $argo_link_description = apply_filters('default_argo_link_description',"");
     }
+
     if (isset($custom["argo_link_source"][0])) {
       $argo_link_source = $custom["argo_link_source"][0];
     } else {
-      $argo_link_source = "";
+      $argo_link_source = apply_filters('default_argo_link_source',"");
     }
+
+    $argo_link_img_src = Argo_This_Button::default_imgUrl();
+    
+
+
 ?>
     <p><label>URL:</label><br />
     <input type='text' name='argo_link_url' value='<?php echo $argo_link_url; ?>' style='width:98%;'/></p>
@@ -123,12 +132,21 @@ class ArgoLinks {
     <textarea cols="100" rows="5" name="argo_link_description" style='width:98%;'><?php echo $argo_link_description; ?></textarea></p>
     <p><label>Source:</label><br />
     <input type='text' name='argo_link_source' value='<?php echo $argo_link_source; ?>' style='width:98%;'/></p>
+
+    <?php if( $argo_link_img_src ) : ?>
+      <p><label>Import featured image:</label><br />
+      <img src="<?php echo $argo_link_img_src ?>" width="300" />
+      <input type='hidden' name='argo_link_img_url' value='<?php echo $argo_link_img_src; ?>'/><br>
+      <input type="checkbox" value="1" name="argo_link_img_url_import"><label>Import as feature image</label>
+      </p>
+    <?php endif; ?>
+
 <?php
   }
 
   /*Save the custom post field data.  Very important!*/
   public static function save_custom_fields($post_id) {
-
+    error_log(print_r($_POST,true));
     if (isset($_POST["argo_link_url"])){
       update_post_meta((isset($_POST['post_ID']) ? $_POST['post_ID'] : $post_id), "argo_link_url", $_POST["argo_link_url"]);
     }
@@ -137,6 +155,44 @@ class ArgoLinks {
     }
     if (isset($_POST["argo_link_source"])){
       update_post_meta((isset($_POST['post_ID']) ? $_POST['post_ID'] : $post_id), "argo_link_source", $_POST["argo_link_source"]);
+    }
+    if (isset($_POST["argo_link_img_url_import"]) && $_POST["argo_link_img_url_import"]) {
+      $attachment_id = self::argo_links_media_sideload_image($_POST["argo_link_img_url"],$post_id);
+      if($attachment_id) {
+        update_post_meta((isset($_POST['post_ID']) ? $_POST['post_ID'] : $post_id), "_thumbnail_id", $attachment_id);
+      }
+    }
+
+  }
+
+  /**
+   * Similar to `media_sideload_image` except that it simply returns the attachment's ID on success
+   *
+   * @param (string) $file the url of the image to download and attach to the post
+   * @param (integer) $post_id the post ID to attach the image to
+   * @param (string) $desc an optional description for the image
+   *
+   * @since 0.1
+   */      
+  public static function argo_links_media_sideload_image($file, $post_id, $desc=null) {
+    if (!empty($file)) {
+      // Set variables for storage, fix file filename for query strings.
+      preg_match('/[^\?]+\.(jpe?g|jpe|gif|png)\b/i', $file, $matches);
+      $file_array = array();
+      $file_array['name'] = basename($matches[0]);
+      // Download file to temp location.
+      $file_array['tmp_name'] = download_url($file);
+      // If error storing temporarily, return the error.
+      if (is_wp_error($file_array['tmp_name'])) {
+        return $file_array['tmp_name'];
+      }
+      // Do the validation and storage stuff.
+      $id = media_handle_sideload($file_array, $post_id, $desc);
+      // If error storing permanently, unlink.
+      if (is_wp_error($id)) {
+        @unlink($file_array['tmp_name']);
+      }
+      return $id;
     }
   }
 
@@ -198,7 +254,14 @@ class ArgoLinks {
 
       <p>Use Argo Link This! to clip links to any web page. Then edit and add more straight from Argo Link This! before you save or publish it in a post on your site.</p>
       <p class="description">Drag-and-drop the following link to your bookmarks bar or right click it and add it to your favorites for a posting shortcut.</p>
-      <p class="pressthis"><a onclick="return false;" oncontextmenu="if(window.navigator.userAgent.indexOf('WebKit')!=-1||window.navigator.userAgent.indexOf('MSIE')!=-1)jQuery('.pressthis-code').show().find('textarea').focus().select();return false;" href="javascript:var%20d=document,w=window,e=w.getSelection,k=d.getSelection,x=d.selection,s=(e?e():(k)?k():(x?x.createRange().text:0)),f='<?php echo plugins_url( 'argo-this.php', __FILE__ );?>',l=d.location,e=encodeURIComponent,u=f+'?post_type=argolinks&u='+e(l.href)+'&t='+e(d.title)+'&s='+e(s)+'&v=4';a=function(){if(!w.open(u,'t','toolbar=0,resizable=1,scrollbars=1,status=1,width=720,height=570'))l.href=u;};if%20(/Firefox/.test(navigator.userAgent))%20setTimeout(a,%200);%20else%20a();void(0)"><span>Argo Link This!</span></a></p>
+      
+      <p class="pressthis">
+        <a onclick="return false;" 
+           oncontextmenu="if(window.navigator.userAgent.indexOf('WebKit')!=-1||window.navigator.userAgent.indexOf('MSIE')!=-1)jQuery('.pressthis-code').show().find('textarea').focus().select();return false;" 
+           href="<?php echo Argo_This_Button::shortcut_link(); ?>">
+            <span>Argo Link This!</span>
+        </a>
+      </p>
       <div class="pressthis-code" style="display:none;">
       <p class="description">If your bookmarks toolbar is hidden: copy the code below, open your Bookmarks manager, create new bookmark, type Press This into the name field and paste the code into the URL field.</p>
       <p><textarea rows="5" cols="120" readonly="readonly">javascript:var%20d=document,w=window,e=w.getSelection,k=d.getSelection,x=d.selection,s=(e?e():(k)?k():(x?x.createRange().text:0)),f='<?php echo plugins_url( 'argo-this.php', __FILE__ );?>',l=d.location,e=encodeURIComponent,u=f+'?post_type=argolinks&u='+e(l.href)+'&t='+e(d.title)+'&s='+e(s)+'&v=4';a=function(){if(!w.open(u,'t','toolbar=0,resizable=1,scrollbars=1,status=1,width=720,height=570'))l.href=u;};if%20(/Firefox/.test(navigator.userAgent))%20setTimeout(a,%200);%20else%20a();void(0)</textarea></p>
