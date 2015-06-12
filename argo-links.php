@@ -42,6 +42,7 @@ class ArgoLinks {
     add_action("manage_posts_custom_column", array(__CLASS__, "data_for_custom_columns"));
 
     add_action('widgets_init', array(__CLASS__, 'add_argo_links_widget'));
+    add_action('widgets_init', array(__CLASS__, 'add_argo_link_roundups_widget'));
 
     /*Add our css stylesheet into the header*/
     add_action('admin_print_styles', array(__CLASS__,'add_styles'));
@@ -215,9 +216,13 @@ class ArgoLinks {
   public static function add_argo_links_widget() {
       register_widget( 'argo_links_widget' );
   }
+  public static function add_argo_link_roundups_widget() {
+  	  register_widget( 'argo_link_roundups_widget' );
+  }
 }
 /* Initialize the plugin using it's init() function */
 ArgoLinks::init();
 require_once('argo-link-roundups.php');
 require_once('argo-links-widget.php');
+require_once('argo-link-roundups-widget.php');
 ?>
