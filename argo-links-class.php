@@ -137,7 +137,7 @@ class ArgoLinks {
       <p><label>Import featured image:</label><br />
       <img src="<?php echo $argo_link_img_src ?>" width="300" />
       <input type='hidden' name='argo_link_img_url' value='<?php echo $argo_link_img_src; ?>'/><br>
-      <input type="checkbox" value="1" name="argo_link_img_url_import"><label>Import as feature image</label>
+      <input type="checkbox" value="1" name="argo_link_img_url_import" id="argo_link_img_url_import"><label for="argo_link_img_url_import">Import as feature image</label>
       </p>
     <?php endif; ?>
 
@@ -264,7 +264,7 @@ class ArgoLinks {
       </p>
       <div class="pressthis-code" style="display:none;">
       <p class="description">If your bookmarks toolbar is hidden: copy the code below, open your Bookmarks manager, create new bookmark, type Press This into the name field and paste the code into the URL field.</p>
-      <p><textarea rows="5" cols="120" readonly="readonly">javascript:var%20d=document,w=window,e=w.getSelection,k=d.getSelection,x=d.selection,s=(e?e():(k)?k():(x?x.createRange().text:0)),f='<?php echo plugins_url( 'argo-this.php', __FILE__ );?>',l=d.location,e=encodeURIComponent,u=f+'?post_type=argolinks&u='+e(l.href)+'&t='+e(d.title)+'&s='+e(s)+'&v=4';a=function(){if(!w.open(u,'t','toolbar=0,resizable=1,scrollbars=1,status=1,width=720,height=570'))l.href=u;};if%20(/Firefox/.test(navigator.userAgent))%20setTimeout(a,%200);%20else%20a();void(0)</textarea></p>
+      <p><textarea rows="5" cols="120" readonly="readonly"><?php echo Argo_This_Button::shortcut_link(); ?></textarea></p>
       </div>
     </div>
 <?php
