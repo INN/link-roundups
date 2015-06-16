@@ -25,6 +25,7 @@ class argo_link_roundups_widget extends WP_Widget {
 			$query_args = array (
 				'post__not_in' 	=> get_option( 'sticky_posts' ),
 				'showposts' 	=> $instance['num_posts'],
+				'exceprt'	=> $instance['show_excerpt'],
 				'post_type' 	=> 'post',
 				'post_status'	=> 'publish'
 			);
@@ -41,14 +42,9 @@ class argo_link_roundups_widget extends WP_Widget {
 	                      	// the headline
 							$output .= '<h4><a href="' . get_permalink() . '">' . get_the_title() . '</a></h4>';
 							
-							
 							// the excerpt
-							if ($excerpt == 'num_sentences') {
-								$output .= '<p>' . largo_trim_sentences( get_the_content(), $instance['num_sentences'] ) . '</p>';
-							} elseif ($excerpt == 'custom_excerpt') {
-	                			$output .= '<p>' . get_the_excerpt() . '</p>';
-							}
-				
+							$output .= '<p>' . get_the_excerpt() . '</p>';
+							
 							echo $output;
 	                      	?>
 
@@ -69,8 +65,6 @@ class argo_link_roundups_widget extends WP_Widget {
 		$instance = $old_instance;
 		$instance['title'] = strip_tags( $new_instance['title'] );
 		$instance['num_posts'] = strip_tags( $new_instance['num_posts'] );
-		$instance['num_sentences'] = strip_tags( $new_instance['num_sentences'] );
-		$instance['show_date'] = ! empty($new_instance['show_date']);
 		$instance['linktext'] = $new_instance['linktext'];
 		$instance['linkurl'] = $new_instance['linkurl'];
 		return $instance;
@@ -80,11 +74,10 @@ class argo_link_roundups_widget extends WP_Widget {
 		$defaults = array(
 			'title' 			=> 'Recent Link Roundups',
 			'num_posts' 		=> 1,
-			'num_sentences' 	=> 0,
 			'linktext' 			=> '',
 			'linkurl' 			=> ''
 		);
-		$showdate = $instance['show_date'] ? 'checked="checked"' : '';
+
 		$instance = wp_parse_args( (array) $instance, $defaults );
 		?>
 
@@ -98,16 +91,6 @@ class argo_link_roundups_widget extends WP_Widget {
 			<input id="<?php echo $this->get_field_id( 'num_posts' ); ?>" name="<?php echo $this->get_field_name( 'num_posts' ); ?>" value="<?php echo $instance['num_posts']; ?>" style="width:90%;" />
 		</p>
 
-		<?php if ( function_exists( 'largo_trim_sentences' ) ) : ?>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'num_sentences' ); ?>"><?php _e('Excerpt Length (# of Sentences):', 'argo-links'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'num_sentences' ); ?>" name="<?php echo $this->get_field_name( 'num_sentences' ); ?>" value="<?php echo $instance['num_sentences']; ?>" style="width:90%;" />
-		</p>
-		<?php endif; ?>
-		
-		<p>
-			<input class="checkbox" type="checkbox" <?php echo $showdate; ?> id="<?php echo $this->get_field_id('show_date'); ?>" name="<?php echo $this->get_field_name('show_date'); ?>" /> <label for="<?php echo $this->get_field_id('show_date'); ?>"><?php _e('Show date on link roundup?', 'argo-links'); ?></label>
-		</p>
 		
 		<p><strong>More Link</strong><br /><small><?php _e('If you would like to add a more link at the bottom of the widget, add the link text and url here.', 'argo-links'); ?></small></p>
 		<p>
