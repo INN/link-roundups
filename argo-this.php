@@ -171,8 +171,6 @@ class Argo_This_Button {
 			self::$imgUrl = $meta['ogp']['image'];
 		}
 
-		add_action( 'admin_print_styles', array( __CLASS__, 'style' ) );
-
 		add_filter( 'default_title', array( __CLASS__, 'default_title' ) );
 		add_filter( 'default_argo_link_url', array( __CLASS__, 'default_link' ));
 		add_filter( 'default_argo_link_description', array( __CLASS__, 'default_description' ) );
