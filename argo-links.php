@@ -218,7 +218,7 @@ add_action('init', 'argo_flush_permalinks', 99);
  */
 function argo_get_page_info($url) {
 
-	require_once __DIR__. '/inc/SimpleScraper.wp.class.php';
+	require_once __DIR__. '/inc/WPSimpleScraper.php';
 
 	$response = array();
 	try {

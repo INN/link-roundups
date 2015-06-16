@@ -1,35 +1,28 @@
 <?php
-/*
- +---------------------------------------------------------------------------+
- | Simple Scraper (SimpleScraper.class.php )                                 |
- | Copyright (c) 2013-2015, Ramon Kayo                                       |
- +---------------------------------------------------------------------------+
- | Author        : Ramon Kayo                                                |
- | Email         : contato@ramonkayo.com                                     |
- | License       : Distributed under the MIT License                         |
- | Full license  : http://code.ramonkayo.com/simple-scraper/license.txt      |
- +---------------------------------------------------------------------------+
- | "Simplicity is the ultimate sophistication." - Leonardo Da Vinci          |
- +---------------------------------------------------------------------------+
- | Last modified : 2015-03-20                                                |
- +---------------------------------------------------------------------------+
+/**
+ * Based on Simple Scraper (SimpleScraper.class.php) by Ramon Kayo
+ *
+ * Modified to do file fetching with core WordPress functions.
+ *
+ * @author Will Haynes <will@inn.org>
+ * @author Ryan Nagle <ryan@inn.org>
+ * @author Ramon Kayo <contato@ramonkayo.com>
+ * @see license.txt
+ * @since 0.1
  */
 use \Exception;
 
-class SimpleScraper {
-	
+class WPSimpleScraper {
+
 	private
 		$contentType,
 		$data,
 		$content,
 		$httpCode,
 		$url;
-	
-/*===========================================================================*/
-// CONSTRUCTOR
-/*===========================================================================*/
+
 	/**
-	 * 
+	 *
 	 * @param string $url
 	 * @throws Exception
 	 */
@@ -39,14 +32,14 @@ class SimpleScraper {
 			'twitter' => array(),
 			'meta' => array()
 		);
-		
+
 		$urlPattern = '~^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}-\x{ffff}]{2,})))(?::\d{2,5})?(?:/[^\s]*)?$~iu';
 		if (!is_string($url))
 			throw new InvalidArgumentException("Argument 'url' is invalid (not a string).");
 		if (!(preg_match($urlPattern, $url)))
 			throw new InvalidArgumentException("Argument 'url' is invalid.");
 		$this->url = $url;
-		
+
 		$this->fetchResource();
 		libxml_use_internal_errors(true);
 		$dom = new DOMDocument(null, 'UTF-8');
@@ -58,9 +51,9 @@ class SimpleScraper {
 			$attributes = $metaTags->item($i)->attributes;
 			$attrArray = array();
 			foreach ($attributes as $attr) $attrArray[$attr->nodeName] = $attr->nodeValue;
-			
+
 			if (
-				array_key_exists('property', $attrArray) && 
+				array_key_exists('property', $attrArray) &&
 				preg_match('~og:([a-zA-Z:_]+)~', $attrArray['property'], $matches)
 			) {
 				$this->data['ogp'][$matches[1]] = $attrArray['content'];
@@ -77,10 +70,7 @@ class SimpleScraper {
 			}
 		}
 	}
-	
-/*===========================================================================*/
-// PUBLIC METHODS
-/*===========================================================================*/
+
 	/**
 	 *
 	 * @return array
@@ -88,7 +78,7 @@ class SimpleScraper {
 	public function getAllData() {
 		return $this->data;
 	}
-	
+
 	/**
 	 *
 	 * @return string
@@ -96,9 +86,9 @@ class SimpleScraper {
 	public function getContent() {
 		return $this->content;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getContentType() {
@@ -112,7 +102,7 @@ class SimpleScraper {
 	public function getHttpCode() {
 		return $this->httpCode;
 	}
-	
+
 	/**
 	 *
 	 * @return array
@@ -120,7 +110,7 @@ class SimpleScraper {
 	public function getMeta() {
 		return $this->data['meta'];
 	}
-	
+
 	/**
 	 *
 	 * @return array
@@ -128,7 +118,7 @@ class SimpleScraper {
 	public function getOgp() {
 		return $this->data['ogp'];
 	}
-	
+
 	/**
 	 *
 	 * @return array
@@ -136,27 +126,27 @@ class SimpleScraper {
 	public function getTwitter() {
 		return $this->data['twitter'];
 	}
-	
-/*===========================================================================*/
-// PRIVATE METHODS
-/*===========================================================================*/
+
 	private function fetchResource() {
-		$ch = curl_init();
-		curl_setopt($ch,CURLOPT_USERAGENT,'Mozilla/5.0 (compatible; ' . TITLE . '/' . HOST . ')');
-		curl_setopt($ch, CURLOPT_URL, $this->url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-		curl_setopt($ch, CURLOPT_MAXREDIRS, 100);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 30); // times out after 30s
-		$this->content = curl_exec($ch);
-		$info = curl_getinfo($ch);
-		curl_close($ch);
-		
-		$this->httpCode = $info['http_code'];
-		$this->contentType = $info['content_type'];
-		
+		$cookies = array();
+		foreach ( $_COOKIE as $name => $value ) {
+			$cookies[] = new WP_Http_Cookie( array( 'name' => $name, 'value' => $value ) );
+		}
+
+		$response = wp_remote_get(
+			$this->url, array(
+				'cookies' => $cookies,
+				'headers' => array( 'Accept-Encoding' => 'gzip' ),
+				'user-agent'=> 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36'
+			));
+
+		$this->content = wp_remote_retrieve_body($response);
+		$this->httpCode = wp_remote_retrieve_response_code($response);
+		$this->contentType = $response['headers']['content_type'];
+
 		if (((int) $this->httpCode) >= 400) {
 			throw new Exception('STATUS CODE: ' . $this->httpCode);
 		}
 	}
+
 }
