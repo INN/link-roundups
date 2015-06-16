@@ -14,7 +14,7 @@ Select the links that you would like to add to your roundup by selecting the che
 
 The Recent Roundup Links section will show a maximum of 15 links at a time. Use the pagination to view additional links. You will need to click the "send links to editor window" button for each view. Say for example you have a link on the second page of results and three links on the first page of results that comprise your roundup. You will need to click the "send links to editor window" twice. Once for the first page of results and once for the second page of results.
 
-Once you have the links that make up your roundup in the editor window, you can edit the links, change the description and make any adjustments that you'd make to a normal post. If you'd like to add a description to the post, go to the first line of the roundup and add a new line. You'll likely notice that the roundup icon that appears to the left of new roundup links appears on the blank line. To remove this icon, select "Heading 4" from the formatting menu.
+Once you have the links that make up your roundup in the editor window, you can edit the links, change the description and make any adjustments that you'd make to a normal post. If you'd like to add a description to the post, go to the first line of the roundup and add a new line. You'll likely notice that the roundup icon that appears to the left of new roundup links appears on the blank line. To remove this icon, select "Paragraph" from the formatting menu and the formatting will be removed.
 
 ![Screenshot showing the post editor](img/link-roundup-heading.png)
 
