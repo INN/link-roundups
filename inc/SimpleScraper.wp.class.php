@@ -5,14 +5,10 @@
  */
 use \Exception;
 
-require_once 'simple-scraper/SimpleScraper.class.php';
+require_once dirname(__DIR__) . '/vendor/simple-scraper/SimpleScraper.class.php';
 
-class WPSimpleScraper {
-	
-/*===========================================================================*/
-// PRIVATE METHODS
-/*===========================================================================*/
-	
+class WPSimpleScraper extends SimpleScraper {
+
 	/**
 	 * Override fetchResource to do it with wp_fetch_urla
 	 */
@@ -20,11 +16,11 @@ class WPSimpleScraper {
 
 		$cookies = array();
 		foreach ( $_COOKIE as $name => $value ) {
-    		$cookies[] = new WP_Http_Cookie( array( 'name' => $name, 'value' => $value ) );
+			$cookies[] = new WP_Http_Cookie( array( 'name' => $name, 'value' => $value ) );
 		}
 
 		$response = wp_remote_get(
-			$this->url, array( 
+			$this->url, array(
 				'cookies' => $cookies,
 				'headers' => array( 'Accept-Encoding' => 'gzip' ),
 				'user-agent'=> 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36'

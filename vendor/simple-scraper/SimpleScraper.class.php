@@ -150,7 +150,6 @@ class SimpleScraper {
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30); // times out after 30s
 		$this->content = curl_exec($ch);
 		$info = curl_getinfo($ch);
-		error_log(print_r($info,true));
 		curl_close($ch);
 		
 		$this->httpCode = $info['http_code'];
