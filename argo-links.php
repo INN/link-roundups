@@ -200,8 +200,40 @@ require_once('argo-link-roundups.php');
 require_once('argo-links-widget.php');
 require_once('argo-links-class.php');
 require_once('argo-links-ajax.php');
+require_once('argo-this.php');
 
 /* Initialize the plugin using it's init() function */
 ArgoLinkRoundups::init();
 ArgoLinks::init();
 add_action('init', 'argo_flush_permalinks', 99);
+
+/**
+ * Fetches info from a pages <meta> tags and
+ * returns an array of that information.
+ *
+ * @see http://code.ramonkayo.com/simple-scraper/
+ * @since 0.3
+ *
+ * @param string $url the url of the page to scrape
+ */
+function argo_get_page_info($url) {
+
+	require_once __DIR__. '/inc/WPSimpleScraper.php';
+
+	$response = array();
+	try {
+		$scraper = new WPSimpleScraper($url);
+		$data = $scraper->getAllData();
+
+		$response['success'] = true;
+		$response['meta'] = $data;
+
+	} catch (Exception $e) {
+
+		$response['success'] = false;
+		$response['message'] = 'Something went wrong.';
+
+	}
+
+	return $response;
+}
