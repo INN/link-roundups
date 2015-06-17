@@ -75,7 +75,7 @@ function argo_flush_permalinks() {
 function argo_links_create_mailchimp_campaign_button() {
 	global $post;
 
-	if ($post->post_type !== 'argolinkroundups')
+	if ($post->post_type !== 'roundup')
 		return;
 
 	if ( false == get_option('argo_link_roundups_use_mailchimp_integration') || false == get_option('argo_link_roundups_mailchimp_api_key') )
@@ -129,7 +129,7 @@ function argo_links_enqueue_assets() {
 	wp_register_style('argo-links-common', $plugin_path . '/css/argo-links-common.css');
 
 	$screen = get_current_screen();
-	if ($screen->base == 'post' && $screen->post_type == 'argolinkroundups') {
+	if ($screen->base == 'post' && $screen->post_type == 'roundup') {
 		wp_enqueue_script('argo-link-roundups');
 		wp_enqueue_style('argo-links-common');
 	}
@@ -175,7 +175,7 @@ function argo_links_json_obj($add=array()) {
 
 function argo_links_add_modal_template() {
 	$screen = get_current_screen();
-	if ($screen->base == 'post' && $screen->post_type == 'argolinkroundups') {
+	if ($screen->base == 'post' && $screen->post_type == 'roundup') {
 		argo_links_modal_underscore_template();
 
 ?>

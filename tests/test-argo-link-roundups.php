@@ -5,7 +5,7 @@ class ArgoLinkRoundupsTestFunctions extends WP_UnitTestCase {
 		parent::setUp();
 
 		// Set up global $post object
-		$this->argolinks_post = $this->factory->post->create(array('post_type' => 'argolinkroundups'));
+		$this->argolinks_post = $this->factory->post->create(array('post_type' => 'roundup'));
 		global $post;
 		$this->tmp_post = $post;
 		$post = get_post($this->argolinks_post);
@@ -32,7 +32,7 @@ class ArgoLinkRoundupsTestFunctions extends WP_UnitTestCase {
 		ArgoLinkRoundups::my_get_posts($test_query);
 
 		$this->assertTrue(
-			in_array('argolinkroundups', $test_query->query_vars['post_type']));
+			in_array('roundup', $test_query->query_vars['post_type']));
 	}
 
 	function test_register_post_type() {
@@ -40,7 +40,7 @@ class ArgoLinkRoundupsTestFunctions extends WP_UnitTestCase {
 
 		ArgoLinkRoundups::register_post_type();
 
-		$this->assertTrue(in_array('argolinkroundups', array_keys($wp_post_types)));
+		$this->assertTrue(in_array('roundup', array_keys($wp_post_types)));
 	}
 
 	function test_add_custom_post_fields() {

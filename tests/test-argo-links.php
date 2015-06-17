@@ -6,7 +6,7 @@ class ArgoLinksTestFunctions extends WP_UnitTestCase {
 		parent::setUp();
 
 		// Set up global $post object
-		$this->argolinks_post = $this->factory->post->create(array('post_type' => 'argolinkroundups'));
+		$this->argolinks_post = $this->factory->post->create(array('post_type' => 'roundup'));
 		global $post;
 		$this->tmp_post = $post;
 		$post = get_post($this->argolinks_post);
@@ -20,7 +20,7 @@ class ArgoLinksTestFunctions extends WP_UnitTestCase {
 		// Mimic the post edit page
 		set_current_screen('post');
 		$screen = get_current_screen();
-		$screen->post_type = 'argolinkroundups';
+		$screen->post_type = 'roundup';
 	}
 
 	function tearDown() {
