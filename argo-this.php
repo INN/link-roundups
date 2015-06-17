@@ -112,7 +112,7 @@ class Argo_This_Button {
 		// This is the default 'Press This!' button link.
 		$shortcut_link = get_shortcut_link();
 
-		$post_type = 'argolinks';
+		$post_type = 'rounduplink';
 
 		// We alter it for our post type.
 		$shortcut_link = str_replace('press-this.php', 'post-new.php', $shortcut_link);

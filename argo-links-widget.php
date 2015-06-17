@@ -25,7 +25,7 @@ class argo_links_widget extends WP_Widget {
 			$query_args = array (
 				'post__not_in' 	=> get_option( 'sticky_posts' ),
 				'showposts' 	=> $instance['num_posts'],
-				'post_type' 	=> 'argolinks',
+				'post_type' 	=> 'rounduplink',
 				'post_status'	=> 'publish'
 			);
 			$my_query = new WP_Query( $query_args );

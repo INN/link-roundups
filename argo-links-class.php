@@ -1,16 +1,20 @@
 <?php
 
 /**
- * The Argo Links Plugin class
- *
+ * The Argo Links class
  * So we don't have function naming conflicts.
  *
  * @since 0.1
  */
 class ArgoLinks {
 
-	/* Initialize the plugin */
+	/**
+	 * Initialize the class.
+	 * 
+	 * @since 0.1
+	 */
 	public static function init() {
+
 		/*Register the custom post type of argolinks */
 		add_action('init', array(__CLASS__, 'register_post_type' ));
 
@@ -28,7 +32,7 @@ class ArgoLinks {
 		add_action('save_post', array(__CLASS__, 'save_custom_fields'));
 
 		/*Add our new custom post fields to the display columns on the main Argo Links admin page*/
-		add_filter("manage_edit-argolinks_columns", array(__CLASS__, "display_custom_columns"));
+		add_filter("manage_edit-rounduplink_columns", array(__CLASS__, "display_custom_columns"));
 
 		/*Populate those new columns with the custom data*/
 		add_action("manage_posts_custom_column", array(__CLASS__, "data_for_custom_columns"));
@@ -66,23 +70,28 @@ class ArgoLinks {
 		wp_enqueue_style('argo-links', $css, array(), 1);
 	}
 
-	/*Register the Argo Links post type */
+	/**
+	 * Register the Roundup Link post type 
+	 *
+	 * @since 0.1
+	 */
 	public static function register_post_type() {
-		register_post_type('argolinks', array(
+		
+		register_post_type('rounduplink', array(
 			'labels' => array(
-				'name' => 'Argo Links',
-				'singular_name' => 'Argo Link',
-				'add_new' => 'Add New Link',
-				'add_new_item' => 'Add New Argo Link',
+				'name' => 'Saved Links',
+				'singular_name' => 'Saved Link',
+				'add_new' => 'New Saved Link',
+				'add_new_item' => 'New Saved Link',
 				'edit' => 'Edit',
-				'edit_item' => 'Edit Argo Link',
+				'edit_item' => 'Edit Saved Link',
 				'view' => 'View',
-				'view_item' => 'View Argo Link',
-				'search_items' => 'Search Argo Links',
-				'not_found' => 'No Argo Links found',
-				'not_found_in_trash' => 'No Argo Links found in Trash',
+				'view_item' => 'View Saved Link',
+				'search_items' => 'Search Saved Links',
+				'not_found' => 'No Saved Links found',
+				'not_found_in_trash' => 'No Saved Links found in Trash',
 			),
-			'description' => 'Argo Links',
+			'description' => 'Saved Links',
 			'supports' => array( 'title', 'thumbnail' ),
 			'public' => true,
 			'menu_position' => 6,
@@ -90,29 +99,43 @@ class ArgoLinks {
 			'taxonomies' => array(),
 			'has_archive' => true
 		));
+
 	}
 
-
-	/*Tell Wordpress where to put our custom fields for our custom post type*/
-	public static function add_custom_post_fields() {
-		add_meta_box("argo_links_meta", "Link Information", array(__CLASS__,"display_custom_fields"), "argolinks", "normal", "low");
-	}
-
-	/*Register our custom taxonomy*/
+	/**
+	 * Register our custom taxonomy
+	 * 
+	 * @since 0.1
+	 */
 	public static function register_argo_links_taxonomy() {
 		register_taxonomy(
 			"argo-link-tags",
-			array("argolinks"),
+			'rounduplink',
 			array(
 				"hierarchical" => false,
-				"label" => "Link Tags",
-				"singular_label" => "Link Tag",
+				"label" => "Saved Link Tags",
+				"singular_label" => "Saved Link Tag",
 				"rewrite" => true
-			));
+			)
+		);
 	}
 
-	/*Show our custom post fields in the add/edit Argo Links admin pages*/
+	/**
+	 * Tell Wordpress where to put our custom fields for our custom post type
+	 * 
+	 * @since 0.1
+	 */
+	public static function add_custom_post_fields() {
+		add_meta_box("argo_links_meta", "Link Information", array(__CLASS__,"display_custom_fields"), "rounduplink", "normal", "low");
+	}
+
+	/**
+	 * Show our custom post fields in the add/edit Argo Links admin pages
+	 * 
+	 * @since 0.1
+	 */
 	public static function display_custom_fields() {
+
 		global $post;
 		$custom = get_post_custom($post->ID);
 
@@ -135,7 +158,8 @@ class ArgoLinks {
 		}
 
 		$argo_link_img_src = Argo_This_Button::default_imgUrl();
-?>
+
+	?>
 	<p><label>URL:</label><br />
 	<input type='text' name='argo_link_url' value='<?php echo $argo_link_url; ?>' style='width:98%;'/></p>
 	<p><label>Description:</label><br />
@@ -152,23 +176,32 @@ class ArgoLinks {
 	<?php }
 	}
 
-	/*Save the custom post field data.  Very important!*/
+	/**
+	 * Save the custom post field data. Very important!
+	 * 
+	 * @since 0.1
+	 */
 	public static function save_custom_fields($post_id) {
+
 		if (isset($_POST["argo_link_url"])){
 			update_post_meta((isset($_POST['post_ID']) ? $_POST['post_ID'] : $post_id), "argo_link_url", $_POST["argo_link_url"]);
 		}
+
 		if (isset($_POST["argo_link_description"])){
 			update_post_meta((isset($_POST['post_ID']) ? $_POST['post_ID'] : $post_id), "argo_link_description", $_POST["argo_link_description"]);
 		}
+
 		if (isset($_POST["argo_link_source"])){
 			update_post_meta((isset($_POST['post_ID']) ? $_POST['post_ID'] : $post_id), "argo_link_source", $_POST["argo_link_source"]);
 		}
+
 		if (isset($_POST["argo_link_img_url_import"]) && $_POST["argo_link_img_url_import"]) {
 			$attachment_id = self::argo_links_media_sideload_image($_POST["argo_link_img_url"],$post_id);
 			if(!empty($attachment_id) && !is_wp_error($attachment_id)) {
 				update_post_meta((isset($_POST['post_ID']) ? $_POST['post_ID'] : $post_id), "_thumbnail_id", $attachment_id);
 			}
 		}
+
 	}
 
 	/**
@@ -181,6 +214,7 @@ class ArgoLinks {
 	 * @since 0.1
 	 */
 	public static function argo_links_media_sideload_image($file, $post_id, $desc=null) {
+
 		if (!empty($file)) {
 			// Set variables for storage, fix file filename for query strings.
 			preg_match('/[^\?]+\.(jpe?g|jpe|gif|png)\b/i', $file, $matches);
@@ -200,9 +234,14 @@ class ArgoLinks {
 			}
 			return $id;
 		}
+
 	}
 
-	/*Create the new columns to display our custom post fields*/
+	/** 
+	 * Create the new columns to display our custom post fields
+	 * 
+	 * @since 0.1
+	 */
 	public static function display_custom_columns($columns){
 		$columns = array(
 			"cb" => "<input type=\"checkbox\" />",
@@ -216,67 +255,87 @@ class ArgoLinks {
 		return $columns;
 	}
 
-	/*Fill in our custom data for the new columns*/
+	/**
+	 * Fill in our custom data for the new columns
+	 * 
+	 * @since 0.1
+	 */
 	public static function data_for_custom_columns($column){
+		
 		global $post;
 		$custom = get_post_custom();
 
 		switch ($column) {
-		case "description":
-			echo $custom["argo_link_description"][0];
-			break;
-		case "url":
-			echo $custom["argo_link_url"][0];
-			break;
-		case "link-tags":
-			$base_url = "edit.php?post_type=argolinks";
-			$terms = get_the_terms($post->ID, 'argo-link-tags');
-			if (is_array($terms)) {
-				$term_links = array();
-				foreach ($terms as $term) {
-					$term_links[] = "<a href='".$base_url."&argo-link-tags=".$term->slug."'>".$term->name."</a>";
+
+			case "description":
+				echo $custom["argo_link_description"][0];
+				break;
+
+			case "url":
+				echo $custom["argo_link_url"][0];
+				break;
+
+			case "link-tags":
+				$base_url = "edit.php?post_type=rounduplink";
+				$terms = get_the_terms($post->ID, 'argo-link-tags');
+				if (is_array($terms)) {
+					$term_links = array();
+					foreach ($terms as $term) {
+						$term_links[] = "<a href='".$base_url."&argo-link-tags=".$term->slug."'>".$term->name."</a>";
+					}
+					echo implode(", ",$term_links);
+				} else {
+					echo "&nbsp;";
 				}
-				echo implode(", ",$term_links);
-			} else {
-				echo "&nbsp;";
-			}
-			break;
+				break;
 		}
+
 	}
 
-	/*Add the Argo Link This! sub menu*/
+	/**
+	 * Add the Argo Link This! sub menu
+	 * 
+	 * @since 0.1
+	 */
 	public static function add_argo_this_sub_menu() {
 		add_submenu_page(
-			"edit.php?post_type=argolinks",
-			"Argo Link This!",
-			"Argo Link This!",
+			"edit.php?post_type=rounduplink",
+			"'Link This!' Bookmark",
+			"'Link This!' Bookmark",
 			"edit_posts",
-			"argo-this",
+			"bookmarklet",
 			array(__CLASS__, 'build_argo_this_page'
 		));
 	}
 
-	/*Custom page for people to pull the Argo Link This! code from (similar to Press This!)*/
+	/**
+	 * Custom page for people to pull the Argo Link This! code from (similar to Press This!)
+	 * 
+	 * @since 0.1
+	 */
 	public static function build_argo_this_page() {
-?>
-	<div id="icon-tools" class="icon32"><br></div><h2>Tools</h2>
+	?>
+	<div id="icon-tools" class="icon32"><br></div><h2>Install 'Link This!' Bookmarklet</h2>
 
 	<div class="tool-box">
-	  <h3 class="title">Argo Link This!</h3>
-	  <p>Argo Link This! is a bookmarklet: a little app that runs in your browser and lets you grab bits of the web.</p>
 
-	  <p>Use Argo Link This! to clip links to any web page. Then edit and add more straight from Argo Link This! before you save or publish it in a post on your site.</p>
+	  <p>Install the 'Link This!' bookmarklet to save links from across the web directly from your browser's bookmark toolbar.</p>
+
+	  <p>Use this bookmarklet to save links to any web page. Then edit and add more straight in WordPress before you save or publish it in a post on your site.</p>
+
+	  <h2>Installing</h2>
+
 	  <p class="description">Drag-and-drop the following link to your bookmarks bar or right click it and add it to your favorites for a posting shortcut.</p>
 
 	  <p class="pressthis">
 		<a onclick="return false;"
 		   oncontextmenu="if(window.navigator.userAgent.indexOf('WebKit')!=-1||window.navigator.userAgent.indexOf('MSIE')!=-1)jQuery('.pressthis-code').show().find('textarea').focus().select();return false;" 
 		   href="<?php echo Argo_This_Button::shortcut_link(); ?>">
-			<span>Argo Link This!</span>
+			<span>Link This!</span>
 		</a>
 	  </p>
 	  <div class="pressthis-code" style="display:none;">
-	  <p class="description">If your bookmarks toolbar is hidden: copy the code below, open your Bookmarks manager, create new bookmark, type Press This into the name field and paste the code into the URL field.</p>
+	  <p class="description">If your bookmarks toolbar is hidden: copy the code below, open your Bookmarks manager, create new bookmark, type 'Link This!' into the name field and paste the code into the URL field.</p>
 	  <p><textarea rows="5" cols="120" readonly="readonly"><?php echo Argo_This_Button::shortcut_link(); ?></textarea></p>
 	  </div>
 	</div>
@@ -308,7 +367,7 @@ class ArgoLinks {
 		$meta = get_post_meta($post->ID);
 		$remoteUrl = !empty($meta["argo_link_url"]) ? $meta["argo_link_url"][0] : '';
 
-		if ( empty($url) || !( 'argolinks' == $post->post_type ) ) {
+		if ( empty($url) || !( 'rounduplink' == $post->post_type ) ) {
 			return $url;
 		}
 
@@ -335,7 +394,7 @@ class ArgoLinks {
 		$meta = get_post_meta($post->ID);
 		$source = !empty($meta["argo_link_source"]) ? $meta["argo_link_source"][0] : $default;
 
-		if ( empty($source) || !( 'argolinks' == $post->post_type ) ) {
+		if ( empty($source) || !( 'rounduplink' == $post->post_type ) ) {
 			return $author;
 		}
 
@@ -353,7 +412,7 @@ class ArgoLinks {
 	public static function the_author_posts_link($link) {
 		global $post;
 
-		if ( !( 'argolinks' == $post->post_type ) ) {
+		if ( !( 'rounduplink' == $post->post_type ) ) {
 			return $link;
 		}
 
@@ -388,7 +447,7 @@ class ArgoLinks {
 
 		// Only run for argo_links
 		global $post;
-		if ( ! ( 'argolinks' == $post->post_type ) ) {
+		if ( ! ( 'rounduplink' == $post->post_type ) ) {
 			return $content;
 		}
 
@@ -409,7 +468,7 @@ class ArgoLinks {
 
 		// Only run for argo_links
 		global $post;
-		if ( ! ( 'argolinks' == $post->post_type ) ) {
+		if ( ! ( 'rounduplink' == $post->post_type ) ) {
 			return $content;
 		}
 

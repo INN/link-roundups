@@ -14,7 +14,7 @@ class ArgoLinkRoundups {
 	/* Initialize the plugin */
 	public static function init() {
 
-		/* Register the custom post type of argolinks */
+		/* Register the custom post type of roundup */
 		add_action('init', array(__CLASS__, 'register_post_type' ));
 
 		/* Add our custom post fields for our custom post type */
