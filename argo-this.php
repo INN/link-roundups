@@ -12,8 +12,8 @@
 /**
  * This file used to be loaded directly from the Argo Link! bookmarklet.
  * 
- * If WordPress is not loaded, then direct them the right place to install the
- * new bookmarklet.
+ * If WordPress is not loaded, then direct them to the right edit screen
+ * and pass along the previous query vars.
  * 
  * @since 0.3
  */
