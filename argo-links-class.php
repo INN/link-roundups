@@ -34,6 +34,7 @@ class ArgoLinks {
 		add_action("manage_posts_custom_column", array(__CLASS__, "data_for_custom_columns"));
 
 		add_action('widgets_init', array(__CLASS__, 'add_argo_links_widget'));
+		add_action('widgets_init', array(__CLASS__, 'add_argo_link_roundups_widget'));
 
 		/*Add our css stylesheet into the header*/
 		add_action('admin_print_styles', array(__CLASS__,'add_styles'));
@@ -85,6 +86,7 @@ class ArgoLinks {
 			'supports' => array( 'title', 'thumbnail' ),
 			'public' => true,
 			'menu_position' => 6,
+			'menu_icon'     => 'dashicons-admin-links',
 			'taxonomies' => array(),
 			'has_archive' => true
 		));

@@ -197,6 +197,7 @@ function argo_links_get_mc_api_endpoint() {
  * Set us up the files
  */
 require_once('argo-link-roundups.php');
+require_once('argo-link-roundups-widget.php');
 require_once('argo-links-widget.php');
 require_once('argo-links-class.php');
 require_once('argo-links-ajax.php');

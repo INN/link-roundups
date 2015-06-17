@@ -78,6 +78,7 @@ class ArgoLinkRoundups {
 			),
 			'public' => true,
 			'menu_position' => 7,
+			'menu_icon' 	=> 'dashicons-list-view',
 			'taxonomies' => apply_filters('argolinkroundups_taxonomies', array('category','post_tag')),
 			'has_archive' => true,
 		);
