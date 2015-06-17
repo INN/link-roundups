@@ -38,22 +38,22 @@ class ArgoLinkRoundups {
 		if ($query->get('suppress_filters')) return;
 
 		/*
-		 * Add argolinkroundups to the post type in the query if it is not already in it.
+		 * Add roundup to the post type in the query if it is not already in it.
 		 */
 		if ( $query->is_home() || $query->is_tag() || $query->is_category() ) {
 			if (isset($query->query_vars['post_type']) && is_array($query->query_vars['post_type'])) {
-				if ( ! in_array( 'argolinkroundups', $query->query_vars['post_type'] ) ) {
-					// There is an array of post types and argolinkroundups is not in it
-					$query->set( 'post_type', array_merge(array('argolinkroundups' ), $query->query_vars['post_type']) );
+				if ( ! in_array( 'roundup', $query->query_vars['post_type'] ) ) {
+					// There is an array of post types and roundup is not in it
+					$query->set( 'post_type', array_merge(array('roundup' ), $query->query_vars['post_type']) );
 				}
 			} elseif (isset($query->query_vars['post_type']) && !is_array($query->query_vars['post_type'])) {
-				if ( $query->query_vars['post_type'] !== 'argolinkroundups' ) {
+				if ( $query->query_vars['post_type'] !== 'roundup' ) {
 					// There is a single post type, so we shall add it to an array
-					$query->set( 'post_type', array('argolinkroundups', $query->query_vars['post_type']) );
+					$query->set( 'post_type', array('roundup', $query->query_vars['post_type']) );
 				}
 			} else {
-				// Post type is not set, so it shall be post and argolinkroundups
-				$query->set( 'post_type', array('post','argolinkroundups') );
+				// Post type is not set, so it shall be post and roundup
+				$query->set( 'post_type', array('post','roundup') );
 			}
 		}
 	}
