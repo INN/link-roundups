@@ -9,6 +9,28 @@
  * @see https://wordpress.org/plugins/press-this-reloaded/
  */
 
+/**
+ * This file used to be loaded directly from the Argo Link! bookmarklet.
+ * 
+ * If WordPress is not loaded, then direct them the right place to install the
+ * new bookmarklet.
+ * 
+ * @since 0.3
+ */
+if ( !defined('ABSPATH') ) {
+
+	// Load WordPress
+	define('WP_USE_THEMES', false);
+	require_once('../../../wp-admin/admin.php');
+
+	// Generate URL redirect
+	$URL = parse_url( $_SERVER["REQUEST_URI"] );
+	$newURL = admin_url( 'post-new.php?' . $URL['query'] );
+
+	// Header redirect
+	header( 'Location: ' . $newURL );
+}
+
 class Argo_This_Button {
 
 	private static $title;
@@ -241,4 +263,5 @@ class Argo_This_Button {
 
 Argo_This_Button::init();
 
-?>
+
+
