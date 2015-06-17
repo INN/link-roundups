@@ -1,11 +1,14 @@
 # Argo Links
 
-![docs](https://readthedocs.org/projects/docs/badge/?version=latest "Read our documentation on ReadTheDocs.org")
+Version: 0.3
 
-Contributors: Project Argo, INN Nerds
-Tags: links, argo, argo-links, largo
-Requires at least: 3.3.1
-Tested up to: 4.1
-Stable tag: 0.01
+#### [Documentation](docs/index.md)
 
-For information on the development status of this plugin, check the development milestones on https://github.com/INN/argo-links/milestones
+1. [Collect and tag links](docs/saving-links.md)
+2. [Create link roundups](docs/link-roundups.md)
+3. [Send your roundup to MailChimp](docs/mailchimp.md)
+4. [__More →__](docs/index.md)
+
+#### Development
+
+For information on the development status of this plugin, check the [development milestones on github](https://github.com/INN/argo-links/milestones).
