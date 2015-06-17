@@ -287,6 +287,10 @@ class ArgoLinks {
 		register_widget( 'argo_links_widget' );
 	}
 
+	public static function add_argo_link_roundups_widget() {
+		register_widget( 'argo_link_roundups_widget' );
+	}
+
 	/**
 	 * Filter argo link content & excerpt
 	 *
