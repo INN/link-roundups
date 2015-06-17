@@ -1,7 +1,7 @@
 === Argo Links ===
 Contributors: Project Argo, INN Nerds
 Tags: links, argo, argo-links, largo
-Donate link: https://goo.gl/mFmkjF
+Donate link: http://bit.ly/1GOG4Xh
 Requires at least: 3.3.1
 Tested up to: 4.1
 Stable tag: trunk
