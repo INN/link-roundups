@@ -237,7 +237,7 @@ ArgoLinks::init();
 add_action('init', 'argo_flush_permalinks', 99);
 
 
-require_once('inc/lroundups-upgrade.php');
+require_once('inc/lroundups-update.php');
 
 /**
  * Fetches info from a pages <meta> tags and
