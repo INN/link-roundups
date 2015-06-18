@@ -4,7 +4,7 @@ Plugin Name: Argo Links
 Plugin URI: https://github.com/argoproject/argo-links
 Description: The Argo Links Plugin
 Author: Project Argo, Mission Data
-Version: 1.00
+Version: 0.3
 Author URI:
 License: GPLv2
 */
@@ -85,7 +85,7 @@ function redirect_argolinks_requests() {
 	if( strpos($pageURL,'post_type=argolinks') ) {
 
 		$newURL = str_replace('post_type=argolinks','post_type=rounduplink',$pageURL);
-		
+
 		// Header redirect
 		header( 'Location: ' . $newURL );
 		die();
@@ -235,6 +235,9 @@ require_once('argo-this.php');
 ArgoLinkRoundups::init();
 ArgoLinks::init();
 add_action('init', 'argo_flush_permalinks', 99);
+
+
+require_once('inc/lroundups-upgrade.php');
 
 /**
  * Fetches info from a pages <meta> tags and
