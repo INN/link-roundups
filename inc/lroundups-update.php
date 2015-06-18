@@ -14,16 +14,13 @@
  * Performs various update functions and sets a new verion number.
  *
  * This acts as a main() for applying database updates when the update ajax is
- * called. 
- * 
+ * called.
+ *
  * @since 0.3
  */
 function lroundups_perform_update() {
-	
+
 	if (lroundups_need_updates()) {
-
-		error_log('in update function');
-
 		// Run 0.3 updates.
 		do_action( 'lroundups_update_0.3', lroundups_version(), get_option('lroundups_version') );
 
@@ -34,8 +31,6 @@ function lroundups_perform_update() {
 
 		// Set version.
 		update_option('lroundups_version', lroundups_version());
-
-
 	}
 
 	return true;
@@ -91,7 +86,7 @@ function lroundups_need_updates() {
 
 /**
  * Add an admin notice if lroundups needs to be updated.
- * 
+ *
  * @since 0.3
  */
 function lroundups_update_admin_notice() {
@@ -107,11 +102,10 @@ add_action('admin_notices', 'lroundups_update_admin_notice');
 
 /**
  * Register an admin page for updates.
- * 
+ *
  * @since 0.3
  */
 function lroundups_register_update_page() {
-	
 	$parent_slug = null;
 	$page_title = "Update Link Roundups";
 	$menu_title = "Update Link Roundups";
@@ -173,6 +167,8 @@ function lroundups_update_page_view() { ?>
 		<div class="update-message">
 
 			<p><?php _e('Link Roundups plugin has been updated to version'); echo " " . lroundups_version(); ?>.
+			<p><?php _e('This update will migrate <strong>Argo Links</strong> and <strong>Argo Link Roundups</strong> to the new <strong>Saved Links</strong> and <strong>Link Roundups</strong> formats respectively.'); ?></p>
+			<p><?php _e('This process will restore previous Argo Links and Argo Link Roundups posts to your site.'); ?></p>
 			<p><?php _e('Please run the following update function.'); ?></p>
 			<p class="submit-container">
 				<input type="submit" class="button-primary" id="update" name="update" value="<?php _e('Update the database!'); ?>">
