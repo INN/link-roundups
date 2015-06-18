@@ -1,4 +1,4 @@
-# Argo Links
+# Link Roundups
 
 Version: 0.3
 
@@ -11,4 +11,4 @@ Version: 0.3
 
 #### Development
 
-For information on the development status of this plugin, check the [development milestones on github](https://github.com/INN/argo-links/milestones).
+For information on the development status of this plugin, check the [development milestones on github](https://github.com/INN/link-roundups/milestones).

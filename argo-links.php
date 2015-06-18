@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: Argo Links
-Plugin URI: https://github.com/argoproject/argo-links
-Description: The Argo Links Plugin
-Author: Project Argo, Mission Data
+Plugin Name: Link Roundups
+Plugin URI: https://github.com/INN/link-roundups
+Description: Link Roundups (previously Argo Links) allows you to save links from the web to use in roundup posts for your WordPress site.
+Author: INN, Project Argo, Mission Data
 Version: 0.3
-Author URI:
+Author URI: http://nerds.inn.org/
 License: GPLv2
 */
 
