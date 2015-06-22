@@ -6,6 +6,7 @@ p.link-roundup {
 	vertical-align:top;
 	padding-top:0px;
 }
+
 .wp-editor p.link-roundup {
 	background-position: 0px 1px;
 }
@@ -15,32 +16,50 @@ p.link-roundup a {
 	text-decoration:none;
 	vertical-align:top;
 }
+
 p.link-roundup em {
 	color:#808080;
 }
+
+/* ==========================================================================
+Recent Roundups Editor Styles
+========================================================================== */
+#argo_link_roundups_roundup .inside {
+  min-height: 250px;
+}
+
+#argo_link_roundups_roundup .pagination {
+  margin:10px 0 10px 0;
+}
+
+#argo_link_roundups_roundup .pagination:last-child {
+  padding-bottom:15px;
+}
+
+#argo_link_roundups_roundup #filter_links {
+  margin:10px 0 10px;
+}
+
+
 div.display-argo-links div.pagination {
 	height:30px;
 }
 div.display-argo-links div.pagination span, div.display-argo-links div.pagination a {
-    background: none repeat scroll 0 0 #E8E8E8;
-    border: 1px solid #000;
-    border-radius: 3px 3px 3px 3px;
     color: #000;
-    margin: 0 2px;
-    padding: 4px 7px;
     text-decoration: none;
 }
 div.display-argo-links div.pagination .current {
-    background: none repeat scroll 0 0 #FFFFFF;
     color: #C7C7C7;
 }
+
 .widget.argo-links h5 {
   margin-bottom: 2px;
+	font-weight:700;
   padding: 0 3px;
-  font-size: 16px;
+  font-size: 15px;
 }
 .widget.argo-links p {
-  font-size: 10.672px;
+  font-size: 10.5px;
   margin-bottom: 12px;
 }
 .widget.argo-links p.description {

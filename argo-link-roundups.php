@@ -106,7 +106,7 @@ class ArgoLinkRoundups {
 	 */
 	public static function add_custom_post_fields() {
 		add_meta_box(
-			"argo_link_roundups_roundup", "Recent Roundup Links",
+			"argo_link_roundups_roundup", "Recent Saved Links",
 			array(__CLASS__, "display_custom_fields"), "roundup", "normal", "high"
 		);
 	}
