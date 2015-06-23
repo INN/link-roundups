@@ -253,7 +253,7 @@ wp_reset_query();
  * 
  * @since 0.1
  */
-function get_html() {
+function link_roundups_get_html() {
 $javascript_url = <<<JAVASCRIPT_URL
 "+jQuery('#url-'+jQuery(this).val()).text()+"
 JAVASCRIPT_URL;
@@ -288,7 +288,7 @@ EOT;
  * 
  * @since 0.3
  */
-function get_shortcode() {
+function link_roundups_get_shortcode() {
 $javascript_title = <<<JAVASCRIPT_TITLE
 '+jQuery('#title-'+jQuery(this).val()).text()+'
 JAVASCRIPT_TITLE;
@@ -306,7 +306,7 @@ jQuery(function(){
       if (jQuery(this).is(":checked")) {
         <?php /* The old way: */ ?>
         <?php /* var html = "<?php echo get_html(); ?>"; */ ?>
-        var shortcode = '<?php echo get_shortcode(); ?>';
+        var shortcode = '<?php echo link_roundups_get_shortcode(); ?>';
         if (jQuery('#content').is(":visible")) {
           jQuery('#content').val(jQuery('#content').val()+html);
         } else {
