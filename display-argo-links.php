@@ -149,7 +149,9 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
     <?php $i=1; ?>
     <?php while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
       <tr id='<?php echo get_the_ID(); ?>' class='<?php echo ($i%2 ? 'alternate' : '')?>'>
-        <th scope="row" id="cb" class="manage-column column-cb check-column" style=""><input type="checkbox" class='argo-link' value='<?php echo get_the_ID(); ?>'/></th>
+        <th scope="row" id="cb" class="manage-column column-cb check-column" style="">
+          <input type="checkbox" class='argo-link' value='<?php echo get_the_ID(); ?>'/>
+        </th>
         <td scope="row" id="title" class="manage-column column-title sortable desc" style="">
           <span id="title-<?php echo get_the_ID();?>"><?php echo the_title(); ?></span><br />
           <?php
@@ -246,8 +248,12 @@ wp_reset_query();
 ?>
 <?php
 
-
-function get_html() {
+/**
+ * Returns html for the old way argo links included content on the page.
+ * 
+ * @since 0.1
+ */
+function link_roundups_get_html() {
 $javascript_url = <<<JAVASCRIPT_URL
 "+jQuery('#url-'+jQuery(this).val()).text()+"
 JAVASCRIPT_URL;
@@ -276,17 +282,35 @@ EOT;
   return $argo_html;
 }
 
+/**
+ * Get a shortcode string in a jQuery context.
+ * Returns a PHP concatenated string of jQuery concatenated selectors. Sorry.
+ * 
+ * @since 0.3
+ */
+function link_roundups_get_shortcode() {
+$javascript_title = <<<JAVASCRIPT_TITLE
+'+jQuery('#title-'+jQuery(this).val()).text()+'
+JAVASCRIPT_TITLE;
+  $shortcode = "[rounduplink ";
+  $shortcode .= "id=\"'+jQuery(this).val()+'\" ";
+  $shortcode .= "title=\"".$javascript_title."\"]";
+  return $shortcode;
+}
+
 ?>
 <script type='text/javascript'>
 jQuery(function(){
   jQuery('.append-argo-links').bind('click',function(){
     jQuery('.argo-link').each(function(){
       if (jQuery(this).is(":checked")) {
-        var html = "<?php echo get_html(); ?>";
+        <?php /* The old way: */ ?>
+        <?php /* var html = "<?php echo get_html(); ?>"; */ ?>
+        var shortcode = '<?php echo link_roundups_get_shortcode(); ?>';
         if (jQuery('#content').is(":visible")) {
           jQuery('#content').val(jQuery('#content').val()+html);
         } else {
-          parent.tinyMCE.activeEditor.setContent(parent.tinyMCE.activeEditor.getContent() + html);
+          parent.tinyMCE.activeEditor.setContent(parent.tinyMCE.activeEditor.getContent() + shortcode);
         }
       }
     });
