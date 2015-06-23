@@ -101,7 +101,7 @@ function _argo_links_render_mailchimp_template($source, $post) {
 		'*|ROUNDUPLINKS|*' => apply_filters('the_content', $post->post_content),
 		'*|ROUNDUPTITLE|*' => $post->post_title,
 		'*|ROUNDUPAUTHOR|*' => $author->display_name,
-		'*|ROUNDUPDATE|*' => $post->post_date, // @TODO: format the date;
+		'*|ROUNDUPDATE|*' => get_the_date('',$post->ID),
 		'*|ROUNDUPPERMALINK|*' => get_post_permalink($post->ID)
 	);
 
