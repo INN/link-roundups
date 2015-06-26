@@ -29,6 +29,7 @@ class argo_link_roundups_widget extends WP_Widget {
 				'post_type' 	=> 'post',
 				'post_status'	=> 'publish'
 			);
+			if ( $instance['cat'] != '' ) $query_args['cat'] = $instance['cat'];
 			$my_query = new WP_Query( $query_args );
           		if ( $my_query->have_posts() ) {
           			while ( $my_query->have_posts() ) : $my_query->the_post();
@@ -67,6 +68,7 @@ class argo_link_roundups_widget extends WP_Widget {
 		$instance['num_posts'] = strip_tags( $new_instance['num_posts'] );
 		$instance['linktext'] = $new_instance['linktext'];
 		$instance['linkurl'] = $new_instance['linkurl'];
+		$instance['cat'] = intval( $new_instance['cat'] );
 		return $instance;
 	}
 
@@ -75,7 +77,8 @@ class argo_link_roundups_widget extends WP_Widget {
 			'title' 			=> 'Recent Link Roundups',
 			'num_posts' 		=> 1,
 			'linktext' 			=> '',
-			'linkurl' 			=> ''
+			'linkurl' 			=> '',
+			'cat' 				=> 0,
 		);
 
 		$instance = wp_parse_args( (array) $instance, $defaults );
@@ -91,6 +94,10 @@ class argo_link_roundups_widget extends WP_Widget {
 			<input id="<?php echo $this->get_field_id( 'num_posts' ); ?>" name="<?php echo $this->get_field_name( 'num_posts' ); ?>" value="<?php echo $instance['num_posts']; ?>" style="width:90%;" />
 		</p>
 
+		<p>
+			<label for="<?php echo $this->get_field_id('cat'); ?>"><?php _e('Limit to category: ', 'largo'); ?>
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat'), 'show_option_all' => __('None (all categories)', 'largo'), 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat'])); ?></label>
+		</p>
 		
 		<p><strong>More Link</strong><br /><small><?php _e('If you would like to add a more link at the bottom of the widget, add the link text and url here.', 'argo-links'); ?></small></p>
 		<p>

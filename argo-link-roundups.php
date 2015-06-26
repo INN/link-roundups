@@ -36,6 +36,7 @@ class ArgoLinkRoundups {
 	public static function my_get_posts( &$query ) {
 		// bail out early if suppress filters is set to true
 		if ($query->get('suppress_filters')) return;
+		if ( is_admin() ) return;
 
 		/*
 		 * Add roundup to the post type in the query if it is not already in it.

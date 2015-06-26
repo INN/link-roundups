@@ -52,6 +52,9 @@ class ArgoLinks {
 		add_filter('author_link ', array(__CLASS__,'the_permalink') );
 		add_filter('the_author', array(__CLASS__,'the_author') );
 		add_filter('the_author_posts_link', array(__CLASS__,'the_author_posts_link'));
+
+		/* Register a shortcode to display links */
+		add_shortcode('rounduplink', array(__CLASS__,'rounduplink_shortcode'));
 	}
 
 	public static function plugin_mce_css($mce_css) {
@@ -488,6 +491,10 @@ class ArgoLinks {
 	public static function get_html( $post = null ) {
 
 		$post = get_post($post);
+
+		if(!$post)
+			return;
+
 		$meta = get_post_meta($post->ID);
 
 		$url = !empty($meta["argo_link_url"]) ? $meta["argo_link_url"][0] : '';
@@ -519,6 +526,22 @@ class ArgoLinks {
 		return $argo_html;
 	}
 
+	/**
+	 * Displays rounduplink html.
+	 * 
+	 * @since 0.3
+	 */
+	public static function rounduplink_shortcode( $atts ) {
+
+		$a = shortcode_atts( array( 'id' => '', 'title' => '' ), $atts );
+
+		if( $a['id'] != null )
+			return self::get_html( $a['id'] );
+		else
+			return '';
+		
+	}
+	
 	/**
 	 * Returns DOM for an argolink excerpt.
 	 *
