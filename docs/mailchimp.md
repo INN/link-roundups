@@ -1,12 +1,10 @@
-This file aims to walk you through enabling the MailChimp integration in th Argo Links Plugin. You'll need to create a template and a list if you don't already have them in MailChimp.
+## Using Link Roundups Mailchimp Integration
 
-# Creating a MailChimp campaign
+Using the Mailchimp API, Link Roundups can send Roundups as newsletters via MailChimp.
 
-Once you have [saved some links](saving-links) and [created the link roundup post](link-roundups), you can send the link roundup post to MailChimp as a draft campaign.
+## Prerequisites: Setup a Template and List in MailChimp
 
-In the Link Roundups editor, above the standard WordPress "Publish" button, is a tktk
-
-# Setting up a MailChimp templates
+You'll need to create a template and a list if you don't already have them in MailChimp.
 
 ## Getting an API key from MailChimp
 
@@ -38,9 +36,17 @@ First, you'll have to create a template.
 
 Continue to the next step!
 
+# Creating a MailChimp Campaign
+
+Once you have [saved some links](saving-links.md) and [created the link roundup post](link-roundups.md), you can send the link roundup post to MailChimp as a draft campaign.
+
+In the Link Roundups editor, above the standard WordPress "Publish" button, is a button to Create a MailChimp Campaign. (Docs under construction...)
+
 ### Inserting template tags
 
-The Argo Links plugin's MailChimp features depend on the rpesence of certain tags in your email. You'll have to edit your template to add them, so that they can be filled in with your content when you go to send an email.
+The Link Roundups Plugin's MailChimp features depend on the presence of specific tags in your email. 
+
+You'll have to edit your template to add them, so that they can be filled in with your content when you go to send an email.
 
 1. Click on "Templates" in the MailChimp header.
 2. Click "Edit" on the template you want to edit.
@@ -64,6 +70,6 @@ These template tags are not required, but we highly recommend using them in your
 
 ## Choosing the template to use
 
-So now you have at least one template saved in MailChimp. Go back to the Argo Link roundups options page in Dashboard > Argo Link Roundups > Options, and choose your template.
+So now you have at least one template saved in MailChimp. Go back to the Link Roundups Options page in Dashboard &raquo; Link Roundups &raquo; Options, and choose your template.
 
 # Setting up Mailchimp Lists
