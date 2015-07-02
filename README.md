@@ -33,7 +33,7 @@ Display the most recent Link Roundup with a date.
 
 #### Mailchimp API Integration
 
-## [Documentation](docs/index.md)
+## [Documentation](docs/readme.md)
 
 1. [Collect and tag links](docs/saving-links.md)
 2. [Create link roundups](docs/link-roundups.md)
