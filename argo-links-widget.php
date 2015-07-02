@@ -9,7 +9,7 @@ class argo_links_widget extends WP_Widget {
 			'classname' => 'argo-links',
 			'description' => 'Show your most recently saved links in a sidebar widget', 'argo-links'
 		);
-		parent::__construct( 'argo-links-widget', __('Argo Links Widget', 'argo-links'), $widget_ops);
+		parent::__construct( 'argo-links-widget', __('Saved Links Widget', 'argo-links'), $widget_ops);
 	}
 
 	function widget( $args, $instance ) {

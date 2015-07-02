@@ -9,7 +9,7 @@ class argo_link_roundups_widget extends WP_Widget {
 			'classname' => 'argo-link-roundups',
 			'description' => 'Show your most recent link roundups in the sidebar', 'argo-links'
 		);
-		$this->WP_Widget( 'argo-link-roundups-widget', __('Argo Link Roundups Widget', 'argo-links'), $widget_ops);
+		$this->WP_Widget( 'argo-link-roundups-widget', __('Link Roundups Widget', 'argo-links'), $widget_ops);
 	}
 
 	function widget( $args, $instance ) {
