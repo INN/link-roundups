@@ -2,7 +2,7 @@
 
 Now that you have some links saved to your site, you're ready to create your first Link Roundup. 
 
-1. Go to Link Roundups and click Add New from your WordPress Dashboard.
+1) Go to Link Roundups and click Add New from your WordPress Dashboard.
 
 ![Finding "Link Roundups > Add New" in the menu](img/new-roundup.png)
 
@@ -12,7 +12,7 @@ Recent Saved Links lets you sort through links based on the date they were creat
 
 ![Screenshot showing how to choose links to add to a roundup post](img/recent-roundup-links.png)
 
-2. Select one or more links to add to your roundup by sending them to the Editor.
+2) Select one or more links to add to your roundup by sending them to the Editor.
 
 The Recent Saved Links section shows a maximum of 15 links at one time. Use the pagination to view more pages of Saved Links, but bear in mind you must send links to the editor before switching pages -- the box can't remember links you checked on other pages, only links currently displayed that you've checked.
 
