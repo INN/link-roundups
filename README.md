@@ -10,6 +10,7 @@ Version: 0.3
 ## Features
 
 #### Saved Links
+![New Saved Link](https://raw.githubusercontent.com/INN/link-roundups/master/docs/img/new-saved-link.png)
 
 Aggregate links from articles around the web and their source. Organize Links using tags.
 
@@ -18,6 +19,7 @@ Aggregate links from articles around the web and their source. Organize Links us
 Display a feed of links, optionally filtered by tags.
 
 #### Link Roundups
+![Recent Saved Links Panel in Link Roundups Editor](https://raw.githubusercontent.com/INN/link-roundups/master/docs/img/link-roundups-passthru.png)
 
 Quickly build custom link roundup posts using a panel that filters your Saved Links and lets you send them to the standard WordPress Post Editor.
 
