@@ -3,7 +3,7 @@ A fork inspired by NPR's Argo Project argo-links plugin.
 
 Since begun retrofit by the INN Nerds.
 
-### Aggregate articles and links from external sources, publish feeds of links and link roundup posts.
+### Aggregate links from external sources and publish feeds of external Saved Links and Roundup Posts. Integration with Mailchimp API enables Link Roundups to be sent as email newsletters.
 
 Version: 0.3
 
@@ -27,6 +27,11 @@ Quickly build custom link roundup posts using a panel that filters your Saved Li
 
 Display the most recent Link Roundup with a date.
 
+#### Custom Roundup Display Template
+
+#### Custom Roundup URL Slug
+
+#### Mailchimp API Integration
 
 ## [Documentation](docs/index.md)
 
