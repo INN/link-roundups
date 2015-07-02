@@ -42,7 +42,7 @@ EOT;
 				<li><code>#!SOURCE!#</code></li>
 				</ul>
 				<br /><br />
-				The current default html for reference is:<br />
+				<h4 style="margin-bottom:0;padding-bottom:0;">Default HTML</h4><br />
 				<code><?php echo htmlspecialchars($default_html); ?></code><br />
 				<h5>Style Links</h5>
 				Add custom styles to your theme's CSS based on selectors and structure above.
