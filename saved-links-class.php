@@ -262,7 +262,8 @@ class SavedLinks {
 	 * 
 	 * @since 0.1
 	 */
-	public static function data_for_custom_columns($column){
+	 
+	public static function data_for_custom_columns($column) {
 		
 		global $post;
 		$custom = get_post_custom();

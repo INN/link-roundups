@@ -208,7 +208,7 @@ class LinkRoundups {
 			add_settings_error(
 				'argo_link_roundups_use_mailchimp_integration',
 				'curl_not_enabled',
-				__('Curl is not enabled on your server. The MailChimp features will not work without curl. Please contact your server administrator to have curl enabled.', 'argo-links'),
+				__('Curl <strong>isn\'t enabled</strong> on your server. MailChimp features are dependent on cURL and won\'t work without it. Please contact your Server Admin to have cURL enabled.', 'link-roundups'),
 				'error'
 			);
 			delete_option('argo_link_roundups_use_mailchimp_integration');

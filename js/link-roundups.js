@@ -65,10 +65,10 @@ var LR = LR || {};
         initialize: function(options) {
             var model = options.model;
 
-            this.content = 'Successfully created a new MailChimp campaign!<br />' +
+            this.content = 'Successfully created a new MailChimp Campaign!<br />' +
                 '<a target="blank" href="https://' + LR.mc_api_endpoint +
                 '.admin.mailchimp.com/campaigns/wizard/confirm?id=' + model.get('web_id') +
-                '">Click here to edit your campaign in MailChimp.</a>';
+                '">Click here</a> to edit your campaign in MailChimp.';
 
             return LR.Modal.prototype.initialize.apply(this, arguments);
         }

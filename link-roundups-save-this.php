@@ -1,7 +1,7 @@
 <?php
 /**
  * Class: LinkRoundups_SaveThis_Button
- * Contains all relevant functionality to implement "Argo Link This!" button.
+ * Contains all relevant functionality to implement "Link Roundup Save This!" button.
  * 
  * @since 0.3
  * 
