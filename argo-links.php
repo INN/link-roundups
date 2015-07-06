@@ -1,44 +1,4 @@
 <?php
-/*
-Plugin Name: Link Roundups
-Plugin URI: https://github.com/INN/link-roundups
-Description: Link Roundups (previously Argo Links) allows you to save links from the web to use in roundup posts for your WordPress site.
-Author: INN, Project Argo, Mission Data
-Version: 0.3
-Author URI: http://nerds.inn.org/
-License: GPLv2
-*/
-
-/** Mailchimp API **/
-require_once(__DIR__ . '/vendor/mailchimp-api-php/src/Mailchimp.php');
-
-/**
- * On activation, we'll set an option called 'argolinks_flush' to true,
- * so our plugin knows, on initialization, to flush the rewrite rules.
- *
- * @link https://gist.github.com/clioweb/871595
- * @since 0.2
- * @see argolinks_deactivation
- * @see argo_flush_permalinks
- */
-function argolinks_activation() {
-	add_option('argolinks_flush', True);
-}
-register_activation_hook( __FILE__, 'argolinks_activation' );
-
-/**
- * On deactivation, we'll remove our 'argolinks_flush' option if it is
- * still around. It shouldn't be after we register our post type.
- *
- * @link https://gist.github.com/clioweb/871595
- * @since 0.2
- * @see argolinks_activation
- * @see argo_flush_permalinks
- */
-function argolinks_deactivation() {
-    delete_option('argolinks_flush');
-}
-register_deactivation_hook( __FILE__, 'argolinks_deactivation' );
 
 /**
  * Utility function to reset the permalinks.
@@ -154,7 +114,7 @@ function argo_links_enqueue_assets() {
 		array('argo-links-common'), 0.2, true
 	);
 
-	wp_register_style('argo-links-common', $plugin_path . '/css/argo-links-common.css');
+	wp_register_style('argo-links-common', $plugin_path . '/css/argo-links-common.min.css');
 
 	$screen = get_current_screen();
 	if ($screen->base == 'post' && $screen->post_type == 'roundup') {
@@ -220,24 +180,6 @@ function argo_links_get_mc_api_endpoint() {
 	$mc_api_key_parts = explode('-', $mc_api_key);
 	return $mc_api_key_parts[1];
 }
-
-/**
- * Set us up the files
- */
-require_once('argo-link-roundups.php');
-require_once('argo-link-roundups-widget.php');
-require_once('argo-links-widget.php');
-require_once('argo-links-class.php');
-require_once('argo-links-ajax.php');
-require_once('argo-this.php');
-
-/* Initialize the plugin using it's init() function */
-ArgoLinkRoundups::init();
-ArgoLinks::init();
-add_action('init', 'argo_flush_permalinks', 99);
-
-
-require_once('inc/lroundups-update.php');
 
 /**
  * Fetches info from a pages <meta> tags and

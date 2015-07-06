@@ -9,7 +9,7 @@
 */
 
 /* The Argo Link Roundups class - so we don't have function naming conflicts */
-class ArgoLinkRoundups {
+class LinkRoundups {
 
 	/* Initialize the plugin */
 	public static function init() {
@@ -28,6 +28,10 @@ class ArgoLinkRoundups {
 
 		/* Make sure our custom post type gets pulled into the river */
 		add_filter( 'pre_get_posts', array(__CLASS__,'my_get_posts') );
+		
+		/* Register Link Roundups Widget */
+		add_action('widgets_init', array(__CLASS__, 'add_argo_link_roundups_widget'));
+
 
 	}
 
