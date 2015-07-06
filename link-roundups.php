@@ -5,10 +5,10 @@
  */
 
 /*
-*Argo Links - Link Roundups Code
+* Link Roundups Code
 */
 
-/* The Argo Link Roundups class - so we don't have function naming conflicts */
+/* The Link Roundups class - so we don't have naming conflicts with SavedLinks */
 class LinkRoundups {
 
 	/* Initialize the plugin */
@@ -126,7 +126,7 @@ class LinkRoundups {
 		<div id='argo-links-display-area'></div>
 		<script type='text/javascript'>
 		jQuery(function(){
-			jQuery('#argo-links-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-argo-links.php');
+			jQuery('#argo-links-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-recent-saved-links.php');
 		});
 		</script>
 	<?php

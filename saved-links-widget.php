@@ -1,6 +1,8 @@
 <?php
 /*
- * argo Recent Posts
+ * Saved Links widget
+ *
+ * @since 0.2.0
  */
 class argo_links_widget extends WP_Widget {
 

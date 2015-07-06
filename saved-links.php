@@ -3,8 +3,8 @@
 /**
  * Utility function to reset the permalinks.
  *
- * Called in ArgoLinks::register_permalinks() to reset the WordPress permalinks after the
- * argolinks post type is registered in ArgoLinks::register_permalinks(), which is run after
+ * Called in SavedLinks::register_permalinks() to reset the WordPress permalinks after the
+ * savedlinks post type is registered in ArgoLinks::register_permalinks(), which is run after
  * the argolinkroundups post type is registered in ArgoLinkRoundups::register_permalinks() 
  *
  * @return bool If get_option('argolinks_flush') is true or false
@@ -105,27 +105,27 @@ function argo_links_enqueue_assets() {
 	$plugin_path = plugins_url(basename(__DIR__), __DIR__);
 
 	wp_register_script(
-		'argo-links-common', $plugin_path . '/js/argo-links-common.js',
-		array('jquery', 'underscore', 'backbone'), 0.2, true
+		'saved-links', $plugin_path . '/js/saved-links.js',
+		array('jquery', 'underscore', 'backbone'), 0.3, true
 	);
 
 	wp_register_script(
-		'argo-link-roundups', $plugin_path . '/js/argo-link-roundups.js',
-		array('argo-links-common'), 0.2, true
+		'link-roundups', $plugin_path . '/js/link-roundups.js',
+		array('argo-links-common'), 0.3, true
 	);
 
-	wp_register_style('argo-links-common', $plugin_path . '/css/argo-links-common.min.css');
+	wp_register_style('saved-links', $plugin_path . '/css/saved-links-common.min.css');
 
 	$screen = get_current_screen();
 	if ($screen->base == 'post' && $screen->post_type == 'roundup') {
-		wp_enqueue_script('argo-link-roundups');
-		wp_enqueue_style('argo-links-common');
+		wp_enqueue_script('link-roundups');
+		wp_enqueue_style('saved-links');
 	}
 }
 add_action('admin_enqueue_scripts', 'argo_links_enqueue_assets');
 
 /**
- * Print the underscore template for the AL.Modal view.
+ * Print the underscore template for the SL.Modal view.
  *
  * @since 0.2
  */
@@ -145,7 +145,7 @@ function argo_links_modal_underscore_template() { ?>
 }
 
 /**
- * Builds an AL object with common attributes used throughout the plugin's javascript files.
+ * Builds an SL object with common attributes used throughout the plugin's javascript files.
  *
  * @since 0.2
  */

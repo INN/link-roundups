@@ -17,18 +17,19 @@ License: GPLv2
  */
 
 /** Setup Saved Links **/
-require_once('argo-links.php');
-require_once('argo-links-class.php');
+require_once('saved-links.php');
+require_once('saved-links-class.php');
 
 /** Setup Saved Links Peripherals **/
-require_once('argo-links-widget.php');
-require_once('argo-links-ajax.php');
-require_once('argo-this.php');
+require_once('saved-links-widget.php');
+require_once('saved-links-ajax.php');
+
+require_once('link-roundups-save-this.php');
 
 /** Setup Link Roundups **/
-require_once('argo-link-roundups.php');
-require_once('argo-link-roundups-widget.php');
-require_once('inc/lroundups-update.php');
+require_once('link-roundups.php');
+require_once('link-roundups-widget.php');
+require_once('inc/link-roundups-update.php');
 
 
 /** Include the MailChimp PHP API **/
@@ -36,9 +37,10 @@ require_once(__DIR__ . '/vendor/mailchimp-api-php/src/Mailchimp.php');
 
 /** Initialize Plugin using its' class 
   *
-  * @see argo-links-class.php
+  * @see saved-links-class.php
   *
   **/
+  
 SavedLinks::init();
 LinkRoundups::init();
 add_action('init', 'argo_flush_permalinks', 99);

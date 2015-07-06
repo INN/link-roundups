@@ -9,8 +9,8 @@ module.exports = function(grunt) {
     path = path.replace(/^[\s\S]+\/wp-content/, "\/wp-content");
 
     var CSS_LESS_FILES = {
-        'css/argo-links.css': 'less/argo-links.less',
-        'css/argo-links-common.css': 'less/argo-links-common.less',
+        'css/link-roundups.css': 'less/link-roundups.less',
+        'css/saved-links-common.css': 'less/saved-links-common.less',
     };
 
     grunt.initConfig({
@@ -66,13 +66,6 @@ module.exports = function(grunt) {
                     src: ['*.css', '!*.min.css'],
                     dest: 'css',
                     ext: '.min.css'
-                },
-                {
-                    expand: true,
-                    cwd: 'homepages/assets/css',
-                    src: ['*.css', '!*.min.css'],
-                    dest: 'homepages/assets/css',
-                    ext: '.min.css'
                 }]
             }
         },
@@ -81,47 +74,12 @@ module.exports = function(grunt) {
             less: {
                 files: [
                     'less/**/*.less',
-                    'homepages/assets/less/**/*.less'
                 ],
                 tasks: [
                     'less:development',
                     'cssmin'
                 ]
             },
-        },
-
-        pot: {
-            options: {
-                text_domain: 'largo',
-                dest: 'lang/',
-                keywords: [ //WordPress localization functions
-                    '__:1',
-                    '_e:1',
-                    '_x:1,2c',
-                    'esc_html__:1',
-                    'esc_html_e:1',
-                    'esc_html_x:1,2c',
-                    'esc_attr__:1',
-                    'esc_attr_e:1',
-                    'esc_attr_x:1,2c',
-                    '_ex:1,2c',
-                    '_n:1,2',
-                    '_nx:1,2,4c',
-                    '_n_noop:1,2',
-                    '_nx_noop:1,2,3c'
-                ]
-            },
-            files: {
-                src: '**/*.php',
-                expand: true
-            }
-        },
-
-        po2mo: {
-            files: {
-                src: 'lang/*.po',
-                expand: true
-            }
         }
     });
 

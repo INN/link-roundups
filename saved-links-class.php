@@ -159,7 +159,7 @@ class SavedLinks {
 			$argo_link_source = apply_filters('default_argo_link_source',"");
 		}
 
-		$argo_link_img_src = Argo_This_Button::default_imgUrl();
+		$argo_link_img_src = LinkRoundups_SaveThis_Button::default_imgUrl();
 
 	?>
 	<p><label>URL:</label><br />
@@ -436,9 +436,9 @@ class SavedLinks {
 	}
 
 	/**
-	 * Filter argo link content.
+	 * Filter Saved Links content.
 	 *
-	 * Argo links have no content, so we have to generate it for inclusion on
+	 * Saved Links have no content, so we have to generate it for inclusion on
 	 * archive pages.
 	 *
 	 * @since 0.3
@@ -447,7 +447,7 @@ class SavedLinks {
 	 */
 	public static function the_content($content) {
 
-		// Only run for argo_links
+		// Only run for rounduplink
 		global $post;
 		if ( ! ( 'rounduplink' == $post->post_type ) ) {
 			return $content;
@@ -457,7 +457,7 @@ class SavedLinks {
 	}
 
 	/**
-	 * Filter argo link content & excerpt
+	 * Filter Saved Links content & excerpt
 	 *
 	 * Argo links have no content, so we have to generate it for inclusion on
 	 * archive pages.
@@ -468,7 +468,7 @@ class SavedLinks {
 	 */
 	public static function the_excerpt($content) {
 
-		// Only run for argo_links
+		// Only run for rounduplink
 		global $post;
 		if ( ! ( 'rounduplink' == $post->post_type ) ) {
 			return $content;
@@ -478,7 +478,7 @@ class SavedLinks {
 	}
 
 	/**
-	 * Returns DOM for an argolink post content.
+	 * Returns DOM for Saved Links content.
 	 *
 	 * DOM is generated either from the default HTML string or from a user
 	 * specified dom string in argolink options.

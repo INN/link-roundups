@@ -6,7 +6,7 @@ class ArgoLinksTestFunctions extends WP_UnitTestCase {
 		parent::setUp();
 
 		// Set up global $post object
-		$this->argolinks_post = $this->factory->post->create(array('post_type' => 'roundup'));
+		$this->argolinks_post = $this->factory->post->create(array('post_type' => 'rounduplinks'));
 		global $post;
 		$this->tmp_post = $post;
 		$post = get_post($this->argolinks_post);
