@@ -9,12 +9,9 @@ Author URI: http://nerds.inn.org/
 License: GPLv2
 */
 
-/**
- * Register Plugin filesName
- *
- * @todo: http://wppb.me/
- * @since 0.3
- */
+/** --------------------------------------------------------
+ * Register Plugin Files
+ * ------------------------------------------------------ */
 
 /** Setup Saved Links **/
 require_once('saved-links.php');
@@ -35,11 +32,11 @@ require_once('inc/link-roundups-update.php');
 /** Include the MailChimp PHP API **/
 require_once(__DIR__ . '/vendor/mailchimp-api-php/src/Mailchimp.php');
 
-/** Initialize Plugin using its' class 
-  *
-  * @see saved-links-class.php
-  *
-  **/
+/** --------------------------------------------------------
+ * Initialize Plugin Using Its' Class
+ *
+ * @see saved-links-class.php
+ * ------------------------------------------------------ */
   
 SavedLinks::init();
 LinkRoundups::init();

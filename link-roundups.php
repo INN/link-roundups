@@ -14,10 +14,10 @@ class LinkRoundups {
 	/* Initialize the plugin */
 	public static function init() {
 
-		/* Register the custom post type of roundup */
+		/* Register WordPress Custom Post Type for Link Roundups */
 		add_action('init', array(__CLASS__, 'register_post_type' ));
 
-		/* Add our custom post fields for our custom post type */
+		/* Add Custom Post Fields to Link Roundups */
 		add_action("admin_init", array(__CLASS__, "add_custom_post_fields"));
 
 		/* Add the Argo Link Roundups Options sub menu */
@@ -31,7 +31,6 @@ class LinkRoundups {
 		
 		/* Register Link Roundups Widget */
 		add_action('widgets_init', array(__CLASS__, 'add_argo_link_roundups_widget'));
-
 
 	}
 

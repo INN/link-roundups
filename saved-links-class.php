@@ -15,36 +15,36 @@ class SavedLinks {
 	 */
 	public static function init() {
 
-		/*Register the custom post type of argolinks */
+		/* Register Saved Links Custom Post Type */
 		add_action('init', array(__CLASS__, 'register_post_type' ));
 
-		/*Register our custom taxonomy of "argo-link-categories" so we can have our own tags/categories for our Argo Links post type*/
-		/* moved into a function per wordpress 3.0 issues with calling it directly*/
+		/* Register Saved Links Custom Taxonomy */
 		add_action('init', array(__CLASS__, 'register_argo_links_taxonomy'));
 
-		/*Add the Argo This! sub menu*/
+		/* Add the Save This! Page */
 		add_action("admin_menu", array(__CLASS__, "add_argo_this_sub_menu"));
 
-		/*Add our custom post fields for our custom post type*/
+		/* Add Custom Post Fields */
 		add_action("admin_init", array(__CLASS__, "add_custom_post_fields"));
 
-		/*Save our custom post fields! Very important!*/
+		/* Save Custom Post Field Values -- very important! */
 		add_action('save_post', array(__CLASS__, 'save_custom_fields'));
 
-		/*Add our new custom post fields to the display columns on the main Argo Links admin page*/
+		/*Add Custom Display Columns to List of Saved Links to Edit in the Dashboard
 		add_filter("manage_edit-rounduplink_columns", array(__CLASS__, "display_custom_columns"));
 
-		/*Populate those new columns with the custom data*/
+		/* Populate those new columns with the custom data */
 		add_action("manage_posts_custom_column", array(__CLASS__, "data_for_custom_columns"));
-
+		
+		/* Register the Saved Links Widget with WordPress */
 		add_action('widgets_init', array(__CLASS__, 'add_argo_links_widget'));
 
-		/*Add our css stylesheet into the header*/
+		/* Add our CSS to the header */
 		add_action('admin_print_styles', array(__CLASS__,'add_styles'));
 		add_action('wp_print_styles', array(__CLASS__, 'add_styles'));
 		add_filter('mce_css', array(__CLASS__,'plugin_mce_css'));
 
-		/* Argo links have no content, so we have to generate it on request */
+		/* Saved Links have no content, so we have to generate it on request */
 		add_filter('the_content', array(__CLASS__,'the_content') );
 		add_filter('the_excerpt', array(__CLASS__,'the_excerpt') );
 		add_filter('post_type_link', array(__CLASS__,'the_permalink'), 0, 2);

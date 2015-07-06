@@ -87,7 +87,7 @@ function argo_links_create_mailchimp_campaign_button() {
 			id="argo-links-create-mailchimp-campaign"
 			class="button button-primary button-large" value="Create MailChimp Campaign">
 	<?php } else { ?>
-		<p>A MailChimp roundup campaign exists for thist post.</p>
+		<p>A MailChimp Campaign exists for thist post.</p>
 		<a class="button" target="blank"
 			href="https://<?php echo argo_links_get_mc_api_endpoint(); ?>.admin.mailchimp.com/campaigns/wizard/confirm?id=<?php echo $mc_web_id; ?>">Edit in MailChimp.</a>
 	<?php } ?>
@@ -111,7 +111,7 @@ function argo_links_enqueue_assets() {
 
 	wp_register_script(
 		'link-roundups', $plugin_path . '/js/link-roundups.js',
-		array('argo-links-common'), 0.3, true
+		array('link-roundups'), 0.3, true
 	);
 
 	wp_register_style('saved-links', $plugin_path . '/css/saved-links-common.min.css');

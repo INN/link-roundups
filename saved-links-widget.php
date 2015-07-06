@@ -8,10 +8,10 @@ class argo_links_widget extends WP_Widget {
 
 	function argo_links_widget() {
 		$widget_ops = array(
-			'classname' => 'argo-links',
-			'description' => 'Show your most recently saved links in a sidebar widget', 'argo-links'
+			'classname' => 'link-roundups',
+			'description' => 'Show your most recently saved links in a sidebar widget', 'link-roundups'
 		);
-		parent::__construct( 'argo-links-widget', __('Argo Links Widget', 'argo-links'), $widget_ops);
+		parent::__construct( 'argo-links-widget', __('Argo Links Widget', 'link-roundups'), $widget_ops);
 	}
 
 	function widget( $args, $instance ) {
@@ -30,6 +30,7 @@ class argo_links_widget extends WP_Widget {
 				'post_type' 	=> 'rounduplink',
 				'post_status'	=> 'publish'
 			);
+			
 			$my_query = new WP_Query( $query_args );
           		if ( $my_query->have_posts() ) {
           			while ( $my_query->have_posts() ) : $my_query->the_post();
@@ -45,7 +46,7 @@ class argo_links_widget extends WP_Widget {
 		                      	echo '</p>';
 	                      	}
 	                      	if ( isset($custom["argo_link_source"][0] ) ) {
-		                      	echo '<p class="source">' . __('Source: ', 'argo-links') . '<span>';
+		                      	echo '<p class="source">' . __('Source: ', 'link-roundups') . '<span>';
 		                      	echo ( isset( $custom["argo_link_url"][0] ) ) ? '<a href="' . $custom["argo_link_url"][0] . '">' . $custom["argo_link_source"][0] . '</a>' : $custom["argo_link_source"][0];
 		                      	echo '</span></p>';
 	                      	}
@@ -55,7 +56,7 @@ class argo_links_widget extends WP_Widget {
 	            <?php
 	            	endwhile;
 	            } else {
-	    			_e('<p class="error"><strong>You don\'t have any recent links or the argo links plugin is not active.</strong></p>', 'argo-links');
+	    			_e('<p class="error"><strong>You don\'t have any recent links or the argo links plugin is not active.</strong></p>', 'link-roundups');
 	    		} // end recent links
 
     		if ( $instance['linkurl'] !='' ) { ?>
@@ -86,30 +87,36 @@ class argo_links_widget extends WP_Widget {
 		?>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'argo-links'); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>">
+				<?php _e('Title:', 'link-roundups'); ?>
+			</label>
 			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:90%;" />
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'num_posts' ); ?>"><?php _e('Number of posts to show:', 'argo-links'); ?></label>
+			<label for="<?php echo $this->get_field_id( 'num_posts' ); ?>">
+				<?php _e('Number of posts to show:', 'link-roundups'); ?>
+			</label>
 			<input id="<?php echo $this->get_field_id( 'num_posts' ); ?>" name="<?php echo $this->get_field_name( 'num_posts' ); ?>" value="<?php echo $instance['num_posts']; ?>" style="width:90%;" />
 		</p>
 
 		<?php if ( function_exists( 'largo_trim_sentences' ) ) : ?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'num_sentences' ); ?>"><?php _e('Excerpt Length (# of Sentences):', 'argo-links'); ?></label>
+			<label for="<?php echo $this->get_field_id( 'num_sentences' ); ?>">
+				<?php _e('Excerpt Length (# of Sentences):', 'link-roundups'); ?>
+			</label>
 			<input id="<?php echo $this->get_field_id( 'num_sentences' ); ?>" name="<?php echo $this->get_field_name( 'num_sentences' ); ?>" value="<?php echo $instance['num_sentences']; ?>" style="width:90%;" />
 		</p>
 		<?php endif; ?>
 
-		<p><strong>More Link</strong><br /><small><?php _e('If you would like to add a more link at the bottom of the widget, add the link text and url here.', 'argo-links'); ?></small></p>
+		<p><strong>More Link</strong><br /><small><?php _e('If you would like to add a more link at the bottom of the widget, add the link text and url here.', 'link-roundups'); ?></small></p>
 		<p>
-			<label for="<?php echo $this->get_field_id('linktext'); ?>"><?php _e('Link text:', 'argo-links'); ?></label>
+			<label for="<?php echo $this->get_field_id('linktext'); ?>"><?php _e('Link text:', 'link-roundups'); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id('linktext'); ?>" name="<?php echo $this->get_field_name('linktext'); ?>" type="text" value="<?php echo $instance['linktext']; ?>" />
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id('linkurl'); ?>"><?php _e('URL:', 'argo-links'); ?></label>
+			<label for="<?php echo $this->get_field_id('linkurl'); ?>"><?php _e('URL:', 'link-roundups'); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id('linkurl'); ?>" name="<?php echo $this->get_field_name('linkurl'); ?>" type="text" value="<?php echo $instance['linkurl']; ?>" />
 		</p>
 
