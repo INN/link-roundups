@@ -5,19 +5,19 @@
  */
 
 /*
-*Argo Links - Link Roundups Code
+* Link Roundups Code
 */
 
-/* The Argo Link Roundups class - so we don't have function naming conflicts */
-class ArgoLinkRoundups {
+/* The Link Roundups class - so we don't have naming conflicts with SavedLinks */
+class LinkRoundups {
 
 	/* Initialize the plugin */
 	public static function init() {
 
-		/* Register the custom post type of roundup */
+		/* Register WordPress Custom Post Type for Link Roundups */
 		add_action('init', array(__CLASS__, 'register_post_type' ));
 
-		/* Add our custom post fields for our custom post type */
+		/* Add Custom Post Fields to Link Roundups */
 		add_action("admin_init", array(__CLASS__, "add_custom_post_fields"));
 
 		/* Add the Argo Link Roundups Options sub menu */
@@ -28,6 +28,9 @@ class ArgoLinkRoundups {
 
 		/* Make sure our custom post type gets pulled into the river */
 		add_filter( 'pre_get_posts', array(__CLASS__,'my_get_posts') );
+		
+		/* Register Link Roundups Widget */
+		add_action('widgets_init', array(__CLASS__, 'add_argo_link_roundups_widget'));
 
 	}
 
@@ -122,7 +125,7 @@ class ArgoLinkRoundups {
 		<div id='argo-links-display-area'></div>
 		<script type='text/javascript'>
 		jQuery(function(){
-			jQuery('#argo-links-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-argo-links.php');
+			jQuery('#argo-links-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-recent-saved-links.php');
 		});
 		</script>
 	<?php
@@ -205,7 +208,7 @@ class ArgoLinkRoundups {
 			add_settings_error(
 				'argo_link_roundups_use_mailchimp_integration',
 				'curl_not_enabled',
-				__('Curl is not enabled on your server. The MailChimp features will not work without curl. Please contact your server administrator to have curl enabled.', 'argo-links'),
+				__('Curl <strong>isn\'t enabled</strong> on your server. MailChimp features are dependent on cURL and won\'t work without it. Please contact your Server Admin to have cURL enabled.', 'link-roundups'),
 				'error'
 			);
 			delete_option('argo_link_roundups_use_mailchimp_integration');

@@ -6,7 +6,7 @@
  *
  * @since 0.1
  */
-class ArgoLinks {
+class SavedLinks {
 
 	/**
 	 * Initialize the class.
@@ -15,37 +15,36 @@ class ArgoLinks {
 	 */
 	public static function init() {
 
-		/*Register the custom post type of argolinks */
+		/* Register Saved Links Custom Post Type */
 		add_action('init', array(__CLASS__, 'register_post_type' ));
 
-		/*Register our custom taxonomy of "argo-link-categories" so we can have our own tags/categories for our Argo Links post type*/
-		/* moved into a function per wordpress 3.0 issues with calling it directly*/
+		/* Register Saved Links Custom Taxonomy */
 		add_action('init', array(__CLASS__, 'register_argo_links_taxonomy'));
 
-		/*Add the Argo This! sub menu*/
+		/* Add the Save This! Page */
 		add_action("admin_menu", array(__CLASS__, "add_argo_this_sub_menu"));
 
-		/*Add our custom post fields for our custom post type*/
+		/* Add Custom Post Fields */
 		add_action("admin_init", array(__CLASS__, "add_custom_post_fields"));
 
-		/*Save our custom post fields! Very important!*/
+		/* Save Custom Post Field Values -- very important! */
 		add_action('save_post', array(__CLASS__, 'save_custom_fields'));
 
-		/*Add our new custom post fields to the display columns on the main Argo Links admin page*/
+		/*Add Custom Display Columns to List of Saved Links to Edit in the Dashboard
 		add_filter("manage_edit-rounduplink_columns", array(__CLASS__, "display_custom_columns"));
 
-		/*Populate those new columns with the custom data*/
+		/* Populate those new columns with the custom data */
 		add_action("manage_posts_custom_column", array(__CLASS__, "data_for_custom_columns"));
-
+		
+		/* Register the Saved Links Widget with WordPress */
 		add_action('widgets_init', array(__CLASS__, 'add_argo_links_widget'));
-		add_action('widgets_init', array(__CLASS__, 'add_argo_link_roundups_widget'));
 
-		/*Add our css stylesheet into the header*/
+		/* Add our CSS to the header */
 		add_action('admin_print_styles', array(__CLASS__,'add_styles'));
 		add_action('wp_print_styles', array(__CLASS__, 'add_styles'));
 		add_filter('mce_css', array(__CLASS__,'plugin_mce_css'));
 
-		/* Argo links have no content, so we have to generate it on request */
+		/* Saved Links have no content, so we have to generate it on request */
 		add_filter('the_content', array(__CLASS__,'the_content') );
 		add_filter('the_excerpt', array(__CLASS__,'the_excerpt') );
 		add_filter('post_type_link', array(__CLASS__,'the_permalink'), 0, 2);
@@ -160,7 +159,7 @@ class ArgoLinks {
 			$argo_link_source = apply_filters('default_argo_link_source',"");
 		}
 
-		$argo_link_img_src = Argo_This_Button::default_imgUrl();
+		$argo_link_img_src = LinkRoundups_SaveThis_Button::default_imgUrl();
 
 	?>
 	<p><label>URL:</label><br />
@@ -263,7 +262,8 @@ class ArgoLinks {
 	 * 
 	 * @since 0.1
 	 */
-	public static function data_for_custom_columns($column){
+	 
+	public static function data_for_custom_columns($column) {
 		
 		global $post;
 		$custom = get_post_custom();
@@ -437,9 +437,9 @@ class ArgoLinks {
 	}
 
 	/**
-	 * Filter argo link content.
+	 * Filter Saved Links content.
 	 *
-	 * Argo links have no content, so we have to generate it for inclusion on
+	 * Saved Links have no content, so we have to generate it for inclusion on
 	 * archive pages.
 	 *
 	 * @since 0.3
@@ -448,7 +448,7 @@ class ArgoLinks {
 	 */
 	public static function the_content($content) {
 
-		// Only run for argo_links
+		// Only run for rounduplink
 		global $post;
 		if ( ! ( 'rounduplink' == $post->post_type ) ) {
 			return $content;
@@ -458,7 +458,7 @@ class ArgoLinks {
 	}
 
 	/**
-	 * Filter argo link content & excerpt
+	 * Filter Saved Links content & excerpt
 	 *
 	 * Argo links have no content, so we have to generate it for inclusion on
 	 * archive pages.
@@ -469,7 +469,7 @@ class ArgoLinks {
 	 */
 	public static function the_excerpt($content) {
 
-		// Only run for argo_links
+		// Only run for rounduplink
 		global $post;
 		if ( ! ( 'rounduplink' == $post->post_type ) ) {
 			return $content;
@@ -479,7 +479,7 @@ class ArgoLinks {
 	}
 
 	/**
-	 * Returns DOM for an argolink post content.
+	 * Returns DOM for Saved Links content.
 	 *
 	 * DOM is generated either from the default HTML string or from a user
 	 * specified dom string in argolink options.

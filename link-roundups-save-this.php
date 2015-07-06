@@ -1,7 +1,7 @@
 <?php
 /**
- * Class: Argo_This_Button
- * Contains all relevant functionality to implement "Argo Link This!" button.
+ * Class: LinkRoundups_SaveThis_Button
+ * Contains all relevant functionality to implement "Link Roundup Save This!" button.
  * 
  * @since 0.3
  * 
@@ -31,7 +31,7 @@ if ( !defined('ABSPATH') ) {
 	header( 'Location: ' . $newURL );
 }
 
-class Argo_This_Button {
+class LinkRoundups_SaveThis_Button {
 
 	private static $title;
 	private static $description;
@@ -261,7 +261,7 @@ class Argo_This_Button {
 
 }
 
-Argo_This_Button::init();
+LinkRoundups_SaveThis_Button::init();
 
 
 

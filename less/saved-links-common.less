@@ -1,5 +1,5 @@
 /* Modal */
-.argo-links-modal {
+.lr-links-modal {
   position: fixed;
   width: 500px;
   min-height: 180px;
@@ -14,43 +14,43 @@
   border-radius: 4px;
 }
 
-.argo-links-modal-header {
+.lr-links-modal-header {
   background: #eee;
   width: 100%;
   float: left;
   border-bottom: 1px solid #ddd;
 }
-.argo-links-modal-close {
+.lr-links-modal-close {
   float: right;
   margin: 10px;
   color: #555;
 }
-.argo-links-modal-close:hover {
+.lr-links-modal-close:hover {
   color: #222;
   cursor: pointer;
 }
 
-.argo-links-modal-content,
-.argo-links-modal-actions {
+.lr-links-modal-content,
+.lr-links-modal-actions {
   padding: 10px;
   float: left;
   clear: both;
   width: 480px;
 }
-.argo-links-modal-content {
+.lr-links-modal-content {
   font-size: 16px;
   text-align: center;
   margin-bottom: 50px;
   padding-top: 20px;
 }
-.argo-links-modal-actions {
+.lr-links-modal-actions {
   bottom: 0;
   position: absolute;
   text-align: right;
   border-top: 1px solid #eee;
 }
 
-#argo-links-modal-overlay {
+.lr-links-modal-overlay {
   top: 0;
   left: 0;
   position: fixed;
@@ -61,10 +61,10 @@
   display: none;
 }
 
-body.argo-links-modal-open .argo-links-modal {
+body.lr-links-modal-open .lr-links-modal {
   display: none;
 }
-body.argo-links-modal-open .argo-links-modal.show,
-body.argo-links-modal-open #argo-links-modal-overlay {
+body.lr-links-modal-open .lr-links-modal.show,
+body.lr-links-modal-open .lr-links-modal-overlay {
   display: block;
 }

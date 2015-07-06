@@ -11,6 +11,7 @@ require_once('../../../wp-admin/admin.php');
 
 global $post;
 // The Query
+
 /*Build our query for what links to show!*/
 $posts_per_page = (isset($_REQUEST['posts_per_page']) ? $_REQUEST['posts_per_page'] : 15);
 $page = (isset($_REQUEST['argo_page']) ? $_REQUEST['argo_page']: 1);
@@ -29,17 +30,21 @@ if (isset($_REQUEST['link_date'])) {
     $default_date = array();
   }
 }
+
 $args =  array(
-              'post_type' => 'rounduplink',
-              'orderby' => (isset($_REQUEST['orderby']) ? $_REQUEST['orderby'] : 'date'),
-              'order' => (isset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc'),
-              'posts_per_page' => -1
-              );
+            'post_type' => 'rounduplink',
+            'orderby' => (isset($_REQUEST['orderby']) ? $_REQUEST['orderby'] : 'date'),
+            'order' => (isset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc'),
+            'posts_per_page' => -1
+        );
+              
 $args = array_merge($args, $default_date);
 $the_posts_count_query = new WP_Query($args);
 $total_post_count = $the_posts_count_query->post_count;
 $the_posts_count_query = '';
-$the_query = new WP_Query(array_merge($args,array('posts_per_page' => $posts_per_page, 'paged' => $page)));
+$the_query = new WP_Query(
+			array_merge($args,array('posts_per_page' => $posts_per_page, 'paged' => $page))
+			);
 
 $from_result = 1;
 $to_result = $posts_per_page;
@@ -318,11 +323,11 @@ jQuery(function(){
     });
   jQuery('div.display-argo-links a').bind("click",function(){
     var urlOptions = jQuery(this).attr('href');
-    jQuery('#argo-links-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-argo-links.php?'+urlOptions);
+    jQuery('#argo-links-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-recent-saved-links.php?'+urlOptions);
     return false;
   });
   jQuery("#filter_links").bind("submit", function() {
-    jQuery('#argo-links-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-argo-links.php?'+jQuery(this).serialize());
+    jQuery('#argo-links-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-recent-saved-links.php?'+jQuery(this).serialize());
     return false;
   });
   jQuery('#check-all-boxes').change(function(){

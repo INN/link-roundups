@@ -1,10 +1,10 @@
-var AL = AL || {};
+var SL = SL || {};
 
 (function() {
     var $ = jQuery;
 
     // Views
-    AL.BaseView = Backbone.View.extend({
+    SL.BaseView = Backbone.View.extend({
         showSpinner: function() {
             this.$el.find('.spinner').css('display', 'inline-block');
         },
@@ -14,7 +14,7 @@ var AL = AL || {};
         }
     });
 
-    AL.Modal = AL.BaseView.extend({
+    SL.Modal = SL.BaseView.extend({
         actions: null,
 
         content: null,

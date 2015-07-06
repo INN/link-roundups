@@ -44,7 +44,7 @@ function lroundups_perform_update() {
  */
 function lroundups_version() {
 	if( is_admin() ) {
-		$plugin = get_plugin_data( plugin_dir_path(__FILE__) . "../argo-links.php" );
+		$plugin = get_plugin_data( plugin_dir_path(__FILE__) . "../saved-links.php" );
 		return $plugin['Version'];
 	}
 	return false;
@@ -72,12 +72,6 @@ function lroundups_need_updates() {
 	return true;
 
 }
-
-
-
-
-
-
 
 
 /** --------------------------------------------------------
@@ -240,5 +234,5 @@ add_action('wp_ajax_lroundups_ajax_update_database', 'lroundups_ajax_update_data
  * Update functions.
  * ------------------------------------------------------ */
 
-include_once('lroundups-update-functions.php');
+include_once('link-roundups-update-functions.php');
 
