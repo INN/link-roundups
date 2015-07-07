@@ -3,7 +3,7 @@ A fork inspired by NPR's Argo Project argo-links plugin.
 
 Since begun retrofit by the INN Nerds.
 
-### Aggregate links from external sources and publish feeds of external Saved Links and Roundup Posts. Integration with Mailchimp API enables Link Roundups to be sent as email newsletters.
+### Link Roundups (previously Argo Links) lets you aggregate and tag Saved Links. Then publish feeds using widgets, custom Link Roundup posts and optionally use MailChimp API integration to send Roundups as Campaigns.
 
 Version: 0.3
 
