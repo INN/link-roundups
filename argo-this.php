@@ -110,7 +110,7 @@ class Argo_This_Button {
 	static function shortcut_link() {
 
 		// This is the default 'Press This!' button link.
-		$shortcut_link = get_shortcut_link();
+		$shortcut_link = htmlspecialchars( get_shortcut_link() );
 
 		$post_type = 'rounduplink';
 
@@ -119,6 +119,7 @@ class Argo_This_Button {
 		$shortcut_link = str_replace('width=720', 'width=840', $shortcut_link);
 		$shortcut_link = str_replace('post-new.php', "post-new.php?post_type=$post_type", $shortcut_link);
 		$shortcut_link = str_replace('?u=', '&u=', $shortcut_link);
+		$shortcut_link = str_replace('?v=', '&v=', $shortcut_link);
 
 		return $shortcut_link;
 
