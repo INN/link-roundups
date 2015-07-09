@@ -327,14 +327,14 @@ class ArgoLinks {
 
 	 <div class="card pressthis">
 	<h3><?php _e('Link This') ?></h3>
-	<p><?php _e( 'Link This is a little bookmarklet that lets you save your current page as a Saved Link.' );?></p>
-	<p><?php _e( 'The bookmarklet tries to automatically fills the URL, Title, Source out for you.' ); ?></p>
+	<p><?php _e( 'Link This is a little bookmarklet that lets you send Saved Links to your WordPress Dashboard while browsing the web.' );?></p>
+	<p><?php _e( 'Click Link This!, and a new WordPress window will popup, attempting to prefill Title, URL and Source information.' ); ?></p>
 
 
 	<form>
 		<h3><?php _e( 'Install Link This' ); ?></h3>
-		<h4><?php _e( 'Bookmarklet' ); ?></h4>
-		<p><?php _e( 'Drag the bookmarklet below to your bookmarks bar. Then, when you&#8217;re on a page you want to share, simply &#8220;press&#8221; it.' ); ?></p>
+		<h4><?php _e( 'Browser Bookmarklet' ); ?></h4>
+		<p><?php _e( 'Drag the Link This! bookmarklet below to your web browser\'s Bookmarks Toolbar.<br /><em>If you can\'t drag, click the Clipboard.</em>' ); ?></p>
 
 		<p class="pressthis-bookmarklet-wrapper">
 			<a class="pressthis-bookmarklet" onclick="return false;" href="<?php echo Argo_This_Button::shortcut_link(); ?>"><span><?php _e( 'Link This!' ); ?></span></a>
@@ -353,7 +353,7 @@ class ArgoLinks {
 			</p>
 		</div>
 
-		<h4><?php _e( 'Direct link (best for mobile)' ); ?></h4>
+		<h4><?php _e( 'Direct link (best for mobile and tablets)' ); ?></h4>
 		<p><?php _e( 'Follow the link to open Link This. Then add it to your device&#8217;s bookmarks or home screen.' ); ?></p>
 
 		<p>
