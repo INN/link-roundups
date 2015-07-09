@@ -317,30 +317,70 @@ class ArgoLinks {
 	 * @since 0.1
 	 */
 	public static function build_argo_this_page() {
+	/** WordPress Administration Bootstrap */
+	include_once( ABSPATH  . '/admin.php' );
 	?>
+	
 	<div id="icon-tools" class="icon32"><br></div><h2>Install 'Link This!' Bookmarklet</h2>
 
 	<div class="tool-box">
 
-	  <p>Install the 'Link This!' bookmarklet to save links from across the web directly from your browser's bookmark toolbar.</p>
+	 <div class="card pressthis">
+	<h3><?php _e('Link This') ?></h3>
+	<p><?php _e( 'Link This is a little tool that lets you grab bits of the web and create new posts with ease.' );?></p>
+	<p><?php _e( 'Use Link This to clip text, images and videos from any web page. Then edit and add more straight from Press This before you save or publish it in a post on your site.' ); ?></p>
 
-	  <p>Use this bookmarklet to save links to any web page. Then edit and add more straight in WordPress before you save or publish it in a post on your site.</p>
 
-	  <h2>Installing</h2>
+	<form>
+		<h3><?php _e( 'Install Link This' ); ?></h3>
+		<h4><?php _e( 'Bookmarklet' ); ?></h4>
+		<p><?php _e( 'Drag the bookmarklet below to your bookmarks bar. Then, when you&#8217;re on a page you want to share, simply &#8220;press&#8221; it.' ); ?></p>
 
-	  <p class="description">Drag-and-drop the following link to your bookmarks bar or right click it and add it to your favorites for a posting shortcut.</p>
+		<p class="pressthis-bookmarklet-wrapper">
+			<a class="pressthis-bookmarklet" onclick="return false;" href="<?php echo Argo_This_Button::shortcut_link(); ?>"><span><?php _e( 'Link This!' ); ?></span></a>
+			<button type="button" class="button button-secondary pressthis-js-toggle js-show-pressthis-code-wrap" aria-expanded="false" aria-controls="pressthis-code-wrap">
+				<span class="dashicons dashicons-clipboard"></span>
+				<span class="screen-reader-text"><?php _e( 'Copy &#8220;Link This&#8221; bookmarklet code' ) ?></span>
+			</button>
+		</p>
 
-	  <p class="pressthis">
-		<a onclick="return false;"
-		   oncontextmenu="if(window.navigator.userAgent.indexOf('WebKit')!=-1||window.navigator.userAgent.indexOf('MSIE')!=-1)jQuery('.pressthis-code').show().find('textarea').focus().select();return false;" 
-		   href="<?php echo Argo_This_Button::shortcut_link(); ?>">
-			<span>Link This!</span>
-		</a>
-	  </p>
-	  <div class="pressthis-code" style="display:none;">
-	  <p class="description">If your bookmarks toolbar is hidden: copy the code below, open your Bookmarks manager, create new bookmark, type 'Link This!' into the name field and paste the code into the URL field.</p>
-	  <p><textarea rows="5" cols="120" readonly="readonly"><?php echo Argo_This_Button::shortcut_link(); ?></textarea></p>
-	  </div>
+		<div class="hidden js-pressthis-code-wrap clear" id="pressthis-code-wrap">
+			<p id="pressthis-code-desc">
+				<?php _e( 'If you can&#8217;t drag the bookmarklet to your bookmarks, copy the following code and create a new bookmark. Paste the code into the new bookmark&#8217;s URL field.' ) ?>
+			</p>
+			<p>
+				<textarea class="js-pressthis-code" rows="5" cols="120" readonly="readonly" aria-labelledby="pressthis-code-desc"><?php echo htmlspecialchars( get_shortcut_link() ); ?></textarea>
+			</p>
+		</div>
+
+		<h4><?php _e( 'Direct link (best for mobile)' ); ?></h4>
+		<p><?php _e( 'Follow the link to open Link This. Then add it to your device&#8217;s bookmarks or home screen.' ); ?></p>
+
+		<p>
+			<a class="button button-secondary" href="<?php echo Argo_This_Button::shortcut_link(); ?>"><?php _e( 'Open Link This' ) ?></a>
+		</p>
+		<script>
+			jQuery( document ).ready( function( $ ) {
+				var $showPressThisWrap = $( '.js-show-pressthis-code-wrap' );
+				var $pressthisCode = $( '.js-pressthis-code' );
+
+				$showPressThisWrap.on( 'click', function( event ) {
+					var $this = $( this );
+
+					$this.parent().next( '.js-pressthis-code-wrap' ).slideToggle( 200 );
+					$this.attr( 'aria-expanded', $this.attr( 'aria-expanded' ) === 'false' ? 'true' : 'false' );
+				});
+
+				// Select Press This code when focusing (tabbing) or clicking the textarea.
+				$pressthisCode.on( 'click focus', function() {
+					var self = this;
+					setTimeout( function() { self.select(); }, 50 );
+				});
+
+			});
+		</script>
+	</form>
+</div>
 	</div>
 <?php
 	}
