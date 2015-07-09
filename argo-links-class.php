@@ -327,8 +327,8 @@ class ArgoLinks {
 
 	 <div class="card pressthis">
 	<h3><?php _e('Link This') ?></h3>
-	<p><?php _e( 'Link This is a little tool that lets you grab bits of the web and create new posts with ease.' );?></p>
-	<p><?php _e( 'Use Link This to clip text, images and videos from any web page. Then edit and add more straight from Press This before you save or publish it in a post on your site.' ); ?></p>
+	<p><?php _e( 'Link This is a little bookmarklet that lets you save your current page as a Saved Link.' );?></p>
+	<p><?php _e( 'The bookmarklet tries to automatically fills the URL, Title, Source out for you.' ); ?></p>
 
 
 	<form>
