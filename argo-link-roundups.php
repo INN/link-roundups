@@ -170,6 +170,12 @@ class ArgoLinkRoundups {
 		register_setting('argolinkroundups-settings-group', 'argo_link_roundups_custom_url');
 		register_setting('argolinkroundups-settings-group', 'argo_link_roundups_custom_html');
 		register_setting(
+			'argolinkroundups-settings-group', 'link_roundups_custom_name_singular'
+		);
+		register_setting(
+			'argolinkroundups-settings-group', 'link_roundups_custom_name_plural'
+		);
+		register_setting(
 			'argolinkroundups-settings-group', 'argo_link_roundups_use_mailchimp_integration',
 			array(__CLASS__, 'validate_mailchimp_integration')
 		);
