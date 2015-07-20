@@ -17,20 +17,42 @@ EOT;
 		<div class="options-wrapper">
 			<div id="rename" class="card">
 				<h3>Rename Link Roundups</h3>
+				<p>You might call it a Daily Digest. Recap. Team Newsletter. Etc.</p> 
+				<p>Modify the Post Type Name displayed in the WordPress Dashboard Menus and Pages and the Post Type Slug (<a href="http://codex.wordpress.org/Glossary#Post_Slug">learn more</a>) used in the public URL for each Link Roundup post.</p>
 				<h4>Custom Name</h4>
-				<h5 style="margin-bottom:0;padding-bottom:0;">Singular (Roundup)</h5>
+				<h5 style="margin-bottom:0;padding-bottom:0;">Singular (Default: Link Roundup)</h5>
 				<input type="text" name="link_roundups_custom_name_singular" value="<?php echo get_option('link_roundups_custom_name_singular'); ?>" />
-				<h5 style="margin-bottom:0;padding-bottom:0;">Plural (Link Roundups)</h5>
+				<h5 style="margin-bottom:0;padding-bottom:0;">Plural (Default: Link Roundups)</h5>
 				<input type="text" name="link_roundups_custom_name_plural" value="<?php echo get_option('link_roundups_custom_name_plural'); ?>" />
 
-				<h4>Custom URL Slug</h4>
-				<p>Must be lowercase with no spaces -- dashes allowed.</p>
+				<h4 style="margin-bottom:2px;padding-bottom:2px;">Custom URL Slug</h4>
+				<h5 style="margin:0;padding:0;">Current URL Slug for Link Roundups:</h5>
+				<code style="display:block;margin:0.33em 0;">
+					<?php echo get_site_url(); ?>/
+					<strong><?php 
+					$custom_slug_setting = get_option('argo_link_roundups_custom_url');
+					
+					if(!empty($custom_slug_setting)) { 
+						$current_slug = $custom_slug_setting; // apply custom slug
+					} else {
+						$current_slug = 'roundup'; // set plugin default to roundup
+					}
+					echo $current_slug; ?>
+					</strong>/random-roundup/</code>
 				<?php $custom_slug = get_option('argo_link_roundups_custom_url'); ?>
-				<input type="text" name="argo_link_roundups_custom_url" value="<?php echo get_option('argo_link_roundups_custom_url'); ?>" />
-				<br /><br /><code style="display:block;"><?php echo get_site_url(); ?>/<strong>roundup</strong>/random-saved-link/</code><br />
+				<input type="text" name="argo_link_roundups_custom_url" value="<?php echo $custom_slug; ?>" />
+				<p>Must be lowercase with no spaces or special characters -- dashes allowed.</p>
+				
+				<?php // echo get_option('argo_link_roundups_custom_url'); ?>
 			    	<p><strong>IMPORTANT</strong>: Whenever you define a new Custom URL Slug, you <strong>must</strong> also update your 
 			    	<a href="<?php echo admin_url( '/options-permalink.php' ); ?>"><strong>Permalink Settings</strong></a>.
 			    	</p>
+			    	<label for="argo_link_roundups_permalink_flush">
+							Update the WordPress Permalink Settings?
+							<input type="checkbox" name="argo_link_roundups_permalink_flush"
+								<?php checked(get_option('argo_link_roundups_permalink_flush'), 'on', true); ?> />
+					</label><br />
+					<em>This is checked automatically if you change the slug setting above.<br />You may disable to manually save or modify your Permalinks/.htaccess.</em>
 				
 			</div>
 			<div id="html" class="card">
