@@ -528,29 +528,38 @@ class ArgoLinks {
 	 *
 	 * @param string $content content passed in by the filter (should be empty).
 	 */
-	public static function get_html( $post = null ) {
+	public static function get_html( $post = null, $link_style = null) {
 
-		$post = get_post($post);
+		$post = get_post($post); // getting a saved link...
 
 		if(!$post)
 			return;
 
-		$meta = get_post_meta($post->ID);
+		$meta = get_post_meta($post->ID); // getting meta fields from saved link...
 
 		$url = !empty($meta["argo_link_url"]) ? $meta["argo_link_url"][0] : '';
 		$title = get_the_title($post->ID);
-		$description = array_key_exists("argo_link_description",$meta) ? $meta["argo_link_description"][0] : '';;
+		$description = array_key_exists("argo_link_description",$meta) ? $meta["argo_link_description"][0] : '';
 		$source = !empty($meta["argo_link_source"]) ? $meta["argo_link_source"][0] : '';
-
-		ob_start();
-?>
-	  <p class='link-roundup'>
+		$style = $link_style; // $link_style is defined below in rounduplink_shortcode()
+		
+		ob_start(); 
+		/* begin shortcode output
+		 * NOTE: 
+		 * This default output is overwritten 98% of the time by $argo_html 
+		 * regardless of whether you've modified the code in setting
+		 * Needs improvement in future version
+		*/
+		?>
+		
+	  <p class='link-roundups' style='#!STYLE!#'>
 		<a href='#!URL!#'>#!TITLE!#</a>
 		&ndash;
 		<span class='description'>#!DESCRIPTION!#</span>
 		<em>#!SOURCE!#</em>
 	  </p>
-<?php
+	
+	  <?php
 		$default_html = ob_get_clean();
 
 		if (get_option("argo_link_roundups_custom_html") != "") {
@@ -563,6 +572,7 @@ class ArgoLinks {
 		$argo_html = str_replace("#!TITLE!#",$title,$argo_html);
 		$argo_html = str_replace("#!DESCRIPTION!#",$description,$argo_html);
 		$argo_html = str_replace("#!SOURCE!#",$source,$argo_html);
+		$argo_html = str_replace("#!STYLE!#",$style,$argo_html);
 		return $argo_html;
 	}
 
@@ -573,10 +583,38 @@ class ArgoLinks {
 	 */
 	public static function rounduplink_shortcode( $atts ) {
 
-		$a = shortcode_atts( array( 'id' => '', 'title' => '' ), $atts );
-
+		$a = shortcode_atts( 
+			array( 'id' => '', 
+				   'title' => '', 
+				   'style' => '' ), 
+			$atts,
+		);
+		
+		// check if a link has style like 'sponsored'
+		if(!empty($a['style'])) { 
+		
+			$custom_css = get_option('argo_link_roundups_sponsored_style');
+			
+			// check for custom css
+			if(!empty($custom_css)) {
+				$output_style = $custom_css;
+			}
+			
+			// set a default style for the plugin
+			else {
+				$output_style = 'font-style:italics;background:#aaa;';
+			}
+			
+			$link_style = $output_style; // we pass this variable below
+			
+		}
+		
+		else { // if no style="" in shortcode, display nothing
+			$link_style='';
+		}
+		
 		if( $a['id'] != null )
-			return self::get_html( $a['id'] );
+			return self::get_html( $a['id'], $link_style ); // id and style
 		else
 			return '';
 		
