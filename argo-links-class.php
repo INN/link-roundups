@@ -589,7 +589,7 @@ class ArgoLinks {
 			array( 'id' => '', 
 				   'title' => '', 
 				   'style' => '' ), 
-			$atts,
+			$atts
 		);
 		
 		// check if a link has style like 'sponsored'
