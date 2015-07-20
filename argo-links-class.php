@@ -544,7 +544,9 @@ class ArgoLinks {
 		$style = $link_style; // $link_style is defined below in rounduplink_shortcode()
 		
 		ob_start(); 
+		
 		/* begin shortcode output
+		 *
 		 * NOTE: 
 		 * This default output is overwritten 98% of the time by $argo_html 
 		 * regardless of whether you've modified the code in setting
