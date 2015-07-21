@@ -8,6 +8,6 @@ Get the brief introduction to plugin features in [the main Readme.md file](https
 
 ## Table of Contents
 
-1. [Collect and tag links](saving-links.md)
+1. [Collect and tag links](save-links.md)
 2. [Create link roundups](link-roundups.md)
 3. [Send your roundup to MailChimp](mailchimp.md)
