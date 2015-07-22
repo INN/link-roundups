@@ -65,9 +65,9 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
 <div class='display-argo-links'>
   <div class='pagination'>
     <div style='float:left'>
-      <button class='append-argo-links'>Add links to link roundup post</button> 
+      <button class='button append-argo-links'>Send to Editor</button> 
       <form action='' method='get' id='filter_links'>
-        <label for='link_date'><b>Show links from: </b></label>
+        <label for='link_date'><b>Date range: </b></label>
         <select name='link_date'>
           <option value='today' <?php echo ((isset($_REQUEST['link_date']) && $_REQUEST['link_date'] == 'today' ) ? 'selected' : '');?>>Today</option>
           <option value='this_week' <?php echo ((isset($_REQUEST['link_date']) && $_REQUEST['link_date'] == 'this_week' ) ? 'selected' : '');?>>This Week</option>
@@ -81,16 +81,16 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
         <?php if(isset($_REQUEST['order'])):?>
           <input type='hidden' name='order' value='<?php echo $_REQUEST['order']; ?>'/>
         <?php endif;?>
-        <input type='submit' value='Filter'/>
+        <input class='button' type='submit' value='Filter'/>
       </form>
     </div>
-    <div style='float:right'>
-      Displaying <?php echo $from_result;?>-<?php echo $to_result;?> of <?php echo $total_post_count;?>
+    <div class="page-navi" style='float:right'>
+      <?php echo $from_result;?>-<?php echo $to_result;?> of <?php echo $total_post_count;?>
       <?php if(!($page <= 6)):?>
-        <a href='argo_page=<?php echo $pagination_first;?><?php echo $query_url; ?>' title='First'>&lt;lt&</a>
+        <a class="button" href='argo_page=<?php echo $pagination_first;?><?php echo $query_url; ?>' title='First'>&laquo;</a>
       <?php endif; ?>
       <?php if(!($page == 1)):?>
-        <a href='argo_page=<?php echo $pagination_previous;?><?php echo $query_url; ?>' title='Previous'>&lt;</a>
+        <a class="button" href='argo_page=<?php echo $pagination_previous;?><?php echo $query_url; ?>' title='Previous'>&laquo;</a>
       <?php endif; ?>
       <?php
         $start = 1;
@@ -125,15 +125,15 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
           }
         }
         while ($start <= $count) {
-          echo "<a href='argo_page=$start$query_url' class='".($start == $page ? 'current' : '')."'>$start</a> &nbsp;";
+          echo "<a href='argo_page=$start$query_url' class='button ".($start == $page ? 'current' : '')."'>$start</a> &nbsp;";
           $start++;
         }
       ?>
       <?php if(!($page == $pagination_last)):?>
-        <a href='argo_page=<?php echo $pagination_next;?><?php echo $query_url; ?>' title='Next'>&gt;</a>
+        <a class="button" href='argo_page=<?php echo $pagination_next;?><?php echo $query_url; ?>' title='Next'>&raquo;</a>
       <?php endif; ?>
       <?php if(!($page >= ($pagination_last - 5))):?>
-        <a href='argo_page=<?php echo $pagination_last;?><?php echo $query_url; ?>' title='Last'>&gt;&gt;</a>
+        <a class="button" href='argo_page=<?php echo $pagination_last;?><?php echo $query_url; ?>' title='Last'>&raquo;</a>
       <?php endif;?>
     </div>
   </div>
@@ -147,7 +147,7 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
     </tr>
     
     <?php $i=1; ?>
-    <?php while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
+    <?php if ($the_query->have_posts()) : while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
       <tr id='<?php echo get_the_ID(); ?>' class='<?php echo ($i%2 ? 'alternate' : '')?>'>
         <th scope="row" id="cb" class="manage-column column-cb check-column" style="">
           <input type="checkbox" class='argo-link' value='<?php echo get_the_ID(); ?>'/>
@@ -179,21 +179,33 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
         <td scope="row" id="date" class="manage-column column-date sortable asc" style=""><span><?php echo get_the_date(); ?></span></td>
       </tr>
       <?php $i++;?>
-    <?php endwhile; ?>
+    <?php endwhile; else : ?>
+      <tr id="blank" class='alternate'>
+        <th scope="row" id="cb" class="manage-column column-cb check-column" style=""></th>
+        <td scope="row" id="title" class="manage-column column-title sortable desc" style="">
+          <span style="margin:.5em;padding-top:0.75em;display:block;">No links found. Select another date range.</span><br />
+        <td scope="row" id="author" class="manage-column column-author sortable desc" style=""><span>&nbsp;</span></td>
+        <td scope="row" id="link-tags" class="manage-column column-link-tags" style="">
+        	&nbsp;
+        </td>
+        <td scope="row" id="date" class="manage-column column-date sortable asc" style=""><span>&nbsp;</span></td>
+      </tr>
+      <?php $hide = true; ?>
+    <?php endif; ?>
   </table>
   
   <div class='pagination'>
     <div style='float:left'>
-      <button class='append-argo-links'>Add links to link roundup post</button>
+      <button class='button append-argo-links'>Send to Editor</button>
     </div>
-    <div style='float:right'>
+    <div class="page-navi" style='float:right'>
       <br />
-      Displaying <?php echo $from_result;?>-<?php echo $to_result;?> of <?php echo $total_post_count;?>
+      <?php echo $from_result;?>-<?php echo $to_result;?> of <?php echo $total_post_count;?>
       <?php if(!($page <= 6)):?>
-        <a href='argo_page=<?php echo $pagination_first;?><?php echo $query_url; ?>' title='First'>&lt;lt&</a>
+        <a class="button" href='argo_page=<?php echo $pagination_first;?><?php echo $query_url; ?>' title='First'>&laquo;</a>
       <?php endif; ?>
       <?php if(!($page == 1)):?>
-        <a href='argo_page=<?php echo $pagination_previous;?><?php echo $query_url; ?>' title='Previous'>&lt;</a>
+        <a class="button" href='argo_page=<?php echo $pagination_previous;?><?php echo $query_url; ?>' title='Previous'>&laquo;</a>
       <?php endif; ?>
       <?php
         $start = 1;
@@ -228,15 +240,15 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
           }
         }
         while ($start <= $count) {
-          echo "<a href='argo_page=$start$query_url' class='".($start == $page ? 'current' : '')."'>$start</a> &nbsp;";
+          echo "<a href='argo_page=$start$query_url' class='button ".($start == $page ? 'current' : '')."'>$start</a> &nbsp;";
           $start++;
         }
       ?>
       <?php if(!($page == $pagination_last)):?>
-        <a href='argo_page=<?php echo $pagination_next;?><?php echo $query_url; ?>' title='Next'>&gt;</a>
+        <a class="button" href='argo_page=<?php echo $pagination_next;?><?php echo $query_url; ?>' title='Next'>&raquo;</a>
       <?php endif; ?>
       <?php if(!($page >= ($pagination_last - 5))):?>
-        <a href='argo_page=<?php echo $pagination_last;?><?php echo $query_url; ?>' title='Last'>&gt;&gt;</a>
+        <a class="button" href='argo_page=<?php echo $pagination_last;?><?php echo $query_url; ?>' title='Last'>&raquo;</a>
       <?php endif;?>
     </div>
   </div>
@@ -267,7 +279,7 @@ $javascript_source = <<<JAVASCRIPT_SOURCE
 "+jQuery('#source-'+jQuery(this).val()).text()+"
 JAVASCRIPT_SOURCE;
 $default_html = <<<EOT
-    <p class='link-roundup'><a href='#!URL!#'>#!TITLE!#</a> &ndash; <span class='description'>#!DESCRIPTION!#</span> <em>#!SOURCE!#</em></p>
+    <p><a href='#!URL!#'>#!TITLE!#</a> &ndash; <span class='description'>#!DESCRIPTION!#</span> <em>#!SOURCE!#</em></p>
 EOT;
   if (get_option("argo_link_roundups_custom_html") != "") {
     $argo_html = get_option("argo_link_roundups_custom_html");
