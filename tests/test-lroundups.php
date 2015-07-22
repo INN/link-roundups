@@ -22,14 +22,14 @@ class LRoundupsTestFunctions extends WP_UnitTestCase {
 		// Testing init would be equivalent to test core WordPress functions called within.
 		// There's no need for that kind of testing here.
 		$this->markTestSkipped(
-			'`ArgoLinkRoundups::init` returns null and uses only core WordPress functions.');
+			'`LRoundups::init` returns null and uses only core WordPress functions.');
 	}
 
 	function test_my_get_posts() {
 		$test_query = new WP_Query();
 		$test_query->is_home = true;
 
-		LinkRoundups::my_get_posts($test_query);
+		LRoundups::my_get_posts($test_query);
 
 		$this->assertTrue(
 			in_array('roundup', $test_query->query_vars['post_type']));
@@ -38,19 +38,19 @@ class LRoundupsTestFunctions extends WP_UnitTestCase {
 	function test_register_post_type() {
 		global $wp_post_types;
 
-		LinkRoundups::register_post_type();
+		LRoundups::register_post_type();
 
 		$this->assertTrue(in_array('roundup', array_keys($wp_post_types)));
 	}
 
 	function test_add_custom_post_fields() {
 		$this->markTestSkipped(
-			'`LinkRoundups::add_custom_post_fields` returns null and uses only core WordPress functions.');
+			'`LRoundups::add_custom_post_fields` returns null and uses only core WordPress functions.');
 	}
 
 	function test_display_custom_fields() {
 		$this->expectOutputRegex('/argo-links-display-area/');
-		LinkRoundups::display_custom_fields();
+		LRoundups::display_custom_fields();
 	}
 
 	function test_save_custom_fields() {
@@ -60,7 +60,7 @@ class LRoundupsTestFunctions extends WP_UnitTestCase {
 		$_POST['argo_link_url'] = $test_url;
 		$_POST['argo_link_description'] = $test_des;
 
-		LinkRoundups::save_custom_fields($this->savedlinks_post);
+		LRoundups::save_custom_fields($this->savedlinks_post);
 
 		$post_url = get_post_meta($this->savedlinks_post, 'argo_link_url', true);
 		$post_des = get_post_meta($this->savedlinks_post, 'argo_link_description', true);
@@ -71,16 +71,16 @@ class LRoundupsTestFunctions extends WP_UnitTestCase {
 
 	function test_add_lroundups_options_page() {
 		$this->markTestSkipped(
-			'`LinkRoundups::add_add_lroundups_options_page` returns null and uses only core WordPress functions.');
+			'`LRoundups::add_add_lroundups_options_page` returns null and uses only core WordPress functions.');
 	}
 
 	function test_register_mysettings() {
 		$this->markTestSkipped(
-			'`LinkRoundups::register_mysettings` returns null and uses only core WordPress functions.');
+			'`LRoundups::register_mysettings` returns null and uses only core WordPress functions.');
 	}
 
 	function test_validate_mailchimp_integration() {
-		$ret = LinkRoundups::validate_mailchimp_integration('test');
+		$ret = LRoundups::validate_mailchimp_integration('test');
 		$this->assertEquals($ret, '');
 	}
 
