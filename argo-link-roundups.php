@@ -65,21 +65,39 @@ class ArgoLinkRoundups {
 	 * @since 0.1
 	 */
 	public static function register_post_type() {
+	$singular_opt = get_option('link_roundups_custom_name_singular');
+	$plural_opt = get_option('link_roundups_custom_name_plural');
+	$slug_opt = get_option('argo_link_roundups_custom_url');
+	
+	if($singular_opt != "") {
+		$singular = $singular_opt;
+	}
+	else {
+		$singular = 'Link Roundup';
+	}
+	
+	if($plural_opt != "") {
+		$plural = $plural_opt;
+	}
+	else {
+		$plural = 'Link Roundups';
+	}
+	
 		$roundup_options = array(
 			'labels' => array(
-				'name' => 'Link Roundups',
-				'singular_name' => 'Link Roundup',
-				'add_new' => 'Add New Roundup',
-				'add_new_item' => 'Add New Link Roundup',
+				'name' => $plural,
+				'singular_name' => $singular,
+				'add_new' => 'Add '. $singular,
+				'add_new_item' => 'Add New '. $singular,
 				'edit' => 'Edit',
-				'edit_item' => 'Edit Link Roundup',
+				'edit_item' => 'Edit ' . $singular,
 				'view' => 'View',
-				'view_item' => 'View Link Roundup',
-				'search_items' => 'Search Link Roundups',
-				'not_found' => 'No Links Roundups found',
-				'not_found_in_trash' => 'No Link Roundups found in Trash',
+				'view_item' => 'View ' . $singular,
+				'search_items' => 'Search ' . $plural,
+				'not_found' => 'No ' . $plural . ' found',
+				'not_found_in_trash' => 'No ' . $plural . ' found in Trash',
 			),
-			'description' => 'Link Roundups',
+			'description' => $plural,
 			'supports' => array(
 				'title', 'editor', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'custom-fields',
 				'comments', 'revisions', 'page-attributes', 'post-formats'
@@ -91,8 +109,8 @@ class ArgoLinkRoundups {
 			'has_archive' => true,
 		);
 
-		if (get_option('argo_link_roundups_custom_url') != "")
-			$roundup_options['rewrite'] = array('slug' => get_option('argo_link_roundups_custom_url'));
+		if ($slug_opt != "")
+			$roundup_options['rewrite'] = array('slug' => $slug_opt);
 
 		register_post_type('roundup', $roundup_options);
 
@@ -169,6 +187,13 @@ class ArgoLinkRoundups {
 		// register our settings
 		register_setting('argolinkroundups-settings-group', 'argo_link_roundups_custom_url');
 		register_setting('argolinkroundups-settings-group', 'argo_link_roundups_custom_html');
+		register_setting('argolinkroundups-settings-group', 'argo_link_roundups_sponsored_style');
+		register_setting(
+			'argolinkroundups-settings-group', 'link_roundups_custom_name_singular'
+		);
+		register_setting(
+			'argolinkroundups-settings-group', 'link_roundups_custom_name_plural'
+		);
 		register_setting(
 			'argolinkroundups-settings-group', 'argo_link_roundups_use_mailchimp_integration',
 			array(__CLASS__, 'validate_mailchimp_integration')
