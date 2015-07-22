@@ -5,10 +5,10 @@ class LRoundupsTestFunctions extends WP_UnitTestCase {
 		parent::setUp();
 
 		// Set up global $post object
-		$this->linkroundup_post = $this->factory->post->create(array('post_type' => 'roundup'));
+		$this->roundup_post = $this->factory->post->create(array('post_type' => 'roundup'));
 		global $post;
 		$this->tmp_post = $post;
-		$post = get_post($this->linkroundup_post);
+		$post = get_post($this->roundup_post);
 		setup_postdata($post);
 	}
 
@@ -49,7 +49,7 @@ class LRoundupsTestFunctions extends WP_UnitTestCase {
 	}
 
 	function test_display_custom_fields() {
-		$this->expectOutputRegex('/argo-links-display-area/');
+		$this->expectOutputRegex('/lroundups-display-area/');
 		LRoundups::display_custom_fields();
 	}
 
@@ -60,10 +60,10 @@ class LRoundupsTestFunctions extends WP_UnitTestCase {
 		$_POST['argo_link_url'] = $test_url;
 		$_POST['argo_link_description'] = $test_des;
 
-		LRoundups::save_custom_fields($this->linkroundup_post);
+		LRoundups::save_custom_fields($this->roundup_post);
 
-		$post_url = get_post_meta($this->linkroundup_post, 'argo_link_url', true);
-		$post_des = get_post_meta($this->linkroundup_post, 'argo_link_description', true);
+		$post_url = get_post_meta($this->roundup_post, 'argo_link_url', true);
+		$post_des = get_post_meta($this->roundup_post, 'argo_link_description', true);
 
 		$this->assertEquals($test_url, $post_url);
 		$this->assertEquals($test_des, $post_des);
@@ -71,7 +71,7 @@ class LRoundupsTestFunctions extends WP_UnitTestCase {
 
 	function test_add_lroundups_options_page() {
 		$this->markTestSkipped(
-			'`LRoundups::add_add_lroundups_options_page` returns null and uses only core WordPress functions.');
+			'`LRoundups::add_argo_links_roundup_options_page` returns null and uses only core WordPress functions.');
 	}
 
 	function test_register_mysettings() {
