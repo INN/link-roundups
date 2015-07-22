@@ -1,19 +1,24 @@
 <?php
 /**
-  * @package Argo_Links
-  * @version 0.01
+  * @package Link_Roundups
+  * @since 0.1
   */
+  
 /*
-*Argo Links - Link Roundups Meta Box Code
+* Recent Saved Links Custom Meta Panel 
+* for Link Roundups Post Type
 */
-/** WordPress Administration Bootstrap */
+
+/** WordPress Admin Bootstrap */
 require_once('../../../wp-admin/admin.php');
 
 global $post;
+
 // The Query
+
 /*Build our query for what links to show!*/
 $posts_per_page = (isset($_REQUEST['posts_per_page']) ? $_REQUEST['posts_per_page'] : 15);
-$page = (isset($_REQUEST['argo_page']) ? $_REQUEST['argo_page']: 1);
+$page = (isset($_REQUEST['lroundups_page']) ? $_REQUEST['lroundups_page']: 1);
 $default_date = array('year' => date('Y'), 'monthnum' => date('m'), 'day' => date('d'));
 /*Sort out passed filter dates*/
 if (isset($_REQUEST['link_date'])) {
@@ -62,10 +67,10 @@ $query_url .= (isset($_REQUEST['orderby']) ? '&orderby='.$_REQUEST['orderby']: '
 $query_url .= (isset($_REQUEST['order']) ? '&order='.$_REQUEST['order']: '');
 $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_date']: '');
 ?>
-<div class='display-argo-links'>
+<div class='display-saved-links'>
   <div class='pagination'>
     <div style='float:left'>
-      <button class='button append-argo-links'>Send to Editor</button> 
+      <button class='button append-saved-links'>Send to Editor</button> 
       <form action='' method='get' id='filter_links'>
         <label for='link_date'><b>Date range: </b></label>
         <select name='link_date'>
@@ -87,10 +92,10 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
     <div class="page-navi" style='float:right'>
       <?php echo $from_result;?>-<?php echo $to_result;?> of <?php echo $total_post_count;?>
       <?php if(!($page <= 6)):?>
-        <a class="button" href='argo_page=<?php echo $pagination_first;?><?php echo $query_url; ?>' title='First'>&laquo;</a>
+        <a class="button" href='lroundups_page=<?php echo $pagination_first;?><?php echo $query_url; ?>' title='First'>&laquo;</a>
       <?php endif; ?>
       <?php if(!($page == 1)):?>
-        <a class="button" href='argo_page=<?php echo $pagination_previous;?><?php echo $query_url; ?>' title='Previous'>&laquo;</a>
+        <a class="button" href='lroundups_page=<?php echo $pagination_previous;?><?php echo $query_url; ?>' title='Previous'>&laquo;</a>
       <?php endif; ?>
       <?php
         $start = 1;
@@ -125,15 +130,15 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
           }
         }
         while ($start <= $count) {
-          echo "<a href='argo_page=$start$query_url' class='button ".($start == $page ? 'current' : '')."'>$start</a> &nbsp;";
+          echo "<a href='lroundups_page=$start$query_url' class='button ".($start == $page ? 'current' : '')."'>$start</a> &nbsp;";
           $start++;
         }
       ?>
       <?php if(!($page == $pagination_last)):?>
-        <a class="button" href='argo_page=<?php echo $pagination_next;?><?php echo $query_url; ?>' title='Next'>&raquo;</a>
+        <a class="button" href='lroundups_page=<?php echo $pagination_next;?><?php echo $query_url; ?>' title='Next'>&raquo;</a>
       <?php endif; ?>
       <?php if(!($page >= ($pagination_last - 5))):?>
-        <a class="button" href='argo_page=<?php echo $pagination_last;?><?php echo $query_url; ?>' title='Last'>&raquo;</a>
+        <a class="button" href='lroundups_page=<?php echo $pagination_last;?><?php echo $query_url; ?>' title='Last'>&raquo;</a>
       <?php endif;?>
     </div>
   </div>
@@ -150,7 +155,7 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
     <?php if ($the_query->have_posts()) : while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
       <tr id='<?php echo get_the_ID(); ?>' class='<?php echo ($i%2 ? 'alternate' : '')?>'>
         <th scope="row" id="cb" class="manage-column column-cb check-column" style="">
-          <input type="checkbox" class='argo-link' value='<?php echo get_the_ID(); ?>'/>
+          <input type="checkbox" class='lroundups-link' value='<?php echo get_the_ID(); ?>'/>
         </th>
         <td scope="row" id="title" class="manage-column column-title sortable desc" style="">
           <span id="title-<?php echo get_the_ID();?>"><?php echo the_title(); ?></span><br />
@@ -179,11 +184,11 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
         <td scope="row" id="date" class="manage-column column-date sortable asc" style=""><span><?php echo get_the_date(); ?></span></td>
       </tr>
       <?php $i++;?>
-    <?php endwhile; else : ?>
+    <?php endwhile; else : // below is the blank template if no links are found ?>
       <tr id="blank" class='alternate'>
         <th scope="row" id="cb" class="manage-column column-cb check-column" style=""></th>
         <td scope="row" id="title" class="manage-column column-title sortable desc" style="">
-          <span style="margin:.5em;padding-top:0.75em;display:block;">No links found. Select another date range.</span><br />
+          <span style="margin:.5em;padding-top:0.75em;display:block;"><?php _e('No links found. Select another date range.'); ?></span><br />
         <td scope="row" id="author" class="manage-column column-author sortable desc" style=""><span>&nbsp;</span></td>
         <td scope="row" id="link-tags" class="manage-column column-link-tags" style="">
         	&nbsp;
@@ -196,16 +201,16 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
   
   <div class='pagination'>
     <div style='float:left'>
-      <button class='button append-argo-links'>Send to Editor</button>
+      <button class='button append-saved-links'>Send to Editor</button>
     </div>
     <div class="page-navi" style='float:right'>
       <br />
       <?php echo $from_result;?>-<?php echo $to_result;?> of <?php echo $total_post_count;?>
       <?php if(!($page <= 6)):?>
-        <a class="button" href='argo_page=<?php echo $pagination_first;?><?php echo $query_url; ?>' title='First'>&laquo;</a>
+        <a class="button" href='lroundups_page=<?php echo $pagination_first;?><?php echo $query_url; ?>' title='First'>&laquo;</a>
       <?php endif; ?>
       <?php if(!($page == 1)):?>
-        <a class="button" href='argo_page=<?php echo $pagination_previous;?><?php echo $query_url; ?>' title='Previous'>&laquo;</a>
+        <a class="button" href='lroundups_page=<?php echo $pagination_previous;?><?php echo $query_url; ?>' title='Previous'>&laquo;</a>
       <?php endif; ?>
       <?php
         $start = 1;
@@ -240,15 +245,15 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
           }
         }
         while ($start <= $count) {
-          echo "<a href='argo_page=$start$query_url' class='button ".($start == $page ? 'current' : '')."'>$start</a> &nbsp;";
+          echo "<a href='lroundups_page=$start$query_url' class='button ".($start == $page ? 'current' : '')."'>$start</a> &nbsp;";
           $start++;
         }
       ?>
       <?php if(!($page == $pagination_last)):?>
-        <a class="button" href='argo_page=<?php echo $pagination_next;?><?php echo $query_url; ?>' title='Next'>&raquo;</a>
+        <a class="button" href='lroundups_page=<?php echo $pagination_next;?><?php echo $query_url; ?>' title='Next'>&raquo;</a>
       <?php endif; ?>
       <?php if(!($page >= ($pagination_last - 5))):?>
-        <a class="button" href='argo_page=<?php echo $pagination_last;?><?php echo $query_url; ?>' title='Last'>&raquo;</a>
+        <a class="button" href='lroundups_page=<?php echo $pagination_last;?><?php echo $query_url; ?>' title='Last'>&raquo;</a>
       <?php endif;?>
     </div>
   </div>
@@ -282,16 +287,16 @@ $default_html = <<<EOT
     <p><a href='#!URL!#'>#!TITLE!#</a> &ndash; <span class='description'>#!DESCRIPTION!#</span> <em>#!SOURCE!#</em></p>
 EOT;
   if (get_option("argo_link_roundups_custom_html") != "") {
-    $argo_html = get_option("argo_link_roundups_custom_html");
-    $argo_html = preg_replace("/\"/","'",$argo_html);
+    $lroundups_html = get_option("argo_link_roundups_custom_html");
+    $lroundups_html = preg_replace("/\"/","'",$lroundups_html);
   } else {
-    $argo_html = $default_html;
+    $lroundups_html = $default_html;
   }
-  $argo_html = str_replace("#!URL!#",$javascript_url,$argo_html);
-  $argo_html = str_replace("#!TITLE!#",$javascript_title,$argo_html);
-  $argo_html = str_replace("#!DESCRIPTION!#",$javascript_description,$argo_html);
-  $argo_html = str_replace("#!SOURCE!#",$javascript_source,$argo_html);
-  return $argo_html;
+  $lroundups_html = str_replace("#!URL!#",$javascript_url,$lroundups_html);
+  $lroundups_html = str_replace("#!TITLE!#",$javascript_title,$lroundups_html);
+  $lroundups_html = str_replace("#!DESCRIPTION!#",$javascript_description,$lroundups_html);
+  $lroundups_html = str_replace("#!SOURCE!#",$javascript_source,$lroundups_html);
+  return $lroundups_html;
 }
 
 /**
@@ -313,8 +318,8 @@ JAVASCRIPT_TITLE;
 ?>
 <script type='text/javascript'>
 jQuery(function(){
-  jQuery('.append-argo-links').bind('click',function(){
-    jQuery('.argo-link').each(function(){
+  jQuery('.append-saved-links').bind('click',function(){
+    jQuery('.saved-link').each(function(){
       if (jQuery(this).is(":checked")) {
         <?php /* The old way: */ ?>
         <?php /* var html = "<?php echo get_html(); ?>"; */ ?>
@@ -328,22 +333,22 @@ jQuery(function(){
     });
     return false;
     });
-  jQuery('div.display-argo-links a').bind("click",function(){
+  jQuery('div.display-saved-links a').bind("click",function(){
     var urlOptions = jQuery(this).attr('href');
-    jQuery('#argo-links-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-argo-links.php?'+urlOptions);
+    jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-recent-saved-links.php?'+urlOptions);
     return false;
   });
   jQuery("#filter_links").bind("submit", function() {
-    jQuery('#argo-links-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-argo-links.php?'+jQuery(this).serialize());
+    jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-recent-saved-links.php?'+jQuery(this).serialize());
     return false;
   });
   jQuery('#check-all-boxes').change(function(){
     if (jQuery(this).is(':checked')) {
-      jQuery('.argo-link').each(function(){
+      jQuery('.saved-link').each(function(){
         jQuery(this).prop("checked", true); 
       });
     } else {
-      jQuery('.argo-link').each(function(){
+      jQuery('.saved-link').each(function(){
         jQuery(this).prop("checked", false);
       });
     }

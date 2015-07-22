@@ -1,6 +1,6 @@
 <?php
 
-class ArgoLinkRoundupsTestFunctions extends WP_UnitTestCase {
+class LRoundupsTestFunctions extends WP_UnitTestCase {
 	function setUp() {
 		parent::setUp();
 

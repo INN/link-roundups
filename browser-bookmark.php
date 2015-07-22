@@ -1,7 +1,8 @@
 <?php
 /**
- * Class: Argo_This_Button
- * Contains all relevant functionality to implement "Argo Link This!" button.
+ * Class: Save_To_Site_Button
+ * The Save To Site Button contains special javascript adapted from Press This!
+ * To add a browser bookmark tool for Saved Links
  * 
  * @since 0.3
  * 
@@ -10,7 +11,7 @@
  */
 
 /**
- * This file used to be loaded directly from the Argo Link! bookmarklet.
+ * This file used to be loaded directly from the Save To Site Button bookmarklet.
  * 
  * If WordPress is not loaded, then direct them to the right edit screen
  * and pass along the previous query vars.
@@ -31,7 +32,7 @@ if ( !defined('ABSPATH') ) {
 	header( 'Location: ' . $newURL );
 }
 
-class Argo_This_Button {
+class Save_To_Site_Button {
 
 	private static $title;
 	private static $description;
@@ -127,7 +128,7 @@ class Argo_This_Button {
 
 	/**
 	 * Passes ?u= query var through login process
-	 * 
+	 * so we retain all the good meta we gathered
 	 * @since 0.3
 	 * 
 	 * @return url with query vars still attached.
@@ -144,7 +145,7 @@ class Argo_This_Button {
 	}
 
 	/**
-	 * Sets up default values for new argolink.
+	 * Sets up default values for new Saved Link.
 	 * 
 	 * @since 0.3
 	 */
@@ -155,7 +156,8 @@ class Argo_This_Button {
 		self::$url = wp_kses( urldecode( self::$url ), null );
 
 		// Get meta data from url.
-		$meta = argo_get_page_info(self::$url);
+		// @see 
+		$meta = lroundups_scrape_url(self::$url); // func. contains WPSimpleScraper
 		$meta = $meta['meta'];
 
 		// Default title.
@@ -193,17 +195,35 @@ class Argo_This_Button {
 		if( !empty($meta['ogp']['image']) ) {
 			self::$imgUrl = $meta['ogp']['image'];
 		}
+		
+		/**
+         * Default Link Roundups Values for Custom Meta
+         *
+         * Register default title, link URL, link description and link source.
+         * Used within popup so hides the Admin Bar
+         *
+         * @since x.x.x
+         *
+         * @param type  $var Description.
+         * @param array $args {
+         *     Short description about this hash.
+         *
+         *     @type type $var Description.
+         *     @type type $var Description.
+         * }
+         * @param type  $var Description.
+         */
 
 		add_filter( 'default_title', array( __CLASS__, 'default_title' ) );
-		add_filter( 'default_argo_link_url', array( __CLASS__, 'default_link' ));
-		add_filter( 'default_argo_link_description', array( __CLASS__, 'default_description' ) );
-		add_filter( 'default_argo_link_source', array( __CLASS__, 'default_source' ) );
+		add_filter( 'default_link_url', array( __CLASS__, 'default_link' ));
+		add_filter( 'default_link_description', array( __CLASS__, 'default_description' ) );
+		add_filter( 'default_link_source', array( __CLASS__, 'default_source' ) );
 
 		add_filter( 'show_admin_bar', '__return_false' );
 
 		self::manageAjaxRequest();
 
-	}
+		}
 
 	/**
 	 * Returns the default title value for this argo link. 
@@ -262,7 +282,7 @@ class Argo_This_Button {
 
 }
 
-Argo_This_Button::init();
+Save_To_Site_Button::init();
 
 
 

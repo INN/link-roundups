@@ -6,7 +6,7 @@
  *
  * @since 0.1
  */
-class ArgoLinks {
+class SavedLinks {
 
 	/**
 	 * Initialize the class.
@@ -15,15 +15,15 @@ class ArgoLinks {
 	 */
 	public static function init() {
 
-		/*Register the custom post type of argolinks */
+		/*Register the custom post type of for saved links: rounduplinks */
 		add_action('init', array(__CLASS__, 'register_post_type' ));
 
 		/*Register our custom taxonomy of "argo-link-categories" so we can have our own tags/categories for our Argo Links post type*/
 		/* moved into a function per wordpress 3.0 issues with calling it directly*/
-		add_action('init', array(__CLASS__, 'register_argo_links_taxonomy'));
+		add_action('init', array(__CLASS__, 'register_rounduplinks_taxonomy'));
 
 		/*Add the Argo This! sub menu*/
-		add_action("admin_menu", array(__CLASS__, "add_argo_this_sub_menu"));
+		add_action("admin_menu", array(__CLASS__, "add_save_to_site_sub_menu"));
 
 		/*Add our custom post fields for our custom post type*/
 		add_action("admin_init", array(__CLASS__, "add_custom_post_fields"));
@@ -37,8 +37,8 @@ class ArgoLinks {
 		/*Populate those new columns with the custom data*/
 		add_action("manage_posts_custom_column", array(__CLASS__, "data_for_custom_columns"));
 
-		add_action('widgets_init', array(__CLASS__, 'add_argo_links_widget'));
-		add_action('widgets_init', array(__CLASS__, 'add_argo_link_roundups_widget'));
+		add_action('widgets_init', array(__CLASS__, 'add_saved_links_widget'));
+		add_action('widgets_init', array(__CLASS__, 'add_link_roundups_widget'));
 
 		/*Add our css stylesheet into the header*/
 		add_action('admin_print_styles', array(__CLASS__,'add_styles'));
@@ -63,14 +63,14 @@ class ArgoLinks {
 		} else {
 			$mce_css = '';
 		}
-		$mce_css .= plugins_url("css/argo-links.css", __FILE__);
+		$mce_css .= plugins_url("css/lroundups.css", __FILE__);
 		return $mce_css;
 	}
 
 	/*Add our css stylesheet into the header*/
 	public static function add_styles() {
-		$css = plugins_url('css/argo-links.css', __FILE__);
-		wp_enqueue_style('argo-links', $css, array(), 1);
+		$css = plugins_url('css/lroundups.css', __FILE__);
+		wp_enqueue_style('link-roundups', $css, array(), 1);
 	}
 
 	/**
@@ -110,7 +110,7 @@ class ArgoLinks {
 	 * 
 	 * @since 0.1
 	 */
-	public static function register_argo_links_taxonomy() {
+	public static function register_rounduplinks_taxonomy() {
 		register_taxonomy(
 			"argo-link-tags",
 			'rounduplink',
@@ -129,7 +129,7 @@ class ArgoLinks {
 	 * @since 0.1
 	 */
 	public static function add_custom_post_fields() {
-		add_meta_box("argo_links_meta", "Link Information", array(__CLASS__,"display_custom_fields"), "rounduplink", "normal", "low");
+		add_meta_box("saved_links_meta", "Link Information", array(__CLASS__,"display_custom_fields"), "rounduplink", "normal", "low");
 	}
 
 	/**
@@ -143,37 +143,37 @@ class ArgoLinks {
 		$custom = get_post_custom($post->ID);
 
 		if (isset($custom["argo_link_url"][0])) {
-			$argo_link_url = $custom["argo_link_url"][0];
+			$link_url = $custom["argo_link_url"][0];
 		} else {
-			$argo_link_url = apply_filters('default_argo_link_url',"");
+			$link_url = apply_filters('default_link_url',"");
 		}
 
 		if (isset($custom["argo_link_description"][0])) {
-			$argo_link_description = $custom["argo_link_description"][0];
+			$link_description = $custom["argo_link_description"][0];
 		} else {
-			$argo_link_description = apply_filters('default_argo_link_description',"");
+			$link_description = apply_filters('default_link_description',"");
 		}
 
 		if (isset($custom["argo_link_source"][0])) {
-			$argo_link_source = $custom["argo_link_source"][0];
+			$link_source = $custom["argo_link_source"][0];
 		} else {
-			$argo_link_source = apply_filters('default_argo_link_source',"");
+			$link_source = apply_filters('default_link_source',"");
 		}
 
-		$argo_link_img_src = Argo_This_Button::default_imgUrl();
+		$link_img_src = Save_To_Site_Button::default_imgUrl();
 
 	?>
 	<p><label>URL:</label><br />
-	<input type='text' name='argo_link_url' value='<?php echo $argo_link_url; ?>' style='width:98%;'/></p>
+	<input type='text' name='argo_link_url' value='<?php echo $link_url; ?>' style='width:98%;'/></p>
 	<p><label>Description:</label><br />
-	<textarea cols="100" rows="5" name="argo_link_description" style='width:98%;'><?php echo $argo_link_description; ?></textarea></p>
+	<textarea cols="100" rows="5" name="argo_link_description" style='width:98%;'><?php echo $link_description; ?></textarea></p>
 	<p><label>Source:</label><br />
-	<input type='text' name='argo_link_source' value='<?php echo $argo_link_source; ?>' style='width:98%;'/></p>
+	<input type='text' name='argo_link_source' value='<?php echo $link_source; ?>' style='width:98%;'/></p>
 
-	<?php if( $argo_link_img_src ) { ?>
+	<?php if( $link_img_src ) { ?>
 		<p><label>Import featured image:</label><br />
-		<img src="<?php echo $argo_link_img_src ?>" width="300" />
-		<input type='hidden' name='argo_link_img_url' value='<?php echo $argo_link_img_src; ?>'/><br>
+		<img src="<?php echo $link_img_src ?>" width="300" />
+		<input type='hidden' name='argo_link_img_url' value='<?php echo $link_img_src; ?>'/><br>
 		<input type="checkbox" value="1" name="argo_link_img_url_import" id="argo_link_img_url_import"><label for="argo_link_img_url_import">Import as feature image</label>
 		</p>
 	<?php }
@@ -216,7 +216,7 @@ class ArgoLinks {
 	 *
 	 * @since 0.1
 	 */
-	public static function argo_links_media_sideload_image($file, $post_id, $desc=null) {
+	public static function lroundups_media_sideload_image($file, $post_id, $desc=null) {
 
 		if (!empty($file)) {
 			// Set variables for storage, fix file filename for query strings.
@@ -300,14 +300,14 @@ class ArgoLinks {
 	 * 
 	 * @since 0.1
 	 */
-	public static function add_argo_this_sub_menu() {
+	public static function add_save_to_site_sub_menu() {
 		add_submenu_page(
 			"edit.php?post_type=rounduplink",
-			"'Link This!' Bookmark",
-			"'Link This!' Bookmark",
+			"Add Browser Bookmark",
+			"Add Browser Bookmark",
 			"edit_posts",
-			"bookmarklet",
-			array(__CLASS__, 'build_argo_this_page'
+			"install-browser-bookmark",
+			array(__CLASS__, 'build_lroundups_page'
 		));
 	}
 
@@ -316,12 +316,12 @@ class ArgoLinks {
 	 * 
 	 * @since 0.1
 	 */
-	public static function build_argo_this_page() {
+	public static function build_lroundups_page() {
 	/** WordPress Administration Bootstrap */
 	include_once( ABSPATH  . '/admin.php' );
 	?>
 	
-	<div id="icon-tools" class="icon32"><br></div><h2>Install 'Link This!' Bookmarklet</h2>
+	<div id="icon-tools" class="icon32"><br></div><h2><?php _e('Add Save to Site Bookmark to Your Web Browser'); ?></h2>
 
 	<div class="tool-box">
 
@@ -337,7 +337,7 @@ class ArgoLinks {
 		<p><?php _e( 'Drag the Link This! bookmarklet below to your web browser\'s Bookmarks Toolbar.<br /><em>If you can\'t drag, click the Clipboard.</em>' ); ?></p>
 
 		<p class="pressthis-bookmarklet-wrapper">
-			<a class="pressthis-bookmarklet" onclick="return false;" href="<?php echo Argo_This_Button::shortcut_link(); ?>"><span><?php _e( 'Link This!' ); ?></span></a>
+			<a class="pressthis-bookmarklet" onclick="return false;" href="<?php echo Save_To_Site_Button::shortcut_link(); ?>"><span><?php _e( 'Link This!' ); ?></span></a>
 			<button type="button" class="button button-secondary pressthis-js-toggle js-show-pressthis-code-wrap" aria-expanded="false" aria-controls="pressthis-code-wrap">
 				<span class="dashicons dashicons-clipboard"></span>
 				<span class="screen-reader-text"><?php _e( 'Copy &#8220;Link This&#8221; bookmarklet code' ) ?></span>
@@ -357,7 +357,7 @@ class ArgoLinks {
 		<p><?php _e( 'Follow the link to open Link This. Then add it to your device&#8217;s bookmarks or home screen.' ); ?></p>
 
 		<p>
-			<a class="button button-secondary" href="<?php echo Argo_This_Button::shortcut_link(); ?>"><?php _e( 'Open Link This' ) ?></a>
+			<a class="button button-secondary" href="<?php echo Save_To_Site_Button::shortcut_link(); ?>"><?php _e( 'Open Link This' ) ?></a>
 		</p>
 		<script>
 			jQuery( document ).ready( function( $ ) {
@@ -385,12 +385,12 @@ class ArgoLinks {
 <?php
 	}
 
-	public static function add_argo_links_widget() {
-		register_widget( 'argo_links_widget' );
+	public static function add_saved_links_widget() {
+		register_widget( 'saved_links_widget' );
 	}
 
-	public static function add_argo_link_roundups_widget() {
-		register_widget( 'argo_link_roundups_widget' );
+	public static function add_link_roundups_widget() {
+		register_widget( 'link_roundups_widget' );
 	}
 
 	/**
@@ -565,17 +565,17 @@ class ArgoLinks {
 		$default_html = ob_get_clean();
 
 		if (get_option("argo_link_roundups_custom_html") != "") {
-			$argo_html = get_option("argo_link_roundups_custom_html");
-			$argo_html = preg_replace("/\"/","'",$argo_html);
+			$lroundups_html = get_option("argo_link_roundups_custom_html");
+			$lroundups_html = preg_replace("/\"/","'",$lroundups_html);
 		} else {
-			$argo_html = $default_html;
+			$lroundups_html = $default_html;
 		}
-		$argo_html = str_replace("#!URL!#",$url,$argo_html);
-		$argo_html = str_replace("#!TITLE!#",$title,$argo_html);
-		$argo_html = str_replace("#!DESCRIPTION!#",$description,$argo_html);
-		$argo_html = str_replace("#!SOURCE!#",$source,$argo_html);
-		$argo_html = str_replace("#!STYLE!#",$style,$argo_html);
-		return $argo_html;
+		$lroundups_html = str_replace("#!URL!#",$url,$lroundups_html);
+		$lroundups_html = str_replace("#!TITLE!#",$title,$lroundups_html);
+		$lroundups_html = str_replace("#!DESCRIPTION!#",$description,$lroundups_html);
+		$lroundups_html = str_replace("#!SOURCE!#",$source,$lroundups_html);
+		$lroundups_html = str_replace("#!STYLE!#",$style,$lroundups_html);
+		return $lroundups_html;
 	}
 
 	/**
@@ -623,7 +623,7 @@ class ArgoLinks {
 	}
 	
 	/**
-	 * Returns DOM for an argolink excerpt.
+	 * Returns DOM for a rounduplink excerpt.
 	 *
 	 * Excerpt DOM is static:
 	 *  <p class="description">#!DESCRIPTION!#</p>
@@ -642,7 +642,7 @@ class ArgoLinks {
 		if ( isset( $custom["argo_link_description"][0] ) )
 			echo '<p class="description">' . $custom["argo_link_description"][0] . '</p>';
 		if ( isset($custom["argo_link_source"][0] ) && ( $custom["argo_link_source"][0] != '' ) ) {
-			echo '<p class="source">' . __('Source: ', 'largo') . '<span>';
+			echo '<p class="source">' . __('Source: ', 'link-roundups') . '<span>';
 			echo ( isset( $custom["argo_link_url"][0] ) ) ? '<a href="' . $custom["argo_link_url"][0] . '">' . $custom["argo_link_source"][0] . '</a>' : $custom["argo_link_source"][0];
 			echo '</span></p>';
 		}

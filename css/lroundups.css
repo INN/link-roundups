@@ -21,46 +21,46 @@ p.link-roundup em {
 /* ==========================================================================
 Recent Roundups Editor Styles
 ========================================================================== */
-#argo_link_roundups_roundup .inside {
+#lroundups_roundup .inside {
   min-height: 250px;
 }
 
-#argo_link_roundups_roundup .pagination {
+#lroundups_roundup .pagination {
   margin:10px 0 10px 0;
 }
 
-#argo_link_roundups_roundup .pagination:last-child {
+#lroundups_roundup .pagination:last-child {
   padding-bottom:15px;
 }
 
-#argo_link_roundups_roundup #filter_links {
+#lroundups_roundup #filter_links {
   margin:10px 0 10px;
 }
 
-div.display-argo-links div.pagination {
+div.display-saved-links div.pagination {
   height:30px;
 }
-div.display-argo-links div.pagination span, div.display-argo-links div.pagination a {
+div.display-saved-links div.pagination span, div.display-saved-links div.pagination a {
     color: #000;
     text-decoration: none;
 }
-div.display-argo-links div.pagination .current {
+div.display-saved-links div.pagination .current {
     color: #C7C7C7;
 }
 
-.widget.argo-links h5 {
+.widget.saved-links h5 {
   margin-bottom: 2px;
 	font-weight:700;
   padding: 0 3px;
   font-size: 15px;
 }
-.widget.argo-links p {
+.widget.saved-links p {
   font-size: 10.5px;
   margin-bottom: 12px;
 }
-.widget.argo-links p.description {
+.widget.saved-links p.description {
   margin-bottom: 2px;
 }
-.widget.argo-links p.source span {
+.widget.saved-links p.source span {
   font-style: italic;
 }

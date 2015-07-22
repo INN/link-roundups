@@ -1,7 +1,7 @@
 <?php
 
-function argo_links_create_mailchimp_campaign() {
-	check_ajax_referer('argo_links_ajax_nonce', 'security');
+function lroundups_create_mailchimp_campaign() {
+	check_ajax_referer('lroundups_ajax_nonce', 'security');
 
 	if (isset($_POST['post_id']))
 		$post = get_post($_POST['post_id']);
@@ -29,7 +29,7 @@ function argo_links_create_mailchimp_campaign() {
 			wp_die();
 		}
 
-		if (!_argo_links_ensure_template_tags($template_info['source'])) {
+		if (!_lroundups_ensure_template_tags($template_info['source'])) {
 			print json_encode(array(
 				"success" => false,
 				"message" => 'Your MailChimp template is missing the required *|ROUNDUPLINKS|* template tag.'
@@ -57,7 +57,7 @@ function argo_links_create_mailchimp_campaign() {
 		/**
 		 * Replace the template tags in the MailChimp post
 		 */
-		$html = _argo_links_render_mailchimp_template($template_info['source'], $post);
+		$html = _lroundups_render_mailchimp_template($template_info['source'], $post);
 
 		$campaign_content = array(
 			'html' => $html, // the content!
@@ -88,13 +88,13 @@ function argo_links_create_mailchimp_campaign() {
 		wp_die();
 	}
 }
-add_action('wp_ajax_argo_links_create_mailchimp_campaign', 'argo_links_create_mailchimp_campaign');
+add_action('wp_ajax_lroundups_create_mailchimp_campaign', 'lroundups_create_mailchimp_campaign');
 
-function _argo_links_ensure_template_tags($template_body) {
+function _lroundups_ensure_template_tags($template_body) {
 	return (bool) strstr($template_body, '*|ROUNDUPLINKS|*');
 }
 
-function _argo_links_render_mailchimp_template($source, $post) {
+function _lroundups_render_mailchimp_template($source, $post) {
 	$author = get_user_by('id', $post->post_author);
 
 	$tags = array(

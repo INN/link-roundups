@@ -1,15 +1,15 @@
 <?php
 /**
- * @package Argo_Links
- * @version 0.01
+ * @package Link_Roundups
+ * @version 0.1.0
  */
 
 /*
-*Argo Links - Link Roundups Code
+*Link Roundups Post Type and Supporting Functions
 */
 
-/* The Argo Link Roundups class - so we don't have function naming conflicts */
-class ArgoLinkRoundups {
+/* The LRoundups class - so we don't have function naming conflicts with link-roundups */
+class LRoundups {
 
 	/* Initialize the plugin */
 	public static function init() {
@@ -20,8 +20,8 @@ class ArgoLinkRoundups {
 		/* Add our custom post fields for our custom post type */
 		add_action("admin_init", array(__CLASS__, "add_custom_post_fields"));
 
-		/* Add the Argo Link Roundups Options sub menu */
-		add_action("admin_menu", array(__CLASS__, "add_argo_link_roundup_options_page"));
+		/* Add the Link Roundups Options sub menu */
+		add_action("admin_menu", array(__CLASS__, "add_lroundups_options_page"));
 
 		/* Save our custom post fields! Very important! */
 		add_action('save_post', array(__CLASS__, 'save_custom_fields'));
@@ -31,8 +31,10 @@ class ArgoLinkRoundups {
 
 	}
 
-	/*Pull the argolinkroundups into the rivers for is_home, is_tag, is_category, is_archive*/
-	/*Merge the post_type query var if there is already a custom post type being pulled in, otherwise do post & argolinkroundups*/
+	/* Pull the linkroundups into the queries for is_home, is_tag, is_category, is_archive */
+	
+	/* Merge the post_type query var if there is already a custom post type being pulled in
+	 * otherwise do post & linkroundups */
 	public static function my_get_posts( &$query ) {
 		// bail out early if suppress filters is set to true
 		if ($query->get('suppress_filters')) return;
@@ -60,7 +62,8 @@ class ArgoLinkRoundups {
 	}
 
 	/**
-	 * Register the Argo Links post type
+	 * Register the Link Roundups Custom Post Type
+	 * Use Options Page settings to set Names and Slug
 	 * 
 	 * @since 0.1
 	 */
@@ -125,7 +128,7 @@ class ArgoLinkRoundups {
 	 */
 	public static function add_custom_post_fields() {
 		add_meta_box(
-			"argo_link_roundups_roundup", "Recent Saved Links",
+			"link_roundups_roundup", "Recent Saved Links",
 			array(__CLASS__, "display_custom_fields"), "roundup", "normal", "high"
 		);
 	}
@@ -137,10 +140,10 @@ class ArgoLinkRoundups {
 	 */
 	public static function display_custom_fields() {
 	?>
-		<div id='argo-links-display-area'></div>
+		<div id='lroundups-display-area'></div>
 		<script type='text/javascript'>
 		jQuery(function(){
-			jQuery('#argo-links-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-argo-links.php');
+			jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-recent-saved-links.php');
 		});
 		</script>
 	<?php
@@ -167,15 +170,15 @@ class ArgoLinkRoundups {
 	 * 
 	 * @since 0.1
 	 */
-	public static function add_argo_link_roundup_options_page() {
+	public static function add_lroundups_options_page() {
 
 		add_submenu_page(
 			"edit.php?post_type=roundup", 	// $parent_slug
 			"Options", 						// $page_title
 			"Options", 						// $menu_title
 			"edit_posts", 					// $capability
-			"argo-link-roundups-options",  	// $menu_slug
-			array(__CLASS__, 'build_argo_link_roundups_options_page') 	// $function
+			"link-roundups-options",  	    // $menu_slug
+			array(__CLASS__, 'build_lroundups_options_page') 	// $function
 		);
 
 		// call register settings function
@@ -219,7 +222,7 @@ class ArgoLinkRoundups {
 		return $input;
 	}
 
-	public static function build_argo_link_roundups_options_page() {
+	public static function build_lroundups_options_page() {
 		
 		$mc_api_key = get_option('argo_link_roundups_mailchimp_api_key');
 
@@ -230,7 +233,7 @@ class ArgoLinkRoundups {
 			add_settings_error(
 				'argo_link_roundups_use_mailchimp_integration',
 				'curl_not_enabled',
-				__('Curl is not enabled on your server. The MailChimp features will not work without curl. Please contact your server administrator to have curl enabled.', 'argo-links'),
+				__('Curl is not enabled on your server. The MailChimp features will not work without curl. Please contact your server administrator to have curl enabled.', 'link-roundups'),
 				'error'
 			);
 			delete_option('argo_link_roundups_use_mailchimp_integration');

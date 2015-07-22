@@ -1,12 +1,12 @@
-var AL = AL || {};
+var LR = LR || {};
 
 (function() {
     var $ = jQuery;
 
     if (typeof AL.instances == 'undefined')
-        AL.instances = {};
+        LR.instances = {};
 
-    AL.CreateCampaignModal = AL.Modal.extend({
+    LR.CreateCampaignModal = LR.Modal.extend({
         actions: {
             'Yes': 'createCampaign',
             'Cancel': 'close'
@@ -14,7 +14,7 @@ var AL = AL || {};
 
         initialize: function(options) {
             this.content = 'Are you sure you want to create a new MailChimp campaign?';
-            return AL.Modal.prototype.initialize.apply(this, arguments);
+            return LR.Modal.prototype.initialize.apply(this, arguments);
         },
 
         createCampaign: function() {
@@ -31,8 +31,8 @@ var AL = AL || {};
                         self.close();
 
                         var model = new Backbone.Model(data.data);
-                        AL.instances.campaignSuccessModal = new AL.CampaignCreatedModal({ model: model });
-                        AL.instances.campaignSuccessModal.render();
+                        LR.instances.campaignSuccessModal = new AL.CampaignCreatedModal({ model: model });
+                        LR.instances.campaignSuccessModal.render();
                         updateCreateCampaignButton(model);
                     },
                     error: function() {
@@ -43,9 +43,9 @@ var AL = AL || {};
                 };
 
             var data = {
-                action: 'argo_links_create_mailchimp_campaign',
-                security: AL.ajax_nonce,
-                post_id: AL.post_id
+                action: 'lroundups_create_mailchimp_campaign',
+                security: LR.ajax_nonce,
+                post_id: LR.post_id
             };
 
             opts.data = data;
@@ -57,7 +57,7 @@ var AL = AL || {};
         }
     });
 
-    AL.CampaignCreatedModal = AL.Modal.extend({
+    LR.CampaignCreatedModal = LR.Modal.extend({
         actions: {
             'Close': 'close'
         },
@@ -65,22 +65,22 @@ var AL = AL || {};
         initialize: function(options) {
             var model = options.model;
 
-            this.content = 'Successfully created a new MailChimp campaign!<br />' +
-                '<a target="blank" href="https://' + AL.mc_api_endpoint +
+            this.content = 'New MailChimp campaign created successfully!<br />' +
+                '<a target="blank" href="https://' + LR.mc_api_endpoint +
                 '.admin.mailchimp.com/campaigns/wizard/confirm?id=' + model.get('web_id') +
                 '">Click here to edit your campaign in MailChimp.</a>';
 
-            return AL.Modal.prototype.initialize.apply(this, arguments);
+            return LR.Modal.prototype.initialize.apply(this, arguments);
         }
     });
 
     var updateCreateCampaignButton = function(model) {
         var markup = '<p>A MailChimp roundup campaign exists for thist post.</p>' +
-            '<a class="button" target="blank" href="https://' + AL.mc_api_endpoint +
+            '<a class="button" target="blank" href="https://' + LR.mc_api_endpoint +
             '.admin.mailchimp.com/campaigns/wizard/confirm?id=' + model.get('web_id') +
             '">Edit in MailChimp.</a>';
 
-        var campaign_button = $('#argo-links-create-mailchimp-campaign'),
+        var campaign_button = $('#lroundups-create-mailchimp-campaign'),
             parent = campaign_button.parent();
 
         campaign_button.remove();
@@ -88,12 +88,12 @@ var AL = AL || {};
     }
 
     $(document).ready(function() {
-        $('#argo-links-create-mailchimp-campaign').click(function() {
+        $('#lroundups-create-mailchimp-campaign').click(function() {
             if (typeof $(this).attr('disabled') == 'undefined') {
-                if (typeof AL.instances.campaignModal == 'undefined')
-                    AL.instances.campaignModal = new AL.CreateCampaignModal();
+                if (typeof LR.instances.campaignModal == 'undefined')
+                    LR.instances.campaignModal = new LR.CreateCampaignModal();
 
-                AL.instances.campaignModal.render();
+                LR.instances.campaignModal.render();
             }
             return false;
         });
