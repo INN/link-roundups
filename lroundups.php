@@ -72,14 +72,14 @@ class LRoundups {
 	$plural_opt = get_option('link_roundups_custom_name_plural');
 	$slug_opt = get_option('argo_link_roundups_custom_url');
 	
-	if($singular_opt != "") {
+	if(!empty($singular_opt)) {
 		$singular = $singular_opt;
 	}
 	else {
 		$singular = 'Link Roundup';
 	}
 	
-	if($plural_opt != "") {
+	if(!empty($plural_opt)) {
 		$plural = $plural_opt;
 	}
 	else {
