@@ -166,7 +166,7 @@ function link_roundups_enqueue_assets() {
 add_action('admin_enqueue_scripts', 'link_roundups_enqueue_assets');
 
 /**
- * Print the underscore template for the AL.Modal view.
+ * Print the underscore template for the LR.Modal view.
  *
  * @since 0.2
  */
@@ -186,7 +186,7 @@ function lroundups_modal_underscore_template() { ?>
 }
 
 /**
- * Builds an LR object with common attributes used throughout the plugin's javascript files.
+ * Builds a LR object with common attributes used throughout the plugin's javascript files.
  *
  * @since 0.2
  */
@@ -222,7 +222,7 @@ function lroundups_get_mc_api_endpoint() {
 	return $mc_api_key_parts[1];
 }
 
-/**
+/*
  * Set us up the files
  */
 require_once('lroundups.php');
@@ -232,7 +232,7 @@ require_once('saved-links-class.php');
 require_once('links-ajax.php');
 require_once('browser-bookmark.php');
 
-/* Initialize the plugin using it's init() function */
+/* Initialize the plugin using its init() function */
 LRoundups::init();
 SavedLinks::init();
 add_action('init', 'lroundups_flush_permalinks', 99);
@@ -240,7 +240,7 @@ add_action('init', 'lroundups_flush_permalinks', 99);
 require_once('inc/lroundups-update.php');
 
 /**
- * Fetches info from a pages <meta> tags and
+ * Fetches info from a page's <meta> tags and
  * returns an array of that information.
  *
  * @see http://code.ramonkayo.com/simple-scraper/

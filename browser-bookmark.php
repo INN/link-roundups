@@ -226,51 +226,51 @@ class Save_To_Site_Button {
 		}
 
 	/**
-	 * Returns the default title value for this argo link. 
+	 * Returns the default title value for this link.
 	 * 
 	 * @since 0.3
 	 * 
-	 * @return String. Default title. 
+	 * @return String. Default title.
 	 */
 	public static function default_title( $title = null ) {
 		return self::$title;
 	}
 
 	/**
-	 * Returns the default description value for this argo link. 
+	 * Returns the default description value for this link.
 	 * 
 	 * @since 0.3
 	 * 
-	 * @return String. Default description. 
+	 * @return String. Default description.
 	 */
 	public static function default_description( $description = null ) {
 		return self::$description;
 	}
 
 	/**
-	 * Returns the default link value for this argo link. 
+	 * Returns the default link value for this link.
 	 * 
 	 * @since 0.3
 	 * 
-	 * @return String. Default link. 
+	 * @return String. Default link.
 	 */
 	public static function default_link( $link = null ) {
 		return self::$url;
 	}
 
 	/**
-	 * Returns the default source value for this argo link. 
+	 * Returns the default source value for this link.
 	 * 
 	 * @since 0.3
 	 * 
-	 * @return String. Default source. 
+	 * @return String. Default source.
 	 */
 	public static function default_source( $source = null ) {
 		return self::$source;
 	}
 
 	/**
-	 * Returns the default image src value for this argo link. 
+	 * Returns the default image src value for this link.
 	 * 
 	 * @since 0.3
 	 * 
