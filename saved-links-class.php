@@ -548,7 +548,7 @@ class SavedLinks {
 		/* begin shortcode output
 		 *
 		 * NOTE: 
-		 * This default output is overwritten 98% of the time by $argo_html 
+		 * This default output is overwritten 98% of the time by $lroundups_html
 		 * regardless of whether you've modified the code in setting
 		 * Needs improvement in future version
 		*/
