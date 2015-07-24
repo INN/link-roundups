@@ -75,7 +75,7 @@ var LR = LR || {};
     });
 
     var updateCreateCampaignButton = function(model) {
-        var markup = '<p>A MailChimp roundup campaign exists for thist post.</p>' +
+        var markup = '<p>A MailChimp roundup campaign exists for this post.</p>' +
             '<a class="button" target="blank" href="https://' + LR.mc_api_endpoint +
             '.admin.mailchimp.com/campaigns/wizard/confirm?id=' + model.get('web_id') +
             '">Edit in MailChimp.</a>';
