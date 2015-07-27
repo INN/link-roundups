@@ -47,13 +47,6 @@ EOT;
 			    	<p><strong>IMPORTANT</strong>: Whenever you define a new Custom URL Slug, you <strong>must</strong> also update your 
 			    	<a href="<?php echo admin_url( '/options-permalink.php' ); ?>"><strong>Permalink Settings</strong></a>.
 			    	</p>
-			    	<label for="argo_link_roundups_permalink_flush">
-							Update the WordPress Permalink Settings?
-							<input type="checkbox" name="argo_link_roundups_permalink_flush"
-								<?php checked(get_option('argo_link_roundups_permalink_flush'), 'on', true); ?> />
-					</label><br />
-					<em>This is checked automatically if you change the slug setting above.<br />You may disable to manually save or modify your Permalinks/.htaccess.</em>
-				
 			</div>
 			<div id="html" class="card">
 				<h3>Custom HTML for Displaying Links</h3>
