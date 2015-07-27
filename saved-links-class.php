@@ -63,7 +63,7 @@ class SavedLinks {
 		} else {
 			$mce_css = '';
 		}
-		$mce_css .= plugins_url("css/lroundups.css", __FILE__);
+		$mce_css .= plugins_url("css/lroundups.min.css", __FILE__);
 		return $mce_css;
 	}
 
