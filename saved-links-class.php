@@ -22,7 +22,7 @@ class SavedLinks {
 		/* moved into a function per wordpress 3.0 issues with calling it directly*/
 		add_action('init', array(__CLASS__, 'register_rounduplinks_taxonomy'));
 
-		/*Add the Argo This! sub menu*/
+		/* Add the Add Browser Bookmark submenu */
 		add_action("admin_menu", array(__CLASS__, "add_save_to_site_sub_menu"));
 
 		/*Add our custom post fields for our custom post type*/
@@ -326,21 +326,21 @@ class SavedLinks {
 	<div class="tool-box">
 
 	 <div class="card pressthis">
-	<h3><?php _e('Link This') ?></h3>
-	<p><?php _e( 'Link This is a little bookmarklet that lets you send Saved Links to your WordPress Dashboard while browsing the web.' );?></p>
-	<p><?php _e( 'Click Link This!, and a new WordPress window will popup, attempting to prefill Title, URL and Source information.' ); ?></p>
+	<h3><?php _e('Save to Site') ?></h3>
+	<p><?php _e( 'Save to Site is a tool that lets you send Saved Links to your WordPress Dashboard while browsing the web.' );?></p>
+	<p><?php _e( 'Click the Save to Site bookmark and a new WordPress window will popup, attempting to prefill Title, URL and Source information.' ); ?></p>
 
 
 	<form>
-		<h3><?php _e( 'Install Link This' ); ?></h3>
+		<h3><?php _e( 'Install Save to Site' ); ?></h3>
 		<h4><?php _e( 'Browser Bookmarklet' ); ?></h4>
-		<p><?php _e( 'Drag the Link This! bookmarklet below to your web browser\'s Bookmarks Toolbar.<br /><em>If you can\'t drag, click the Clipboard.</em>' ); ?></p>
+		<p><?php _e( 'Drag the Save to Site bookmarklet below to your web browser\'s Bookmarks Toolbar.<br /><em>If you can\'t drag, click the Clipboard.</em>' ); ?></p>
 
 		<p class="pressthis-bookmarklet-wrapper">
-			<a class="pressthis-bookmarklet" onclick="return false;" href="<?php echo Save_To_Site_Button::shortcut_link(); ?>"><span><?php _e( 'Link This!' ); ?></span></a>
+			<a class="pressthis-bookmarklet" onclick="return false;" href="<?php echo Save_To_Site_Button::shortcut_link(); ?>"><span><?php _e( 'Save to Site' ); ?></span></a>
 			<button type="button" class="button button-secondary pressthis-js-toggle js-show-pressthis-code-wrap" aria-expanded="false" aria-controls="pressthis-code-wrap">
 				<span class="dashicons dashicons-clipboard"></span>
-				<span class="screen-reader-text"><?php _e( 'Copy &#8220;Link This&#8221; bookmarklet code' ) ?></span>
+				<span class="screen-reader-text"><?php _e( 'Copy Save to Site bookmarklet code' ) ?></span>
 			</button>
 		</p>
 
@@ -354,10 +354,10 @@ class SavedLinks {
 		</div>
 
 		<h4><?php _e( 'Direct link (best for mobile and tablets)' ); ?></h4>
-		<p><?php _e( 'Follow the link to open Link This. Then add it to your device&#8217;s bookmarks or home screen.' ); ?></p>
+		<p><?php _e( 'Follow the link to open Save to Site. Then add it to your device&#8217;s bookmarks or home screen.' ); ?></p>
 
 		<p>
-			<a class="button button-secondary" href="<?php echo Save_To_Site_Button::shortcut_link(); ?>"><?php _e( 'Open Link This' ) ?></a>
+			<a class="button button-secondary" href="<?php echo Save_To_Site_Button::shortcut_link(); ?>"><?php _e( 'Open Save to Site' ) ?></a>
 		</p>
 		<script>
 			jQuery( document ).ready( function( $ ) {
