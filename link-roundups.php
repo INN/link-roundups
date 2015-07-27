@@ -13,21 +13,30 @@ Seeking Link Roundups Post Type functions? They use lroundups instead of link-ro
 */
 
 /** Mailchimp API **/
-require_once(__DIR__ . '/vendor/mailchimp-api-php/src/Mailchimp.php');
 
-require_once(__DIR__ . '/inc/temp-file-only-for-clean.php');
-require_once(__DIR__ . '/inc/argo-links-compatability.php');
-require_once(__DIR__ . '/inc/mailchimp-admin.php');
-
-/*
- * Set us up the files
- */
-require_once('lroundups.php');
-require_once('lroundups-widget.php');
-require_once('saved-links-widget.php');
+/** Saved Links Post Type **/
 require_once('saved-links-class.php');
-require_once('links-ajax.php');
+/** Saved Links Widget **/
+require_once('saved-links-widget.php');
+
+/** Link Roundup Post Type Functions **/
+require_once('lroundups.php');
+/** Link Roundups Widget **/
+require_once('lroundups-widget.php');
+
+/** Mailchimp API and Modal Functions **/
+require_once(__DIR__ . '/vendor/mailchimp-api-php/src/Mailchimp.php'); // API files
+require_once(__DIR__ . '/inc/mailchimp-admin.php'); // Integration Code
+
+/** Save to Site Browser Bookmark Tool **/
 require_once('browser-bookmark.php');
+
+/** AJAX Helper Functions **/
+require_once('links-ajax.php');
+
+/** Add Backwards Compatability with argo-links **/
+require_once(__DIR__ . '/inc/argo-links-compatability.php');
+
 
 /* Initialize the plugin using its init() function */
 LRoundups::init();
@@ -100,7 +109,7 @@ function link_roundups_enqueue_assets() {
 	);
 
 	wp_register_script(
-		'link-roundups', $plugin_path . '/js/link-roundups.js',
+		'link-roundups', $plugin_path . '/js/lroundups.js',
 		array('links-common'), 0.2, true
 	);
 

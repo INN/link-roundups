@@ -34,17 +34,22 @@ if (isset($_REQUEST['link_date'])) {
     $default_date = array();
   }
 }
-$args =  array(
-              'post_type' => 'rounduplink',
-              'orderby' => (isset($_REQUEST['orderby']) ? $_REQUEST['orderby'] : 'date'),
-              'order' => (isset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc'),
-              'posts_per_page' => -1
-              );
+$args =  
+	array(
+        'post_type' => 'rounduplink',
+        'orderby' => (isset($_REQUEST['orderby']) ? $_REQUEST['orderby'] : 'date'),
+        'order' => (isset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc'),
+        'posts_per_page' => -1
+    );
 $args = array_merge($args, $default_date);
 $the_posts_count_query = new WP_Query($args);
 $total_post_count = $the_posts_count_query->post_count;
 $the_posts_count_query = '';
-$the_query = new WP_Query(array_merge($args,array('posts_per_page' => $posts_per_page, 'paged' => $page)));
+$the_query = new WP_Query(
+				array_merge($args,
+							array('posts_per_page' => $posts_per_page, 'paged' => $page)
+							)
+				);
 
 $from_result = 1;
 $to_result = $posts_per_page;

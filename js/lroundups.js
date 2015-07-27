@@ -3,7 +3,7 @@ var LR = LR || {};
 (function() {
     var $ = jQuery;
 
-    if (typeof AL.instances == 'undefined')
+    if (typeof LR.instances == 'undefined')
         LR.instances = {};
 
     LR.CreateCampaignModal = LR.Modal.extend({

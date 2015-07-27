@@ -1,10 +1,11 @@
 <?php
 
 /**
- * Redirect  wp-admin URLs containing 'post_type=argolinks' to the
- * same url replaced with 'post_type=rounduplink'.
- * 
- * Enables backwards-compatiblity with old argo-links bookmarklets.
+ * Redirect wp-admin URLs containing 'post_type=argolinks' to the
+ * same url replaced with 'post_type=rounduplink'
+ *
+ * If a user had an only Argo Link bookmark tool on their browser bar,
+ * then it would continue to work.
  * 
  * @since 0.3
  */
