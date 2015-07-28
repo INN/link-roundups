@@ -44,7 +44,7 @@ function lroundups_perform_update() {
  */
 function lroundups_version() {
 	if( is_admin() ) {
-		$plugin = get_plugin_data( plugin_dir_path(__FILE__) . "../saved-links.php" );
+		$plugin = get_plugin_data( plugin_dir_path(__FILE__) . "../link-roundups.php" );
 		return $plugin['Version'];
 	}
 	return false;
