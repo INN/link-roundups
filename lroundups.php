@@ -129,7 +129,7 @@ class LRoundups {
 	public static function add_custom_post_fields() {
 		add_meta_box(
 			"link_roundups_roundup", "Recent Saved Links",
-			array(__CLASS__, "display_custom_fields"), "roundup", "normal", "high"
+			array(__CLASS__, "display_custom_fields"), "roundup", "advanced", "high"
 		);
 	}
 

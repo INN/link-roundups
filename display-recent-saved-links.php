@@ -326,6 +326,7 @@ JAVASCRIPT_TITLE;
 <script type='text/javascript'>
 jQuery(function(){
   jQuery('.append-saved-links').bind('click',function(){
+  // this is the class for the checkbox in the table, we check how it's doing
     jQuery('.lroundups-link').each(function(){
       if (jQuery(this).is(":checked")) {
         <?php /* The old way: */ ?>
