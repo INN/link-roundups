@@ -1,6 +1,6 @@
 <?php
 $default_html = <<<EOT
-<p class='link-roundup' style='#!STYLE!#'><a href='#!URL!#'>#!TITLE!#</a> &ndash; <span class='description'>#!DESCRIPTION!#</span> <em>#!SOURCE!#</em></p>
+<p class='lr-saved-link' style='#!STYLE!#'><a href='#!URL!#'>#!TITLE!#</a> &ndash; <span class='description'>#!DESCRIPTION!#</span> <em>#!SOURCE!#</em></p>
 EOT;
 ?>
 <div class="wrap">
@@ -96,7 +96,7 @@ EOT;
 							<option <?php selected(get_option('argo_link_mailchimp_template'), $template['id'], true); ?> value="<?php echo $template['id']; ?>" /><?php echo $template['name']; ?></option>
 						<?php } ?>
 					</select>
-					<p>Choose a MailChimp template to use as the basis for Argo Link Roundup email campaigns.</p>
+					<p>Choose a MailChimp template to use as the basis for Link Roundup email campaigns.</p>
 			<?php } ?>
 			<?php if ((bool) get_option('argo_link_roundups_use_mailchimp_integration') && !empty($lists)) { ?>
 				<h4>MailChimp Lists</h4>
@@ -106,7 +106,7 @@ EOT;
 							<option <?php selected(get_option('argo_link_mailchimp_list'), $list['id'], true); ?> value="<?php echo $list['id']; ?>" /><?php echo $list['name']; ?></option>
 						<?php } ?>
 					</select>
-					<p>Choose a MailChimp list that your Argo Link Roundup email campaigns will be sent to.</p>
+					<p>Choose a MailChimp list that your Link Roundup email campaigns will be sent to.</p>
 			<?php } ?>
 				</div>
 

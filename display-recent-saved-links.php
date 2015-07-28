@@ -147,6 +147,8 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
       <?php endif;?>
     </div>
   </div>
+  
+  <!-- START TABLE -->
   <table class="wp-list-table widefat fixed posts" cellspacing="0">
     <tr>
       <th scope="col" id="cb" class="manage-column column-cb check-column" style=""><input type="checkbox" id='check-all-boxes'></th>
@@ -289,7 +291,7 @@ $javascript_source = <<<JAVASCRIPT_SOURCE
 "+jQuery('#source-'+jQuery(this).val()).text()+"
 JAVASCRIPT_SOURCE;
 $default_html = <<<EOT
-    <p><a href='#!URL!#'>#!TITLE!#</a> &ndash; <span class='description'>#!DESCRIPTION!#</span> <em>#!SOURCE!#</em></p>
+   <p class='lr-saved-link' style='#!STYLE!#'><a href='#!URL!#'>#!TITLE!#</a> &ndash; <span class='description'>#!DESCRIPTION!#</span> <em>#!SOURCE!#</em></p>
 EOT;
   if (get_option("argo_link_roundups_custom_html") != "") {
     $lroundups_html = get_option("argo_link_roundups_custom_html");
@@ -324,16 +326,12 @@ JAVASCRIPT_TITLE;
 <script type='text/javascript'>
 jQuery(function(){
   jQuery('.append-saved-links').bind('click',function(){
-    jQuery('.saved-link').each(function(){
+    jQuery('.lroundups-link').each(function(){
       if (jQuery(this).is(":checked")) {
         <?php /* The old way: */ ?>
         <?php /* var html = "<?php echo get_html(); ?>"; */ ?>
         var shortcode = '<?php echo link_roundups_get_shortcode(); ?>';
-        if (jQuery('#content').is(":visible")) {
-          jQuery('#content').val(jQuery('#content').val()+html);
-        } else {
-          parent.tinyMCE.activeEditor.setContent(parent.tinyMCE.activeEditor.getContent() + shortcode);
-        }
+        parent.tinyMCE.activeEditor.setContent(parent.tinyMCE.activeEditor.getContent() + shortcode);
       }
     });
     return false;
@@ -349,11 +347,11 @@ jQuery(function(){
   });
   jQuery('#check-all-boxes').change(function(){
     if (jQuery(this).is(':checked')) {
-      jQuery('.saved-link').each(function(){
+      jQuery('.lroundups-link').each(function(){
         jQuery(this).prop("checked", true); 
       });
     } else {
-      jQuery('.saved-link').each(function(){
+      jQuery('.lroundups-link').each(function(){
         jQuery(this).prop("checked", false);
       });
     }

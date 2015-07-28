@@ -199,7 +199,7 @@ class SavedLinks {
 		}
 
 		if (isset($_POST["argo_link_img_url_import"]) && $_POST["argo_link_img_url_import"]) {
-			$attachment_id = self::argo_links_media_sideload_image($_POST["argo_link_img_url"],$post_id);
+			$attachment_id = self::lroundups_media_sideload_image($_POST["argo_link_img_url"],$post_id);
 			if(!empty($attachment_id) && !is_wp_error($attachment_id)) {
 				update_post_meta((isset($_POST['post_ID']) ? $_POST['post_ID'] : $post_id), "_thumbnail_id", $attachment_id);
 			}
@@ -312,8 +312,9 @@ class SavedLinks {
 	}
 
 	/**
-	 * Custom page for people to pull the Argo Link This! code from (similar to Press This!)
-	 * 
+	 * Add Browser Bookmark Tool based on WP Core Press This! tool
+	 *
+	 * @see  
 	 * @since 0.1
 	 */
 	public static function build_lroundups_page() {
@@ -394,9 +395,9 @@ class SavedLinks {
 	}
 
 	/**
-	 * Filter argo link content & excerpt
+	 * Filter saved link content & excerpt
 	 *
-	 * Argo links have no content, so we have to generate it for inclusion on
+	 * Saved links have no content, so we have to generate it for inclusion on
 	 * archive pages.
 	 *
 	 * @since 0.3
@@ -477,9 +478,9 @@ class SavedLinks {
 	}
 
 	/**
-	 * Filter argo link content.
+	 * Filter Saved Link content.
 	 *
-	 * Argo links have no content, so we have to generate it for inclusion on
+	 * Saved links have no content, so we have to generate it for inclusion on
 	 * archive pages.
 	 *
 	 * @since 0.3
@@ -498,9 +499,9 @@ class SavedLinks {
 	}
 
 	/**
-	 * Filter argo link content & excerpt
+	 * Filter Saved Link content & excerpt
 	 *
-	 * Argo links have no content, so we have to generate it for inclusion on
+	 * Saved Links have no content, so we have to generate it for inclusion on
 	 * archive pages.
 	 *
 	 * @since 0.3
@@ -522,7 +523,7 @@ class SavedLinks {
 	 * Returns DOM for an argolink post content.
 	 *
 	 * DOM is generated either from the default HTML string or from a user
-	 * specified dom string in argolink options.
+	 * specified dom string in rounduplink options.
 	 *
 	 * @since 0.3
 	 *
@@ -554,7 +555,7 @@ class SavedLinks {
 		*/
 		?>
 		
-	  <p class='link-roundups' style='#!STYLE!#'>
+	  <p class='lr-saved-link' style='#!STYLE!#'>
 		<a href='#!URL!#'>#!TITLE!#</a>
 		&ndash;
 		<span class='description'>#!DESCRIPTION!#</span>

@@ -1,3 +1,4 @@
+// Mailchimp Backbone Modal
 var LR = LR || {};
 
 (function() {
