@@ -1,6 +1,6 @@
 <?php
 $default_html = <<<EOT
-<p class='lr-saved-link' style='#!STYLE!#'><a href='#!URL!#'>#!TITLE!#</a> &ndash; <span class='description'>#!DESCRIPTION!#</span> <em>#!SOURCE!#</em></p>
+<p class='lr-saved-link#!CLASS!#'><a href='#!URL!#'>#!TITLE!#</a>&ndash;<span class='description'>#!DESCRIPTION!#</span><em>#!SOURCE!#</em></p>
 EOT;
 ?>
 <div class="wrap">
@@ -59,13 +59,12 @@ EOT;
 				<li><code>#!TITLE!#</code></li>
 				<li><code>#!DESCRIPTION!#</code></li>
 				<li><code>#!SOURCE!#</code></li>
-				<li><code>#!STYLE!#</code><em><small>Intended for the paragraph wrapper</small></em></li>
+				<li><code>#!CLASS!#</code><em><small>Intended for the paragraph wrapper</small></em></li>
 				</ul></blockquote>
 				<h4 style="margin-bottom:0;padding-bottom:0;">Default HTML</h4><br />
 				<code><?php echo htmlspecialchars($default_html); ?></code><br />
-				<h3>Custom Sponsored Link Inline CSS (#!STYLE!#)</h3>
-				<p>Use style to separate sponsored links from your standard links.<br /><br />Inside the [rounduplink ...] shortcode in the Link Roundups Editor, add <code>style="sponsored"</code>. CSS written below will be included inline so it can display in both WordPress and Mailchimp with ease.</p>
-				<textarea name="argo_link_roundups_sponsored_style" cols='70' rows='6' ><?php echo (get_option('argo_link_roundups_sponsored_style') != "" ? get_option('argo_link_roundups_sponsored_style') : null); ?></textarea>
+				<h4>Sponsored Link Styling</h4>
+				<code>.lr-saved-link.sponsored</code> is the proper selector to use in your CSS.
 				<h4>General Styling of Saved Links Output</h4>
 				<p>Add custom styles to your theme's CSS based on selectors and structure above.</p>
 			</div>

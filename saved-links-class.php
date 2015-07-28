@@ -529,7 +529,7 @@ class SavedLinks {
 	 *
 	 * @param string $content content passed in by the filter (should be empty).
 	 */
-	public static function get_html( $post = null, $link_style = null) {
+	public static function get_html( $post = null, $link_class = null ) {
 
 		$post = get_post($post); // getting a saved link...
 
@@ -537,12 +537,23 @@ class SavedLinks {
 			return;
 
 		$meta = get_post_meta($post->ID); // getting meta fields from saved link...
+		
+		// first lets get the kind of link
+		$style_class = $link_class; // $link_class is defined below in rounduplink_shortcode()
+		// now check if it's sponsored and set the $sponsored_title
+		if (!empty($style_class)) {
+			$sponsored_title = _('SPONSORED: ');
+		}
+		else {
+			$sponsored_title = '';
+		}
 
 		$url = !empty($meta["argo_link_url"]) ? $meta["argo_link_url"][0] : '';
-		$title = get_the_title($post->ID);
+		$link_title = get_the_title($post->ID);
+		$title = $sponsored_title . '' . $link_title; 
 		$description = array_key_exists("argo_link_description",$meta) ? $meta["argo_link_description"][0] : '';
 		$source = !empty($meta["argo_link_source"]) ? $meta["argo_link_source"][0] : '';
-		$style = $link_style; // $link_style is defined below in rounduplink_shortcode()
+
 		
 		ob_start(); 
 		
@@ -555,7 +566,7 @@ class SavedLinks {
 		*/
 		?>
 		
-	  <p class='lr-saved-link' style='#!STYLE!#'>
+	  <p class='lr-saved-link #!CLASS!#'>
 		<a href='#!URL!#'>#!TITLE!#</a>
 		&ndash;
 		<span class='description'>#!DESCRIPTION!#</span>
@@ -575,7 +586,7 @@ class SavedLinks {
 		$lroundups_html = str_replace("#!TITLE!#",$title,$lroundups_html);
 		$lroundups_html = str_replace("#!DESCRIPTION!#",$description,$lroundups_html);
 		$lroundups_html = str_replace("#!SOURCE!#",$source,$lroundups_html);
-		$lroundups_html = str_replace("#!STYLE!#",$style,$lroundups_html);
+		$lroundups_html = str_replace("#!CLASS!#",$style_class,$lroundups_html);
 		return $lroundups_html;
 	}
 
@@ -594,30 +605,18 @@ class SavedLinks {
 		);
 		
 		// check if a link has style like 'sponsored'
-		if(!empty($a['style'])) { 
-		
-			$custom_css = get_option('argo_link_roundups_sponsored_style');
+		if(!empty($a['style'])) { 	
 			
-			// check for custom css
-			if(!empty($custom_css)) {
-				$output_style = $custom_css;
-			}
-			
-			// set a default style for the plugin
-			else {
-				$output_style = 'font-style:italics;background:#aaa;';
-			}
-			
-			$link_style = $output_style; // we pass this variable below
+			$link_class = ' ' . $a['style']; // we pass this variable below
 			
 		}
 		
 		else { // if no style="" in shortcode, display nothing
-			$link_style='';
+			$link_class='';
 		}
 		
 		if( $a['id'] != null )
-			return self::get_html( $a['id'], $link_style ); // id and style
+			return self::get_html( $a['id'], $link_class ); // id and style
 		else
 			return '';
 		

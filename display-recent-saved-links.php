@@ -291,7 +291,7 @@ $javascript_source = <<<JAVASCRIPT_SOURCE
 "+jQuery('#source-'+jQuery(this).val()).text()+"
 JAVASCRIPT_SOURCE;
 $default_html = <<<EOT
-   <p class='lr-saved-link' style='#!STYLE!#'><a href='#!URL!#'>#!TITLE!#</a> &ndash; <span class='description'>#!DESCRIPTION!#</span> <em>#!SOURCE!#</em></p>
+      <p class='lr-saved-link#!CLASS!#'><a href='#!URL!#'>#!TITLE!#</a>&ndash;<span class='description'>#!DESCRIPTION!#</span><em>#!SOURCE!#</em></p>
 EOT;
   if (get_option("argo_link_roundups_custom_html") != "") {
     $lroundups_html = get_option("argo_link_roundups_custom_html");
