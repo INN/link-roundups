@@ -1,12 +1,11 @@
 <?php
 /**
  * Class: Save_To_Site_Button
+ * A browser bookmark tool for Saved Links
+ *
  * The Save To Site Button contains special javascript adapted from Press This!
- * To add a browser bookmark tool for Saved Links
  * 
  * @since 0.3
- * 
- * Structure based on:
  * @see https://wordpress.org/plugins/press-this-reloaded/
  */
 
@@ -283,6 +282,3 @@ class Save_To_Site_Button {
 }
 
 Save_To_Site_Button::init();
-
-
-

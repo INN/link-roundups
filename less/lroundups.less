@@ -54,30 +54,35 @@ Recent Roundups Editor Styles
   margin:10px 0 10px;
 }
 
-div.display-saved-links div.pagination {
-  height:30px;
-}
-div.display-saved-links div.pagination span, div.display-saved-links div.pagination a {
-    color: #000;
-    text-decoration: none;
-}
-div.display-saved-links div.pagination .current {
-    color: #C7C7C7;
+div.display-saved-links {
+  div.pagination {
+    height:30px;
+    span,
+    a {
+      color: #000;
+      text-decoration: none;
+    }
+    .current {
+        color: #C7C7C7;
+    }
+  }
 }
 
-.widget.saved-links h5 {
-  margin-bottom: 2px;
-	font-weight:700;
-  padding: 0 3px;
-  font-size: 15px;
-}
-.widget.saved-links p {
-  font-size: 10.5px;
-  margin-bottom: 12px;
-}
-.widget.saved-links p.description {
-  margin-bottom: 2px;
-}
-.widget.saved-links p.source span {
-  font-style: italic;
+.widget.saved-links {
+  h5 {
+    margin-bottom: 2px;
+  	font-weight:700;
+    padding: 0 3px;
+    font-size: 15px;
+  }
+  p {
+    font-size: 10.5px;
+    margin-bottom: 12px;
+    .description {
+      margin-bottom: 2px;
+    }
+    .source span {
+      font-style: italic;
+    }
+  }
 }
