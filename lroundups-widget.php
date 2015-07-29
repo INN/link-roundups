@@ -1,15 +1,16 @@
 <?php
 /*
- * argo Recent Posts
+ * Recent Link Roundups Widget
  */
-class argo_link_roundups_widget extends WP_Widget {
+ 
+class link_roundups_widget extends WP_Widget {
 
-	function argo_link_roundups_widget() {
+	function link_roundups_widget() {
 		$widget_ops = array(
-			'classname' => 'argo-link-roundups',
-			'description' => 'Show your most recent link roundups in the sidebar', 'argo-links'
+			'classname' => 'link-roundups',
+			'description' => 'Show your most recent link roundups in the sidebar', 'link-roundups'
 		);
-		$this->WP_Widget( 'argo-link-roundups-widget', __('Argo Link Roundups Widget', 'argo-links'), $widget_ops);
+		$this->WP_Widget( 'link_roundups_widget', __('Link Roundups Widget', 'link-roundups'), $widget_ops);
 	}
 
 	function widget( $args, $instance ) {
@@ -53,7 +54,7 @@ class argo_link_roundups_widget extends WP_Widget {
 	            <?php
 	            	endwhile;
 	            } else {
-	    			_e('<p class="error"><strong>You don\'t have any recent links or the argo links plugin is not active.</strong></p>', 'argo-links');
+	    			_e('<p class="error"><strong>You don\'t have any recent links or the Link Roundups plugin is not active.</strong></p>', 'link-roundups');
 	    		} // end recent links
 
     		if ( $instance['linkurl'] !='' ) { ?>
@@ -85,28 +86,28 @@ class argo_link_roundups_widget extends WP_Widget {
 		?>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'argo-links'); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'link-roundups'); ?></label>
 			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:90%;" />
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'num_posts' ); ?>"><?php _e('Number of posts to show:', 'argo-links'); ?></label>
+			<label for="<?php echo $this->get_field_id( 'num_posts' ); ?>"><?php _e('Number of posts to show:', 'link-roundups'); ?></label>
 			<input id="<?php echo $this->get_field_id( 'num_posts' ); ?>" name="<?php echo $this->get_field_name( 'num_posts' ); ?>" value="<?php echo $instance['num_posts']; ?>" style="width:90%;" />
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id('cat'); ?>"><?php _e('Limit to category: ', 'largo'); ?>
-			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat'), 'show_option_all' => __('None (all categories)', 'largo'), 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat'])); ?></label>
+			<label for="<?php echo $this->get_field_id('cat'); ?>"><?php _e('Limit to category: ', 'link-roundups'); ?>
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat'), 'show_option_all' => __('None (all categories)', 'link-roundups'), 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat'])); ?></label>
 		</p>
 		
-		<p><strong>More Link</strong><br /><small><?php _e('If you would like to add a more link at the bottom of the widget, add the link text and url here.', 'argo-links'); ?></small></p>
+		<p><strong>More Link</strong><br /><small><?php _e('If you would like to add a more link at the bottom of the widget, add the link text and url here.', 'link-roundups'); ?></small></p>
 		<p>
-			<label for="<?php echo $this->get_field_id('linktext'); ?>"><?php _e('Link text:', 'argo-links'); ?></label>
+			<label for="<?php echo $this->get_field_id('linktext'); ?>"><?php _e('Link text:', 'link-roundups'); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id('linktext'); ?>" name="<?php echo $this->get_field_name('linktext'); ?>" type="text" value="<?php echo $instance['linktext']; ?>" />
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id('linkurl'); ?>"><?php _e('URL:', 'argo-links'); ?></label>
+			<label for="<?php echo $this->get_field_id('linkurl'); ?>"><?php _e('URL:', 'link-roundups'); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id('linkurl'); ?>" name="<?php echo $this->get_field_name('linkurl'); ?>" type="text" value="<?php echo $instance['linkurl']; ?>" />
 		</p>
 

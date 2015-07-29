@@ -1,20 +1,23 @@
-var AL = AL || {};
+// Mailchimp Backbone Modal
+var LR = LR || {};
 
 (function() {
     var $ = jQuery;
 
     // Views
-    AL.BaseView = Backbone.View.extend({
+    LR.BaseView = Backbone.View.extend({
         showSpinner: function() {
             this.$el.find('.spinner').css('display', 'inline-block');
+            this.$el.find('.spinner').css('visibility', 'visible');
         },
 
         hideSpinner: function() {
             this.$el.find('.spinner').css('display', 'none');
+            this.$el.find('.spinner').css('visibility', 'hidden');
         }
     });
 
-    AL.Modal = AL.BaseView.extend({
+    LR.Modal = LR.BaseView.extend({
         actions: null,
 
         content: null,
@@ -26,10 +29,10 @@ var AL = AL || {};
         initialize: function(options) {
             var self = this;
 
-            this.$el.addClass('argo-links-modal');
+            this.$el.addClass('lroundups-modal');
 
             Backbone.View.prototype.initialize.apply(this, arguments);
-            this.template = _.template($('#argo-links-modal-tmpl').html());
+            this.template = _.template($('#lroundups-modal-tmpl').html());
 
             if (!this.content)
                 this.content = (typeof options.content !== 'undefined')? options.content : '';
@@ -40,8 +43,8 @@ var AL = AL || {};
             this.setEvents();
 
             $('body').append(this.$el);
-            if ($('#argo-links-modal-overlay').length == 0)
-                $('body').append('<div id="argo-links-modal-overlay" />');
+            if ($('#lroundups-modal-overlay').length == 0)
+                $('body').append('<div id="lroundups-modal-overlay" />');
 
             return this;
         },
@@ -62,14 +65,14 @@ var AL = AL || {};
         },
 
         open: function() {
-            $('body').addClass('argo-links-modal-open');
+            $('body').addClass('lroundups-modal-open');
             this.$el.removeClass('hide');
             this.$el.addClass('show');
             return false;
         },
 
         close: function() {
-            $('body').removeClass('argo-links-modal-open');
+            $('body').removeClass('lroundups-modal-open');
             this.$el.removeClass('show');
             this.$el.addClass('hide');
             return false;
