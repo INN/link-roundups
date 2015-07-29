@@ -269,47 +269,10 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
 // Reset Query
 wp_reset_query();
 
-?>
-<?php
-
-/**
- * Returns html for the old way argo links included content on the page.
- * 
- * @since 0.1
- */
-function link_roundups_get_html() {
-$javascript_url = <<<JAVASCRIPT_URL
-"+jQuery('#url-'+jQuery(this).val()).text()+"
-JAVASCRIPT_URL;
-$javascript_title = <<<JAVASCRIPT_TITLE
-"+jQuery('#title-'+jQuery(this).val()).text()+"
-JAVASCRIPT_TITLE;
-$javascript_description = <<<JAVASCRIPT_DESCRIPTION
-"+jQuery('#description-'+jQuery(this).val()).text()+"
-JAVASCRIPT_DESCRIPTION;
-$javascript_source = <<<JAVASCRIPT_SOURCE
-"+jQuery('#source-'+jQuery(this).val()).text()+"
-JAVASCRIPT_SOURCE;
-$default_html = <<<EOT
-      <p class='lr-saved-link#!CLASS!#'><a href='#!URL!#'>#!TITLE!#</a>&ndash;<span class='description'>#!DESCRIPTION!#</span><em>#!SOURCE!#</em></p>
-EOT;
-  if (get_option("argo_link_roundups_custom_html") != "") {
-    $lroundups_html = get_option("argo_link_roundups_custom_html");
-    $lroundups_html = preg_replace("/\"/","'",$lroundups_html);
-  } else {
-    $lroundups_html = $default_html;
-  }
-  $lroundups_html = str_replace("#!URL!#",$javascript_url,$lroundups_html);
-  $lroundups_html = str_replace("#!TITLE!#",$javascript_title,$lroundups_html);
-  $lroundups_html = str_replace("#!DESCRIPTION!#",$javascript_description,$lroundups_html);
-  $lroundups_html = str_replace("#!SOURCE!#",$javascript_source,$lroundups_html);
-  return $lroundups_html;
-}
-
 /**
  * Get a shortcode string in a jQuery context.
  * Returns a PHP concatenated string of jQuery concatenated selectors. Sorry.
- * 
+ *
  * @since 0.3
  */
 function link_roundups_get_shortcode() {
@@ -326,14 +289,10 @@ JAVASCRIPT_TITLE;
 <script type='text/javascript'>
 jQuery(function(){
   jQuery('.append-saved-links').bind('click',function(){
-  // this is the class for the checkbox in the table, we check how it's doing
+    // this is the class for the checkbox in the table, we check how it's doing
     jQuery('.lroundups-link').each(function(){
-      if (jQuery(this).is(":checked")) {
-        <?php /* The old way: */ ?>
-        <?php /* var html = "<?php echo get_html(); ?>"; */ ?>
-        var shortcode = '<?php echo link_roundups_get_shortcode(); ?>';
-        parent.tinyMCE.activeEditor.setContent(parent.tinyMCE.activeEditor.getContent() + shortcode);
-      }
+      if (jQuery(this).is(":checked"))
+        send_to_editor('<?php echo link_roundups_get_shortcode(); ?>');
     });
     return false;
     });
