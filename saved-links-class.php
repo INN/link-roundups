@@ -565,8 +565,7 @@ class SavedLinks {
 		 * Needs improvement in future version
 		*/
 		?>
-		
-	  <p class='lr-saved-link #!CLASS!#'>
+	  <p class='lr-saved-link#!CLASS!#'>
 		<a href='#!URL!#'>#!TITLE!#</a>
 		&ndash;
 		<span class='description'>#!DESCRIPTION!#</span>
@@ -582,11 +581,14 @@ class SavedLinks {
 		} else {
 			$lroundups_html = $default_html;
 		}
+		
 		$lroundups_html = str_replace("#!URL!#",$url,$lroundups_html);
 		$lroundups_html = str_replace("#!TITLE!#",$title,$lroundups_html);
 		$lroundups_html = str_replace("#!DESCRIPTION!#",$description,$lroundups_html);
 		$lroundups_html = str_replace("#!SOURCE!#",$source,$lroundups_html);
-		$lroundups_html = str_replace("#!CLASS!#",$style_class,$lroundups_html);
+		$lroundups_html = str_replace("#!CLASS!#",$link_class,$lroundups_html);
+	    //				$link_class is defined below in rounduplink_shortcode()
+		
 		return $lroundups_html;
 	}
 
@@ -600,23 +602,22 @@ class SavedLinks {
 		$a = shortcode_atts( 
 			array( 'id' => '', 
 				   'title' => '', 
-				   'style' => '' ), 
+				   'class' => '' ), 
 			$atts
 		);
 		
 		// check if a link has style like 'sponsored'
-		if(!empty($a['style'])) { 	
-			
-			$link_class = ' ' . $a['style']; // we pass this variable below
-			
+		if(!empty($a['class'])) { 	
+			$link_class = ' ' . $a['class']; // we pass this variable below to get_html()
 		}
 		
 		else { // if no style="" in shortcode, display nothing
 			$link_class='';
 		}
 		
+		// send it all over to get_html (see above)
 		if( $a['id'] != null )
-			return self::get_html( $a['id'], $link_class ); // id and style
+			return self::get_html( $a['id'], $link_class ); // id and sponsored class
 		else
 			return '';
 		
