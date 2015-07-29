@@ -4,8 +4,8 @@
  * Redirect wp-admin URLs containing 'post_type=argolinks' to the
  * same url replaced with 'post_type=rounduplink'
  *
- * If a user had an only Argo Link bookmark tool on their browser bar,
- * then it would continue to work.
+ * If a user had an old Argo Link bookmark tool installed on their browser bar,
+ * then it would continue to work because of this...
  * 
  * @since 0.3
  */

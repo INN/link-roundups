@@ -31,7 +31,7 @@ var LR = LR || {};
                         self.close();
 
                         var model = new Backbone.Model(data.data);
-                        LR.instances.campaignSuccessModal = new AL.CampaignCreatedModal({ model: model });
+                        LR.instances.campaignSuccessModal = new LR.CampaignCreatedModal({ model: model });
                         LR.instances.campaignSuccessModal.render();
                         updateCreateCampaignButton(model);
                     },

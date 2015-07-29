@@ -27,8 +27,6 @@ module.exports = function(grunt) {
                 files: CSS_LESS_FILES
             },
         },
-
-
         cssmin: {
             target: {
                 options: {
@@ -43,7 +41,6 @@ module.exports = function(grunt) {
                 }]
             }
         },
-
         watch: {
             less: {
                 files: [
