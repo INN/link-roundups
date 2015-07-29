@@ -54,7 +54,7 @@ class link_roundups_widget extends WP_Widget {
 	            <?php
 	            	endwhile;
 	            } else {
-	    			_e('<p class="error"><strong>You don\'t have any recent links or the argo links plugin is not active.</strong></p>', 'link-roundups');
+	    			_e('<p class="error"><strong>You don\'t have any recent links or the Link Roundups plugin is not active.</strong></p>', 'link-roundups');
 	    		} // end recent links
 
     		if ( $instance['linkurl'] !='' ) { ?>
@@ -96,8 +96,8 @@ class link_roundups_widget extends WP_Widget {
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id('cat'); ?>"><?php _e('Limit to category: ', 'largo'); ?>
-			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat'), 'show_option_all' => __('None (all categories)', 'largo'), 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat'])); ?></label>
+			<label for="<?php echo $this->get_field_id('cat'); ?>"><?php _e('Limit to category: ', 'link-roundups'); ?>
+			<?php wp_dropdown_categories(array('name' => $this->get_field_name('cat'), 'show_option_all' => __('None (all categories)', 'link-roundups'), 'hide_empty'=>0, 'hierarchical'=>1, 'selected'=>$instance['cat'])); ?></label>
 		</p>
 		
 		<p><strong>More Link</strong><br /><small><?php _e('If you would like to add a more link at the bottom of the widget, add the link text and url here.', 'link-roundups'); ?></small></p>

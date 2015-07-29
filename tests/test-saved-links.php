@@ -70,7 +70,7 @@ class SavedLinksTestFunctions extends WP_UnitTestCase {
 		$this->assertTrue(!empty($wp_styles->registered['links-common']));
 	}
 
-	function test_argo_links_modal_underscore_template() {
+	function test_lroundups_modal_underscore_template() {
 		$this->expectOutputRegex('/id="lroundups-modal-tmpl"/');
 		lroundups_modal_underscore_template();
 	}
