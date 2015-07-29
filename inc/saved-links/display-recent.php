@@ -3,14 +3,14 @@
   * @package Link_Roundups
   * @since 0.1
   */
-  
+
 /*
-* Recent Saved Links Custom Meta Panel 
+* Recent Saved Links Custom Meta Panel
 * for Link Roundups Post Type
 */
 
 /** WordPress Admin Bootstrap */
-require_once('../../../wp-admin/admin.php');
+require_once('../../../../../wp-admin/admin.php');
 
 global $post;
 
@@ -34,22 +34,18 @@ if (isset($_REQUEST['link_date'])) {
     $default_date = array();
   }
 }
-$args =  
-	array(
-        'post_type' => 'rounduplink',
-        'orderby' => (isset($_REQUEST['orderby']) ? $_REQUEST['orderby'] : 'date'),
-        'order' => (isset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc'),
-        'posts_per_page' => -1
-    );
+$args = array(
+	'post_type' => 'rounduplink',
+	'orderby' => (isset($_REQUEST['orderby']) ? $_REQUEST['orderby'] : 'date'),
+	'order' => (isset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc'),
+	'posts_per_page' => -1
+);
 $args = array_merge($args, $default_date);
 $the_posts_count_query = new WP_Query($args);
 $total_post_count = $the_posts_count_query->post_count;
 $the_posts_count_query = '';
-$the_query = new WP_Query(
-				array_merge($args,
-							array('posts_per_page' => $posts_per_page, 'paged' => $page)
-							)
-				);
+$the_query = new WP_Query(array_merge(
+	$args, array('posts_per_page' => $posts_per_page, 'paged' => $page)));
 
 $from_result = 1;
 $to_result = $posts_per_page;
@@ -75,7 +71,7 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
 <div class='display-saved-links'>
   <div class='pagination'>
     <div style='float:left'>
-      <button class='button append-saved-links'>Send to Editor</button> 
+      <button class='button append-saved-links'>Send to Editor</button>
       <form action='' method='get' id='filter_links'>
         <label for='link_date'><b>Date range: </b></label>
         <select name='link_date'>
@@ -147,7 +143,7 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
       <?php endif;?>
     </div>
   </div>
-  
+
   <!-- START TABLE -->
   <table class="wp-list-table widefat fixed posts" cellspacing="0">
     <tr>
@@ -157,7 +153,7 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
       <th scope="col" id="link-tags" class="manage-column column-link-tags" style="">Tags</th>
       <th scope="col" id="date" class="manage-column column-date <?php echo (isset($_REQUEST['orderby']) && $_REQUEST['orderby'] == 'date' ? 'sorted' : 'sortable');?> <?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'date' && $_REQUEST['order'] == 'desc' ? 'desc' : 'asc') : 'desc');?>" style=""><a href="post_type=rounduplink&orderby=date&order=<?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'date' && $_REQUEST['order'] == 'desc' ? 'asc' : 'desc') : 'desc');?><?php echo (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_date']: ''); ?>"><span>Date</span><span class="sorting-indicator"></span></a></th>
     </tr>
-    
+
     <?php $i=1; ?>
     <?php if ($the_query->have_posts()) : while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
       <tr id='<?php echo get_the_ID(); ?>' class='<?php echo ($i%2 ? 'alternate' : '')?>'>
@@ -172,7 +168,7 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
           <span id='url-<?php echo get_the_ID();?>'style='font-size:10px;'><em><?php echo (isset($custom["argo_link_url"][0]) ? $custom["argo_link_url"][0] : ''); ?></em></span>
           <span id='description-<?php echo get_the_ID();?>'style='display:none;'><em><?php echo (isset($custom["argo_link_description"][0]) ? $custom["argo_link_description"][0] : ''); ?></em></span>
           <span id='source-<?php echo get_the_ID();?>'style='display:none;'><em><?php echo (isset($custom["argo_link_source"][0]) ? $custom["argo_link_source"][0] : ''); ?></em></span>
-        
+
         </td>
         <td scope="row" id="author" class="manage-column column-author sortable desc" style=""><span><?php the_author();?></span></td>
         <td scope="row" id="link-tags" class="manage-column column-link-tags" style="">
@@ -205,7 +201,7 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
       <?php $hide = true; ?>
     <?php endif; ?>
   </table>
-  
+
   <div class='pagination'>
     <div style='float:left'>
       <button class='button append-saved-links'>Send to Editor</button>
@@ -298,17 +294,17 @@ jQuery(function(){
     });
   jQuery('div.display-saved-links a').bind("click",function(){
     var urlOptions = jQuery(this).attr('href');
-    jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-recent-saved-links.php?'+urlOptions);
+    jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>inc/saved-links/display-recent.php?'+urlOptions);
     return false;
   });
   jQuery("#filter_links").bind("submit", function() {
-    jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-recent-saved-links.php?'+jQuery(this).serialize());
+    jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>inc/saved-links/display-recent.php?'+jQuery(this).serialize());
     return false;
   });
   jQuery('#check-all-boxes').change(function(){
     if (jQuery(this).is(':checked')) {
       jQuery('.lroundups-link').each(function(){
-        jQuery(this).prop("checked", true); 
+        jQuery(this).prop("checked", true);
       });
     } else {
       jQuery('.lroundups-link').each(function(){
