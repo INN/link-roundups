@@ -1,7 +1,7 @@
 /* ==========================================================================
 Modal
 ========================================================================== */
-.lroundups-links-modal {
+.lroundups-modal {
   position: fixed;
   width: 500px;
   min-height: 180px;
@@ -16,43 +16,46 @@ Modal
   border-radius: 4px;
 }
 
-.lroundups-links-modal-header {
+.lroundups-modal-header {
   background: #eee;
   width: 100%;
   float: left;
   border-bottom: 1px solid #ddd;
 }
-.lroundups-links-modal-close {
+.lroundups-modal-close {
   float: right;
   margin: 10px;
   color: #555;
 }
-.lroundups-links-modal-close:hover {
+.lroundups-modal-close:hover {
   color: #222;
   cursor: pointer;
 }
 
-.lroundups-links-modal-content,
-.lroundups-links-modal-actions {
+.lroundups-modal-content,
+.lroundups-modal-actions {
   padding: 10px;
   float: left;
   clear: both;
   width: 480px;
 }
-.lroundups-links-modal-content {
+.lroundups-modal-content {
   font-size: 16px;
   text-align: center;
   margin-bottom: 50px;
   padding-top: 20px;
 }
-.lroundups-links-modal-actions {
+.lroundups-modal-actions {
   bottom: 0;
   position: absolute;
   text-align: right;
   border-top: 1px solid #eee;
+  .spinner {
+    display: none;
+  }
 }
 
-#lroundups-links-modal-overlay {
+#lroundups-modal-overlay {
   top: 0;
   left: 0;
   position: fixed;
@@ -63,10 +66,28 @@ Modal
   display: none;
 }
 
-body.lroundups-links-modal-open .lroundups-links-modal {
+body.lroundups-modal-open .lroundups-modal {
   display: none;
 }
-body.lroundups-links-modal-open .lroundups-links-modal.show,
-body.lroundups-links-modal-open #lroundups-links-modal-overlay {
+body.lroundups-modal-open .lroundups-modal.show,
+body.lroundups-modal-open #lroundups-modal-overlay {
   display: block;
+}
+
+.lroundups-error-modal strong {
+  color: #a00;
+}
+
+/* ==========================================================================
+Create MailChimp Campaign Button
+========================================================================== */
+#link-roundups-publish-actions {
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  input[type="submit"] {
+    display: inline-block;
+    margin: 10px auto;
+  }
 }

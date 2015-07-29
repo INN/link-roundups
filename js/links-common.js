@@ -8,10 +8,12 @@ var LR = LR || {};
     LR.BaseView = Backbone.View.extend({
         showSpinner: function() {
             this.$el.find('.spinner').css('display', 'inline-block');
+            this.$el.find('.spinner').css('visibility', 'visible');
         },
 
         hideSpinner: function() {
             this.$el.find('.spinner').css('display', 'none');
+            this.$el.find('.spinner').css('visibility', 'hidden');
         }
     });
 
@@ -27,7 +29,7 @@ var LR = LR || {};
         initialize: function(options) {
             var self = this;
 
-            this.$el.addClass('lroundups-links-modal');
+            this.$el.addClass('lroundups-modal');
 
             Backbone.View.prototype.initialize.apply(this, arguments);
             this.template = _.template($('#lroundups-modal-tmpl').html());

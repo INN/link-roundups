@@ -16,26 +16,17 @@ function lroundups_create_mailchimp_campaign_button() {
 
 	$mc_web_id = get_post_meta($post->ID, 'mc_web_id', true);
 	?>
-	
-	<style type="text/css">
-		#argo-links-publish-actions {
-		  margin: 10px 0;
-		  padding: 0 0 12px 0;
-		  border-bottom: 1px solid #dadada;
-		  text-align: center;
-		}
-	</style>
 
 	<div id="link-roundups-publish-actions">
 	<?php if (empty($mc_web_id)) { ?>
 		<input type="submit"
-			name="argo_links_create_mailchimp_campaign"
-			id="argo-links-create-mailchimp-campaign"
+			name="link_roundups_create_mailchimp_campaign"
+			id="link-roundups-create-mailchimp-campaign"
 			class="button button-primary button-large" value="Create MailChimp Campaign">
 	<?php } else { ?>
 		<p>A MailChimp roundup campaign exists for this post.</p>
 		<a class="button" target="blank"
-			href="https://<?php echo argo_links_get_mc_api_endpoint(); ?>.admin.mailchimp.com/campaigns/wizard/confirm?id=<?php echo $mc_web_id; ?>">Edit in MailChimp.</a>
+			href="https://<?php echo lroundups_get_mc_api_endpoint(); ?>.admin.mailchimp.com/campaigns/wizard/confirm?id=<?php echo $mc_web_id; ?>">Edit in MailChimp.</a>
 	<?php } ?>
 	</div>
 <?php

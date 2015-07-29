@@ -30,15 +30,31 @@ var LR = LR || {};
                         self.hideSpinner();
                         self.close();
 
-                        var model = new Backbone.Model(data.data);
-                        LR.instances.campaignSuccessModal = new LR.CampaignCreatedModal({ model: model });
-                        LR.instances.campaignSuccessModal.render();
-                        updateCreateCampaignButton(model);
+                        if (data.success) {
+                            var model = new Backbone.Model(data.data);
+                            LR.instances.campaignSuccessModal = new LR.CampaignCreatedModal({ model: model });
+                            LR.instances.campaignSuccessModal.render();
+                            updateCreateCampaignButton(model);
+                        } else {
+                            new LR.Modal({
+                                className: 'lroundups-error-modal',
+                                content: "Failed to create MailChimp Campaign. Error message:<br /><strong>" + data.message + "</strong>",
+                                actions: {
+                                    'Close': 'close'
+                                }
+                            }).render();
+                        }
                     },
                     error: function() {
                         self.hideSpinner();
                         self.close();
-                        alert('Something went wrong. Please try again.');
+                        new LR.Modal({
+                            className: 'lroundups-error-modal',
+                            content: 'Something went wrong. Please try again.',
+                            actions: {
+                                'Close': 'close'
+                            }
+                        }).render();
                     }
                 };
 
@@ -80,7 +96,7 @@ var LR = LR || {};
             '.admin.mailchimp.com/campaigns/wizard/confirm?id=' + model.get('web_id') +
             '">Edit in MailChimp.</a>';
 
-        var campaign_button = $('#lroundups-create-mailchimp-campaign'),
+        var campaign_button = $('#link-roundups-create-mailchimp-campaign'),
             parent = campaign_button.parent();
 
         campaign_button.remove();
@@ -88,7 +104,7 @@ var LR = LR || {};
     }
 
     $(document).ready(function() {
-        $('#lroundups-create-mailchimp-campaign').click(function() {
+        $('#link-roundups-create-mailchimp-campaign').click(function() {
             if (typeof $(this).attr('disabled') == 'undefined') {
                 if (typeof LR.instances.campaignModal == 'undefined')
                     LR.instances.campaignModal = new LR.CreateCampaignModal();
