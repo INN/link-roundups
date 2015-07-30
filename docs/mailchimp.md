@@ -1,6 +1,6 @@
 ## Using Link Roundups Mailchimp Integration
 
-Using the Mailchimp API, Link Roundups can send Roundups as newsletters via MailChimp.
+Using the Mailchimp API, Link Roundups can send Roundups as newsletters via a MailChimp account.
 
 ## Prerequisites: Setup a Template and List in MailChimp
 
@@ -22,9 +22,9 @@ In order to use the MailChimp features of Argo Links, you'll need to sign up for
 
 Next: Creating a template in Mailchimp that your post will use.
 
-## Configuring a MailChimp template
+## Configuring a MailChimp Template
 
-If you already have a saved template, great! Duplicate it, then pick up below where we insert the template tags into the template. 
+If you already have a saved template, great! Duplicate it, then pick up below where we insert the template tags into the template.
 
 First, you'll have to create a template.
 
@@ -44,7 +44,7 @@ In the Link Roundups editor, above the standard WordPress "Publish" button, is a
 
 ### Inserting template tags
 
-The Link Roundups Plugin's MailChimp features depend on the presence of specific tags in your email. 
+The Link Roundups Plugin's MailChimp features depend on the presence of specific tags in your email.
 
 You'll have to edit your template to add them, so that they can be filled in with your content when you go to send an email.
 

@@ -1,11 +1,10 @@
 # Link Roundups
-A fork inspired by NPR's Argo Project argo-links plugin.
 
-Since begun retrofit by the INN Nerds
+An aggregation plugion for WordPress to curate and tag Saved Links to be published in widget feeds, Link Roundup posts and MailChimp API integration to send Link Roundups as email newsletters with your MailChimp account.
 
-**NOTE**: Under active development July 2015, new release coming soon.
+The Browser Bookmark can be saved to a web browser's bookmark bar and attempts to prefill the Saved Link fields like Title, URL and Source.
 
-### Link Roundups (previously Argo Links) lets you aggregate and tag Saved Links. Then publish feeds using widgets, custom Link Roundup posts and optionally use MailChimp API integration to send Roundups as Campaigns.
+Link Roundups was forked from NPR Project Argo's Argo Links Plugin.
 
 Version: 0.3
 
@@ -16,22 +15,28 @@ Version: 0.3
 
 Aggregate links from articles around the web and their source. Organize Links using tags.
 
+###### TIP: Use the Browser Bookmark Tool to speed up the process of saving links to WordPress!
+
 #### Saved Links Widget
 
-Display a feed of links, optionally filtered by tags.
+Display a feed of Saved Links, optionally filtered by tags.
 
 #### Link Roundups
 ![Recent Saved Links Panel in Link Roundups Editor](https://raw.githubusercontent.com/INN/link-roundups/master/docs/img/link-roundups-passthru.png)
 
-Quickly build custom link roundup posts using a panel that filters your Saved Links and lets you send them to the standard WordPress Post Editor.
+Build link roundup posts with unique, hand-crafted order using a panel that filters your Recent Saved Links and is where you send them to the editor.
 
 #### Link Roundups Widget
 
-Display the most recent Link Roundup with a date.
+Display most recent Link Roundup headline with a date.
 
-#### Custom Roundup Display Template
+#### Rename Link Roundups
 
-#### Custom Roundup URL Slug
+Rename the singular (Link Roundup), plural (Link Roundups) and slug for Link Roundups posts. 
+
+#### Custom HTML for Displaying Links
+
+Modify HTML output of a Saved Link within a Link Roundup and information about Sponsored Link styling.
 
 #### Mailchimp API Integration
 
