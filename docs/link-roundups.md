@@ -1,6 +1,6 @@
 # How to Create Link Roundups
 
-Now that you have some links saved to your site, you're ready to create your first Link Roundup. 
+Now that you have some Saved Links, you're ready to create your first Link Roundup. 
 
 1) Go to Link Roundups and click Add New from your WordPress Dashboard.
 
@@ -8,7 +8,7 @@ Now that you have some links saved to your site, you're ready to create your fir
 
 The new Link Roundup post will resemble a regular WordPress post in many ways... but there is one important difference: the Recent Saved Links Panel below the Editor.
 
-Recent Saved Links lets you sort through links based on the date they were created. 
+Recent Saved Links lets you sort through links based on the date they were created.
 
 ![Screenshot showing how to choose links to add to a roundup post](img/recent-roundup-links.png)
 
