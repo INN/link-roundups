@@ -41,6 +41,24 @@ module.exports = function(grunt) {
                 }]
             }
         },
+        uglify: {
+            target: {
+                options: {
+                    report: 'gzip'
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'js',
+                    src: [
+                        'links-common.js',
+                        'lroundups.js',
+                        '!*.min.js'
+                    ],
+                    dest: 'js',
+                    ext: '.min.js'
+                }]
+            }
+        },
         watch: {
             less: {
                 files: [
@@ -48,6 +66,7 @@ module.exports = function(grunt) {
                 ],
                 tasks: [
                     'less:development',
+                    'uglify',
                     'cssmin'
                 ]
             },

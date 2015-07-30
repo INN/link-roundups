@@ -63,13 +63,15 @@ class SavedLinks {
 		} else {
 			$mce_css = '';
 		}
-		$mce_css .= plugins_url("css/lroundups.min.css", __FILE__);
+		$suffix = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG)? '' : '.min';
+		$mce_css .= plugins_url("css/lroundups" . $suffix . ".css", LROUNDUPS_PLUGIN_FILE);
 		return $mce_css;
 	}
 
 	/*Add our css stylesheet into the header*/
 	public static function add_styles() {
-		$css = plugins_url('css/lroundups.css', LROUNDUPS_PLUGIN_FILE);
+		$suffix = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG)? '' : '.min';
+		$css = plugins_url('css/lroundups' . $suffix . '.css', LROUNDUPS_PLUGIN_FILE);
 		wp_enqueue_style('link-roundups', $css, array(), 1);
 	}
 
