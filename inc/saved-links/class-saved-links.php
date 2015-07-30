@@ -69,7 +69,7 @@ class SavedLinks {
 
 	/*Add our css stylesheet into the header*/
 	public static function add_styles() {
-		$css = plugins_url('css/lroundups.css', __FILE__);
+		$css = plugins_url('css/lroundups.css', LROUNDUPS_PLUGIN_FILE);
 		wp_enqueue_style('link-roundups', $css, array(), 1);
 	}
 
@@ -319,7 +319,7 @@ class SavedLinks {
 	 */
 	public static function build_lroundups_page() {
 	/** WordPress Administration Bootstrap */
-	include_once( ABSPATH  . '/admin.php' );
+	include_once( ABSPATH  . 'admin.php' );
 	?>
 	
 	<div id="icon-tools" class="icon32"><br></div><h2><?php _e('Add Save to Site Bookmark to Your Web Browser'); ?></h2>

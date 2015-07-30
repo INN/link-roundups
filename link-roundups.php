@@ -12,27 +12,25 @@ Seeking Link Roundups Post Type functions? They use lroundups instead of link-ro
 
 */
 
-/** Mailchimp API **/
+/** Plugin directory **/
+define('LROUNDUPS_PLUGIN_FILE', __FILE__);
 
 /** Saved Links Post Type **/
-require_once('saved-links-class.php');
+require_once(__DIR__ . '/inc/saved-links/class-saved-links.php');
 /** Saved Links Widget **/
-require_once('saved-links-widget.php');
+require_once(__DIR__ . '/inc/saved-links/widget.php');
 
 /** Link Roundup Post Type Functions **/
-require_once('lroundups.php');
+require_once(__DIR__ . '/inc/lroundups/class-lroundups.php');
 /** Link Roundups Widget **/
-require_once('lroundups-widget.php');
+require_once(__DIR__ . '/inc/lroundups/widget.php');
 
 /** Mailchimp API and Modal Functions **/
 require_once(__DIR__ . '/vendor/mailchimp-api-php/src/Mailchimp.php'); // API files
-require_once(__DIR__ . '/inc/mailchimp-admin.php'); // Integration Code
+require_once(__DIR__ . '/inc/lroundups/mailchimp-admin.php'); // Integration Code
 
 /** Save to Site Browser Bookmark Tool **/
-require_once('browser-bookmark.php');
-
-/** AJAX Helper Functions **/
-require_once('links-ajax.php');
+require_once(__DIR__ . '/inc/lroundups/browser-bookmark.php');
 
 /** Add Backwards Compatability with argo-links **/
 require_once(__DIR__ . '/inc/argo-links-compatability.php');
@@ -43,7 +41,7 @@ LRoundups::init();
 SavedLinks::init();
 add_action('init', 'lroundups_flush_permalinks', 99);
 
-require_once('inc/lroundups-update.php');
+require_once('inc/updates/index.php');
 
 /**
  * On activation, we'll set an option called 'argolinks_flush' to true,
@@ -129,7 +127,7 @@ add_action('admin_enqueue_scripts', 'link_roundups_enqueue_assets');
  * returns an array of that information.
  *
  * @see http://code.ramonkayo.com/simple-scraper/
- * @see browser-bookmark.php
+ * @see link-roundups-browser-bookmark.php
  * @since 0.3
  *
  * @param string $url the url of the page to scrape

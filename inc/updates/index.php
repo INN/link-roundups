@@ -1,10 +1,9 @@
 <?php
 /**
  * Contains functions and tools for transitioning between versions
- * 
+ *
  * @since 0.3
  */
-
 
 /** --------------------------------------------------------
  * Start updates and helpers
@@ -39,12 +38,12 @@ function lroundups_perform_update() {
 /**
  * Returns current version of the plugin as set in metadata.
  * Only works if is_admin() is true.
- * 
+ *
  * @since 0.3
  */
 function lroundups_version() {
 	if( is_admin() ) {
-		$plugin = get_plugin_data( plugin_dir_path(__FILE__) . "../link-roundups.php" );
+		$plugin = get_plugin_data( plugin_dir_path(LROUNDUPS_PLUGIN_FILE) . "/link-roundups.php" );
 		return $plugin['Version'];
 	}
 	return false;
@@ -52,9 +51,9 @@ function lroundups_version() {
 
 /**
  * Checks if updates need to be run.
- * 
+ *
  * @since 0.3
- * 
+ *
  * @return boolean if updates need to be run
  */
 function lroundups_need_updates() {
@@ -118,7 +117,7 @@ add_action('admin_menu', 'lroundups_register_update_page');
 
 /**
  * DOM for admin page for updates.
- * 
+ *
  * @since 0.3
  */
 function lroundups_update_page_view() { ?>
@@ -175,7 +174,7 @@ function lroundups_update_page_view() { ?>
 
 /**
  * Enqueues javascript used on the Link Roundup Update page
- * 
+ *
  * @since 0.3
  *
  * @global $_GET
@@ -183,7 +182,7 @@ function lroundups_update_page_view() { ?>
 function lroundups_update_page_enqueue_js() {
 	if (isset($_GET['page']) && $_GET['page'] == 'update-lroundups') {
 		wp_enqueue_script(
-			'lroundups_update_page', plugins_url('/js/update.js',dirname(__FILE__)),
+			'lroundups_update_page', plugins_url('/js/update.js', LROUNDUPS_PLUGIN_FILE),
 			array('jquery'), false, 1);
 	}
 }
@@ -191,7 +190,7 @@ add_action('admin_enqueue_scripts', 'lroundups_update_page_enqueue_js');
 
 /**
  * Ajax handler for when update is applied from the updates page.
- * 
+ *
  * @since 0.3
  */
 function lroundups_ajax_update_database() {
@@ -234,5 +233,4 @@ add_action('wp_ajax_lroundups_ajax_update_database', 'lroundups_ajax_update_data
  * Update functions.
  * ------------------------------------------------------ */
 
-include_once('lroundups-update-functions.php');
-
+include_once(__DIR__ . '/functions.php');

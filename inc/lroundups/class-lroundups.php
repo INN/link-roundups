@@ -143,7 +143,7 @@ class LRoundups {
 		<div id='lroundups-display-area'></div>
 		<script type='text/javascript'>
 		jQuery(function(){
-			jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>display-recent-saved-links.php');
+			jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(LROUNDUPS_PLUGIN_FILE); ?>inc/saved-links/display-recent.php');
 		});
 		</script>
 	<?php
@@ -251,6 +251,6 @@ class LRoundups {
 			$lists = $mcapi->lists->getList();
 		}
 
-		include_once __DIR__ . '/templates/options.php';
+		include_once dirname(LROUNDUPS_PLUGIN_FILE) . '/templates/options.php';
 	}
 }
