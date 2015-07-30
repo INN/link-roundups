@@ -43,7 +43,7 @@ class LRoundups {
 		/*
 		 * Add roundup to the post type in the query if it is not already in it.
 		 */
-		if ( $query->is_home() || $query->is_tag() || $query->is_category() ) {
+		if ( $query->is_home() || $query->is_tag() || $query->is_category() || $query->is_author() ) {
 			if (isset($query->query_vars['post_type']) && is_array($query->query_vars['post_type'])) {
 				if ( ! in_array( 'roundup', $query->query_vars['post_type'] ) ) {
 					// There is an array of post types and roundup is not in it
