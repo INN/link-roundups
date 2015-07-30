@@ -102,13 +102,13 @@ function link_roundups_enqueue_assets() {
 	$plugin_path = plugins_url(basename(__DIR__), __DIR__);
 
 	wp_register_script(
-		'links-common', $plugin_path . '/js/links-common.js',
-		array('jquery', 'underscore', 'backbone'), 0.2, true
+		'links-common', $plugin_path . '/js/links-common.min.js',
+		array('jquery', 'underscore', 'backbone'), 0.3, true
 	);
 
 	wp_register_script(
-		'link-roundups', $plugin_path . '/js/lroundups.js',
-		array('links-common'), 0.2, true
+		'link-roundups', $plugin_path . '/js/lroundups.min.js',
+		array('links-common'), 0.3, true
 	);
 
 	wp_register_style('links-common', $plugin_path . '/css/links-common.min.css');

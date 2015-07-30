@@ -69,7 +69,7 @@ class SavedLinks {
 
 	/*Add our css stylesheet into the header*/
 	public static function add_styles() {
-		$css = plugins_url('css/lroundups.css', LROUNDUPS_PLUGIN_FILE);
+		$css = plugins_url('css/lroundups.min.css', LROUNDUPS_PLUGIN_FILE);
 		wp_enqueue_style('link-roundups', $css, array(), 1);
 	}
 
