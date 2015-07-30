@@ -294,11 +294,11 @@ jQuery(function(){
     });
   jQuery('div.display-saved-links a').bind("click",function(){
     var urlOptions = jQuery(this).attr('href');
-    jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>inc/saved-links/display-recent.php?'+urlOptions);
+    jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(LROUNDUPS_PLUGIN_FILE); ?>inc/saved-links/display-recent.php?'+urlOptions);
     return false;
   });
   jQuery("#filter_links").bind("submit", function() {
-    jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(__FILE__); ?>inc/saved-links/display-recent.php?'+jQuery(this).serialize());
+    jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(LROUNDUPS_PLUGIN_FILE); ?>inc/saved-links/display-recent.php?'+jQuery(this).serialize());
     return false;
   });
   jQuery('#check-all-boxes').change(function(){
