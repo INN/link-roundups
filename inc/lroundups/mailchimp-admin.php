@@ -14,6 +14,19 @@ function lroundups_create_mailchimp_campaign_button() {
 	if ( false == get_option('argo_link_roundups_use_mailchimp_integration') || false == get_option('argo_link_roundups_mailchimp_api_key') )
 		return;
 
+	$mc_cid = get_post_meta($post->ID, 'mc_cid', true);
+	if (!empty($mc_cid)) {
+		$mc_api_key = get_option('argo_link_roundups_mailchimp_api_key');
+		$opts = array('debug' => (defined('WP_DEBUG') && WP_DEBUG)? WP_DEBUG:false);
+		$mcapi = new Mailchimp($mc_api_key, $opts);
+		try {
+			$content = $mcapi->campaigns->content($mc_cid);
+		} catch (Mailchimp_Campaign_DoesNotExist $e) {
+			delete_post_meta($post->ID, 'mc_web_id');
+			delete_post_meta($post->ID, 'mc_cid');
+		}
+	}
+
 	$mc_web_id = get_post_meta($post->ID, 'mc_web_id', true);
 	?>
 
@@ -179,6 +192,8 @@ function lroundups_create_mailchimp_campaign() {
 
 		$mc_web_id = $response['web_id'];
 		update_post_meta($post->ID, 'mc_web_id', $mc_web_id);
+		$mc_cid = $response['cid'];
+		update_post_meta($post->ID, 'mc_cid', $mc_cid);
 
 		print json_encode(array(
 			"success" => true,
