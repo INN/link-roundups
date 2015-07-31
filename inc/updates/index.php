@@ -19,9 +19,9 @@
  */
 function lroundups_perform_update() {
 
-	if (lroundups_need_updates()) {
+	if ( lroundups_need_updates() ) {
 		// Run 0.3 updates.
-		do_action( 'lroundups_update_0.3', lroundups_version(), get_option('lroundups_version') );
+		do_action( 'lroundups_update_0.3', lroundups_version(), get_option( 'lroundups_version' ) );
 
 		// Run updates for 0.4
 		// do_action( 'lroundups_update_0.4', lroundups_version(), get_option('lroundups_version') );
@@ -29,7 +29,7 @@ function lroundups_perform_update() {
 		// &c...
 
 		// Set version.
-		update_option('lroundups_version', lroundups_version());
+		update_option( 'lroundups_version', lroundups_version() );
 	}
 
 	return true;
@@ -43,7 +43,7 @@ function lroundups_perform_update() {
  */
 function lroundups_version() {
 	if( is_admin() ) {
-		$plugin = get_plugin_data( plugin_dir_path(LROUNDUPS_PLUGIN_FILE) . "/link-roundups.php" );
+		$plugin = get_plugin_data( plugin_dir_path( LROUNDUPS_PLUGIN_FILE ) . '/link-roundups.php' );
 		return $plugin['Version'];
 	}
 	return false;
@@ -59,9 +59,9 @@ function lroundups_version() {
 function lroundups_need_updates() {
 
 	// try to figure out which versions of the options are stored. Implemented in 0.3
-	if (get_option('lroundups_version')) {
-		$compare = version_compare(lroundups_version(), get_option('lroundups_version'));
-		if ($compare == 1)
+	if ( get_option( 'lroundups_version' ) ) {
+		$compare = version_compare( lroundups_version(), get_option( 'lroundups_version' ) );
+		if ( $compare == 1 )
 			return true;
 		else
 			return false;
@@ -83,15 +83,20 @@ function lroundups_need_updates() {
  * @since 0.3
  */
 function lroundups_update_admin_notice() {
-	if (lroundups_need_updates() && !(isset($_GET['page']) && $_GET['page'] == 'update-lroundups')) {
+	if ( lroundups_need_updates() && !( isset( $_GET['page'] ) && $_GET['page'] == 'update-lroundups' ) ) {
 	?>
 	<div class="update-nag" style="display: block;">
-		<p>Link Roundups has been updated! Please <a href="<? echo admin_url('index.php?page=update-lroundups'); ?>">visit the update page</a> to apply a required database update.</p>
+		<?php 
+			printf( 
+				'<p>' . __( 'Link Roundups has been updated! Please <a href="%s">visit the update page</a> to apply a required database update.', 'link-roundups' ) . '</p>',
+			    admin_url( 'index.php?page=update-lroundups' )
+			);
+		?>
 	</div>
 	<?php
 	}
 }
-add_action('admin_notices', 'lroundups_update_admin_notice');
+add_action( 'admin_notices', 'lroundups_update_admin_notice' );
 
 /**
  * Register an admin page for updates.
@@ -100,20 +105,20 @@ add_action('admin_notices', 'lroundups_update_admin_notice');
  */
 function lroundups_register_update_page() {
 	$parent_slug = null;
-	$page_title = "Update Link Roundups";
-	$menu_title = "Update Link Roundups";
-	$capability = "edit_theme_options";
-	$menu_slug = "update-lroundups";
-	$function = "lroundups_update_page_view";
+	$page_title = __( 'Update Link Roundups', 'link-roundups' );
+	$menu_title = __( 'Update Link Roundups', 'link-roundups' );
+	$capability = 'edit_theme_options';
+	$menu_slug = 'update-lroundups';
+	$function = 'lroundups_update_page_view';
 
-	if (lroundups_need_updates()) {
+	if ( lroundups_need_updates() ) {
 		add_submenu_page(
 			$parent_slug, $page_title, $menu_title,
 			$capability, $menu_slug, $function
 		);
 	}
 }
-add_action('admin_menu', 'lroundups_register_update_page');
+add_action( 'admin_menu', 'lroundups_register_update_page' );
 
 /**
  * DOM for admin page for updates.
@@ -156,15 +161,15 @@ function lroundups_update_page_view() { ?>
 	</style>
 	<div class="wrap">
 		<div id="icon-tools" class="icon32"></div>
-		<h2>Link Roundups Database Update</h2>
+		<h2><?php _e ( 'Link Roundups Database Update', 'link-roundups' ); ?></h2>
 		<div class="update-message">
 
-			<p><?php _e('Link Roundups plugin has been updated to version'); echo " " . lroundups_version(); ?>.
-			<p><?php _e('This update will migrate <strong>Argo Links</strong> and <strong>Argo Link Roundups</strong> to the new <strong>Saved Links</strong> and <strong>Link Roundups</strong> formats respectively.'); ?></p>
-			<p><?php _e('This process will restore previous Argo Links and Argo Link Roundups posts to your site.'); ?></p>
-			<p><?php _e('Please run the following update function.'); ?></p>
+			<p><?php _e( 'Link Roundups plugin has been updated to version', 'link-roundups' ); echo " " . lroundups_version(); ?>.
+			<p><?php _e( 'This update will migrate <strong>Argo Links</strong> and <strong>Argo Link Roundups</strong> to the new <strong>Saved Links</strong> and <strong>Link Roundups</strong> formats respectively.', 'link-roundups' ); ?></p>
+			<p><?php _e( 'This process will restore previous Argo Links and Argo Link Roundups posts to your site.', 'link-roundups' ); ?></p>
+			<p><?php _e( 'Please run the following update function.', 'link-roundups' ); ?></p>
 			<p class="submit-container">
-				<input type="submit" class="button-primary" id="update" name="update" value="<?php _e('Update the database!'); ?>">
+				<input type="submit" class="button-primary" id="update" name="update" value="<?php _e( 'Update the database!', 'link-roundups' ); ?>">
 				<span class="spinner"></span>
 			<p>
 		</div>
@@ -180,13 +185,13 @@ function lroundups_update_page_view() { ?>
  * @global $_GET
  */
 function lroundups_update_page_enqueue_js() {
-	if (isset($_GET['page']) && $_GET['page'] == 'update-lroundups') {
+	if ( isset( $_GET['page'] ) && $_GET['page'] == 'update-lroundups') {
 		wp_enqueue_script(
-			'lroundups_update_page', plugins_url('/js/update.js', LROUNDUPS_PLUGIN_FILE),
-			array('jquery'), false, 1);
+			'lroundups_update_page', plugins_url( '/js/update.js', LROUNDUPS_PLUGIN_FILE),
+			array( 'jquery' ), false, 1 );
 	}
 }
-add_action('admin_enqueue_scripts', 'lroundups_update_page_enqueue_js');
+add_action( 'admin_enqueue_scripts', 'lroundups_update_page_enqueue_js' );
 
 /**
  * Ajax handler for when update is applied from the updates page.
@@ -195,42 +200,42 @@ add_action('admin_enqueue_scripts', 'lroundups_update_page_enqueue_js');
  */
 function lroundups_ajax_update_database() {
 	if (!current_user_can('activate_plugins')) {
-		print json_encode(array(
-			"status" => __("An error occurred."),
-			"success" => false
+		print json_encode( array(
+			'status' 	=> __( 'An error occurred.', 'link-roundups' ),
+			'success' 	=> false
 		));
 		wp_die();
 	}
 
 	if (!lroundups_need_updates()) {
-		print json_encode(array(
-			"status" => __("Finished. No update was required."),
-			"success" => false
+		print json_encode( array(
+			'status' 	=> __( 'Finished. No update was required.', 'link-roundups' ),
+			'success' 	=> false
 		));
 		wp_die();
 	}
 
 	$ret = lroundups_perform_update();
 	if (!empty($ret)) {
-		$message = __("Thank you -- the update is complete.");
-		print json_encode(array(
-			"status" => $message,
-			"success" => true
+		$message = __( 'Thank you -- the update is complete.', 'link-roundups' );
+		print json_encode( array(
+			'status' 	=> $message,
+			'success' 	=> true
 		));
 		wp_die();
 	} else {
-		print json_encode(array(
-			"status" => __("There was a problem applying the update. Please try again."),
-			"success" => false
+		print json_encode( array(
+			'status' 	=> __( 'There was a problem applying the update. Please try again.', 'link-roundups' ),
+			'success' 	=> false
 		));
 		wp_die();
 	}
 }
-add_action('wp_ajax_lroundups_ajax_update_database', 'lroundups_ajax_update_database');
+add_action( 'wp_ajax_lroundups_ajax_update_database', 'lroundups_ajax_update_database' );
 
 
 /** --------------------------------------------------------
  * Update functions.
  * ------------------------------------------------------ */
 
-include_once(__DIR__ . '/functions.php');
+include_once( __DIR__ . '/functions.php' );
