@@ -9,39 +9,53 @@ Author URI: http://nerds.inn.org/
 License: GPLv2
 
 Seeking Link Roundups Post Type functions? They use lroundups instead of link-roundups.
-
 */
 
-/** Plugin directory **/
+// Plugin directory
 define('LROUNDUPS_PLUGIN_FILE', __FILE__);
 
-/** Saved Links Post Type **/
+/**
+ * Saved Links
+ */
+// Post Type Functions
 require_once(__DIR__ . '/inc/saved-links/class-saved-links.php');
-/** Saved Links Widget **/
+// Widget
 require_once(__DIR__ . '/inc/saved-links/widget.php');
 
-/** Link Roundup Post Type Functions **/
+/**
+ * Link Roundups
+ */
+// Post Type Functions
 require_once(__DIR__ . '/inc/lroundups/class-lroundups.php');
-/** Link Roundups Widget **/
+// Widget
 require_once(__DIR__ . '/inc/lroundups/widget.php');
 
-/** Mailchimp API and Modal Functions **/
+/**
+ * Mailchimp API and Modal Functions
+ */
 require_once(__DIR__ . '/vendor/mailchimp-api-php/src/Mailchimp.php'); // API files
 require_once(__DIR__ . '/inc/lroundups/mailchimp-admin.php'); // Integration Code
 
-/** Save to Site Browser Bookmark Tool **/
+/**
+ * Save to Site Browser Bookmark Tool
+ */
 require_once(__DIR__ . '/inc/lroundups/browser-bookmark.php');
 
-/** Add Backwards Compatability with argo-links **/
+/**
+ * Add Backwards Compatability with argo-links
+ */
 require_once(__DIR__ . '/inc/argo-links-compatability.php');
 
 
-/* Initialize the plugin using its init() function */
+/**
+ * Initialize the plugin using its init() function
+ */
 LRoundups::init();
 SavedLinks::init();
-add_action('init', 'lroundups_flush_permalinks', 99);
+add_action( 'init', 'lroundups_flush_permalinks', 99 );
 
-require_once('inc/updates/index.php');
+require_once( 'inc/updates/index.php' );
+
 
 /**
  * On activation, we'll set an option called 'argolinks_flush' to true,
@@ -53,9 +67,10 @@ require_once('inc/updates/index.php');
  * @see lroundups_flush_permalinks
  */
 function lroundups_activation() {
-	add_option('argolinks_flush', true);
+	add_option( 'argolinks_flush', true );
 }
 register_activation_hook( __FILE__, 'lroundups_activation' );
+
 
 /**
  * On deactivation, we'll remove our 'argolinks_flush' option if it is
@@ -67,9 +82,10 @@ register_activation_hook( __FILE__, 'lroundups_activation' );
  * @see lroundups_flush_permalinks
  */
 function lroundups_deactivation() {
-    delete_option('argolinks_flush');
+    delete_option( 'argolinks_flush' );
 }
 register_deactivation_hook( __FILE__, 'lroundups_deactivation' );
+
 
 /**
  * Utility function to reset the permalinks.
@@ -85,9 +101,9 @@ register_deactivation_hook( __FILE__, 'lroundups_deactivation' );
  * @see lroundups_deactivation
  */
 function lroundups_flush_permalinks() {
-	if (get_option('argolinks_flush') == true) {
+	if (get_option( 'argolinks_flush') == true ) {
 		flush_rewrite_rules();
-		delete_option('argolinks_flush');
+		delete_option( 'argolinks_flush' );
 		return true;
 	}
 	return false;
@@ -99,28 +115,28 @@ function lroundups_flush_permalinks() {
  * @since 0.2
  */
 function link_roundups_enqueue_assets() {
-	$plugin_path = plugins_url(basename(__DIR__), __DIR__);
-	$suffix = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG)? '' : '.min';
+	$plugin_path = plugins_url( basename( __DIR__ ), __DIR__ );
+	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 	wp_register_script(
 		'links-common', $plugin_path . '/js/links-common' . $suffix . '.js',
-		array('jquery', 'underscore', 'backbone'), 0.3, true
+		array( 'jquery', 'underscore', 'backbone' ), 0.3, true
 	);
 
 	wp_register_script(
 		'link-roundups', $plugin_path . '/js/lroundups' . $suffix . '.js',
-		array('links-common'), 0.3, true
+		array( 'links-common' ), 0.3, true
 	);
 
-	wp_register_style('links-common', $plugin_path . '/css/links-common' . $suffix . '.css');
+	wp_register_style( 'links-common', $plugin_path . '/css/links-common' . $suffix . '.css' );
 
 	$screen = get_current_screen();
-	if ($screen->base == 'post' && $screen->post_type == 'roundup') {
-		wp_enqueue_script('link-roundups');
-		wp_enqueue_style('links-common');
+	if ( $screen->base == 'post' && $screen->post_type == 'roundup' ) {
+		wp_enqueue_script( 'link-roundups' );
+		wp_enqueue_style( 'links-common' );
 	}
 }
-add_action('admin_enqueue_scripts', 'link_roundups_enqueue_assets');
+add_action( 'admin_enqueue_scripts', 'link_roundups_enqueue_assets' );
 
 
 /**

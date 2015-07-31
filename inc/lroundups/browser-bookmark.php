@@ -20,11 +20,11 @@
 if ( !defined('ABSPATH') ) {
 
 	// Load WordPress
-	define('WP_USE_THEMES', false);
-	require_once('../../../wp-admin/admin.php');
+	define( 'WP_USE_THEMES', false );
+	require_once( '../../../wp-admin/admin.php' );
 
 	// Generate URL redirect
-	$URL = parse_url( $_SERVER["REQUEST_URI"] );
+	$URL = parse_url( $_SERVER['REQUEST_URI'] );
 	$newURL = admin_url( 'post-new.php?' . $URL['query'] );
 
 	// Header redirect
@@ -38,7 +38,7 @@ class Save_To_Site_Button {
 	private static $url;
 	private static $source;
 	private static $imgUrl;
-	const plugin_domain = 'press-this-reloaded';
+	const plugin_domain = 'link-roundups';
 
 	/**
 	 * Initialize the class.
@@ -115,11 +115,11 @@ class Save_To_Site_Button {
 		$post_type = 'rounduplink';
 
 		// We alter it for our post type.
-		$shortcut_link = str_replace('press-this.php', 'post-new.php', $shortcut_link);
-		$shortcut_link = str_replace('width=720', 'width=840', $shortcut_link);
-		$shortcut_link = str_replace('post-new.php', "post-new.php?post_type=$post_type", $shortcut_link);
-		$shortcut_link = str_replace('?u=', '&u=', $shortcut_link);
-		$shortcut_link = str_replace('?v=', '&v=', $shortcut_link);
+		$shortcut_link = str_replace( 'press-this.php', 'post-new.php', $shortcut_link );
+		$shortcut_link = str_replace( 'width=720', 'width=840', $shortcut_link );
+		$shortcut_link = str_replace( 'post-new.php', 'post-new.php?post_type=$post_type', $shortcut_link );
+		$shortcut_link = str_replace( '?u=', '&u=', $shortcut_link );
+		$shortcut_link = str_replace( '?v=', '&v=', $shortcut_link );
 
 		return $shortcut_link;
 
@@ -154,12 +154,11 @@ class Save_To_Site_Button {
 		self::$url = isset( $_GET[ 'u' ] ) ? esc_url( $_GET[ 'u' ] ) : '';
 		self::$url = wp_kses( urldecode( self::$url ), null );
 
-		// Get meta data from url.
-		// @see 
+		// Get meta data from url
 		$meta = lroundups_scrape_url(self::$url); // func. contains WPSimpleScraper
 		$meta = $meta['meta'];
 
-		// Default title.
+		// Default title
 		self::$title = '';
 		if( !empty($meta['ogp']['title']) ) {
 			self::$title = $meta['ogp']['title'];
@@ -173,7 +172,7 @@ class Save_To_Site_Button {
 			$selection = trim( htmlspecialchars( html_entity_decode( $selection, ENT_QUOTES ) ) );
 		}
 
-		// Default description.
+		// Default description
 		self::$description = '';
 		if ( !empty( $selection ) ) {
 			self::$description = $selection;
@@ -181,7 +180,7 @@ class Save_To_Site_Button {
 			self::$description = $meta['ogp']['description'];
 		}  
 
-		// Default source.
+		// Default source
 		self::$source = '';
 		if( !empty($meta['ogp']['site_name']) ) {
 			self::$source = $meta['ogp']['site_name'];
