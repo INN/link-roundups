@@ -318,7 +318,7 @@ class SavedLinks {
 	 */
 	public static function build_lroundups_page() {
 	/** WordPress Administration Bootstrap */
-	include_once( ABSPATH  . 'admin.php' );
+	include_once( ABSPATH  . 'wp-admin/admin.php' );
 	?>
 
 	<div id="icon-tools" class="icon32"><br></div><h2><?php _e( 'Add Save to Site Bookmark to Your Web Browser', 'link-roundups' ); ?></h2>
