@@ -10,7 +10,7 @@ class SavedLinks {
 
 	/**
 	 * Initialize the class.
-	 * 
+	 *
 	 * @since 0.1
 	 */
 	public static function init() {
@@ -76,12 +76,11 @@ class SavedLinks {
 	}
 
 	/**
-	 * Register the Roundup Link post type 
+	 * Register the Roundup Link post type
 	 *
 	 * @since 0.1
 	 */
 	public static function register_post_type() {
-		
 		register_post_type( 'rounduplink', array(
 			'labels' 		=> array(
 				'name' 					=> __( 'Saved Links', 'link-roundups' ),
@@ -104,12 +103,11 @@ class SavedLinks {
 			'taxonomies' 	=> array(),
 			'has_archive' 	=> true
 		));
-
 	}
 
 	/**
 	 * Register our custom taxonomy
-	 * 
+	 *
 	 * @since 0.1
 	 */
 	public static function register_rounduplinks_taxonomy() {
@@ -127,7 +125,7 @@ class SavedLinks {
 
 	/**
 	 * Tell Wordpress where to put our custom fields for our custom post type
-	 * 
+	 *
 	 * @since 0.1
 	 */
 	public static function add_custom_post_fields() {
@@ -136,7 +134,7 @@ class SavedLinks {
 
 	/**
 	 * Show our custom post fields in the add/edit Argo Links admin pages
-	 * 
+	 *
 	 * @since 0.1
 	 */
 	public static function display_custom_fields() {
@@ -183,7 +181,7 @@ class SavedLinks {
 
 	/**
 	 * Save the custom post field data. Very important!
-	 * 
+	 *
 	 * @since 0.1
 	 */
 	public static function save_custom_fields($post_id) {
@@ -217,17 +215,15 @@ class SavedLinks {
 	 * @since 0.1
 	 */
 	public static function lroundups_media_sideload_image( $file, $post_id, $desc = null ) {
-
 		if ( !empty( $file ) ) {
-			
 			// Set variables for storage, fix file filename for query strings.
 			preg_match( '/[^\?]+\.(jpe?g|jpe|gif|png)\b/i', $file, $matches );
 			$file_array = array();
 			$file_array['name'] = basename( $matches[0] );
-			
+
 			// Download file to temp location.
 			$file_array['tmp_name'] = download_url( $file );
-			
+
 			// If error storing temporarily, return the error.
 			if ( is_wp_error( $file_array['tmp_name'] ) )
 				return $file_array['tmp_name'];
@@ -240,12 +236,11 @@ class SavedLinks {
 
 			return $id;
 		}
-
 	}
 
-	/** 
+	/**
 	 * Create the new columns to display our custom post fields
-	 * 
+	 *
 	 * @since 0.1
 	 */
 	public static function display_custom_columns($columns){
@@ -263,11 +258,10 @@ class SavedLinks {
 
 	/**
 	 * Fill in our custom data for the new columns
-	 * 
+	 *
 	 * @since 0.1
 	 */
 	public static function data_for_custom_columns($column){
-		
 		global $post;
 		$custom = get_post_custom();
 
@@ -300,7 +294,7 @@ class SavedLinks {
 
 	/**
 	 * Add the Argo Link This! sub menu
-	 * 
+	 *
 	 * @since 0.1
 	 */
 	public static function add_save_to_site_sub_menu() {
@@ -310,7 +304,7 @@ class SavedLinks {
 			__( 'Add Browser Bookmark', 'link-roundups' ),
 			'edit_posts',
 			'install-browser-bookmark',
-			array( 
+			array(
 				__CLASS__, 'build_lroundups_page'
 			)
 		);
@@ -319,14 +313,14 @@ class SavedLinks {
 	/**
 	 * Add Browser Bookmark Tool based on WP Core Press This! tool
 	 *
-	 * @see  
+	 * @see
 	 * @since 0.1
 	 */
 	public static function build_lroundups_page() {
 	/** WordPress Administration Bootstrap */
 	include_once( ABSPATH  . 'admin.php' );
 	?>
-	
+
 	<div id="icon-tools" class="icon32"><br></div><h2><?php _e( 'Add Save to Site Bookmark to Your Web Browser', 'link-roundups' ); ?></h2>
 
 	<div class="tool-box">
@@ -542,25 +536,23 @@ class SavedLinks {
 			return;
 
 		$meta = get_post_meta( $post->ID ); // getting meta fields from saved link...
-		
+
 		// first lets get the kind of link
 		$style_class = $link_class; // $link_class is defined below in rounduplink_shortcode()
 		// now check if it's sponsored and set the $sponsored_title
-		
+
 		$sponsored_title = !empty( $style_class ) ? __( 'SPONSORED: ', 'link-roundups' ) : '';
-	
+
 		$url = !empty( $meta['argo_link_url']) ? $meta['argo_link_url'][0] : '';
 		$link_title = get_the_title( $post->ID );
-		$title = $sponsored_title . '' . $link_title; 
+		$title = $sponsored_title . '' . $link_title;
 		$description = array_key_exists( 'argo_link_description', $meta ) ? $meta['argo_link_description'][0] : '';
 		$source = !empty( $meta['argo_link_source']) ? $meta['argo_link_source'][0] : '';
 
-		
-		ob_start(); 
-		
+		ob_start();
 		/* begin shortcode output
 		 *
-		 * NOTE: 
+		 * NOTE:
 		 * This default output is overwritten 98% of the time by $lroundups_html
 		 * regardless of whether you've modified the code in setting
 		 * Needs improvement in future version
@@ -572,7 +564,7 @@ class SavedLinks {
 		<span class='description'>#!DESCRIPTION!#</span>
 		<em>#!SOURCE!#</em>
 	  </p>
-	
+
 	  <?php
 		$default_html = ob_get_clean();
 
@@ -582,46 +574,44 @@ class SavedLinks {
 		} else {
 			$lroundups_html = $default_html;
 		}
-		
+
 		$lroundups_html = str_replace( '#!URL!#', $url, $lroundups_html);
 		$lroundups_html = str_replace( '#!TITLE!#', $title, $lroundups_html);
 		$lroundups_html = str_replace( '#!DESCRIPTION!#', $description, $lroundups_html);
 		$lroundups_html = str_replace( '#!SOURCE!#', $source, $lroundups_html);
 		$lroundups_html = str_replace( '#!CLASS!#', $link_class, $lroundups_html);
-	    //				$link_class is defined below in rounduplink_shortcode()
-		
+		// $link_class is defined below in rounduplink_shortcode()
+
 		return $lroundups_html;
 	}
 
 	/**
 	 * Displays rounduplink html.
-	 * 
+	 *
 	 * @since 0.3
 	 */
 	public static function rounduplink_shortcode( $atts ) {
-
-		$a = shortcode_atts( 
-			array( 
-				'id' 	=> '', 
-				'title' => '', 
-				'class' => '' 
-			), 
+		$a = shortcode_atts(
+			array(
+				'id' 	=> '',
+				'title' => '',
+				'class' => ''
+			),
 			$atts
 		);
-		
+
 		// check if a link has style like 'sponsored'
-		if( !empty( $a['class'] ) )	
-		
+		if( !empty( $a['class'] ) )
+
 		$link_class = !empty( $a['class'] ) ? ' ' . $a['class'] : '';
-		
+
 		// send it all over to get_html (see above)
 		if( $a['id'] != null )
 			return self::get_html( $a['id'], $link_class ); // id and sponsored class
 		else
 			return '';
-		
 	}
-	
+
 	/**
 	 * Returns DOM for a rounduplink excerpt.
 	 *
@@ -651,5 +641,4 @@ class SavedLinks {
 		return $html;
 
 	}
-
 }

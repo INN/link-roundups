@@ -32,7 +32,7 @@ class LRoundups {
 	}
 
 	// Pull the linkroundups into the queries for is_home, is_tag, is_category, is_archive
-	
+
 	// Merge the post_type query var if there is already a custom post type being pulled in otherwise do post & linkroundups
 	public static function my_get_posts( &$query ) {
 		// bail out early if suppress filters is set to true
@@ -61,28 +61,28 @@ class LRoundups {
 	/**
 	 * Register the Link Roundups Custom Post Type
 	 * Use Options Page settings to set Names and Slug
-	 * 
+	 *
 	 * @since 0.1
 	 */
 	public static function register_post_type() {
-	$singular_opt = get_option( 'link_roundups_custom_name_singular' );
-	$plural_opt = get_option( 'link_roundups_custom_name_plural' );
-	$slug_opt = get_option( 'argo_link_roundups_custom_url' );
-	
-	if( !empty( $singular_opt ) ) {
-		$singular = $singular_opt;
-	}
-	else {
-		$singular = 'Link Roundup';
-	}
-	
-	if( !empty( $plural_opt ) ) {
-		$plural = $plural_opt;
-	}
-	else {
-		$plural = 'Link Roundups';
-	}
-	
+		$singular_opt = get_option( 'link_roundups_custom_name_singular' );
+		$plural_opt = get_option( 'link_roundups_custom_name_plural' );
+		$slug_opt = get_option( 'argo_link_roundups_custom_url' );
+
+		if( !empty( $singular_opt ) ) {
+			$singular = $singular_opt;
+		}
+		else {
+			$singular = 'Link Roundup';
+		}
+
+		if( !empty( $plural_opt ) ) {
+			$plural = $plural_opt;
+		}
+		else {
+			$plural = 'Link Roundups';
+		}
+
 		$roundup_options = array(
 			'labels' 		=> array(
 				'name' 			=> $plural,
@@ -113,13 +113,11 @@ class LRoundups {
 			$roundup_options['rewrite'] = array( 'slug' => $slug_opt );
 
 		register_post_type( 'roundup', $roundup_options );
-
-
 	}
 
 	/**
 	 * Register meta box for custom fields on roundup edit pages.
-	 * 
+	 *
 	 * @since 0.1
 	 * @see display_custom_fields()
 	 */
@@ -130,9 +128,9 @@ class LRoundups {
 		);
 	}
 
-	/** 
+	/**
 	 * Show our custom post fields in the add/edit Argo Link Roundups admin pages
-	 * 
+	 *
 	 * @since 0.1
 	 */
 	public static function display_custom_fields() {
@@ -148,9 +146,9 @@ class LRoundups {
 
 	/**
 	 * Save the custom post field data.	Very important!
-	 * 
+	 *
 	 * Wait, does this do anything on roundups!? - Will
-	 * 
+	 *
 	 * @since 0.1
 	 */
 	public static function save_custom_fields( $post_id ) {
@@ -164,11 +162,10 @@ class LRoundups {
 
 	/**
 	 * Add options sub menu for roundups.
-	 * 
+	 *
 	 * @since 0.1
 	 */
 	public static function add_lroundups_options_page() {
-
 		add_submenu_page(
 			'edit.php?post_type=roundup', 	// $parent_slug
 			'Options', 						// $page_title
@@ -183,7 +180,6 @@ class LRoundups {
 	}
 
 	public static function register_mysettings() {
-		
 		// register our settings
 		register_setting( 'argolinkroundups-settings-group', 'argo_link_roundups_custom_url' );
 		register_setting( 'argolinkroundups-settings-group', 'argo_link_roundups_custom_html' );
@@ -199,7 +195,6 @@ class LRoundups {
 	}
 
 	public static function validate_mailchimp_integration($input) {
-		
 		// Can't have an empty MailChimp API Key if the integration functionality is enabled.
 		if ( empty( $_POST['argo_link_roundups_mailchimp_api_key'] ) && !empty( $input ) ) {
 			add_settings_error(
@@ -215,7 +210,6 @@ class LRoundups {
 	}
 
 	public static function build_lroundups_options_page() {
-		
 		$mc_api_key = get_option( 'argo_link_roundups_mailchimp_api_key' );
 
 		/**
@@ -236,7 +230,7 @@ class LRoundups {
 			$mcapi = new Mailchimp( $mc_api_key, $opts );
 
 			$templates = $mcapi->templates->getList(
-				array( 
+				array(
 					'gallery' 	=> false,
 					'base' 		=> false
 				),

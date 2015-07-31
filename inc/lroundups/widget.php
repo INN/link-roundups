@@ -1,8 +1,8 @@
 <?php
-/*
+
+/**
  * Recent Link Roundups Widget
  */
- 
 class link_roundups_widget extends WP_Widget {
 
 	function link_roundups_widget() {
@@ -20,8 +20,8 @@ class link_roundups_widget extends WP_Widget {
 		echo $before_widget;
 
 		if ( $title )
-			echo $before_title . $title . $after_title; 
-			
+			echo $before_title . $title . $after_title;
+
 			$query_args = array (
 				'post__not_in' 	=> get_option( 'sticky_posts' ),
 				'showposts' 	=> $instance['num_posts'],
@@ -36,16 +36,12 @@ class link_roundups_widget extends WP_Widget {
           				$custom = get_post_custom( $post->ID ); ?>
 	                  	<div class="post-lead clearfix">
 	                      	<?php
-	                      	
 	                      	// the date
 							$output .= '<span>' . get_the_date( 'F d Y' ) . '</span>';
-								                      	
 	                      	// the headline
 							$output .= '<h4><a href="' . get_permalink() . '">' . get_the_title() . '</a></h4>';
-							
 							// the excerpt
 							$output .= '<p>' . get_the_excerpt() . '</p>';
-							
 							echo $output;
 	                      	?>
 
@@ -98,7 +94,7 @@ class link_roundups_widget extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'cat' ); ?>"><?php _e( 'Limit to category: ', 'link-roundups' ); ?>
 			<?php wp_dropdown_categories( array( 'name' => $this->get_field_name( 'cat' ), 'show_option_all' => __( 'None (all categories)', 'link-roundups' ), 'hide_empty' => 0, 'hierarchical' => 1, 'selected' => $instance['cat'] ) ); ?></label>
 		</p>
-		
+
 		<p><strong><?php _e( 'More Link', 'link-roundups' ); ?></strong><br /><small><?php _e( 'If you would like to add a more link at the bottom of the widget, add the link text and url here.', 'link-roundups' ); ?></small></p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'linktext' ); ?>"><?php _e( 'Link text:', 'link-roundups' ); ?></label>

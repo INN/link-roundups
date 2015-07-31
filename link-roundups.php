@@ -92,7 +92,7 @@ register_deactivation_hook( __FILE__, 'lroundups_deactivation' );
  *
  * Called in ArgoLinks::register_permalinks() to reset the WordPress permalinks after the
  * Saved Links post type is registered in SavedLinks::register_permalinks(), which is run after
- * the Link Roundups post type is registered in LRoundups::register_permalinks() 
+ * the Link Roundups post type is registered in LRoundups::register_permalinks()
  *
  * @return bool If get_option('argolinks_flush') is true or false
  * @link https://gist.github.com/clioweb/871595
