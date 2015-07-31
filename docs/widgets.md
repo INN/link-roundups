@@ -2,7 +2,7 @@
 
 ### Adding Widgets
 
-Widgets can be added in the WordPress Dashboard under Appearance --> Widgets, or alternatively in the WordPress Customizer under the Widgets Panel. Drag the desired widget into your desired sidebar (or click Add Widget in your desired sidebar the case of the Customizer).
+Widgets can be added in the WordPress Dashboard under Appearance > Widgets, or alternatively in the WordPress Customizer under the Widgets Panel. Drag the desired widget into your desired sidebar or widget area (or click Add Widget in your desired sidebar in the case of the Customizer).
 
 #### 1. Saved Links Widget (since 0.1)
 
