@@ -490,9 +490,12 @@ class SavedLinks {
 
 		// Only run for argo_links
 		global $post;
-		if ( ! ( 'rounduplink' == $post->post_type ) ) {
+
+		if (!isset($post))
 			return $content;
-		}
+
+		if ( ! ( 'rounduplink' == $post->post_type ) )
+			return $content;
 
 		return self::get_html( $post );
 	}
@@ -601,9 +604,7 @@ class SavedLinks {
 		);
 
 		// check if a link has style like 'sponsored'
-		if( !empty( $a['class'] ) )
-
-		$link_class = !empty( $a['class'] ) ? ' ' . $a['class'] : '';
+		$link_class = (!empty($a['class']))? ' ' . $a['class'] : '';
 
 		// send it all over to get_html (see above)
 		if( $a['id'] != null )
