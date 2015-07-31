@@ -19,8 +19,8 @@ EOT;
 	
 	<a href="#rename"><strong><?php _e( 'Rename Link Roundups', 'link-roundups' ); ?></strong></a> | <a href="#html"><strong><?php _e( 'Custom HTML for Displaying Links', 'link-roundups' ); ?></strong></a> | <a href="#mailchimp"><strong><?php _e( 'Mailchimp Integration', 'link-roundups' ); ?></strong></a>
 	<form method="post" action="options.php">
-		<?php settings_fields( 'argolinkroundups-settings-group' ); ?>
-		<?php do_settings_fields( 'argolinkroundups-settings-group', null ); ?>
+		<?php settings_fields( 'lroundups-settings-group' ); ?>
+		<?php do_settings_fields( 'lroundups-settings-group', null ); ?>
 		<div class="options-wrapper">
 			<div id="rename" class="card">
 				<h3><?php _e( 'Rename Link Roundups', 'link-roundups' ); ?></h3>
@@ -33,16 +33,16 @@ EOT;
 				?>
 				<h4><?php _e( 'Custom Name', 'link-roundups' ); ?></h4>
 				<h5 style="margin-bottom: 0; padding-bottom: 0;"><?php _e( 'Singular (Default: Link Roundup)', 'link-roundups' ); ?></h5>
-				<input type="text" name="link_roundups_custom_name_singular" value="<?php echo get_option( 'link_roundups_custom_name_singular' ); ?>" />
+				<input type="text" name="lroundups_custom_name_singular" value="<?php echo get_option( 'lroundups_custom_name_singular' ); ?>" />
 				<h5 style="margin-bottom: 0; padding-bottom: 0;"><?php _e( 'Plural (Default: Link Roundups)', 'link-roundups' ); ?></h5>
-				<input type="text" name="link_roundups_custom_name_plural" value="<?php echo get_option( 'link_roundups_custom_name_plural' ); ?>" />
+				<input type="text" name="lroundups_custom_name_plural" value="<?php echo get_option( 'lroundups_custom_name_plural' ); ?>" />
 
 				<h4 style="margin-bottom: 2px; padding-bottom: 2px;"><?php _e( 'Custom URL Slug', 'link-roundups' ); ?></h4>
 				<h5 style="margin: 0; padding: 0;"><?php _e( 'Current URL Slug for Link Roundups:', 'link-roundups' ); ?></h5>
 				<code style="display:block; margin: 0.33em 0;">
 					<?php echo get_site_url(); ?>/
 					<strong><?php 
-					$custom_slug_setting = get_option( 'argo_link_roundups_custom_url' );
+					$custom_slug_setting = get_option( 'lroundups_custom_url' );
 					
 					if(!empty($custom_slug_setting)) { 
 						$current_slug = $custom_slug_setting; // apply custom slug
@@ -51,8 +51,8 @@ EOT;
 					}
 					echo $current_slug; ?>
 					</strong>/random-roundup/</code>
-				<?php $custom_slug = get_option( 'argo_link_roundups_custom_url' ); ?>
-				<input type="text" name="argo_link_roundups_custom_url" value="<?php echo $custom_slug; ?>" />
+				<?php $custom_slug = get_option( 'lroundups_custom_url' ); ?>
+				<input type="text" name="lroundups_custom_url" value="<?php echo $custom_slug; ?>" />
 				<p><?php _e( 'Must be lowercase with no spaces or special characters -- dashes allowed.', 'link-roundups' ); ?></p>
 			    <?php 
 				    printf( 
@@ -64,7 +64,7 @@ EOT;
 			<div id="html" class="card">
 				<h3><?php _e( 'Custom HTML for Displaying Links', 'link-roundups' ); ?></h3>
 				<p><?php _e( 'Modify the display and style of Saved Links.', 'link-roundups' ); ?></p>
-				<textarea name="argo_link_roundups_custom_html" cols='70' rows='6' ><?php echo ( get_option( 'argo_link_roundups_custom_html' ) != '' ? get_option( 'argo_link_roundups_custom_html' )	: $default_html ); ?></textarea>
+				<textarea name="lroundups_custom_html" cols='70' rows='6' ><?php echo ( get_option( 'lroundups_custom_html' ) != '' ? get_option( 'lroundups_custom_html' )	: $default_html ); ?></textarea>
 				<em><?php _e( 'Single quotes are REQUIRED in Custom HTML. Double quotes will be automatically converted to single quotes before use.', 'link-roundups' ); ?></em><br /><br />
 				<?php _e( 'The following tags will be replaced with the URL, Title, Description, and Source automatically when the Saved Link is pushed into the Post Editor.', 'link-roundups' ); ?><br />
 				<blockquote><ul style="list-style-type:square;">
@@ -90,37 +90,37 @@ EOT;
 			<div id="mailchimp" class="card">
 				<h3><?php _e( 'MailChimp Integration', 'link-roundups' ); ?></h3>
 					<p style="margin-bottom:5px;">
-						<label for="argo_link_roundups_use_mailchimp_integration">
+						<label for="lroundups_use_mailchimp_integration">
 							<?php _e( 'Enable MailChimp Integration?', 'link-roundups' ); ?>
-							<input type="checkbox" name="argo_link_roundups_use_mailchimp_integration"
-								<?php checked( get_option( 'argo_link_roundups_use_mailchimp_integration' ), 'on', true ); ?> />
+							<input type="checkbox" name="lroundups_use_mailchimp_integration"
+								<?php checked( get_option( 'lroundups_use_mailchimp_integration' ), 'on', true ); ?> />
 						</label>
 					</p>
 					<p>
-						<label for="argo_link_roundups_mailchimp_api_key">
+						<label for="lroundups_mailchimp_api_key">
 							<?php _e( 'MailChimp API Key', 'link-roundups' ); ?>
-							<input style="width: 300px;" type="text" name="argo_link_roundups_mailchimp_api_key"
-								value="<?php echo get_option( 'argo_link_roundups_mailchimp_api_key' ); ?>"
+							<input style="width: 300px;" type="text" name="lroundups_mailchimp_api_key"
+								value="<?php echo get_option( 'lroundups_mailchimp_api_key' ); ?>"
 								placeholder="Mailchimp API Key" />
 						</label>
 					</p>
 					<p><a href="http://kb.mailchimp.com/accounts/management/about-api-keys#Find-or-Generate-Your-API-Key"><?php _e( 'Find your MailChimp API Key', 'link-roundups' ); ?></a></p>
-			<?php if ((bool) get_option('argo_link_roundups_use_mailchimp_integration') && !empty($templates)) { ?>
+			<?php if ((bool) get_option('lroundups_use_mailchimp_integration') && !empty($templates)) { ?>
 				<h4><?php _e( 'MailChimp Templates', 'link-roundups' ); ?></h4>
-					<select name="argo_link_mailchimp_template">
+					<select name="lroundups_mailchimp_template">
 						<option value=""></option>
 						<?php foreach ( $templates['user'] as $key => $template ) { ?>
-							<option <?php selected(get_option('argo_link_mailchimp_template'), $template['id'], true); ?> value="<?php echo $template['id']; ?>" /><?php echo $template['name']; ?></option>
+							<option <?php selected(get_option('lroundups_mailchimp_template'), $template['id'], true); ?> value="<?php echo $template['id']; ?>" /><?php echo $template['name']; ?></option>
 						<?php } ?>
 					</select>
 					<p><?php _e( 'Choose a MailChimp template to use as the basis for Link Roundup email campaigns.', 'link-roundups' ); ?></p>
 			<?php } ?>
-			<?php if ( ( bool ) get_option( 'argo_link_roundups_use_mailchimp_integration') && !empty( $lists ) ) { ?>
+			<?php if ( ( bool ) get_option( 'lroundups_use_mailchimp_integration') && !empty( $lists ) ) { ?>
 				<h4><?php _e( 'MailChimp Lists', 'link-roundups' ); ?></h4>
-					<select name="argo_link_mailchimp_list">
+					<select name="lroundups_mailchimp_list">
 						<option value=""></option>
 						<?php foreach ( $lists['data'] as $key => $list ) { ?>
-							<option <?php selected( get_option( 'argo_link_mailchimp_list' ), $list['id'], true ); ?> value="<?php echo $list['id']; ?>" /><?php echo $list['name']; ?></option>
+							<option <?php selected( get_option( 'lroundups_mailchimp_list' ), $list['id'], true ); ?> value="<?php echo $list['id']; ?>" /><?php echo $list['name']; ?></option>
 						<?php } ?>
 					</select>
 					<p><?php _e( 'Choose a MailChimp list that your Link Roundup email campaigns will be sent to.', 'link-roundups' ); ?></p>

@@ -65,9 +65,9 @@ class LRoundups {
 	 * @since 0.1
 	 */
 	public static function register_post_type() {
-		$singular_opt = get_option( 'link_roundups_custom_name_singular' );
-		$plural_opt = get_option( 'link_roundups_custom_name_plural' );
-		$slug_opt = get_option( 'argo_link_roundups_custom_url' );
+		$singular_opt = get_option( 'lroundups_custom_name_singular' );
+		$plural_opt = get_option( 'lroundups_custom_name_plural' );
+		$slug_opt = get_option( 'lroundups_custom_url' );
 
 		if( !empty( $singular_opt ) ) {
 			$singular = $singular_opt;
@@ -181,25 +181,25 @@ class LRoundups {
 
 	public static function register_mysettings() {
 		// register our settings
-		register_setting( 'argolinkroundups-settings-group', 'argo_link_roundups_custom_url' );
-		register_setting( 'argolinkroundups-settings-group', 'argo_link_roundups_custom_html' );
-		register_setting( 'argolinkroundups-settings-group', 'link_roundups_custom_name_singular' );
-		register_setting( 'argolinkroundups-settings-group', 'link_roundups_custom_name_plural' );
+		register_setting( 'lroundups-settings-group', 'lroundups_custom_url' );
+		register_setting( 'lroundups-settings-group', 'lroundups_custom_html' );
+		register_setting( 'lroundups-settings-group', 'lroundups_custom_name_singular' );
+		register_setting( 'lroundups-settings-group', 'lroundups_custom_name_plural' );
 		register_setting(
-			'argolinkroundups-settings-group', 'argo_link_roundups_use_mailchimp_integration',
-			array( __CLASS__, 'validate_mailchimp_integration' )
+			'lroundups-settings-group', 'lroundups_use_mailchimp_integration',
+			array( __CLASS__, 'validate_mailchimp_integration' ) 
 		);
-		register_setting( 'argolinkroundups-settings-group', 'argo_link_roundups_mailchimp_api_key' );
-		register_setting( 'argolinkroundups-settings-group', 'argo_link_mailchimp_template' );
-		register_setting( 'argolinkroundups-settings-group', 'argo_link_mailchimp_list' );
+		register_setting( 'lroundups-settings-group', 'lroundups_mailchimp_api_key' );
+		register_setting( 'lroundups-settings-group', 'lroundups_mailchimp_template' );
+		register_setting( 'lroundups-settings-group', 'lroundups_mailchimp_list' );
 	}
 
 	public static function validate_mailchimp_integration($input) {
 		// Can't have an empty MailChimp API Key if the integration functionality is enabled.
-		if ( empty( $_POST['argo_link_roundups_mailchimp_api_key'] ) && !empty( $input ) ) {
+		if ( empty( $_POST['lroundups_mailchimp_api_key'] ) && !empty( $input ) ) {
 			add_settings_error(
-				'argo_link_roundups_use_mailchimp_integration',
-				'argo_link_roundups_use_mailchimp_integration_error',
+				'lroundups_use_mailchimp_integration',
+				'lroundups_use_mailchimp_integration_error',
 				'Please enter a valid MailChimp API Key.',
 				'error'
 			);
@@ -210,22 +210,22 @@ class LRoundups {
 	}
 
 	public static function build_lroundups_options_page() {
-		$mc_api_key = get_option( 'argo_link_roundups_mailchimp_api_key' );
+		$mc_api_key = get_option( 'lroundups_mailchimp_api_key' );
 
 		/**
 		 * It's not possible to use this functionality if curl is not enabled in php.
 		 */
 		if ( ! function_exists('curl_init') ) {
 			add_settings_error(
-				'argo_link_roundups_use_mailchimp_integration',
+				'lroundups_use_mailchimp_integration',
 				'curl_not_enabled',
 				__('Curl is not enabled on your server. The MailChimp features will not work without curl. Please contact your server administrator to have curl enabled.', 'link-roundups'),
 				'error'
 			);
-			delete_option( 'argo_link_roundups_use_mailchimp_integration' );
+			delete_option( 'lroundups_use_mailchimp_integration' );
 
 		// only query MailChimp if it's possible to do so and if plugins are enabled
-		} else if ( get_option( 'argo_link_roundups_use_mailchimp_integration' ) && !empty( $mc_api_key ) ) {
+		} else if ( get_option( 'lroundups_use_mailchimp_integration' ) && !empty( $mc_api_key ) ) {
 			$opts = array( 'debug' => ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? WP_DEBUG : false );
 			$mcapi = new Mailchimp( $mc_api_key, $opts );
 
