@@ -87,7 +87,7 @@ Link Roundup posts have some default styling for your saved links to make sure y
 2. [Create link roundups](docs/link-roundups.md)
 3. [Send your roundup to MailChimp](docs/mailchimp.md)
 4. [Using Saved Link and Link Roundup widgets](docs/widgets.md)
-5. [__More →__](docs/index.md)
+5. [__More →__](docs/readme.md)
 
 
 ## Development
