@@ -191,7 +191,7 @@ function lroundups_create_mailchimp_campaign() {
 
 		$mc_web_id = $response['web_id'];
 		update_post_meta( $post->ID, 'mc_web_id', $mc_web_id );
-		$mc_cid = $response['cid'];
+		$mc_cid = $response['id'];
 		update_post_meta( $post->ID, 'mc_cid', $mc_cid );
 
 		print json_encode( array(
