@@ -70,7 +70,7 @@ $query_url .= ( isset( $_REQUEST['link_date'] ) ? '&link_date='.$_REQUEST['link_
     <div style='float:left'>
       <button class='button append-saved-links'><?php _e( 'Send to Editor', 'link-roundups' ); ?></button>
       <form action='' method='get' id='filter_links'>
-        <label for='link_date'><b><?php _e( 'Date range:', 'link-roundups' ); ?></b></label>
+        <label for='link_date'><b><?php _e( 'Date Range:', 'link-roundups' ); ?></b></label>
         <select name='link_date'>
           <option value='today' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'today' ) ? 'selected' : '' );?>><?php _e( 'Today',' link-roundups' ); ?></option>
           <option value='this_week' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'this_week' ) ? 'selected' : '' );?>><?php _e( 'This Week',' link-roundups' ); ?></option>
@@ -88,7 +88,7 @@ $query_url .= ( isset( $_REQUEST['link_date'] ) ? '&link_date='.$_REQUEST['link_
       </form>
     </div>
     <div class="page-navi" style='float:right'>
-      <?php echo $from_result . '-' . $to_result . __( 'of', 'link-roundups' ) . $total_post_count; ?>
+      <?php echo $from_result . ' - ' . $to_result . ' ' . __( 'of', 'link-roundups' ) . ' ' . $total_post_count; ?>
       <?php if(!($page <= 6)):?>
         <a class="button" href='lroundups_page=<?php echo $pagination_first;?><?php echo $query_url; ?>' title='First'>&laquo;</a>
       <?php endif; ?>
@@ -188,10 +188,10 @@ $query_url .= ( isset( $_REQUEST['link_date'] ) ? '&link_date='.$_REQUEST['link_
       <tr id="blank" class='alternate'>
         <th scope="row" id="cb" class="manage-column column-cb check-column" style=""></th>
         <td scope="row" id="title" class="manage-column column-title sortable desc" style="">
-          <span style="margin:.5em;padding-top:0.75em;display:block;"><?php _e('No links found. Select another date range.'); ?></span><br />
+          <span class="none-found"><?php _e('No links found.', 'link-roundups'); ?></span><small><?php _e('Try selecting a different Date Range above.', 'link-roundups'); ?></small><br />
         <td scope="row" id="author" class="manage-column column-author sortable desc" style=""><span>&nbsp;</span></td>
         <td scope="row" id="link-tags" class="manage-column column-link-tags" style="">
-        	&nbsp;
+        	 
         </td>
         <td scope="row" id="date" class="manage-column column-date sortable asc" style=""><span>&nbsp;</span></td>
       </tr>
@@ -205,7 +205,7 @@ $query_url .= ( isset( $_REQUEST['link_date'] ) ? '&link_date='.$_REQUEST['link_
     </div>
     <div class="page-navi" style='float:right'>
       <br />
-      <?php echo $from_result;?>-<?php echo $to_result;?> of <?php echo $total_post_count;?>
+      <?php echo $from_result . ' - ' . $to_result . ' ' . __( 'of', 'link-roundups' ) . ' ' . $total_post_count; ?>
       <?php if(!($page <= 6)):?>
         <a class="button" href='lroundups_page=<?php echo $pagination_first;?><?php echo $query_url; ?>' title='First'>&laquo;</a>
       <?php endif; ?>
