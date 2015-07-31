@@ -1,12 +1,31 @@
 # Link Roundups
 
-An aggregation plugion for WordPress to curate and tag Saved Links to be published in widget feeds, Link Roundup posts and MailChimp API integration to send Link Roundups as email newsletters with your MailChimp account.
+A WordPress plugin to make it easy to collect links from around the web, turn them into roundup posts and streamline the production of daily/weekly roundup newsletters using MailChimp. Built and maintained by [INN Nerds](http://nerds.inn.org).
 
-The Browser Bookmark can be saved to a web browser's bookmark bar and attempts to prefill the Saved Link fields like Title, URL and Source.
+**Contributors:** The INN Nerds (David Ryan, Ryan Nagle, Ben Keith, Will Haynes, Adam Schweigert) and Project Argo (Corey Daley, Chris Amico, Wesley Lindamood)
+**Tags:** link, newsletter, widget, mailchimp
+**Requires at least:** 4.1
+**Tested up to:** 4.2.3
+**Stable tag:** 0.3
+**License:** GPLv2 or later
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
-Link Roundups was forked from NPR Project Argo's Argo Links Plugin.
+## Overview
 
-Version: 0.3
+The Link Roundup plugin allows you to:
+
+- Curate links
+- Create link roundup posts
+- Optionally send the roundup posts to MailChimp to be distributed to your subscribers
+
+It also includes two widgets:
+
+- A widget to display your recently saved links
+- A widget to display your recent link roundup posts (with the ability to limit by category)
+
+The plugin includes a browser bookmark that you can drag to your browser's bookmark bar, allowing you to save links directly to your WordPress site. This bookmark attempts to pre-fill fields like link title, source, URL and featured image and also allows you to add a description to each link viewable when published on your site.
+
+In its previous life, Link Roundups was called Argo Links.
 
 ## Features
 
@@ -28,7 +47,7 @@ Build link roundup posts with unique, hand-crafted order using a panel that filt
 
 #### Link Roundups Widget
 
-Display most recent Link Roundup headline with a date.
+Display most recent Link Roundup headline(s) with a date. Optionally, limit the roundups displayed by category.
 
 #### Rename Link Roundups
 
@@ -50,3 +69,9 @@ Modify HTML output of a Saved Link within a Link Roundup and information about S
 ## Development
 
 For information on the development status of this plugin, check the [development milestones on github](https://github.com/INN/link-roundups/milestones).
+
+If you'd like to contribute to the project, please see our contributing guidelines.
+
+## Changelog
+
+#### Version 0.3 - Initial Public Release
