@@ -44,7 +44,7 @@ require_once(__DIR__ . '/inc/lroundups/browser-bookmark.php');
 /**
  * Add Backwards Compatability with argo-links
  */
-require_once(__DIR__ . '/inc/argo-links-compatability.php');
+require_once(__DIR__ . '/inc/compatibility.php');
 
 
 /**
