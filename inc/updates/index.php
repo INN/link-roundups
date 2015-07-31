@@ -49,9 +49,10 @@ function lroundups_version() {
 	return false;
 }
 
+
 /**
  * Checks if updates need to be run.
- *
+ * Get's lroundups version from db and compares with value in plugin file 
  * @since 0.3
  *
  * @return boolean if updates need to be run
@@ -66,7 +67,7 @@ function lroundups_need_updates() {
 		else
 			return false;
 	}
-
+	
 	// if 'lroundups_version' isn't present, the settings are old!
 	return true;
 
