@@ -86,7 +86,12 @@ function lroundups_update_admin_notice() {
 	if ( lroundups_need_updates() && !( isset( $_GET['page'] ) && $_GET['page'] == 'update-lroundups' ) ) {
 	?>
 	<div class="update-nag" style="display: block;">
-		<p><?php Link Roundups has been updated! Please <a href="<? echo admin_url( 'index.php?page=update-lroundups' ); ?>">visit the update page</a> to apply a required database update.</p>
+		<?php 
+			printf( 
+				'<p>' . __( 'Link Roundups has been updated! Please <a href="%s">visit the update page</a> to apply a required database update.', 'link-roundups' ) . '</p>',
+			    admin_url( 'index.php?page=update-lroundups' )
+			);
+		?>
 	</div>
 	<?php
 	}
