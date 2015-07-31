@@ -12,7 +12,7 @@ Seeking Link Roundups Post Type functions? They use lroundups instead of link-ro
 */
 
 // Plugin directory
-define('LROUNDUPS_PLUGIN_FILE', __FILE__);
+define( 'LROUNDUPS_PLUGIN_FILE', __FILE__ );
 
 /**
  * Saved Links
@@ -138,6 +138,15 @@ function link_roundups_enqueue_assets() {
 }
 add_action( 'admin_enqueue_scripts', 'link_roundups_enqueue_assets' );
 
+/**
+ * Load plugin textdomain.
+ *
+ * @since 0.3
+ */
+function link_roundups_load_textdomain() {
+  load_plugin_textdomain( 'link-roundups', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' ); 
+}
+add_action( 'plugins_loaded', 'link_roundups_load_textdomain' );
 
 /**
  * Fetches info from a page's <meta> tags and
