@@ -40,11 +40,13 @@ In its previous life, Link Roundups was called Argo Links.
 Link Roundups can be installed like any other WordPress plugin.
 
 1. Download the contents of this repository.
-2. Unzip and upload the folder to your WordPress installation in the wp-content/plugins directory
-3. Login to WordPress, click on Plugins in the left hand menu
-4. Select the Link Roundups plugin and click "activate"
-5. Review the plugin settings under the Settings > Link Roundups menu
+2. Unzip the package and rename the folder to "link-roundups" (the folder will be called "link-roundups-master" but this may cause problems if you don't rename it before uploading to your site)
+3. Upload the folder to your WordPress installation in the wp-content/plugins directory
+4. Login to WordPress, click on Plugins in the left hand menu
+5. Select the Link Roundups plugin and click "activate"
+6. Review the plugin settings under the Settings > Link Roundups menu
 
+Installation directly from the WordPress.org plugin directory coming soon!
 
 ## Features
 
@@ -84,7 +86,8 @@ Link Roundup posts have some default styling for your saved links to make sure y
 1. [Collect and tag links](docs/saving-links.md)
 2. [Create link roundups](docs/link-roundups.md)
 3. [Send your roundup to MailChimp](docs/mailchimp.md)
-4. [__More →__](docs/index.md)
+4. [Using Saved Link and Link Roundup widgets](docs/widgets.md))
+5. [__More →__](docs/index.md)
 
 
 ## Development
