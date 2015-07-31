@@ -22,33 +22,23 @@ In order to use the MailChimp features of Link Roundups, you'll need to sign up 
 
 Next: Creating a template in Mailchimp that your post will use.
 
-## Configuring a MailChimp Template
+## Creating a template in the MailChimp dashboard
 
-If you already have a saved template, great! Duplicate it, then pick up below where we insert the template tags into the template.
+You'll need a MailChimp template created and configured for use with Link Roundups.
 
-First, you'll have to create a template.
+There are many options for creating MailChimp templates, but as a simple way of getting started:
 
 1. Click on "Templates" in the MailChimp header.
 2. Pick a single-column or column-and-sidebar template.
-3. Edit the template to your heart's content.
+3. Edit the template being sure to use [Link Roundups template tags](#inserting-template-tags) in your template to place your content.
 4. Click "Save and Exit".
 5. Name your template, then save.
-
-Continue to the next step!
-
-# Creating a MailChimp Campaign
-
-Once you have [saved some links](saving-links.md) and [created a link roundup post](link-roundups.md), you can send the link roundup post to MailChimp as a draft campaign.
-
-In the Link Roundups editor, above the standard WordPress "Publish" button you'll find a button to Create a MailChimp Campaign.
-
-(something is missing here?)
 
 ### Inserting template tags
 
 This plugin's MailChimp features depend on the presence of specific tags in your MailChimp template.
 
-You'll have to edit your template to add them, so that they can be filled in with your content when you go to send an email.
+You'll have to edit your template to add them, so that they can be replaced with your content when you go to send a campaign.
 
 1. Click on "Templates" in the MailChimp header.
 2. Click "Edit" on the template you want to edit.
@@ -73,3 +63,11 @@ These template tags are not required, but you may wish to use them in your templ
 ## Choosing the template to use
 
 So now you have at least one template saved in MailChimp. Go back to the Link Roundups Options page in Dashboard &raquo; Link Roundups &raquo; Options, and choose your template.
+
+# Creating a MailChimp Campaign
+
+Once you have [saved some links](saving-links.md) and [created a link roundup post](link-roundups.md), you can send the link roundup post to MailChimp as a draft campaign.
+
+In the Link Roundups editor, above the standard WordPress "Publish" button you'll find a button to "Create a MailChimp Campaign."
+
+When you click "Create a MailChimp Campaign" you will be asked to confirm the action. The Link Roundups plugin will contact MailChimp to create the campaign and, upon success, present you with a link to finish editing the campaign in the MailChimp dashboard.
