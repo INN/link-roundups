@@ -3,12 +3,19 @@
 A WordPress plugin to make it easy to collect links from around the web, turn them into roundup posts and streamline the production of daily/weekly roundup newsletters using MailChimp. Built and maintained by [INN Nerds](http://nerds.inn.org).
 
 **Contributors:** The INN Nerds (David Ryan, Ryan Nagle, Ben Keith, Will Haynes, Adam Schweigert) and Project Argo (Corey Daley, Chris Amico, Wesley Lindamood)
+
 **Tags:** link, newsletter, widget, mailchimp
+
 **Requires at least:** 4.1
+
 **Tested up to:** 4.2.3
+
 **Stable tag:** 0.3
+
 **License:** GPLv2 or later
+
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
+
 
 ## Overview
 
@@ -27,37 +34,50 @@ The plugin includes a browser bookmark that you can drag to your browser's bookm
 
 In its previous life, Link Roundups was called Argo Links.
 
+
+## Installation
+
+Link Roundups can be installed like any other WordPress plugin.
+
+1. Download the contents of this repository.
+2. Unzip and upload the folder to your WordPress installation in the wp-content/plugins directory
+3. Login to WordPress, click on Plugins in the left hand menu
+4. Select the Link Roundups plugin and click "activate"
+5. Review the plugin settings under the Settings > Link Roundups menu
+
+
 ## Features
 
 #### Saved Links
 ![New Saved Link](https://raw.githubusercontent.com/INN/link-roundups/master/docs/img/new-saved-link.png)
 
-Aggregate links from articles around the web and their source. Organize Links using tags.
-
-###### TIP: Use the Browser Bookmark Tool to speed up the process of saving links to WordPress!
+Curate links from around the web and save them in WordPress using a handy browser bookmark. You can also add your own descriptions and organize saved links using tags.
 
 #### Saved Links Widget
 
-Display a feed of Saved Links, optionally filtered by tags.
+Display a feed of your recent Saved Links, optionally filtered by tags.
 
 #### Link Roundups
 ![Recent Saved Links Panel in Link Roundups Editor](https://raw.githubusercontent.com/INN/link-roundups/master/docs/img/link-roundups-passthru.png)
 
-Build link roundup posts with unique, hand-crafted order using a panel that filters your Recent Saved Links and is where you send them to the editor.
+Build Link Roundup posts using a panel that displays and filters your recent Saved Links. Select the links you want to include and send them to the editor to compose your roundup posts.
 
 #### Link Roundups Widget
 
-Display most recent Link Roundup headline(s) with a date. Optionally, limit the roundups displayed by category.
+Display most recent Link Roundup posts by date. Optionally, limit the roundup posts displayed by category.
+
+#### MailChimp API Integration
+
+Simplify your workflow by sending Link Roundup posts directly to MailChimp. Create a template for your roundups using a number of special template tags and then create a new MailChimp campaign directly from WordPress. You can even include sponsored links.
 
 #### Rename Link Roundups
 
-Rename the singular (Link Roundup), plural (Link Roundups) and slug for Link Roundups posts. 
+If you would prefer to call your roundup posts something else (daily digest, for example) you can rename the singular (default: Link Roundup) and plural form (default: Link Roundups) as well as the slug for posts in the Link Roundups custom post type. 
 
 #### Custom HTML for Displaying Links
 
-Modify HTML output of a Saved Link within a Link Roundup and information about Sponsored Link styling.
+Link Roundup posts have some default styling for your saved links to make sure your posts look great out of the box. If you'd prefer to modify the HTML output for Save Links or styling for sponsored links, you can do that from the plugin settings.
 
-#### Mailchimp API Integration
 
 ## [Documentation](docs/readme.md)
 
@@ -66,11 +86,13 @@ Modify HTML output of a Saved Link within a Link Roundup and information about S
 3. [Send your roundup to MailChimp](docs/mailchimp.md)
 4. [__More →__](docs/index.md)
 
+
 ## Development
 
 For information on the development status of this plugin, check the [development milestones on github](https://github.com/INN/link-roundups/milestones).
 
-If you'd like to contribute to the project, please see our contributing guidelines.
+If you'd like to contribute to the project, please see our [contributing guidelines](contributing.md).
+
 
 ## Changelog
 
