@@ -1,6 +1,6 @@
 <?php
 
-class LRoundupsTestFunctions extends WP_UnitTestCase {
+class LRoundupsClassTest extends WP_UnitTestCase {
 	function setUp() {
 		parent::setUp();
 

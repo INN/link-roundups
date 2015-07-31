@@ -222,7 +222,7 @@ class Save_To_Site_Button {
 
 		self::manageAjaxRequest();
 
-		}
+	}
 
 	/**
 	 * Returns the default title value for this link.
