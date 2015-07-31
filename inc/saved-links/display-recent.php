@@ -10,88 +10,85 @@
 */
 
 /** WordPress Admin Bootstrap */
-require_once('../../../../../wp-admin/admin.php');
+require_once( '../../../../../wp-admin/admin.php' );
 
 global $post;
 
 // The Query
 
 /*Build our query for what links to show!*/
-$posts_per_page = (isset($_REQUEST['posts_per_page']) ? $_REQUEST['posts_per_page'] : 15);
-$page = (isset($_REQUEST['lroundups_page']) ? $_REQUEST['lroundups_page']: 1);
-$default_date = array('year' => date('Y'), 'monthnum' => date('m'), 'day' => date('d'));
+$posts_per_page = ( isset( $_REQUEST['posts_per_page'] ) ? $_REQUEST['posts_per_page'] : 15 );
+$page = ( isset( $_REQUEST['lroundups_page'] ) ? $_REQUEST['lroundups_page'] : 1);
+$default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ), 'day' => date( 'd' ) );
 /*Sort out passed filter dates*/
-if (isset($_REQUEST['link_date'])) {
-  if ($_REQUEST['link_date'] == 'today') {
-    $default_date = array('year' => date('Y'), 'monthnum' => date('m'), 'day' => date('d'));
-  } elseif ($_REQUEST['link_date'] == 'this_week') {
-    $default_date = array('year' => date('Y'), 'w' => date('W'));
-  } elseif ($_REQUEST['link_date'] == 'this_month') {
-    $default_date = array('year' => date('Y'), 'monthnum' => date('m'));
-  } elseif ($_REQUEST['link_date'] == 'this_year') {
-    $default_date = array('year' => date('Y'));
-  } elseif($_REQUEST['link_date'] == 'show_all') {
+if ( isset($_REQUEST['link_date'] ) ) {
+  if ( $_REQUEST['link_date'] == 'today' ) {
+    $default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ), 'day' => date( 'd' ) );
+  } elseif ( $_REQUEST['link_date'] == 'this_week ') {
+    $default_date = array( 'year' => date( 'Y' ), 'w' => date( 'W' ));
+  } elseif ( $_REQUEST['link_date'] == 'this_month' ) {
+    $default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ) );
+  } elseif ( $_REQUEST['link_date'] == 'this_year') {
+    $default_date = array( 'year' => date( 'Y' ) );
+  } elseif( $_REQUEST['link_date'] == 'show_all' ) {
     $default_date = array();
   }
 }
 $args = array(
-	'post_type' => 'rounduplink',
-	'orderby' => (isset($_REQUEST['orderby']) ? $_REQUEST['orderby'] : 'date'),
-	'order' => (isset($_REQUEST['order']) ? $_REQUEST['order'] : 'desc'),
+	'post_type' 	=> 'rounduplink',
+	'orderby' 		=> ( isset($_REQUEST['orderby'] ) ? $_REQUEST['orderby'] : 'date' ),
+	'order' 		=> ( isset($_REQUEST['order'] ) ? $_REQUEST['order'] : 'desc' ),
 	'posts_per_page' => -1
 );
-$args = array_merge($args, $default_date);
-$the_posts_count_query = new WP_Query($args);
+$args = array_merge( $args, $default_date );
+$the_posts_count_query = new WP_Query( $args );
 $total_post_count = $the_posts_count_query->post_count;
 $the_posts_count_query = '';
-$the_query = new WP_Query(array_merge(
-	$args, array('posts_per_page' => $posts_per_page, 'paged' => $page)));
-
+$the_query = new WP_Query( array_merge( $args, array( 'posts_per_page' => $posts_per_page, 'paged' => $page ) ) );
 $from_result = 1;
 $to_result = $posts_per_page;
 if ($page != 1) {
-  $from_result = $posts_per_page * ($page - 1);
+  $from_result = $posts_per_page * ( $page - 1 );
   $to_result = $from_result + $posts_per_page - 1;
 }
-if ($to_result > $total_post_count) {
+if ($to_result > $total_post_count)
   $to_result = $total_post_count;
-}
 
 /*Build pagination links*/
 $pagination_first = 1;
 $pagination_previous = $page - 1;
 $pagination_next = $page + 1;
-$pagination_last = ceil($total_post_count / $posts_per_page);
+$pagination_last = ceil( $total_post_count / $posts_per_page );
 
 $query_url = '';
-$query_url .= (isset($_REQUEST['orderby']) ? '&orderby='.$_REQUEST['orderby']: '');
-$query_url .= (isset($_REQUEST['order']) ? '&order='.$_REQUEST['order']: '');
-$query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_date']: '');
+$query_url .= ( isset( $_REQUEST['orderby'] ) ? '&orderby='.$_REQUEST['orderby']: '' );
+$query_url .= ( isset( $_REQUEST['order'] ) ? '&order='.$_REQUEST['order']: '' );
+$query_url .= ( isset( $_REQUEST['link_date'] ) ? '&link_date='.$_REQUEST['link_date']: '' );
 ?>
 <div class='display-saved-links'>
   <div class='pagination'>
     <div style='float:left'>
-      <button class='button append-saved-links'>Send to Editor</button>
+      <button class='button append-saved-links'><?php _e( 'Send to Editor', 'link-roundups' ); ?></button>
       <form action='' method='get' id='filter_links'>
-        <label for='link_date'><b>Date range: </b></label>
+        <label for='link_date'><b><?php _e( 'Date range:', 'link-roundups' ); ?></b></label>
         <select name='link_date'>
-          <option value='today' <?php echo ((isset($_REQUEST['link_date']) && $_REQUEST['link_date'] == 'today' ) ? 'selected' : '');?>>Today</option>
-          <option value='this_week' <?php echo ((isset($_REQUEST['link_date']) && $_REQUEST['link_date'] == 'this_week' ) ? 'selected' : '');?>>This Week</option>
-          <option value='this_month' <?php echo ((isset($_REQUEST['link_date']) && $_REQUEST['link_date'] == 'this_month' ) ? 'selected' : '');?>>This Month</option>
-          <option value='this_year' <?php echo ((isset($_REQUEST['link_date']) && $_REQUEST['link_date'] == 'this_year' ) ? 'selected' : '');?>>This Year</option>
-          <option value='show_all' <?php echo ((isset($_REQUEST['link_date']) && $_REQUEST['link_date'] == 'show_all' ) ? 'selected' : '');?>>Show All</option>
+          <option value='today' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'today' ) ? 'selected' : '' );?>><?php _e( 'Today',' link-roundups' ); ?></option>
+          <option value='this_week' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'this_week' ) ? 'selected' : '' );?>><?php _e( 'This Week',' link-roundups' ); ?></option>
+          <option value='this_month' <?php echo ( ( isset( $_REQUEST['link_date']) && $_REQUEST['link_date'] == 'this_month' ) ? 'selected' : '' );?>><?php _e( 'This Month',' link-roundups' ); ?></option>
+          <option value='this_year' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'this_year' ) ? 'selected' : '' );?>><?php _e( 'This Year',' link-roundups' ); ?></option>
+          <option value='show_all' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'show_all' ) ? 'selected' : '' );?>><?php _e( 'Show All',' link-roundups' ); ?></option>
         </select>
-        <?php if(isset($_REQUEST['orderby'])):?>
+        <?php if( isset( $_REQUEST['orderby'] ) ) : ?>
           <input type='hidden' name='orderby' value='<?php echo $_REQUEST['orderby']; ?>'/>
         <?php endif;?>
-        <?php if(isset($_REQUEST['order'])):?>
+        <?php if( isset($_REQUEST['order'] ) ) : ?>
           <input type='hidden' name='order' value='<?php echo $_REQUEST['order']; ?>'/>
         <?php endif;?>
         <input class='button' type='submit' value='Filter'/>
       </form>
     </div>
     <div class="page-navi" style='float:right'>
-      <?php echo $from_result;?>-<?php echo $to_result;?> of <?php echo $total_post_count;?>
+      <?php echo $from_result . '-' . $to_result . __( 'of', 'link-roundups' ) . $total_post_count; ?>
       <?php if(!($page <= 6)):?>
         <a class="button" href='lroundups_page=<?php echo $pagination_first;?><?php echo $query_url; ?>' title='First'>&laquo;</a>
       <?php endif; ?>
@@ -101,14 +98,14 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
       <?php
         $start = 1;
         $count = 0;
-        if ($page == 1) {
-          if ($pagination_last >= 11) {
+        if ( $page == 1 ) {
+          if ( $pagination_last >= 11 ) {
             $count = $start + 10;
           } else {
             $count = $pagination_last;
           }
-        } else if ($page == $pagination_last) {
-          if ($pagination_last <= 11) {
+        } else if ( $page == $pagination_last ) {
+          if ( $pagination_last <= 11 ) {
             $start = 1;
             $count = $pagination_last;
           } else {
@@ -116,13 +113,13 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
             $count = $start + 11;
           }
         } else {
-          if($pagination_last <= 11) {
+          if( $pagination_last <= 11 ) {
             $start = 1;
             $count = $pagination_last;
-          } else if (($page + 5) > $pagination_last) {
+          } else if ( ( $page + 5 ) > $pagination_last ) {
             $start = $pagination_last - 10;
             $count = $start + 10;
-          } else if (($page - 5) <= 0) {
+          } else if ( ( $page - 5 ) <= 0 ) {
             $start = 1;
             $count = 11;
           } else {
@@ -130,15 +127,15 @@ $query_url .= (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_dat
             $count = $start + 10;
           }
         }
-        while ($start <= $count) {
-          echo "<a href='lroundups_page=$start$query_url' class='button ".($start == $page ? 'current' : '')."'>$start</a> &nbsp;";
+        while ( $start <= $count ) {
+          echo "<a href='lroundups_page=$start$query_url' class='button " . ( $start == $page ? 'current' : '' ) . "'>$start</a> &nbsp;";
           $start++;
         }
       ?>
-      <?php if(!($page == $pagination_last)):?>
+      <?php if ( !( $page == $pagination_last ) ) : ?>
         <a class="button" href='lroundups_page=<?php echo $pagination_next;?><?php echo $query_url; ?>' title='Next'>&raquo;</a>
       <?php endif; ?>
-      <?php if(!($page >= ($pagination_last - 5))):?>
+      <?php if ( !( $page >= ( $pagination_last - 5 ) ) ) : ?>
         <a class="button" href='lroundups_page=<?php echo $pagination_last;?><?php echo $query_url; ?>' title='Last'>&raquo;</a>
       <?php endif;?>
     </div>
