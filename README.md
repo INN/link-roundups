@@ -6,7 +6,7 @@ A WordPress plugin to make it easy to collect links from around the web, turn th
 **Tags:** link, newsletter, widget, mailchimp
 **Requires at least:** 4.1
 **Tested up to:** 4.2.3
-**Stable tag:** 0.3
+**Stable tag:** 0.*
 **License:** GPLv2 or later
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
