@@ -160,12 +160,10 @@ function lroundups_scrape_url($url) {
 
 		$response['success'] = true;
 		$response['meta'] = $data;
-
 	} catch (Exception $e) {
-
 		$response['success'] = false;
 		$response['message'] = 'Something went wrong.';
-
+		$response['meta'] = false;
 	}
 
 	return $response;
