@@ -176,7 +176,7 @@ class SavedLinks {
 		<p><label><?php _e( 'Import featured image:', 'link-roundups' ); ?></label><br />
 		<img src="<?php echo $link_img_src ?>" width="300" />
 		<input type='hidden' name='argo_link_img_url' value='<?php echo $link_img_src; ?>'/><br>
-		<input type="checkbox" value="1" name="argo_link_img_url_import" id="argo_link_img_url_import"><label for="argo_link_img_url_import"><?php _e 'Import as feature image', 'link-roundups' ); ?></label>
+		<input type="checkbox" value="1" name="argo_link_img_url_import" id="argo_link_img_url_import"><label for="argo_link_img_url_import"><?php _e( 'Import as feature image', 'link-roundups' ); ?></label>
 		</p>
 	<?php }
 	}
