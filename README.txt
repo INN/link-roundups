@@ -2,7 +2,7 @@
 Contributors: inn_nerds
 Donate link: http://bit.ly/1N4nSJJ
 Tags: newsletters, mailchimp, links, curation, aggregation
-Requires at least: 3.0.0
+Requires at least: 4.1
 Tested up to: 4.2.3
 Stable tag: 0.3.0
 License: GPLv2
