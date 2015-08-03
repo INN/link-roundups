@@ -8,6 +8,9 @@ Get the brief introduction to plugin features in [the main Readme.md file](https
 
 ## Table of Contents
 
-1. [Collect and tag links](save-links.md)
-2. [Create link roundups](link-roundups.md)
-3. [Send your roundup to MailChimp](mailchimp.md)
+1. [Installing in WordPress](installation.md)
+2. [Saved Links](saved-links.md)
+3. [Link Roundup Posts](link-roundups.md)
+4. [MailChimp Integration](mailchimp.md)
+5. [WordPress Widgets](widgets.md)
+6. [Troubleshooting](troubleshooting.md)

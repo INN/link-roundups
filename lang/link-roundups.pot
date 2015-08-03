@@ -1,0 +1,525 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: link-roundups 0.3.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-31 14:41-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: inc/lroundups/class-lroundups.php:222
+msgid ""
+"Curl is not enabled on your server. The MailChimp features will not work "
+"without curl. Please contact your server administrator to have curl enabled."
+msgstr ""
+
+#: inc/lroundups/widget.php:13
+msgid "Link Roundups Widget"
+msgstr ""
+
+#: inc/lroundups/widget.php:52
+msgid ""
+"<p class=\"error\"><strong>You don't have any recent links or the Link "
+"Roundups plugin is not active.</strong></p>"
+msgstr ""
+
+#: inc/lroundups/widget.php:84 inc/saved-links/widget.php:87
+msgid "Title:"
+msgstr ""
+
+#: inc/lroundups/widget.php:89 inc/saved-links/widget.php:92
+msgid "Number of posts to show:"
+msgstr ""
+
+#: inc/lroundups/widget.php:94
+msgid "Limit to category: "
+msgstr ""
+
+#: inc/lroundups/widget.php:95
+msgid "None (all categories)"
+msgstr ""
+
+#: inc/lroundups/widget.php:98
+msgid "More Link"
+msgstr ""
+
+#: inc/lroundups/widget.php:98 inc/saved-links/widget.php:103
+msgid ""
+"If you would like to add a more link at the bottom of the widget, add the "
+"link text and url here."
+msgstr ""
+
+#: inc/lroundups/widget.php:100 inc/saved-links/widget.php:105
+msgid "Link text:"
+msgstr ""
+
+#: inc/lroundups/widget.php:105 inc/saved-links/class-saved-links.php:166
+#: inc/saved-links/widget.php:110
+msgid "URL:"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:86
+#: inc/saved-links/class-saved-links.php:98
+msgid "Saved Links"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:87
+msgid "Saved Link"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:88
+#: inc/saved-links/class-saved-links.php:89
+msgid "New Saved Link"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:90
+msgid "Edit"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:91
+msgid "Edit Saved Link"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:92
+msgid "View"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:93
+msgid "View Saved Link"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:94
+msgid "Search Saved Links"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:95
+msgid "No Saved Links found"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:96
+msgid "No Saved Links found in Trash"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:119
+msgid "Saved Link Tags"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:120
+msgid "Saved Link Tag"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:132
+msgid "Link Information"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:168
+msgid "Description:"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:170
+msgid "Source:"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:174
+msgid "Import featured image:"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:177
+msgid "Import as feature image"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:249
+msgid "Link Title"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:250
+msgid "Author"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:251
+msgid "URL"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:252
+msgid "Description"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:253
+msgid "Tags"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:254
+msgid "Date"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:303
+#: inc/saved-links/class-saved-links.php:304
+msgid "Add Browser Bookmark"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:324
+msgid "Add Save to Site Bookmark to Your Web Browser"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:329
+#: inc/saved-links/class-saved-links.php:340
+msgid "Save to Site"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:330
+msgid ""
+"Save to Site is a tool that lets you send Saved Links to your WordPress "
+"Dashboard while browsing the web."
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:331
+msgid ""
+"Click the Save to Site bookmark and a new WordPress window will popup, "
+"attempting to prefill Title, URL and Source information."
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:335
+msgid "Install Save to Site"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:336
+msgid "Browser Bookmarklet"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:337
+msgid ""
+"Drag the Save to Site bookmarklet below to your web browser's Bookmarks "
+"Toolbar.<br /><em>If you can't drag, click the Clipboard.</em>"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:343
+msgid "Copy Save to Site bookmarklet code"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:349
+msgid ""
+"If you can&#8217;t drag the bookmarklet to your bookmarks, copy the "
+"following code and create a new bookmark. Paste the code into the new "
+"bookmark&#8217;s URL field."
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:356
+msgid "Direct link (best for mobile and tablets)"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:357
+msgid ""
+"Follow the link to open Save to Site. Then add it to your device&#8217;s "
+"bookmarks or home screen."
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:360
+msgid "Open Save to Site"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:547
+msgid "SPONSORED: "
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:636 inc/saved-links/widget.php:46
+msgid "Source: "
+msgstr ""
+
+#: inc/saved-links/display-recent.php:71
+msgid "Send to Editor"
+msgstr ""
+
+#: inc/saved-links/display-recent.php:73
+msgid "Date range:"
+msgstr ""
+
+#: inc/saved-links/display-recent.php:75
+msgid "Today"
+msgstr ""
+
+#: inc/saved-links/display-recent.php:76
+msgid "This Week"
+msgstr ""
+
+#: inc/saved-links/display-recent.php:77
+msgid "This Month"
+msgstr ""
+
+#: inc/saved-links/display-recent.php:78
+msgid "This Year"
+msgstr ""
+
+#: inc/saved-links/display-recent.php:79
+msgid "Show All"
+msgstr ""
+
+#: inc/saved-links/display-recent.php:91
+msgid "of"
+msgstr ""
+
+#: inc/saved-links/display-recent.php:191
+msgid "No links found. Select another date range."
+msgstr ""
+
+#: inc/saved-links/widget.php:10
+msgid "Show your most recently saved links in a sidebar widget"
+msgstr ""
+
+#: inc/saved-links/widget.php:12
+msgid "Saved Links Widget"
+msgstr ""
+
+#: inc/saved-links/widget.php:56
+msgid ""
+"<p class=\"error\"><strong>You don't have any recent links or the argo links "
+"plugin is not active.</strong></p>"
+msgstr ""
+
+#: inc/saved-links/widget.php:77
+msgid "Recent Links"
+msgstr ""
+
+#: inc/saved-links/widget.php:98
+msgid "Excerpt Length (# of Sentences):"
+msgstr ""
+
+#: inc/updates/index.php:91
+#, php-format
+msgid ""
+"Link Roundups has been updated! Please <a href=\"%s\">visit the update page</"
+"a> to apply a required database update."
+msgstr ""
+
+#: inc/updates/index.php:108 inc/updates/index.php:109
+msgid "Update Link Roundups"
+msgstr ""
+
+#: inc/updates/index.php:164
+msgid "Link Roundups Database Update"
+msgstr ""
+
+#: inc/updates/index.php:167
+msgid "Link Roundups plugin has been updated to version"
+msgstr ""
+
+#: inc/updates/index.php:168
+msgid ""
+"This update will migrate <strong>Argo Links</strong> and <strong>Argo Link "
+"Roundups</strong> to the new <strong>Saved Links</strong> and <strong>Link "
+"Roundups</strong> formats respectively."
+msgstr ""
+
+#: inc/updates/index.php:169
+msgid ""
+"This process will restore previous Argo Links and Argo Link Roundups posts "
+"to your site."
+msgstr ""
+
+#: inc/updates/index.php:170
+msgid "Please run the following update function."
+msgstr ""
+
+#: inc/updates/index.php:172
+msgid "Update the database!"
+msgstr ""
+
+#: inc/updates/index.php:204
+msgid "An error occurred."
+msgstr ""
+
+#: inc/updates/index.php:212
+msgid "Finished. No update was required."
+msgstr ""
+
+#: inc/updates/index.php:220
+msgid "Thank you -- the update is complete."
+msgstr ""
+
+#: inc/updates/index.php:228
+msgid "There was a problem applying the update. Please try again."
+msgstr ""
+
+#: node_modules/grunt-pot/test/fixtures/some-file.php:3
+msgid "I'm a translatable string."
+msgstr ""
+
+#: node_modules/grunt-pot/test/fixtures/some-other-file.php:4
+msgid "Me too"
+msgstr ""
+
+#: node_modules/grunt-pot/test/fixtures/some-other-file.php:7
+#, php-format
+msgid "I have %d apple"
+msgid_plural "I have %d apples"
+msgstr[0] ""
+msgstr[1] ""
+
+#. / TRANSLATORS: This should be translated as a shorthand for YEAR-MONTH-DAY using 4, 2 and 2 digits.
+#: node_modules/grunt-pot/test/fixtures/some-other-file.php:16
+msgid "yyyy-mm-dd"
+msgstr ""
+
+#: templates/options.php:7
+msgid "Link Roundups Options"
+msgstr ""
+
+#: templates/options.php:11
+msgid "Documentation"
+msgstr ""
+
+#: templates/options.php:15
+#, php-format
+msgid ""
+"Read about these settings and using this plugin in <a href=\"%s\">the "
+"documentation on GitHub</a>."
+msgstr ""
+
+#: templates/options.php:20 templates/options.php:26
+msgid "Rename Link Roundups"
+msgstr ""
+
+#: templates/options.php:20 templates/options.php:65
+msgid "Custom HTML for Displaying Links"
+msgstr ""
+
+#: templates/options.php:20
+msgid "Mailchimp Integration"
+msgstr ""
+
+#: templates/options.php:27
+msgid "You might call it a Daily Digest. Recap. Team Newsletter. Etc."
+msgstr ""
+
+#: templates/options.php:30
+#, php-format
+msgid ""
+"Modify the Post Type Name displayed in the WordPress Dashboard Menus and "
+"Pages and the Post Type Slug (<a href=\"%s\">learn more</a>) used in the "
+"public URL for each Link Roundup post."
+msgstr ""
+
+#: templates/options.php:34
+msgid "Custom Name"
+msgstr ""
+
+#: templates/options.php:35
+msgid "Singular (Default: Link Roundup)"
+msgstr ""
+
+#: templates/options.php:37
+msgid "Plural (Default: Link Roundups)"
+msgstr ""
+
+#: templates/options.php:40
+msgid "Custom URL Slug"
+msgstr ""
+
+#: templates/options.php:41
+msgid "Current URL Slug for Link Roundups:"
+msgstr ""
+
+#: templates/options.php:56
+msgid ""
+"Must be lowercase with no spaces or special characters -- dashes allowed."
+msgstr ""
+
+#: templates/options.php:59
+#, php-format
+msgid ""
+"<strong>IMPORTANT</strong>: Whenever you define a new Custom URL Slug, you "
+"<strong>must</strong> also update your <a href=\"%s\"><strong>Permalink "
+"Settings</strong></a>."
+msgstr ""
+
+#: templates/options.php:66
+msgid "Modify the display and style of Saved Links."
+msgstr ""
+
+#: templates/options.php:68
+msgid ""
+"Single quotes are REQUIRED in Custom HTML. Double quotes will be "
+"automatically converted to single quotes before use."
+msgstr ""
+
+#: templates/options.php:69
+msgid ""
+"The following tags will be replaced with the URL, Title, Description, and "
+"Source automatically when the Saved Link is pushed into the Post Editor."
+msgstr ""
+
+#: templates/options.php:75
+msgid "Intended for the paragraph wrapper"
+msgstr ""
+
+#: templates/options.php:77
+msgid "Default HTML"
+msgstr ""
+
+#: templates/options.php:79
+msgid "Sponsored Link Styling"
+msgstr ""
+
+#: templates/options.php:82
+#, php-format
+msgid "%s is the proper selector to use in your CSS."
+msgstr ""
+
+#: templates/options.php:86
+msgid "General Styling of Saved Links Output"
+msgstr ""
+
+#: templates/options.php:87
+msgid ""
+"Add custom styles to your theme's CSS based on selectors and structure above."
+msgstr ""
+
+#: templates/options.php:91
+msgid "MailChimp Integration"
+msgstr ""
+
+#: templates/options.php:94
+msgid "Enable MailChimp Integration?"
+msgstr ""
+
+#: templates/options.php:101
+msgid "MailChimp API Key"
+msgstr ""
+
+#: templates/options.php:107
+msgid "Find your MailChimp API Key"
+msgstr ""
+
+#: templates/options.php:109
+msgid "MailChimp Templates"
+msgstr ""
+
+#: templates/options.php:116
+msgid ""
+"Choose a MailChimp template to use as the basis for Link Roundup email "
+"campaigns."
+msgstr ""
+
+#: templates/options.php:119
+msgid "MailChimp Lists"
+msgstr ""
+
+#: templates/options.php:126
+msgid ""
+"Choose a MailChimp list that your Link Roundup email campaigns will be sent "
+"to."
+msgstr ""
+
+#: templates/options.php:132
+msgid "Save Changes"
+msgstr ""

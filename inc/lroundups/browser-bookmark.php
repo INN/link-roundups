@@ -4,27 +4,27 @@
  * A browser bookmark tool for Saved Links
  *
  * The Save To Site Button contains special javascript adapted from Press This!
- * 
+ *
  * @since 0.3
  * @see https://wordpress.org/plugins/press-this-reloaded/
  */
 
 /**
  * This file used to be loaded directly from the Save To Site Button bookmarklet.
- * 
+ *
  * If WordPress is not loaded, then direct them to the right edit screen
  * and pass along the previous query vars.
- * 
+ *
  * @since 0.3
  */
 if ( !defined('ABSPATH') ) {
 
 	// Load WordPress
-	define('WP_USE_THEMES', false);
-	require_once('../../../wp-admin/admin.php');
+	define( 'WP_USE_THEMES', false );
+	require_once( '../../../wp-admin/admin.php' );
 
 	// Generate URL redirect
-	$URL = parse_url( $_SERVER["REQUEST_URI"] );
+	$URL = parse_url( $_SERVER['REQUEST_URI'] );
 	$newURL = admin_url( 'post-new.php?' . $URL['query'] );
 
 	// Header redirect
@@ -38,11 +38,11 @@ class Save_To_Site_Button {
 	private static $url;
 	private static $source;
 	private static $imgUrl;
-	const plugin_domain = 'press-this-reloaded';
+	const plugin_domain = 'link-roundups';
 
 	/**
 	 * Initialize the class.
-	 * 
+	 *
 	 * @since 0.3
 	 */
 	function init() {
@@ -50,12 +50,10 @@ class Save_To_Site_Button {
 		add_filter( 'redirect_post_location', array( __CLASS__, 'redirect' ) );
 
 		if ( isset( $_GET[ 'u' ] ) ) {
-			
 			add_action( 'load-post-new.php', array( __CLASS__, 'load' ) );
 			add_action( 'load-post.php', array( __CLASS__, 'load' ) );
-
 		}
-		elseif ( isset($_REQUEST[ 'ajax' ]) ) { 
+		elseif ( isset($_REQUEST[ 'ajax' ]) ) {
 			// this is for video only
 			// from the original plugin, currently not really used.
 			add_action( 'load-post-new.php', array( __CLASS__, 'manageAjaxRequest' ) );
@@ -64,11 +62,11 @@ class Save_To_Site_Button {
 	}
 
 	/**
-	 * Currently not used. Left as an example from original 
+	 * Currently not used. Left as an example from original
 	 * plugin file of how to handle an ajax request from the page.
-	 * 
+	 *
 	 * This could be used to ajax-ify the fetching of URL information.
-	 * 
+	 *
 	 * @since 0.3
 	 */
 	public static function manageAjaxRequest() {
@@ -90,7 +88,7 @@ class Save_To_Site_Button {
 
 		if ( !empty( $_REQUEST[ 'ajax' ] ) ) {
 			switch ( $_REQUEST[ 'ajax' ] ) {
-				case 'urlInfo':	
+				case 'urlInfo':
 					// return urlInfo
 					break;
 				default:
@@ -102,11 +100,11 @@ class Save_To_Site_Button {
 
 	/**
 	 * Returns the link for the bookmarklet button.
-	 * 
+	 *
 	 * @since 0.3
-	 * 
+	 *
 	 * @return String. Javascript bookmarklet code.
-	 */ 
+	 */
 	static function shortcut_link() {
 
 		// This is the default 'Press This!' button link.
@@ -115,11 +113,11 @@ class Save_To_Site_Button {
 		$post_type = 'rounduplink';
 
 		// We alter it for our post type.
-		$shortcut_link = str_replace('press-this.php', 'post-new.php', $shortcut_link);
-		$shortcut_link = str_replace('width=720', 'width=840', $shortcut_link);
-		$shortcut_link = str_replace('post-new.php', "post-new.php?post_type=$post_type", $shortcut_link);
-		$shortcut_link = str_replace('?u=', '&u=', $shortcut_link);
-		$shortcut_link = str_replace('?v=', '&v=', $shortcut_link);
+		$shortcut_link = str_replace( 'press-this.php', 'post-new.php', $shortcut_link );
+		$shortcut_link = str_replace( 'width=720', 'width=840', $shortcut_link );
+		$shortcut_link = str_replace( 'post-new.php', 'post-new.php?post_type=$post_type', $shortcut_link );
+		$shortcut_link = str_replace( '?u=', '&u=', $shortcut_link );
+		$shortcut_link = str_replace( '?v=', '&v=', $shortcut_link );
 
 		return $shortcut_link;
 
@@ -129,23 +127,21 @@ class Save_To_Site_Button {
 	 * Passes ?u= query var through login process
 	 * so we retain all the good meta we gathered
 	 * @since 0.3
-	 * 
+	 *
 	 * @return url with query vars still attached.
 	 */
 	function redirect( $location ) {
-
 		$referrer = wp_get_referer();
 
 		if ( false !== strpos( $referrer, '?u=' ) || false !== strpos( $referrer, '&u=' ) )
 			$location = add_query_arg( 'u', 1, $location );
 
 		return $location;
-	
 	}
 
 	/**
 	 * Sets up default values for new Saved Link.
-	 * 
+	 *
 	 * @since 0.3
 	 */
 	function load() {
@@ -154,12 +150,11 @@ class Save_To_Site_Button {
 		self::$url = isset( $_GET[ 'u' ] ) ? esc_url( $_GET[ 'u' ] ) : '';
 		self::$url = wp_kses( urldecode( self::$url ), null );
 
-		// Get meta data from url.
-		// @see 
+		// Get meta data from url
 		$meta = lroundups_scrape_url(self::$url); // func. contains WPSimpleScraper
 		$meta = $meta['meta'];
 
-		// Default title.
+		// Default title
 		self::$title = '';
 		if( !empty($meta['ogp']['title']) ) {
 			self::$title = $meta['ogp']['title'];
@@ -173,15 +168,15 @@ class Save_To_Site_Button {
 			$selection = trim( htmlspecialchars( html_entity_decode( $selection, ENT_QUOTES ) ) );
 		}
 
-		// Default description.
+		// Default description
 		self::$description = '';
 		if ( !empty( $selection ) ) {
 			self::$description = $selection;
 		} else if( !empty($meta['ogp']['description']) ) {
 			self::$description = $meta['ogp']['description'];
-		}  
+		}
 
-		// Default source.
+		// Default source
 		self::$source = '';
 		if( !empty($meta['ogp']['site_name']) ) {
 			self::$source = $meta['ogp']['site_name'];
@@ -189,12 +184,12 @@ class Save_To_Site_Button {
 			$url = parse_url(self::$url);
 			self::$source = $url['host'];
 		}
-		
+
 		self::$imgUrl = '';
 		if( !empty($meta['ogp']['image']) ) {
 			self::$imgUrl = $meta['ogp']['image'];
 		}
-		
+
 		/**
          * Default Link Roundups Values for Custom Meta
          *
@@ -222,13 +217,13 @@ class Save_To_Site_Button {
 
 		self::manageAjaxRequest();
 
-		}
+	}
 
 	/**
 	 * Returns the default title value for this link.
-	 * 
+	 *
 	 * @since 0.3
-	 * 
+	 *
 	 * @return String. Default title.
 	 */
 	public static function default_title( $title = null ) {
@@ -237,9 +232,9 @@ class Save_To_Site_Button {
 
 	/**
 	 * Returns the default description value for this link.
-	 * 
+	 *
 	 * @since 0.3
-	 * 
+	 *
 	 * @return String. Default description.
 	 */
 	public static function default_description( $description = null ) {
@@ -248,9 +243,9 @@ class Save_To_Site_Button {
 
 	/**
 	 * Returns the default link value for this link.
-	 * 
+	 *
 	 * @since 0.3
-	 * 
+	 *
 	 * @return String. Default link.
 	 */
 	public static function default_link( $link = null ) {
@@ -259,9 +254,9 @@ class Save_To_Site_Button {
 
 	/**
 	 * Returns the default source value for this link.
-	 * 
+	 *
 	 * @since 0.3
-	 * 
+	 *
 	 * @return String. Default source.
 	 */
 	public static function default_source( $source = null ) {
@@ -270,10 +265,10 @@ class Save_To_Site_Button {
 
 	/**
 	 * Returns the default image src value for this link.
-	 * 
+	 *
 	 * @since 0.3
-	 * 
-	 * @return String. Default image src. 
+	 *
+	 * @return String. Default image src.
 	 */
 	public static function default_imgUrl( $imgUrl = null ) {
 		return self::$imgUrl;

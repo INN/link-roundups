@@ -142,7 +142,7 @@ class WPSimpleScraper {
 
 		$this->content = wp_remote_retrieve_body($response);
 		$this->httpCode = wp_remote_retrieve_response_code($response);
-		$this->contentType = $response['headers']['content_type'];
+		$this->contentType = $response['headers']['content-type'];
 
 		if (((int) $this->httpCode) >= 400) {
 			throw new Exception('STATUS CODE: ' . $this->httpCode);
