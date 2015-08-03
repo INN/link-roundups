@@ -10,12 +10,12 @@ function lroundups_create_mailchimp_campaign_button() {
 	if ( $post->post_type !== 'roundup' )
 		return;
 
-	if ( false == get_option( 'argo_link_roundups_use_mailchimp_integration' ) || false == get_option( 'argo_link_roundups_mailchimp_api_key' ) )
+	if ( false == get_option( 'lroundups_use_mailchimp_integration' ) || false == get_option( 'lroundups_mailchimp_api_key' ) )
 		return;
 
 	$mc_cid = get_post_meta( $post->ID, 'mc_cid', true );
 	if ( !empty( $mc_cid ) ) {
-		$mc_api_key = get_option( 'argo_link_roundups_mailchimp_api_key' );
+		$mc_api_key = get_option( 'lroundups_mailchimp_api_key' );
 		$opts = array( 'debug' => ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? WP_DEBUG : false);
 		$mcapi = new Mailchimp( $mc_api_key, $opts );
 		try {
@@ -107,7 +107,7 @@ add_action( 'admin_footer', 'lroundups_add_modal_template' );
  * @since 0.2
  */
 function lroundups_get_mc_api_endpoint() {
-	$mc_api_key = get_option( 'argo_link_roundups_mailchimp_api_key' );
+	$mc_api_key = get_option( 'lroundups_mailchimp_api_key' );
 	$mc_api_key_parts = explode( '-', $mc_api_key );
 	return $mc_api_key_parts[1];
 }
@@ -130,12 +130,12 @@ function lroundups_create_mailchimp_campaign() {
 		wp_die();
 	}
 
-	$mc_api_key = get_option( 'argo_link_roundups_mailchimp_api_key' );
+	$mc_api_key = get_option( 'lroundups_mailchimp_api_key' );
 	if ( !empty( $mc_api_key ) ) {
 		$opts = array( 'debug' => ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? WP_DEBUG : false );
 		$mcapi = new Mailchimp( $mc_api_key, $opts );
 
-		$template_id = get_option( 'argo_link_mailchimp_template' );
+		$template_id = get_option( 'lroundups_mailchimp_template' );
 		if ( !empty( $template_id ) )
 			$template_info = $mcapi->templates->info( $template_id );
 		else {
@@ -158,12 +158,12 @@ function lroundups_create_mailchimp_campaign() {
 		 * Arguments for MailChimp
 		 */
 		$list_results = $mcapi->lists->getList( array(
-			'list_id' => get_option( 'argo_link_mailchimp_list' )
+			'list_id' => get_option( 'lroundups_mailchimp_list' )
 		));
 		$list = $list_results['data'][0];
 
 		$campaign_options = array(
-			'list_id' 		=> get_option( 'argo_link_mailchimp_list' ), // the list to sent this campaign to, get lists using lists/list()
+			'list_id' 		=> get_option( 'lroundups_mailchimp_list' ), // the list to sent this campaign to, get lists using lists/list()
 			'subject' 		=> $post->post_title, // post title
 			'from_email' 	=> $list['default_from_email'], // the From: email address for your campaign message
 			'from_name' 	=> $list['default_from_name'], // the From: name for your campaign message (not an email address)

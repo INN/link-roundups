@@ -571,8 +571,8 @@ class SavedLinks {
 	  <?php
 		$default_html = ob_get_clean();
 
-		if ( get_option( 'argo_link_roundups_custom_html' ) != '' ) {
-			$lroundups_html = get_option( 'argo_link_roundups_custom_html' );
+		if ( get_option( 'lroundups_custom_html' ) != '' ) {
+			$lroundups_html = get_option( 'lroundups_custom_html' );
 			$lroundups_html = preg_replace( "/\"/", "'", $lroundups_html );
 		} else {
 			$lroundups_html = $default_html;

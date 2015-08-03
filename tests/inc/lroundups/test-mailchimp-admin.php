@@ -12,10 +12,10 @@ class MailChimpAdminTests extends WP_UnitTestCase {
 		$post = get_post($this->savedlinks_post);
 		setup_postdata($post);
 
-		update_option('argo_link_roundups_use_mailchimp_integration', 'on');
+		update_option('lroundups_use_mailchimp_integration', 'on');
 
 		$this->mc_api_endpoint = 'us10';
-		update_option('argo_link_roundups_mailchimp_api_key', 'TKTK-' . $this->mc_api_endpoint);
+		update_option('lroundups_mailchimp_api_key', 'TKTK-' . $this->mc_api_endpoint);
 
 		// Mimic the post edit page
 		set_current_screen('post');
