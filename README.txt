@@ -4,8 +4,8 @@ Donate link: http://bit.ly/1Shqxqb
 Tags: newsletters, mailchimp, links, curation, aggregation
 Requires at least: 3.0.0
 Tested up to: 4.2.3
-Stable tag: 0.3
-License: GPLv2 or later
+Stable tag: 0.3.0
+License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Link Roundups (previously Argo Links) lets you aggregate and tag Saved Links.
@@ -32,10 +32,10 @@ Link Roundups (previously Argo Links) lets you aggregate and tag Saved Links.
 
 = 0.3.0 =
 
-- Prepared the plugin for release on wordpress.org
+- Added a Gruntfile.js to manage compiling and minfying CSS and Javascript assets
 - Renamed the plugin from Argo Links to Link Roundups
 - Removed (most) traces of Argo Links from source code
-- Added an update framework, added update workflow to help move from Argo Links to Link Roundups
+- Added an update framework to help move from Argo Links to Link Roundups
 - Changed label for "Argo Link This!" button to "Save to Site"
 - Added ability to create a MailChimp campaign based on a Link Roundup post
-- Added a Gruntfile.js to manage compiling and minfying CSS and Javascript assets
+- Prepared the plugin for release on wordpress.org
