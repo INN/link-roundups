@@ -16,3 +16,7 @@ lang/*.merged
 ## Misc
 .idea/
 node_modules
+
+## Temporary test and release directories
+/wptest
+/release
