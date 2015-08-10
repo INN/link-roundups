@@ -1,7 +1,7 @@
 #!/bin/bash
 RELEASE_DIR=release
 SVN_PATH=$RELEASE_DIR/svn
-SVN_REPO=https://plugins.svn.wordpress.org/links-roundups/
+SVN_REPO=https://plugins.svn.wordpress.org/link-roundups/
 
 # which files go into the release?
 GLOBIGNORE=*
