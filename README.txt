@@ -4,7 +4,7 @@ Donate link: http://bit.ly/1N4nSJJ
 Tags: newsletters, mailchimp, links, curation, aggregation
 Requires at least: 4.1
 Tested up to: 4.2.3
-Stable tag: 0.3.0
+Stable tag: 0.3.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,12 @@ Link Roundups (previously Argo Links) lets you aggregate and tag Saved Links.
 [Read more about installing plugins here](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
 == Changelog ==
+
+= 0.3.1 =
+
+- Update readme.txt 'requires at least' to match readme.md
+- Add [release.sh](https://github.com/INN/link-roundups/blob/master/release.sh) for pushing changes to wordpress.org
+- Fix the browser bookmarklet
 
 = 0.3.0 =
 

@@ -10,7 +10,7 @@ A WordPress plugin to make it easy to collect links from around the web, turn th
 
 **Tested up to:** 4.2.3
 
-**Stable tag:** 0.3
+**Stable tag:** 0.3.1
 
 **License:** GPLv2 or later
 
