@@ -23,16 +23,6 @@ class LRoundups {
 		// Add the Link Roundups Options sub menu
 		add_action( 'admin_menu', array( __CLASS__, 'add_lroundups_options_page') );
 		
-		// Flush Permalinks whenever custom URL slug option is modified
-		// note: we never register this action, wp creates update_option_*any_option*
-		add_action( 'update_option_lroundups_custom_url', 
-				     	array( 
-				     		__CLASS__, 
-				     		'lroundups_custom_url_flush_permalinks', 10
-				      	) 
-				   );
-	
-
 		// Save our custom post fields! Very important!
 		add_action( 'save_post', array( __CLASS__, 'save_custom_fields') );
 
@@ -218,15 +208,6 @@ class LRoundups {
 
 		return $input;
 	}
-	
-	// flush those rewrite rules on updating option
-	public static function lroundups_custom_url_flush_permalinks() {
-		//Ensure the $wp_rewrite global is loaded
-		global $wp_rewrite;
-		
-		//Call flush_rules() as a method of the $wp_rewrite object
-		$wp_rewrite->flush_rules();
-	}
 
 	public static function build_lroundups_options_page() {
 		$mc_api_key = get_option( 'lroundups_mailchimp_api_key' );
@@ -258,6 +239,14 @@ class LRoundups {
 			// The endpoint is lists/list, to list the lists, but there is no lists->list. 
 			// getList with no args is equivalent.
 			$lists = $mcapi->lists->getList();
+		}
+		
+		// get the custom url
+		$defined_url = get_option('lroundups_custom_url');
+		
+		// check if settings have been updated and if there is a custom slug
+		if( isset($_GET['settings-updated']) && !empty($defined_url)) {
+			flush_rewrite_rules();
 		}
 		
 		// get settings fields for options page
