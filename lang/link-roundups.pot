@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: link-roundups 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 14:41-0400\n"
+"POT-Creation-Date: 2015-08-10 09:45-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -241,7 +241,7 @@ msgid "Send to Editor"
 msgstr ""
 
 #: inc/saved-links/display-recent.php:73
-msgid "Date range:"
+msgid "Date Range:"
 msgstr ""
 
 #: inc/saved-links/display-recent.php:75
@@ -265,11 +265,16 @@ msgid "Show All"
 msgstr ""
 
 #: inc/saved-links/display-recent.php:91
+#: inc/saved-links/display-recent.php:208
 msgid "of"
 msgstr ""
 
 #: inc/saved-links/display-recent.php:191
-msgid "No links found. Select another date range."
+msgid "No links found."
+msgstr ""
+
+#: inc/saved-links/display-recent.php:191
+msgid "Try selecting a different Date Range above."
 msgstr ""
 
 #: inc/saved-links/widget.php:10
@@ -294,59 +299,59 @@ msgstr ""
 msgid "Excerpt Length (# of Sentences):"
 msgstr ""
 
-#: inc/updates/index.php:91
+#: inc/updates/index.php:92
 #, php-format
 msgid ""
 "Link Roundups has been updated! Please <a href=\"%s\">visit the update page</"
 "a> to apply a required database update."
 msgstr ""
 
-#: inc/updates/index.php:108 inc/updates/index.php:109
+#: inc/updates/index.php:109 inc/updates/index.php:110
 msgid "Update Link Roundups"
 msgstr ""
 
-#: inc/updates/index.php:164
+#: inc/updates/index.php:165
 msgid "Link Roundups Database Update"
 msgstr ""
 
-#: inc/updates/index.php:167
+#: inc/updates/index.php:168
 msgid "Link Roundups plugin has been updated to version"
 msgstr ""
 
-#: inc/updates/index.php:168
+#: inc/updates/index.php:169
 msgid ""
 "This update will migrate <strong>Argo Links</strong> and <strong>Argo Link "
 "Roundups</strong> to the new <strong>Saved Links</strong> and <strong>Link "
 "Roundups</strong> formats respectively."
 msgstr ""
 
-#: inc/updates/index.php:169
+#: inc/updates/index.php:170
 msgid ""
 "This process will restore previous Argo Links and Argo Link Roundups posts "
 "to your site."
 msgstr ""
 
-#: inc/updates/index.php:170
+#: inc/updates/index.php:171
 msgid "Please run the following update function."
 msgstr ""
 
-#: inc/updates/index.php:172
+#: inc/updates/index.php:173
 msgid "Update the database!"
 msgstr ""
 
-#: inc/updates/index.php:204
+#: inc/updates/index.php:205
 msgid "An error occurred."
 msgstr ""
 
-#: inc/updates/index.php:212
+#: inc/updates/index.php:213
 msgid "Finished. No update was required."
 msgstr ""
 
-#: inc/updates/index.php:220
+#: inc/updates/index.php:221
 msgid "Thank you -- the update is complete."
 msgstr ""
 
-#: inc/updates/index.php:228
+#: inc/updates/index.php:229
 msgid "There was a problem applying the update. Please try again."
 msgstr ""
 
