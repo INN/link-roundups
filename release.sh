@@ -12,7 +12,7 @@ BLACKLIST=(mkdocs.yml phpunit.xml requirements.txt docs/* node_modules/* tests/*
 REMOTES=`git ls-remote --quiet`
 CURRENT=`git rev-parse HEAD`
 IS_MASTER=`echo "$REMOTES" | grep "refs/heads/master" | grep $CURRENT | awk '{print $2;}'`
-IS_TAG=`echo "$REMOTES" | grep "refs/tags" | grep $CURRENT | awk '{print $2;}'`
+IS_TAG=`echo "$REMOTES" | grep "refs/tags" | grep $CURRENT | awk '{print $2;}' | sed -e 's/^refs\/tags\///;s/\^{}$//'`
 if [[ $IS_MASTER == "" && $IS_TAG == "" ]]
 then
   echo "WOH! Bad release state for git repo!"
@@ -21,8 +21,8 @@ then
 fi
 
 # make sure we know what we're doing
-WHICH_TEXT="[master] and [$(echo $IS_TAG | sed -e 's/^refs\/tags\///')]"
-if [[ $IS_MASTER == "" ]]; then WHICH_TEXT="[$(echo $IS_TAG | sed -e 's/^refs\/tags\///')]"; fi
+WHICH_TEXT="[master] and [$(echo $IS_TAG)]"
+if [[ $IS_MASTER == "" ]]; then WHICH_TEXT="[$(echo $IS_TAG)]"; fi
 if [[ $IS_TAG == "" ]]; then WHICH_TEXT="[master]"; fi
 read -p "Really release plugin from $WHICH_TEXT? " -n 1 -r
 echo ""
@@ -85,7 +85,7 @@ fi
 # (4) optionally write to /svn/tags/0.0.0
 if [[ $IS_TAG != "" ]]
 then
-  WP_TAG=`echo $IS_TAG | sed -e 's/^refs\/tags\///' -e 's/^v//'`
+  WP_TAG=`echo $IS_TAG | sed -e 's/^v//'`
   TAG_PATH=$SVN_PATH/tags/$WP_TAG
 
   # overwrite with unzip
@@ -94,8 +94,8 @@ then
   if [[ $? -ne 0 ]]; then echo "$OUT" && exit 1; fi
 
   # set the version
-  echo " - updating plugin.php version to $WP_TAG"
-  OUT=`sed "s/\* Version:.*$/* Version: $WP_TAG/" $TAG_PATH/plugin.php > plugin.php.new && mv plugin.php.new $TAG_PATH/plugin.php`
+  echo " - updating link-roundups.php version to $WP_TAG"
+  OUT=`sed "s/\* Version:.*$/* Version: $WP_TAG/" $TAG_PATH/link-roundups.php > link-roundups.php.new && mv link-roundups.php.new $TAG_PATH/link-roundups.php`
   if [[ $? -ne 0 ]]; then echo "$OUT" && exit 1; fi
 
   # stage all changes (adds and removes)
