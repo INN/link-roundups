@@ -8,7 +8,7 @@ Stable tag: 0.3.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Link Roundups (previously Argo Links) lets you aggregate and tag Saved Links.
+A WordPress plugin to make it easy to collect links from around the web, turn them into roundup posts and streamline the production of daily/weekly roundup newsletters using MailChimp. Built and maintained by INN Nerds.
 
 == Description ==
 
