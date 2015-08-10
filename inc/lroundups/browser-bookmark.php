@@ -115,7 +115,7 @@ class Save_To_Site_Button {
 		// We alter it for our post type.
 		$shortcut_link = str_replace( 'press-this.php', 'post-new.php', $shortcut_link );
 		$shortcut_link = str_replace( 'width=720', 'width=840', $shortcut_link );
-		$shortcut_link = str_replace( 'post-new.php', 'post-new.php?post_type=$post_type', $shortcut_link );
+		$shortcut_link = str_replace( 'post-new.php', 'post-new.php?post_type=' . $post_type, $shortcut_link );
 		$shortcut_link = str_replace( '?u=', '&u=', $shortcut_link );
 		$shortcut_link = str_replace( '?v=', '&v=', $shortcut_link );
 
