@@ -58,7 +58,7 @@ require_once( 'inc/updates/index.php' );
 
 
 /**
- * On activation, we'll set an option called 'argolinks_flush' to true,
+ * On activation, we'll set an transient (temporary option) called 'lroundups_flush' to true,
  * so our plugin knows, on initialization, to flush the rewrite rules.
  *
  * @link https://gist.github.com/clioweb/871595
@@ -67,7 +67,7 @@ require_once( 'inc/updates/index.php' );
  * @see lroundups_flush_permalinks
  */
 function lroundups_activation() {
-	add_option( 'argolinks_flush', true );
+	set_transient( 'lroundups_flush', true, 5 * MINUTE_IN_SECONDS );
 }
 register_activation_hook( __FILE__, 'lroundups_activation' );
 
@@ -101,9 +101,9 @@ register_deactivation_hook( __FILE__, 'lroundups_deactivation' );
  * @see lroundups_deactivation
  */
 function lroundups_flush_permalinks() {
-	if (get_option( 'argolinks_flush') == true ) {
+	if (get_transient('lroundups_flush') === true ) {
 		flush_rewrite_rules();
-		delete_option( 'argolinks_flush' );
+		delete_transient( 'lroundups_flush' );
 		return true;
 	}
 	return false;
