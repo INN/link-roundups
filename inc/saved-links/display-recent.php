@@ -32,7 +32,7 @@ if ( isset($_REQUEST['link_date'] ) ) {
 	switch ($_REQUEST['link_date']) {
 		case 'today':
 			$default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ), 'day' => date( 'd' ) );
-		case 'this_week ': // is that second space necessary?
+		case 'this_week':
 			$default_date = array( 'year' => date( 'Y' ), 'w' => date( 'W' ));
 		case 'this_month':
 			$default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ) );
