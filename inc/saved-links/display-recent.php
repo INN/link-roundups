@@ -282,24 +282,30 @@ JAVASCRIPT_TITLE;
 ?>
 <script type='text/javascript'>
 jQuery(function(){
+  // When "Send to Editor" is clicked
   jQuery('.append-saved-links').bind('click',function(){
-    // this is the class for the checkbox in the table, we check how it's doing
+    // find all the roundups links in the table, and send them to the editor if they're checked
     jQuery('.lroundups-link').each(function(){
       if (jQuery(this).is(":checked"))
         send_to_editor('<?php echo link_roundups_get_shortcode(); ?>');
     });
     return false;
-    });
+  });
+
+  // If an a inside the "Recent Saved Links" div is clicked, submit its href to this file and display the response.
   jQuery('div.display-saved-links a').bind("click",function(){
     var urlOptions = jQuery(this).attr('href');
     jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(LROUNDUPS_PLUGIN_FILE); ?>inc/saved-links/display-recent.php?'+urlOptions);
     return false;
   });
+
   // When "Filter Links" is clicked, fill the table display area with the HTML produced by this file, when supplied with the query args.
   jQuery("#filter_links").bind("submit", function() {
     jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(LROUNDUPS_PLUGIN_FILE); ?>inc/saved-links/display-recent.php?'+jQuery(this).serialize());
     return false;
   });
+
+  // Check all the checkboxes if the "Check all boxes" checkbox is checked, and if it's unchecked, uncheck all the checkboxes.
   jQuery('#check-all-boxes').change(function(){
     if (jQuery(this).is(':checked')) {
       jQuery('.lroundups-link').each(function(){
