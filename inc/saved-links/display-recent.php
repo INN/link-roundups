@@ -49,9 +49,20 @@ $args = array(
 	'posts_per_page' => -1
 );
 $args = array_merge( $args, $default_date );
+
+// Now we can finally run the query
+
+// From here down, it's manually building the table.
+// We can fix this.
+//
+// Things to keep:
+// 	- "Send to editor" button
+// 	- "Data Range" filter
+
+// count the total number of posts
 $the_posts_count_query = new WP_Query( $args );
 $total_post_count = $the_posts_count_query->post_count;
-$the_posts_count_query = '';
+unset $the_posts_count_query; // to save memory
 $the_query = new WP_Query( array_merge( $args, array( 'posts_per_page' => $posts_per_page, 'paged' => $page ) ) );
 $from_result = 1;
 $to_result = $posts_per_page;
@@ -68,6 +79,7 @@ $pagination_previous = $page - 1;
 $pagination_next = $page + 1;
 $pagination_last = ceil( $total_post_count / $posts_per_page );
 
+// $query_url is used in building the pagination buttons
 $query_url = '';
 $query_url .= ( isset( $_REQUEST['orderby'] ) ? '&orderby='.$_REQUEST['orderby']: '' );
 $query_url .= ( isset( $_REQUEST['order'] ) ? '&order='.$_REQUEST['order']: '' );
