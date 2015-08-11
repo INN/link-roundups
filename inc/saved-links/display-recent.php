@@ -1,15 +1,16 @@
 <?php
 /**
+  * Recent Saved Links Custom Meta Panel
+  * for Link Roundups Post Type
+  *
   * @package Link_Roundups
   * @since 0.1
   */
 
 /*
-* Recent Saved Links Custom Meta Panel
-* for Link Roundups Post Type
 */
 
-/** WordPress Admin Bootstrap */
+// WordPress Admin Bootstrap
 require_once( '../../../../../wp-admin/admin.php' );
 
 global $post;
@@ -294,6 +295,7 @@ jQuery(function(){
     jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(LROUNDUPS_PLUGIN_FILE); ?>inc/saved-links/display-recent.php?'+urlOptions);
     return false;
   });
+  // When "Filter Links" is clicked, fill the table display area with the HTML produced by this file, when supplied with the query args.
   jQuery("#filter_links").bind("submit", function() {
     jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(LROUNDUPS_PLUGIN_FILE); ?>inc/saved-links/display-recent.php?'+jQuery(this).serialize());
     return false;
