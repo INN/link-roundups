@@ -9,6 +9,7 @@
 
 // WordPress Admin Bootstrap
 require_once( '../../../../../wp-admin/admin.php' );
+require_once( './class-wp-list-table-clone.php' );
 
 global $post;
 
@@ -59,10 +60,63 @@ $args = array_merge( $args, $default_date );
 // 	- "Send to editor" button
 // 	- "Data Range" filter
 
+
+/**
+ * Class to generate the table of saved links in the link roundups editor
+ *
+ * @link http://www.smashingmagazine.com/2011/11/native-admin-tables-wordpress/
+ * @see clone_WP_List_Table
+ */
+class Saved_Links_List_Table extends clone_WP_List_Table {
+	function __construct() {
+		parent::__construct( array(
+			'singular' => 'lroundups-link',
+			'plural' => 'lroundups-links',
+		));
+	}
+
+	function extra_tablenav( $which ) {
+		if ( $which == 'top' ) {
+			echo 'foo';
+			// Date range:
+		}
+		if ( $which == 'bottom' ) {
+			echo 'bar';
+		}
+		// send to editor (both)
+	}
+
+	function get_columns() {
+		return $columns = array(
+			'col_link_checkbox' => '',
+			'col_link_title' => 'Title',
+			'col_link_author' => 'Author',
+			'col_link_tags' => 'Tags',
+			'col_link_date' => 'Date'
+		);
+	}
+
+	function get_sortable_columns() {
+		return $columns = array(
+			'col_link_title' => 'post_title',
+			'col_link_author' => 'post_author',
+			'col_link_tags' => 'tags_input',
+			'col_link_date' => 'post_date'
+		);
+	}
+
+	function prepare_items(0 {
+		
+		// essentially what is done below
+		// but in a more orderly fashion, please
+	}
+
+}
+
 // count the total number of posts
 $the_posts_count_query = new WP_Query( $args );
 $total_post_count = $the_posts_count_query->post_count;
-unset $the_posts_count_query; // to save memory
+unset($the_posts_count_query); // to save memory
 $the_query = new WP_Query( array_merge( $args, array( 'posts_per_page' => $posts_per_page, 'paged' => $page ) ) );
 $from_result = 1;
 $to_result = $posts_per_page;
