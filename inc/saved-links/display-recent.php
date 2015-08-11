@@ -7,9 +7,6 @@
   * @since 0.1
   */
 
-/*
-*/
-
 // WordPress Admin Bootstrap
 require_once( '../../../../../wp-admin/admin.php' );
 
@@ -17,23 +14,33 @@ global $post;
 
 // The Query
 
-/*Build our query for what links to show!*/
+/*
+ * Build our query for what links to show!
+ */
+// Number of posts per page
 $posts_per_page = ( isset( $_REQUEST['posts_per_page'] ) ? $_REQUEST['posts_per_page'] : 15 );
+// Which page to get
 $page = ( isset( $_REQUEST['lroundups_page'] ) ? $_REQUEST['lroundups_page'] : 1);
-$default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ), 'day' => date( 'd' ) );
-/*Sort out passed filter dates*/
+// Define the default date query
+$default_date = array(
+	'year' => date( 'Y' ),
+	'monthnum' => date( 'm' ),
+	'day' => date( 'd' )
+);
+// Turn the filter date button's response into a meaningful WP_Query argument
 if ( isset($_REQUEST['link_date'] ) ) {
-  if ( $_REQUEST['link_date'] == 'today' ) {
-    $default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ), 'day' => date( 'd' ) );
-  } elseif ( $_REQUEST['link_date'] == 'this_week ') {
-    $default_date = array( 'year' => date( 'Y' ), 'w' => date( 'W' ));
-  } elseif ( $_REQUEST['link_date'] == 'this_month' ) {
-    $default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ) );
-  } elseif ( $_REQUEST['link_date'] == 'this_year') {
-    $default_date = array( 'year' => date( 'Y' ) );
-  } elseif( $_REQUEST['link_date'] == 'show_all' ) {
-    $default_date = array();
-  }
+	switch ($_REQUEST['link_date']) {
+		case 'today':
+			$default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ), 'day' => date( 'd' ) );
+		case 'this_week ': // is that second space necessary?
+			$default_date = array( 'year' => date( 'Y' ), 'w' => date( 'W' ));
+		case 'this_month':
+			$default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ) );
+		case 'this_year':
+			$default_date = array( 'year' => date( 'Y' ) );
+		case 'show_all':
+			$default_date = array();
+	}
 }
 $args = array(
 	'post_type' 	=> 'rounduplink',
