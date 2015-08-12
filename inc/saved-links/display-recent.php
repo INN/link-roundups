@@ -1,11 +1,11 @@
 <?php
 /**
-  * Recent Saved Links Custom Meta Panel
-  * for Link Roundups Post Type
-  *
-  * @package Link_Roundups
-  * @since 0.1
-  */
+ * Recent Saved Links Custom Meta Panel
+ * for Link Roundups Post Type
+ *
+ * @package Link_Roundups
+ * @since 0.1
+ */
 
 // WordPress Admin Bootstrap
 require_once( '../../../../../wp-admin/admin.php' );
@@ -14,42 +14,6 @@ require_once( './class-wp-list-table-clone.php' );
 global $post;
 
 // The Query
-
-/*
- * Build our query for what links to show!
- */
-// Number of posts per page
-$posts_per_page = ( isset( $_REQUEST['posts_per_page'] ) ? $_REQUEST['posts_per_page'] : 15 );
-// Which page to get
-$page = ( isset( $_REQUEST['lroundups_page'] ) ? $_REQUEST['lroundups_page'] : 1);
-// Define the default date query
-$default_date = array(
-	'year' => date( 'Y' ),
-	'monthnum' => date( 'm' ),
-	'day' => date( 'd' )
-);
-// Turn the filter date button's response into a meaningful WP_Query argument
-if ( isset($_REQUEST['link_date'] ) ) {
-	switch ($_REQUEST['link_date']) {
-		case 'today':
-			$default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ), 'day' => date( 'd' ) );
-		case 'this_week':
-			$default_date = array( 'year' => date( 'Y' ), 'w' => date( 'W' ));
-		case 'this_month':
-			$default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ) );
-		case 'this_year':
-			$default_date = array( 'year' => date( 'Y' ) );
-		case 'show_all':
-			$default_date = array();
-	}
-}
-$args = array(
-	'post_type' 	=> 'rounduplink',
-	'orderby' 		=> ( isset($_REQUEST['orderby'] ) ? $_REQUEST['orderby'] : 'date' ),
-	'order' 		=> ( isset($_REQUEST['order'] ) ? $_REQUEST['order'] : 'desc' ),
-	'posts_per_page' => -1
-);
-$args = array_merge( $args, $default_date );
 
 // Now we can finally run the query
 
@@ -88,7 +52,7 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 
 	function get_columns() {
 		return $columns = array(
-			'col_link_checkbox' => '',
+			'col_link_checkbox' => 'cb', // single_row_columns will turn this into a checkbox.
 			'col_link_title' => 'Title',
 			'col_link_author' => 'Author',
 			'col_link_tags' => 'Tags',
@@ -105,18 +69,78 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 		);
 	}
 
-	function prepare_items(0 {
-		
-		// essentially what is done below
-		// but in a more orderly fashion, please
+	function prepare_items() {
+
+		/*
+		 * Build our query for what links to show!
+		 */
+
+		// Number of posts per page, from $_REQUEST
+		$posts_per_page = ( isset( $_REQUEST['posts_per_page'] ) ? $_REQUEST['posts_per_page'] : 15 );
+		// Which page of results to get, from $_REQUEST
+		$page = ( isset( $_REQUEST['lroundups_page'] ) ? $_REQUEST['lroundups_page'] : 1);
+
+		// Define the default date query
+		$default_date = array(
+			'year' => date( 'Y' ),
+			'monthnum' => date( 'm' ),
+			'day' => date( 'd' )
+		);
+		// Turn the filter date button's response into a meaningful WP_Query date argument
+		if ( isset($_REQUEST['link_date'] ) ) {
+			switch ($_REQUEST['link_date']) {
+				case 'today':
+					$default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ), 'day' => date( 'd' ) );
+				case 'this_week':
+					$default_date = array( 'year' => date( 'Y' ), 'w' => date( 'W' ));
+				case 'this_month':
+					$default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ) );
+				case 'this_year':
+					$default_date = array( 'year' => date( 'Y' ) );
+				case 'show_all':
+					$default_date = array();
+			}
+		}
+		// Generic arguments
+		$args = array(
+			'post_type' 	=> 'rounduplink',
+			'orderby' 		=> ( isset($_REQUEST['orderby'] ) ? $_REQUEST['orderby'] : 'date' ),
+			'order' 		=> ( isset($_REQUEST['order'] ) ? $_REQUEST['order'] : 'desc' ),
+			'posts_per_page' => -1
+		);
+		$args = array_merge( $args, $default_date );
+
+		$screen = get_current_screen();
+		$_wp_column_headers;
+
+		$the_posts_count_query = new WP_Query( $args );
+		$total_post_count = $the_posts_count_query->post_count;
+		unset($the_posts_count_query); // to save memory
+
+		// Set the pagination links automagically
+		$this->set_pagination_args(array(
+			'total_items' => $total_post_count,
+			'total_pages' => ceil($total_post_count/$posts_per_page),
+			'per_page' => $posts_per_page,
+		));
+
+		// Set the columns
+		$columns = $this->get_columns();
+		$_wp_column_headers[$screen->id] = $columns;
+
+		// Fetch the items
+		$links_query = new WP_Query($args);
+		$this->items = $links_query->posts;
+		// So where smash magazine uses wpdb->get_results, what WP_Query does is:
+		//	wp_query->get_posts()
+		//		wpdb->get_results
+		//		but then it converts those results to WP_Post objects
+		// However, we can do whatever we want with these results, because $this->items is then parsed in $this->display_rows, which runs $this->single_row($item) for each item, which wraps $this->single_row_columns($item) in a <tr>, which does most of the dirty work I think.
 	}
 
 }
 
 // count the total number of posts
-$the_posts_count_query = new WP_Query( $args );
-$total_post_count = $the_posts_count_query->post_count;
-unset($the_posts_count_query); // to save memory
 $the_query = new WP_Query( array_merge( $args, array( 'posts_per_page' => $posts_per_page, 'paged' => $page ) ) );
 $from_result = 1;
 $to_result = $posts_per_page;
@@ -127,17 +151,8 @@ if ($page != 1) {
 if ($to_result > $total_post_count)
   $to_result = $total_post_count;
 
-/*Build pagination links*/
-$pagination_first = 1;
-$pagination_previous = $page - 1;
-$pagination_next = $page + 1;
-$pagination_last = ceil( $total_post_count / $posts_per_page );
-
 // $query_url is used in building the pagination buttons
 $query_url = '';
-$query_url .= ( isset( $_REQUEST['orderby'] ) ? '&orderby='.$_REQUEST['orderby']: '' );
-$query_url .= ( isset( $_REQUEST['order'] ) ? '&order='.$_REQUEST['order']: '' );
-$query_url .= ( isset( $_REQUEST['link_date'] ) ? '&link_date='.$_REQUEST['link_date']: '' );
 ?>
 <div class='display-saved-links'>
   <div class='pagination'>
