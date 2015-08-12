@@ -70,9 +70,18 @@ class SavedLinks {
 
 	/*Add our css stylesheet into the header*/
 	public static function add_styles() {
+		$remove_styles = get_option('lroundups_dequeue_styles');
+		
+		if(!empty($remove_styles)) {
+		
+		}
+		else {
+		
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG )  ? '' : '.min';
 		$css = plugins_url(  'css/lroundups' . $suffix . '.css', LROUNDUPS_PLUGIN_FILE);
 		wp_enqueue_style( 'link-roundups', $css, array(), 1 );
+		
+		}
 	}
 
 	/**

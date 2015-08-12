@@ -183,6 +183,7 @@ class LRoundups {
 		// register our settings
 		register_setting( 'lroundups-settings-group', 'lroundups_custom_url' );
 		register_setting( 'lroundups-settings-group', 'lroundups_custom_html' );
+		register_setting( 'lroundups-settings-group', 'lroundups_dequeue_styles' );
 		register_setting( 'lroundups-settings-group', 'lroundups_custom_name_singular' );
 		register_setting( 'lroundups-settings-group', 'lroundups_custom_name_plural' );
 		register_setting(

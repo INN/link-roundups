@@ -76,6 +76,13 @@ EOT;
 				</ul></blockquote>
 				<h4 style="margin-bottom:0;padding-bottom:0;"><?php _e( 'Default HTML', 'link-roundups' ); ?></h4><br />
 				<code><?php echo htmlspecialchars($default_html); ?></code><br />
+				
+				<h4>Turn off included styles</h4>
+						<label for="lroundups_dequeue_styles">
+							<?php _e( 'Disable CSS on the front-end?', 'link-roundups' ); ?>
+							<input type="checkbox" name="lroundups_dequeue_styles"
+								<?php checked( get_option( 'lroundups_dequeue_styles' ), 'on', true ); ?> />
+						</label>
 				<h4><?php _e( 'Sponsored Link Styling', 'link-roundups' ); ?></h4>
 				<?php 
 					printf(
