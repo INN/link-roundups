@@ -63,24 +63,25 @@ class SavedLinks {
 		} else {
 			$mce_css = '';
 		}
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-		$mce_css .= plugins_url( 'css/lroundups' . $suffix . '.css', LROUNDUPS_PLUGIN_FILE );
-		return $mce_css;
+		// check if styles have been removed
+		$remove_styles = get_option('lroundups_dequeue_styles');
+		if(!empty($remove_styles)) {}
+		else {
+			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+			$mce_css .= plugins_url( 'css/lroundups' . $suffix . '.css', LROUNDUPS_PLUGIN_FILE );
+			return $mce_css;
+		}
 	}
 
 	/*Add our css stylesheet into the header*/
 	public static function add_styles() {
+		// check if styles should be removed
 		$remove_styles = get_option('lroundups_dequeue_styles');
-		
-		if(!empty($remove_styles)) {
-		
-		}
+		if(!empty($remove_styles)) {}
 		else {
-		
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG )  ? '' : '.min';
-		$css = plugins_url(  'css/lroundups' . $suffix . '.css', LROUNDUPS_PLUGIN_FILE);
-		wp_enqueue_style( 'link-roundups', $css, array(), 1 );
-		
+			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG )  ? '' : '.min';
+			$css = plugins_url(  'css/lroundups' . $suffix . '.css', LROUNDUPS_PLUGIN_FILE);
+			wp_enqueue_style( 'link-roundups', $css, array(), 1 );
 		}
 	}
 
