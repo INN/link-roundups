@@ -185,7 +185,6 @@ class LRoundups {
 		register_setting( 'lroundups-settings-group', 'lroundups_custom_html' );
 		register_setting( 'lroundups-settings-group', 'lroundups_custom_name_singular' );
 		register_setting( 'lroundups-settings-group', 'lroundups_custom_name_plural' );
-		register_setting( 'lroundups-settings-grou', 'lroundups_toggle_css' );
 		register_setting(
 			'lroundups-settings-group', 'lroundups_use_mailchimp_integration',
 			array( __CLASS__, 'validate_mailchimp_integration' ) 
