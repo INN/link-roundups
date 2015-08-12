@@ -39,33 +39,38 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 		));
 	}
 
+	/**
+	 * Additional decorations for the table: "Send to editor" button and "Date range" filter
+	 *
+	 * @param string $which is either "top" or "bottom", and tells you which nav you're outputting.
+	 */
 	function extra_tablenav( $which ) {
 		// this will display at top and bottom
 		?>
-		<button class='button append-saved-links'><?php _e( 'Send to Editor', 'link-roundups' ); ?></button>
+		<button class='button append-saved-links' style='float:left;'><?php _e( 'Send to Editor', 'link-roundups' ); ?></button>
 		<?php
 		if ( $which == 'top' ) {
 			// Date range:
 			?>
-			<div >
-			<form action='' method='get' id='filter_links'>
-				<label for='link_date'><b><?php _e( 'Date Range:', 'link-roundups' ); ?></b></label>
-				<select name='link_date'>
-					<option value='today' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'today' ) ? 'selected' : '' );?>><?php _e( 'Today',' link-roundups' ); ?></option>
-					<option value='this_week' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'this_week' ) ? 'selected' : '' );?>><?php _e( 'This Week',' link-roundups' ); ?></option>
-					<option value='this_month' <?php echo ( ( isset( $_REQUEST['link_date']) && $_REQUEST['link_date'] == 'this_month' ) ? 'selected' : '' );?>><?php _e( 'This Month',' link-roundups' ); ?></option>
-					<option value='this_year' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'this_year' ) ? 'selected' : '' );?>><?php _e( 'This Year',' link-roundups' ); ?></option>
-					<option value='show_all' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'show_all' ) ? 'selected' : '' );?>><?php _e( 'Show All',' link-roundups' ); ?></option>
-				</select>
-				<?php if( isset( $_REQUEST['orderby'] ) ) : ?>
-					<input type='hidden' name='orderby' value='<?php echo $_REQUEST['orderby']; ?>'/>
-				<?php endif;?>
-				<?php if( isset($_REQUEST['order'] ) ) : ?>
-					<input type='hidden' name='order' value='<?php echo $_REQUEST['order']; ?>'/>
-				<?php endif;?>
-				<input class='button' type='submit' value='Filter'/>
-			</form>
-		</div>
+			<div style='float:left;'>
+				<form action='' method='get' id='filter_links'>
+					<label for='link_date'><b><?php _e( 'Date Range:', 'link-roundups' ); ?></b></label>
+					<select name='link_date'>
+						<option value='today' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'today' ) ? 'selected' : '' );?>><?php _e( 'Today',' link-roundups' ); ?></option>
+						<option value='this_week' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'this_week' ) ? 'selected' : '' );?>><?php _e( 'This Week',' link-roundups' ); ?></option>
+						<option value='this_month' <?php echo ( ( isset( $_REQUEST['link_date']) && $_REQUEST['link_date'] == 'this_month' ) ? 'selected' : '' );?>><?php _e( 'This Month',' link-roundups' ); ?></option>
+						<option value='this_year' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'this_year' ) ? 'selected' : '' );?>><?php _e( 'This Year',' link-roundups' ); ?></option>
+						<option value='show_all' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'show_all' ) ? 'selected' : '' );?>><?php _e( 'Show All',' link-roundups' ); ?></option>
+					</select>
+					<?php if( isset( $_REQUEST['orderby'] ) ) : ?>
+						<input type='hidden' name='orderby' value='<?php echo $_REQUEST['orderby']; ?>'/>
+					<?php endif;?>
+					<?php if( isset($_REQUEST['order'] ) ) : ?>
+						<input type='hidden' name='order' value='<?php echo $_REQUEST['order']; ?>'/>
+					<?php endif;?>
+					<input class='button' type='submit' value='Filter'/>
+				</form>
+			</div>
 		<?php
 		}
 		if ( $which == 'bottom' ) {
