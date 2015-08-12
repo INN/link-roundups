@@ -82,7 +82,7 @@ register_activation_hook( __FILE__, 'lroundups_activation' );
  * @see lroundups_flush_permalinks
  */
 function lroundups_deactivation() {
-	if( !empty( get_transient('lroundups_flush' ) ) ) {
+	if( get_transient('lroundups_flush' ) != '' ) {
     delete_transient( 'lroundups_flush');
     }
 }
