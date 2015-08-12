@@ -26,13 +26,13 @@ class LinkRoundupsFunctionsTests extends WP_UnitTestCase {
 
 	function test_lroundups_activation() {
 		lroundups_activation();
-		$this->assertTrue(get_option('argolinks_flush'));
+		$this->assertTrue(get_transient('lroundups_flush'));
 	}
 
 	function test_lroundups_deactivation() {
 		lroundups_activation();
 		lroundups_deactivation();
-		$this->assertFalse(get_option('argolinks_flush'));
+		$this->assertFalse(get_transient('lroundups_flush'));
 	}
 
 	function test_lroundups_flush_permalinks() {
@@ -43,8 +43,8 @@ class LinkRoundupsFunctionsTests extends WP_UnitTestCase {
 
 		// Testing when it should run
 		$this->assertFalse(
-			get_option('argolinks_flush'),
-			"lroundups_flush_permalinks did not reset the argolinks_flush option");
+			get_transient('lroundups_flush'),
+			"WordPress did not recycle the transient lroundups_flush in lroundups_flush_permalinks");
 		$this->assertTrue($ret);
 		unset($ret);
 
