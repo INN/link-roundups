@@ -74,6 +74,11 @@ EOT;
 				<li><code>#!SOURCE!#</code></li>
 				<li><code>#!CLASS!#</code><em><small><?php _e( 'Intended for the paragraph wrapper', 'link-roundups' ); ?></small></em></li>
 				</ul></blockquote>
+				<h4>Toggle Included Styles</h4>
+				<label for="lroundups_toggle_css">
+							<?php _e( 'Enable Front End CSS?', 'link-roundups' ); ?>
+							<input type="checkbox" name="lroundups_toggle_css" <?php checked(1, (get_option( 'lroundups_toggle_css' )), 1, true ); ?> />
+				</label>
 				<h4 style="margin-bottom:0;padding-bottom:0;"><?php _e( 'Default HTML', 'link-roundups' ); ?></h4><br />
 				<code><?php echo htmlspecialchars($default_html); ?></code><br />
 				<h4><?php _e( 'Sponsored Link Styling', 'link-roundups' ); ?></h4>
