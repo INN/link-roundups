@@ -33,8 +33,8 @@ class LinkRoundupsFunctionsTests extends WP_UnitTestCase {
 		lroundups_activation();
 		lroundups_deactivation();
 		// this isn't working with transients seemingly, however did w/ options...
-		// $this->assertFalse(get_transient('lroundups_flush'));
-		$this->markTestIncomplete('Transients weren\'t testing well see code comment.');
+		$this->assertFalse(get_transient('lroundups_flush'));
+		// $this->markTestIncomplete('Transients weren\'t testing well see code comment.');
 
 	}
 
