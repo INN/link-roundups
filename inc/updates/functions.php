@@ -25,7 +25,7 @@ add_action( 'lroundups_update_0.3', 'lroundups_update_post_types', 10, 2 );
  * Note: _lroundups_convert_posts_meta() indiscriminately targets ALL post types
  * This is okay because argo_link_* is a unique prefix, but note for future use.
  *
- * @since 0.3
+ * @since 0.3.1
  */
 function lroundups_update_post_terms( $to, $from ) {
 	_lroundups_convert_posts_meta( 'argo_link_url', 'lr_url' );
@@ -59,8 +59,8 @@ function _lroundups_convert_posts_meta( $old_meta, $new_meta ) {
 	global $wpdb;
 	$wpdb->query( $wpdb->prepare(
 		"UPDATE  $wpdb->postmeta
-		SET  `meta_key` =  %s
-		WHERE  `meta_key` = %s;"
+		SET  `meta_key` =  `%s`
+		WHERE  `meta_key` = `%s`;"
 		, $new_meta, $old_meta )
 	);
 }
