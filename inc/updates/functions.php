@@ -36,6 +36,17 @@ function lroundups_update_post_terms( $to, $from ) {
 add_action( 'lroundups_update_0.3.1', 'lroundups_update_post_terms', 15, 2 );
 
 /**
+ * Update taxonomy name
+ *  · argo-link-tags → lr-tags
+ *
+ * @since 0.3.1
+ */
+function lroundups_update_taxonomy_name( $to, $from ) {
+	_lroundups_convert_taxonomy_name( 'argo-link-tags', 'lr-tags' );
+}
+add_action( 'lroundups_update_0.3.1', 'lroundups_update_taxonomy_name', 20, 2 );
+
+/**
  * Migrate any custom post type to another
  *
  * @since 0.3
@@ -62,6 +73,21 @@ function _lroundups_convert_posts_meta( $old_meta, $new_meta ) {
 		SET  `meta_key` =  `%s`
 		WHERE  `meta_key` = `%s`;"
 		, $new_meta, $old_meta )
+	);
+}
+
+/**
+ * Migrate a custom taxonomy to a new key
+ *
+ * @since 0.3.1
+ */
+function _lroundups_convert_taxonomy_name( $old_tax, $new_tax ) {
+	global $wpdb;
+	$wpdb->query( $wpdb->prepare(
+		"UPDATE  $wpdb->term_taxonomy
+		SET  `taxonomy` =  `%s`
+		WHERE  `taxonomy` = `%s`;"
+		, $new_tax, $old_tax )
 	);
 }
 
