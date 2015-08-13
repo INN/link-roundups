@@ -11,27 +11,20 @@
 require_once( '../../../../../wp-admin/admin.php' );
 require_once( './class-wp-list-table-clone.php' );
 
-global $post;
-
-// The Query
-
-// Now we can finally run the query
-
-// From here down, it's manually building the table.
-// We can fix this.
-//
-// Things to keep:
-// 	- "Send to editor" button
-// 	- "Data Range" filter
-
-
 /**
  * Class to generate the table of saved links in the link roundups editor
  *
  * @link http://www.smashingmagazine.com/2011/11/native-admin-tables-wordpress/
  * @see clone_WP_List_Table
+ * @see ./README.md
+ * @since 0.3.2
  */
 class Saved_Links_List_Table extends clone_WP_List_Table {
+	/**
+	 * Run the WP_List_Table constructor and set the class names
+	 *
+	 * @since 0.3.2
+	 */
 	function __construct() {
 		parent::__construct( array(
 			'singular' => 'lroundups-link',
@@ -43,6 +36,7 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 	 * Additional decorations for the table: "Send to editor" button and "Date range" filter
 	 *
 	 * @param string $which is either "top" or "bottom", and tells you which nav you're outputting.
+	 * @since 0.3.2
 	 */
 	function bulk_actions( $which ) {
 		// this will display at top and bottom
@@ -78,6 +72,11 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 		}
 	}
 
+	/**
+	 * Set the column IDs and titles for the table
+	 *
+	 * @since 0.3.2
+	 */
 	function get_columns() {
 		return $columns = array(
 			// name => text,
@@ -89,6 +88,11 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 		);
 	}
 
+	/**
+	 * Set which columns are sortable
+	 *
+	 * @since 0.3.2
+	 */
 	function get_sortable_columns() {
 		return $columns = array(
 			'title' => 'post_title',
@@ -98,16 +102,25 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 		);
 	}
 
+	/**
+	 * Build the query of posts that should be displayed, and run the query, and fill $this->items with those posts.
+	 *
+	 * @since 0.3.2
+	 */
 	function prepare_items() {
 
 		/*
-		 * Build our query for what links to show!
+		 * Pagination
 		 */
 
 		// Number of posts per page, from $_REQUEST
 		$posts_per_page = ( isset( $_REQUEST['posts_per_page'] ) ? $_REQUEST['posts_per_page'] : 15 );
 		// Which page of results to get, from $_REQUEST
 		$page = ( isset( $_REQUEST['lroundups_page'] ) ? $_REQUEST['lroundups_page'] : 1);
+
+		/*
+		 * Date
+		 */
 
 		// Define the default date query
 		$default_date = array(
@@ -130,6 +143,7 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 					$default_date = array();
 			}
 		}
+
 		// Generic arguments
 		$args = array(
 			'post_type' 	=> 'rounduplink',
@@ -137,6 +151,8 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 			'order' 		=> ( isset($_REQUEST['order'] ) ? $_REQUEST['order'] : 'desc' ),
 			'posts_per_page' => -1
 		);
+
+		// Join the date query with the generic args.
 		$args = array_merge( $args, $default_date );
 
 		$screen = get_current_screen();
@@ -160,17 +176,22 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 		// Fetch the items
 		$links_query = new WP_Query($args);
 		$this->items = $links_query->posts;
-		// So where smash magazine uses wpdb->get_results, what WP_Query does is:
-		//	wp_query->get_posts()
-		//		wpdb->get_results
-		//		but then it converts those results to WP_Post objects
-		// However, we can do whatever we want with these results, because $this->items is then parsed in $this->display_rows, which runs $this->single_row($item) for each item, which wraps $this->single_row_columns($item) in a <tr>. We'll replace the single_row() method.
+		/* This is where we begin to deviate from http://www.smashingmagazine.com/2011/11/native-admin-tables-wordpress/
+		 * Smash Magazine uses wpdb->get_results, and defines its own display_rows method to parse that.
+		 * WP_Query does the following instead::
+		 *   wp_query->get_posts()
+		 *      wpdb->get_results
+		 *      then WP_Query converts those results to WP_Post objects and stores it in the $links_query->posts.
+		 * Since we can override any of WP_List_Table's functions, we can use whatever flavor of item we want in $this->items. $this->items is parsed in $this->display_rows, which runs $this->single_row($item) for each item, which wraps $this->single_row_columns($item) in a <tr>. We'll replace the single_row() method.
+		 */
 	}
 
 	/*
-	 * Turn a WP_Post object into a row
+	 * Turn a WP_Post object into a row for the table
+	 * Mostly copied from WP_Posts_List_Table's single_row.
 	 *
 	 * @param $post WP_Post object
+	 * @since 0.3.2
 	 */
 	function single_row($post) {
 		$post = get_post($post);
@@ -186,14 +207,13 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 			if ( in_array( $column_name, $hidden ) ) {
 				$classes .= ' hidden';
 			}
-			// Comments column uses HTML in the display name with screen reader text.
 			// Instead of using esc_attr(), we strip tags to get closer to a user-friendly string.
 			$data = 'data-colname="' . wp_strip_all_tags( $column_display_name ) . '"';
 			$attributes = "class='$classes' $data";
 			switch ($column_name) {
 				case 'cb':
 					echo '<th scope="row" class="check-column">';
-					echo $this->column_cb( $post );
+					echo $this->column_cb( $post ); // Creates a checkbox for the $post
 					echo '</th>';
 					break;
 				case 'title':
@@ -222,6 +242,12 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 		print "</tr>";
 	}
 	
+	/**
+	 * Output a checkbox for a given WP_Post object
+	 *
+	 * @param $post WP_Post
+	 * @since 0.3.2
+	 */
 	function column_cb( $post ) { ?>
 		<label class="screen-reader-text" for="cb-select-<?php echo $post->ID; ?>"><?php
 				printf( __( 'Select %s' ), _draft_or_post_title() );
@@ -232,6 +258,7 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 	}
 }
 
+// Set up and generate the table.
 $links_list_table = new Saved_Links_List_Table();
 $links_list_table->prepare_items();
 $links_list_table->display();
@@ -239,16 +266,18 @@ $links_list_table->display();
 // Reset Query
 wp_reset_query();
 
-/**
- * Get a shortcode string in a jQuery context.
- * Returns a PHP concatenated string of jQuery concatenated selectors. Sorry.
- *
- * @since 0.3
+/*
+ * JavaScripts for the table's functionality
  */
 ?>
 <script type='text/javascript'>
 jQuery(function(){
 
+  /**
+   * From a checkbox element, find the post ID and title, and return a WP shortcode.
+   *
+   * @since 0.3.2
+   */
   var link_roundups_get_shortcode = function(checkbox) {
     var row = jQuery(checkbox).parent().parent(),
       post_id = row.data('post-id'),
@@ -256,7 +285,13 @@ jQuery(function(){
     return '[rounduplink id="' + post_id + '" title="' + title + '"]';
   };
 
-  // When "Send to Editor" is clicked
+  /**
+   * When "Send to Editor" is clicked, send checked stories to the editor
+   * Also, do not reload the page
+   *
+   * @since 0.3.2
+   * @uses link_roundups_get_shortcode
+   */
   jQuery('.append-saved-links').bind('click',function(){
     // find all the roundups links in the table, and send them to the editor if they're checked
     jQuery('.lroundups-link .cb-select').each(function(){
@@ -266,14 +301,20 @@ jQuery(function(){
     return false;
   });
 
-  // If an a inside the "Recent Saved Links" div is clicked, submit its href to this file and display the response.
+  /**
+   * If an <a> inside the "Recent Saved Links" div is clicked, submit its href to this file and display the response.
+   *
+   * @since 0.1
+   */
   jQuery('div.display-saved-links a').bind("click",function(){
     var urlOptions = jQuery(this).attr('href');
     jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(LROUNDUPS_PLUGIN_FILE); ?>inc/saved-links/display-recent.php?'+urlOptions);
     return false;
   });
 
-  // When "Filter Links" is clicked, fill the table display area with the HTML produced by this file, when supplied with the query args.
+  /**
+   * When "Filter Links" is clicked, fill the table display area with the HTML produced by this file, when supplied with the query args.
+   */
   jQuery("#filter_links").bind("submit", function() {
     var self=jQuery(this);
     self.find(".spinner").css('visibility','visible');
@@ -283,7 +324,9 @@ jQuery(function(){
     return false;
   });
 
-  // Check all the checkboxes if the "Check all boxes" checkbox is checked, and if it's unchecked, uncheck all the checkboxes.
+  /**
+   * Check all the checkboxes if the "Check all boxes" checkbox is checked, and if it's unchecked, uncheck all the checkboxes.
+   */
   jQuery('#cb-select-all-1,#cb-select-all-2').change(function(){
     if (jQuery(this).is(':checked')) {
       jQuery('.lroundups-links input[type=checkbox]').each(function(){
