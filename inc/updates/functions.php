@@ -36,7 +36,7 @@ function lroundups_update_post_terms( $to, $from ) {
 add_action( 'lroundups_update_0.3.1', 'lroundups_update_post_terms', 15, 2 );
 
 /**
- * Migrate custom post types
+ * Migrate any custom post type to another
  *
  * @since 0.3
  */
@@ -51,7 +51,7 @@ function _lroundups_convert_posts( $old_post_type, $new_post_type ) {
 }
 
 /**
- * Migrate custom meta fields
+ * Migrate any old custom meta fields to new keys
  *
  * @since 0.3.1
  */
@@ -66,7 +66,7 @@ function _lroundups_convert_posts_meta( $old_meta, $new_meta ) {
 }
 
 /**
- * Migrates options from argo
+ * Migrates old options from argo-links
  *
  * @since 0.3
  */
