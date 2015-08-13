@@ -203,7 +203,7 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 					break;
 				case 'post_author':
 					echo "<td $attributes>";
-					echo $post->post_author;
+					echo the_author_meta('display_name', $post->post_author);
 					echo "</td>";
 					break;
 				case 'tags':
