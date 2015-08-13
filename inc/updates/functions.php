@@ -8,15 +8,35 @@
  *
  * @since 0.3
  */
-function lroundups_update_post_terms( $to, $from ) {
+function lroundups_update_post_types( $to, $from ) {
 	_lroundups_convert_posts( 'argolinkroundups','roundup' );
 	_lroundups_convert_posts( 'argolinks','rounduplink' );
 }
-add_action( 'lroundups_update_0.3', 'lroundups_update_post_terms', 10, 2 );
-
+add_action( 'lroundups_update_0.3', 'lroundups_update_post_types', 10, 2 );
 
 /**
- * Converts post types of one kind to another.
+ * Update rounduplink post meta in database.
+ *
+ *  · argo_link_url → lr_url
+ *  · argo_link_description → lr_desc
+ *  · argo_link_source → lr_source
+ *  · argo_link_img_url_import → lr_img
+ *
+ * Note: _lroundups_convert_posts_meta() indiscriminately targets ALL post types
+ * This is okay because argo_link_* is a unique prefix, but note for future use.
+ *
+ * @since 0.3
+ */
+function lroundups_update_post_terms( $to, $from ) {
+	_lroundups_convert_posts_meta( 'argo_link_url', 'lr_url' );
+	_lroundups_convert_posts_meta( 'argo_link_description', 'lr_desc' );
+	_lroundups_convert_posts_meta( 'argo_link_source', 'lr_source' );
+	_lroundups_convert_posts_meta( 'argo_link_img_url_import', 'lr_img' );
+}
+add_action( 'lroundups_update_0.3.1', 'lroundups_update_post_terms', 15, 2 );
+
+/**
+ * Migrate custom post types
  *
  * @since 0.3
  */
@@ -27,6 +47,21 @@ function _lroundups_convert_posts( $old_post_type, $new_post_type ) {
 		SET  `post_type` =  %s
 		WHERE  `post_type` = %s;"
 		, $new_post_type, $old_post_type )
+	);
+}
+
+/**
+ * Migrate custom meta fields
+ *
+ * @since 0.3.1
+ */
+function _lroundups_convert_posts_meta( $old_meta, $new_meta ) {
+	global $wpdb;
+	$wpdb->query( $wpdb->prepare(
+		"UPDATE  $wpdb->postmeta
+		SET  `meta_key` =  %s
+		WHERE  `meta_key` = %s;"
+		, $new_meta, $old_meta )
 	);
 }
 

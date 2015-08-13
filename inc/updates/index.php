@@ -20,13 +20,41 @@
 function lroundups_perform_update() {
 
 	if ( lroundups_need_updates() ) {
-		// Run 0.3 updates.
+		/** --------------------------------------------------------
+ 		 * 0.3 Updates
+ 		 * =============================== 
+ 		 * - Migrate Custom Post Types
+ 		 *  · argolinkroundups → roundups
+ 		 *  · argolinks → rounduplink
+ 		 * - Migrate Plugin Options
+ 		 *		 All argo_link_* and link_roundups_* dropped in favor of lroundups_*
+ 		 *		 --------------------------------------------------------
+ 		 * 		'argo_link_roundups_custom_url'
+		 * 		'argo_link_roundups_custom_html'
+		 * 		'link_roundups_custom_name_singular'
+		 * 		'link_roundups_custom_name_plural'
+		 * 		'argo_link_roundups_use_mailchimp_integration'
+		 * 		'argo_link_roundups_mailchimp_api_key'
+		 * 		'argo_link_mailchimp_template'
+		 * 		'argo_link_mailchimp_list'	 
+ 		 * ------------------------------------------------------ */
 		do_action( 'lroundups_update_0.3', lroundups_version(), get_option( 'lroundups_version' ) );
 
-		// Run updates for 0.4
-		// do_action( 'lroundups_update_0.4', lroundups_version(), get_option('lroundups_version') );
+		/** --------------------------------------------------------
+ 		 * 0.3.1 Updates
+ 		 * =============================== 
+ 		 * - Complete Options Migration
+ 		 * - Migrate Saved Link Custom Post fields 
+ 		 *  · argo_link_url → lr_url
+ 		 *  · argo_link_description → lr_desc
+ 		 *  · argo_link_source → lr_source
+ 		 *  · argo_link_img_url_import → lr_img
+ 		 * ------------------------------------------------------ */
+		do_action( 'lroundups_update_0.3.1', lroundups_version(), get_option('lroundups_version') );
 
-		// &c...
+		// do_action( 'lroundups_update_0.3.2', lroundups_version(), get_option('lroundups_version') );
+
+		// do_action( 'lroundups_update_0.4', lroundups_version(), get_option('lroundups_version') );
 
 		// Set version.
 		update_option( 'lroundups_version', lroundups_version() );
@@ -89,7 +117,7 @@ function lroundups_update_admin_notice() {
 	<div class="update-nag" style="display: block;">
 		<?php 
 			printf( 
-				'<p>' . __( 'Link Roundups has been updated! Please <a href="%s">visit the update page</a> to apply a required database update.', 'link-roundups' ) . '</p>',
+				'<p>' . __( 'Link Roundups has been updated! IMPORTANT: Please <a href="%s">click here</a> to run a required database upgrade.', 'link-roundups' ) . '</p>',
 			    admin_url( 'index.php?page=update-lroundups' )
 			);
 		?>
@@ -164,7 +192,6 @@ function lroundups_update_page_view() { ?>
 		<div id="icon-tools" class="icon32"></div>
 		<h2><?php _e ( 'Link Roundups Database Update', 'link-roundups' ); ?></h2>
 		<div class="update-message">
-
 			<p><?php _e( 'Link Roundups plugin has been updated to version', 'link-roundups' ); echo " " . lroundups_version(); ?>.
 			<p><?php _e( 'This update will migrate <strong>Argo Links</strong> and <strong>Argo Link Roundups</strong> to the new <strong>Saved Links</strong> and <strong>Link Roundups</strong> formats respectively.', 'link-roundups' ); ?></p>
 			<p><?php _e( 'This process will restore previous Argo Links and Argo Link Roundups posts to your site.', 'link-roundups' ); ?></p>
