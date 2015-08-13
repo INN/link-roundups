@@ -44,7 +44,7 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 	 *
 	 * @param string $which is either "top" or "bottom", and tells you which nav you're outputting.
 	 */
-	function extra_tablenav( $which ) {
+	function bulk_actions( $which ) {
 		// this will display at top and bottom
 		?>
 		<button class='button append-saved-links' style='float:left;'><?php _e( 'Send to Editor', 'link-roundups' ); ?></button>
@@ -68,7 +68,7 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 					<?php if( isset($_REQUEST['order'] ) ) : ?>
 						<input type='hidden' name='order' value='<?php echo $_REQUEST['order']; ?>'/>
 					<?php endif;?>
-					<input class='button' type='submit' value='Filter'/>
+					<input class='button' type='submit' value='Filter'/><span class="spinner"></span>
 				</form>
 			</div>
 		<?php
@@ -174,8 +174,9 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 	 */
 	function single_row($post) {
 		$post = get_post($post);
+		$classes .= "lroundups-link";
 
-		print "<tr class='$classes'>";
+		print "<tr class='$classes' data-post-id='$post->ID'>";
 		list( $columns, $hidden, $sortable, $primary ) = $this->get_column_info();
 		foreach ( $columns as $column_name => $column_display_name ) {
 			$classes = "$column_name column-$column_name";
@@ -222,10 +223,10 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 	}
 	
 	function column_cb( $post ) { ?>
-		<label class="screen-reader-text" for="cb-select-<?php the_ID( $post ); ?>"><?php
+		<label class="screen-reader-text" for="cb-select-<?php echo $post->ID; ?>"><?php
 				printf( __( 'Select %s' ), _draft_or_post_title() );
 		?></label>
-		<input id="cb-select-<?php the_ID(); ?>" type="checkbox" name="post[]" value="<?php the_ID(); ?>" />
+		<input id="cb-select-<?php echo $post->ID; ?>" type="checkbox" class="cb-select" name="post[]" value="<?php the_ID(); ?>" />
 		<div class="locked-indicator"></div>
 	<?php
 	}
@@ -244,25 +245,23 @@ wp_reset_query();
  *
  * @since 0.3
  */
-function link_roundups_get_shortcode() {
-$javascript_title = <<<JAVASCRIPT_TITLE
-'+jQuery('#title-'+jQuery(this).val()).text()+'
-JAVASCRIPT_TITLE;
-  $shortcode = "[rounduplink ";
-  $shortcode .= "id=\"'+jQuery(this).val()+'\" ";
-  $shortcode .= "title=\"".$javascript_title."\"]";
-  return $shortcode;
-}
-
 ?>
 <script type='text/javascript'>
 jQuery(function(){
+
+  var link_roundups_get_shortcode = function(checkbox) {
+    var row = jQuery(checkbox).parent().parent(),
+      post_id = row.data('post-id'),
+      title = row.find('.column-title').text();
+    return '[rounduplink id="' + post_id + '" title="' + title + '"]';
+  };
+
   // When "Send to Editor" is clicked
   jQuery('.append-saved-links').bind('click',function(){
     // find all the roundups links in the table, and send them to the editor if they're checked
-    jQuery('.lroundups-link').each(function(){
+    jQuery('.lroundups-link .cb-select').each(function(){
       if (jQuery(this).is(":checked"))
-        send_to_editor('<?php echo link_roundups_get_shortcode(); ?>');
+        send_to_editor(link_roundups_get_shortcode(this));
     });
     return false;
   });
@@ -276,18 +275,22 @@ jQuery(function(){
 
   // When "Filter Links" is clicked, fill the table display area with the HTML produced by this file, when supplied with the query args.
   jQuery("#filter_links").bind("submit", function() {
-    jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(LROUNDUPS_PLUGIN_FILE); ?>inc/saved-links/display-recent.php?'+jQuery(this).serialize());
+    var self=jQuery(this);
+    self.find(".spinner").css('visibility','visible');
+    jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(LROUNDUPS_PLUGIN_FILE); ?>inc/saved-links/display-recent.php?'+jQuery(self).serialize(), function() {
+      self.find(".spinner").css('visibility','hidden');
+    });
     return false;
   });
 
   // Check all the checkboxes if the "Check all boxes" checkbox is checked, and if it's unchecked, uncheck all the checkboxes.
-  jQuery('#check-all-boxes').change(function(){
+  jQuery('#cb-select-all-1,#cb-select-all-2').change(function(){
     if (jQuery(this).is(':checked')) {
-      jQuery('.lroundups-link').each(function(){
+      jQuery('.lroundups-links input[type=checkbox]').each(function(){
         jQuery(this).prop("checked", true);
       });
     } else {
-      jQuery('.lroundups-link').each(function(){
+      jQuery('.lroundups-links input[type=checkbox]').each(function(){
         jQuery(this).prop("checked", false);
       });
     }
