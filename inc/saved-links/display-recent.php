@@ -80,20 +80,21 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 
 	function get_columns() {
 		return $columns = array(
-			'col_link_checkbox' => 'cb', // single_row_columns will turn this into a checkbox.
-			'col_link_title' => 'Title',
-			'col_link_author' => 'Author',
-			'col_link_tags' => 'Tags',
-			'col_link_date' => 'Date'
+			// name => text,
+			'cb' => 'cb', // single_row_columns will turn this into a checkbox.
+			'title' => 'Title',
+			'post_author' => 'Author',
+			'tags' => 'Tags',
+			'date' => 'Date'
 		);
 	}
 
 	function get_sortable_columns() {
 		return $columns = array(
-			'col_link_title' => 'post_title',
-			'col_link_author' => 'post_author',
-			'col_link_tags' => 'tags_input',
-			'col_link_date' => 'post_date'
+			'title' => 'post_title',
+			'post_author' => 'post_author',
+			'tags' => 'tags_input',
+			'date' => 'post_date'
 		);
 	}
 
@@ -159,20 +160,22 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 		// Fetch the items
 		$links_query = new WP_Query($args);
 		$this->items = $links_query->posts;
-		var_log($links_query->posts);
 		// So where smash magazine uses wpdb->get_results, what WP_Query does is:
 		//	wp_query->get_posts()
 		//		wpdb->get_results
 		//		but then it converts those results to WP_Post objects
-		// However, we can do whatever we want with these results, because $this->items is then parsed in $this->display_rows, which runs $this->single_row($item) for each item, which wraps $this->single_row_columns($item) in a <tr>, which does most of the dirty work I think.
+		// However, we can do whatever we want with these results, because $this->items is then parsed in $this->display_rows, which runs $this->single_row($item) for each item, which wraps $this->single_row_columns($item) in a <tr>. We'll replace the single_row() method.
 	}
 
 	/*
-	 * Turn a WP_Post object into a column
+	 * Turn a WP_Post object into a row
 	 *
-	 * @param $item WP_Post object
+	 * @param $post WP_Post object
 	 */
-	function single_row_columns() {
+	function single_row($post) {
+		$post = get_post($post);
+
+		print "<tr class='$classes'>";
 		list( $columns, $hidden, $sortable, $primary ) = $this->get_column_info();
 		foreach ( $columns as $column_name => $column_display_name ) {
 			$classes = "$column_name column-$column_name";
@@ -186,30 +189,43 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 			// Instead of using esc_attr(), we strip tags to get closer to a user-friendly string.
 			$data = 'data-colname="' . wp_strip_all_tags( $column_display_name ) . '"';
 			$attributes = "class='$classes' $data";
-			if ( 'cb' == $column_name ) {
-				echo '<th scope="row" class="check-column">';
-				echo $this->column_cb( $item );
-				echo '</th>';
-			} elseif ( method_exists( $this, '_column_' . $column_name ) ) {
-				echo call_user_func(
-					array( $this, '_column_' . $column_name ),
-					$item,
-					$classes,
-					$data,
-					$primary
-				);
-			} elseif ( method_exists( $this, 'column_' . $column_name ) ) {
-				echo "<td $attributes>";
-				echo call_user_func( array( $this, 'column_' . $column_name ), $item );
-				echo $this->handle_row_actions( $item, $column_name, $primary );
-				echo "</td>";
-			} else {
-				echo "<td $attributes>";
-				echo $this->column_default( $item, $column_name );
-				echo $this->handle_row_actions( $item, $column_name, $primary );
-				echo "</td>";
+			switch ($column_name) {
+				case 'cb':
+					echo '<th scope="row" class="check-column">';
+					echo $this->column_cb( $post );
+					echo '</th>';
+					break;
+				case 'title':
+					echo "<td $attributes>";
+					echo $post->post_title;
+					echo $this->handle_row_actions( $post, $column_name, $primary );
+					echo "</td>";
+					break;
+				case 'post_author':
+					echo "<td $attributes>";
+					echo $post->post_author;
+					echo "</td>";
+					break;
+				case 'tags':
+					echo "<td $attributes>";
+					echo "</td>";
+					break;
+				case 'date':
+					echo "<td $attributes>";
+					echo "</td>";
+					break;
 			}
 		}
+		print "</tr>";
+	}
+	
+	function column_cb( $post ) { ?>
+		<label class="screen-reader-text" for="cb-select-<?php the_ID( $post ); ?>"><?php
+				printf( __( 'Select %s' ), _draft_or_post_title() );
+		?></label>
+		<input id="cb-select-<?php the_ID(); ?>" type="checkbox" name="post[]" value="<?php the_ID(); ?>" />
+		<div class="locked-indicator"></div>
+	<?php
 	}
 }
 
