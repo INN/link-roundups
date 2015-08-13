@@ -208,10 +208,12 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 					break;
 				case 'tags':
 					echo "<td $attributes>";
+					echo get_the_term_list($post->ID, 'argo-link-tags', '', ', ', '');
 					echo "</td>";
 					break;
 				case 'date':
 					echo "<td $attributes>";
+					echo get_the_date( '', $post->ID);
 					echo "</td>";
 					break;
 			}
