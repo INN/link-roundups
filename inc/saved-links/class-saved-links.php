@@ -142,20 +142,20 @@ class SavedLinks {
 		global $post;
 		$custom = get_post_custom( $post->ID );
 
-		if ( isset( $custom['argo_link_url'][0] ) ) {
-			$link_url = $custom['argo_link_url'][0];
+		if ( isset( $custom['lr_url'][0] ) ) {
+			$link_url = $custom['lr_url'][0];
 		} else {
 			$link_url = apply_filters( 'default_link_url', '' );
 		}
 
-		if ( isset( $custom['argo_link_description'][0] ) ) {
-			$link_description = $custom['argo_link_description'][0];
+		if ( isset( $custom['lr_desc'][0] ) ) {
+			$link_description = $custom['lr_desc'][0];
 		} else {
 			$link_description = apply_filters( 'default_link_description', '' );
 		}
 
-		if ( isset( $custom['argo_link_source'][0] ) ) {
-			$link_source = $custom['argo_link_source'][0];
+		if ( isset( $custom['lr_source'][0] ) ) {
+			$link_source = $custom['lr_source'][0];
 		} else {
 			$link_source = apply_filters( 'default_link_source', '' );
 		}
@@ -164,17 +164,17 @@ class SavedLinks {
 
 	?>
 	<p><label><?php _e( 'URL:', 'link-roundups' ); ?></label><br />
-	<input type='text' name='argo_link_url' value='<?php echo $link_url; ?>' style='width:98%;'/></p>
+	<input type='text' name='lr_url' value='<?php echo $link_url; ?>' style='width:98%;'/></p>
 	<p><label><?php _e ( 'Description:', 'link-roundups' ); ?></label><br />
-	<textarea cols="100" rows="5" name="argo_link_description" style='width:98%;'><?php echo $link_description; ?></textarea></p>
+	<textarea cols="100" rows="5" name="lr_desc" style='width:98%;'><?php echo $link_description; ?></textarea></p>
 	<p><label><?php _e( 'Source:', 'link-roundups' ); ?></label><br />
-	<input type='text' name='argo_link_source' value='<?php echo $link_source; ?>' style='width:98%;'/></p>
+	<input type='text' name='lr_source' value='<?php echo $link_source; ?>' style='width:98%;'/></p>
 
 	<?php if( $link_img_src ) { ?>
 		<p><label><?php _e( 'Import featured image:', 'link-roundups' ); ?></label><br />
 		<img src="<?php echo $link_img_src ?>" width="300" />
 		<input type='hidden' name='argo_link_img_url' value='<?php echo $link_img_src; ?>'/><br>
-		<input type="checkbox" value="1" name="argo_link_img_url_import" id="argo_link_img_url_import"><label for="argo_link_img_url_import"><?php _e( 'Import as feature image', 'link-roundups' ); ?></label>
+		<input type="checkbox" value="1" name="lr_img" id="lr_img"><label for="lr_img"><?php _e( 'Import as feature image', 'link-roundups' ); ?></label>
 		</p>
 	<?php }
 	}
@@ -186,17 +186,17 @@ class SavedLinks {
 	 */
 	public static function save_custom_fields($post_id) {
 
-		if ( isset( $_POST['argo_link_url'] ) )
-			update_post_meta( ( isset($_POST['post_ID'] ) ? $_POST['post_ID'] : $post_id ), 'argo_link_url', $_POST['argo_link_url'] );
+		if ( isset( $_POST['lr_url'] ) )
+			update_post_meta( ( isset($_POST['post_ID'] ) ? $_POST['post_ID'] : $post_id ), 'lr_url', $_POST['lr_url'] );
 
-		if ( isset( $_POST["argo_link_description"] ) )
-			update_post_meta( ( isset($_POST['post_ID'] ) ? $_POST['post_ID'] : $post_id ), 'argo_link_description', $_POST['argo_link_description'] );
+		if ( isset( $_POST["lr_desc"] ) )
+			update_post_meta( ( isset($_POST['post_ID'] ) ? $_POST['post_ID'] : $post_id ), 'lr_desc', $_POST['lr_desc'] );
 
 
-		if ( isset( $_POST['argo_link_source'] ) )
-			update_post_meta( ( isset( $_POST['post_ID'] ) ? $_POST['post_ID'] : $post_id ), 'argo_link_source', $_POST['argo_link_source'] );
+		if ( isset( $_POST['lr_source'] ) )
+			update_post_meta( ( isset( $_POST['post_ID'] ) ? $_POST['post_ID'] : $post_id ), 'lr_source', $_POST['lr_source'] );
 
-		if ( isset( $_POST['argo_link_img_url_import'] ) && $_POST['argo_link_img_url_import'] ) {
+		if ( isset( $_POST['lr_img'] ) && $_POST['lr_img'] ) {
 			$attachment_id = self::lroundups_media_sideload_image( $_POST['argo_link_img_url'], $post_id );
 			if( !empty( $attachment_id ) && !is_wp_error( $attachment_id )  ) {
 				update_post_meta( ( isset( $_POST['post_ID'] ) ? $_POST['post_ID'] : $post_id ), '_thumbnail_id', $attachment_id );
@@ -268,11 +268,11 @@ class SavedLinks {
 		switch ($column) {
 
 			case 'description':
-				echo $custom['argo_link_description'][0];
+				echo $custom['lr_desc'][0];
 				break;
 
 			case 'url':
-				echo $custom["argo_link_url"][0];
+				echo $custom["lr_url"][0];
 				break;
 
 			case 'link-tags':
@@ -408,7 +408,7 @@ class SavedLinks {
 
 		// Only run for argo_links
 		$meta = get_post_meta( $post->ID );
-		$remoteUrl = !empty( $meta['argo_link_url'] ) ? $meta['argo_link_url'][0] : '';
+		$remoteUrl = !empty( $meta['lr_url'] ) ? $meta['lr_url'][0] : '';
 
 		if ( empty( $url ) || !( 'rounduplink' == $post->post_type ) ) {
 			return $url;
@@ -435,7 +435,7 @@ class SavedLinks {
 		$default = '';
 
 		$meta = get_post_meta($post->ID);
-		$source = !empty( $meta['argo_link_source'] ) ? $meta['argo_link_source'][0] : $default;
+		$source = !empty( $meta['lr_source'] ) ? $meta['lr_source'][0] : $default;
 
 		if ( empty( $source ) || !( 'rounduplink' == $post->post_type ) ) {
 			return $author;
@@ -461,10 +461,10 @@ class SavedLinks {
 
 		$meta = get_post_meta( $post->ID );
 
-		$url = !empty( $meta['argo_link_url'] ) ? $meta['argo_link_url'][0] : '';
+		$url = !empty( $meta['lr_url'] ) ? $meta['lr_url'][0] : '';
 		$title = get_the_title( $post->ID );
-		$description = array_key_exists( 'argo_link_description', $meta ) ? $meta['argo_link_description'][0] : '';
-		$source = !empty( $meta['argo_link_source'] ) ? $meta['argo_link_source'][0] : '';
+		$description = array_key_exists( 'lr_desc', $meta ) ? $meta['lr_desc'][0] : '';
+		$source = !empty( $meta['lr_source'] ) ? $meta['lr_source'][0] : '';
 
 		$link = sprintf(
 			'<a href="%1$s" title="%2$s" rel="author">%3$s</a>',
@@ -546,11 +546,11 @@ class SavedLinks {
 
 		$sponsored_title = !empty( $style_class ) ? __( 'SPONSORED: ', 'link-roundups' ) : '';
 
-		$url = !empty( $meta['argo_link_url']) ? $meta['argo_link_url'][0] : '';
+		$url = !empty( $meta['lr_url']) ? $meta['lr_url'][0] : '';
 		$link_title = get_the_title( $post->ID );
 		$title = $sponsored_title . '' . $link_title;
-		$description = array_key_exists( 'argo_link_description', $meta ) ? $meta['argo_link_description'][0] : '';
-		$source = !empty( $meta['argo_link_source']) ? $meta['argo_link_source'][0] : '';
+		$description = array_key_exists( 'lr_desc', $meta ) ? $meta['lr_desc'][0] : '';
+		$source = !empty( $meta['lr_source']) ? $meta['lr_source'][0] : '';
 
 		ob_start();
 		/* begin shortcode output
@@ -630,11 +630,11 @@ class SavedLinks {
 		$custom = get_post_meta( $post->ID );
 
 		ob_start();
-		if ( isset( $custom['argo_link_description'][0] ) )
-			echo '<p class="description">' . $custom['argo_link_description'][0] . '</p>';
-		if ( isset( $custom['argo_link_source'][0] ) && ( $custom['argo_link_source'][0] != '' ) ) {
+		if ( isset( $custom['lr_desc'][0] ) )
+			echo '<p class="description">' . $custom['lr_desc'][0] . '</p>';
+		if ( isset( $custom['lr_source'][0] ) && ( $custom['lr_source'][0] != '' ) ) {
 			echo '<p class="source">' . __('Source: ', 'link-roundups') . '<span>';
-			echo isset( $custom['argo_link_url'][0] ) ? '<a href="' . $custom["argo_link_url"][0] . '">' . $custom["argo_link_source"][0] . '</a>' : $custom["argo_link_source"][0];
+			echo isset( $custom['lr_url'][0] ) ? '<a href="' . $custom["lr_url"][0] . '">' . $custom["lr_source"][0] . '</a>' : $custom["lr_source"][0];
 			echo '</span></p>';
 		}
 		$html = ob_get_clean();

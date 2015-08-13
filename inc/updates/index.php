@@ -45,10 +45,10 @@ function lroundups_perform_update() {
  		 * =============================== 
  		 * - Complete Options Migration
  		 * - Migrate Saved Link Custom Post fields 
- 		 *  · argo_link_url → lr_url
- 		 *  · argo_link_description → lr_desc
- 		 *  · argo_link_source → lr_source
- 		 *  · argo_link_img_url_import → lr_img
+ 		 *  · lr_url → lr_url
+ 		 *  · lr_desc → lr_desc
+ 		 *  · lr_source → lr_source
+ 		 *  · lr_img → lr_img
  		 * ------------------------------------------------------ */
 		do_action( 'lroundups_update_0.3.1', lroundups_version(), get_option('lroundups_version') );
 

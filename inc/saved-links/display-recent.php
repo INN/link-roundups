@@ -162,15 +162,15 @@ $query_url .= ( isset( $_REQUEST['link_date'] ) ? '&link_date='.$_REQUEST['link_
           <?php
           $custom = get_post_custom($post->ID);
           ?>
-          <span id='url-<?php echo get_the_ID();?>'style='font-size:10px;'><em><?php echo (isset($custom["argo_link_url"][0]) ? $custom["argo_link_url"][0] : ''); ?></em></span>
-          <span id='description-<?php echo get_the_ID();?>'style='display:none;'><em><?php echo (isset($custom["argo_link_description"][0]) ? $custom["argo_link_description"][0] : ''); ?></em></span>
-          <span id='source-<?php echo get_the_ID();?>'style='display:none;'><em><?php echo (isset($custom["argo_link_source"][0]) ? $custom["argo_link_source"][0] : ''); ?></em></span>
+          <span id='url-<?php echo get_the_ID();?>'style='font-size:10px;'><em><?php echo (isset($custom["lr_url"][0]) ? $custom["lr_url"][0] : ''); ?></em></span>
+          <span id='description-<?php echo get_the_ID();?>'style='display:none;'><em><?php echo (isset($custom["lr_desc"][0]) ? $custom["lr_desc"][0] : ''); ?></em></span>
+          <span id='source-<?php echo get_the_ID();?>'style='display:none;'><em><?php echo (isset($custom["lr_source"][0]) ? $custom["lr_source"][0] : ''); ?></em></span>
 
         </td>
         <td scope="row" id="author" class="manage-column column-author sortable desc" style=""><span><?php the_author();?></span></td>
         <td scope="row" id="link-tags" class="manage-column column-link-tags" style="">
         <?php
-        $terms = get_the_terms(get_the_ID(), 'argo-link-tags');
+        $terms = get_the_terms(get_the_ID(), 'lr-tags');
             if (count($terms) > 1) {
               foreach ($terms as $term) {
                 echo $term->name.", ";
