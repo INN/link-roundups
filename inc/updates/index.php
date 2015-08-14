@@ -22,11 +22,7 @@ function lroundups_perform_update() {
 	if ( lroundups_need_updates() ) {
 		// Run 0.3 updates.
 		do_action( 'lroundups_update_0.3', lroundups_version(), get_option( 'lroundups_version' ) );
-
-		// Run updates for 0.4
-		// do_action( 'lroundups_update_0.4', lroundups_version(), get_option('lroundups_version') );
-
-		// &c...
+		do_action( 'lroundups_update_0.3.2', lroundups_version(), get_option( 'lroundups_version' ) );
 
 		// Set version.
 		update_option( 'lroundups_version', lroundups_version() );
@@ -67,7 +63,7 @@ function lroundups_need_updates() {
 		else
 			return false;
 	}
-	
+
 	// if 'lroundups_version' isn't present, the settings are old!
 	return true;
 
@@ -87,8 +83,8 @@ function lroundups_update_admin_notice() {
 	if ( lroundups_need_updates() && !( isset( $_GET['page'] ) && $_GET['page'] == 'update-lroundups' ) ) {
 	?>
 	<div class="update-nag" style="display: block;">
-		<?php 
-			printf( 
+		<?php
+			printf(
 				'<p>' . __( 'Link Roundups has been updated! Please <a href="%s">visit the update page</a> to apply a required database update.', 'link-roundups' ) . '</p>',
 			    admin_url( 'index.php?page=update-lroundups' )
 			);
