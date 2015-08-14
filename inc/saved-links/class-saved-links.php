@@ -109,10 +109,11 @@ class SavedLinks {
 	 * Register our custom taxonomy
 	 *
 	 * @since 0.1
+	 * @updated 0.3.1
 	 */
 	public static function register_rounduplinks_taxonomy() {
 		register_taxonomy(
-			"argo-link-tags",
+			"lr-tags",
 			'rounduplink',
 			array(
 				'hierarchical' 		=> false,
@@ -277,11 +278,11 @@ class SavedLinks {
 
 			case 'link-tags':
 				$base_url = 'edit.php?post_type=rounduplink';
-				$terms = get_the_terms( $post->ID, 'argo-link-tags' );
+				$terms = get_the_terms( $post->ID, 'lr-tags' );
 				if ( is_array( $terms ) ) {
 					$term_links = array();
 					foreach ( $terms as $term ) {
-						$term_links[] = '<a href="' . $base_url . '&argo-link-tags=' . $term->slug . '">' . $term->name . '</a>';
+						$term_links[] = '<a href="' . $base_url . '&lr-tags=' . $term->slug . '">' . $term->name . '</a>';
 					}
 					echo implode( ', ', $term_links );
 				} else {

@@ -15,62 +15,6 @@ function lroundups_update_post_types( $to, $from ) {
 add_action( 'lroundups_update_0.3', 'lroundups_update_post_types', 10, 2 );
 
 /**
- * Update rounduplink post meta in database.
- *
- *  · argo_link_url → lr_url
- *  · argo_link_description → lr_desc
- *  · argo_link_source → lr_source
- *  · argo_link_img_url_import → lr_img
- *
- * Note: _lroundups_convert_posts_meta() indiscriminately targets ALL post types
- * This is okay because argo_link_* is a unique prefix, but note for future use.
- *
- * @since 0.3.2
- */
-function lroundups_update_post_terms( $to, $from ) {
-	$old_metas = array(
-		'argo_link_url' => 'lr_url',
-		'argo_link_description' => 'lr_desc',
-		'argo_link_source' => 'lr_source',
-		'argo_link_img_url_import' => 'lr_img'
-	);
-
-	foreach ($old_metas as $old_meta => $new_meta)
-		_lroundups_convert_posts_meta($old_meta, $new_meta);
-}
-add_action( 'lroundups_update_0.3.2', 'lroundups_update_post_terms', 15, 2 );
-
-/**
- * Migrate any custom post type to another
- *
- * @since 0.3
- */
-function _lroundups_convert_posts( $old_post_type, $new_post_type ) {
-	global $wpdb;
-	$wpdb->query( $wpdb->prepare(
-		"UPDATE  $wpdb->posts
-		SET  `post_type` =  %s
-		WHERE  `post_type` = %s;"
-		, $new_post_type, $old_post_type )
-	);
-}
-
-/**
- * Migrate any old custom meta fields to new keys
- *
- * @since 0.3.2
- */
-function _lroundups_convert_posts_meta( $old_meta, $new_meta ) {
-	global $wpdb;
-	$wpdb->query( $wpdb->prepare(
-		"UPDATE  $wpdb->postmeta
-		SET  `meta_key` =  `%s`
-		WHERE  `meta_key` = `%s`;"
-		, $new_meta, $old_meta )
-	);
-}
-
-/**
  * Migrates old options from argo-links
  *
  * @since 0.3
@@ -100,11 +44,97 @@ function lroundups_migrate_options() {
 add_action( 'lroundups_update_0.3', 'lroundups_migrate_options', 10 );
 
 /**
+ * Update rounduplink post meta in database.
+ *
+ *  · argo_link_url → lr_url
+ *  · argo_link_description → lr_desc
+ *  · argo_link_source → lr_source
+ *  · argo_link_img_url_import → lr_img
+ *
+ * Note: _lroundups_convert_posts_meta() indiscriminately targets ALL post types
+ * This is okay because argo_link_* is a unique prefix, but note for future use.
+ *
+ * @since 0.3.2
+ */
+function lroundups_update_post_terms( $to, $from ) {
+	$old_metas = array(
+		'argo_link_url' => 'lr_url',
+		'argo_link_description' => 'lr_desc',
+		'argo_link_source' => 'lr_source',
+		'argo_link_img_url_import' => 'lr_img'
+	);
+
+	foreach ($old_metas as $old_meta => $new_meta)
+		_lroundups_convert_posts_meta($old_meta, $new_meta);
+}
+add_action( 'lroundups_update_0.3.2', 'lroundups_update_post_terms', 15, 2 );
+
+/**
+ * Update taxonomy name
+ *  · argo-link-tags → lr-tags
+ *
+ * @since 0.3.2
+ */
+function lroundups_update_taxonomy_name( $to, $from ) {
+	_lroundups_convert_taxonomy_name( 'argo-link-tags', 'lr-tags' );
+}
+add_action( 'lroundups_update_0.3.2', 'lroundups_update_taxonomy_name', 20, 2 );
+
+/**
  * Get rid of an old option
  *
  * @since 0.3.2
  */
-function lroundups_delete_option() {
+function lroundups_delete_argolinks_flush_option() {
 	delete_option('argolinks_flush');
 }
 add_action( 'lroundups_update_0.3.2', 'lroundups_delete_argolinks_flush_option', 10 );
+
+/*
+ * Update utility functions below
+ */
+
+/**
+ * Migrate any custom post type to another
+ *
+ * @since 0.3
+ */
+function _lroundups_convert_posts( $old_post_type, $new_post_type ) {
+	global $wpdb;
+	$wpdb->query( $wpdb->prepare(
+		"UPDATE $wpdb->posts
+		SET post_type = %s
+		WHERE post_type = %s;"
+		, $new_post_type, $old_post_type )
+	);
+}
+
+/**
+ * Migrate any old custom meta fields to new keys
+ *
+ * @since 0.3.2
+ */
+function _lroundups_convert_posts_meta( $old_meta, $new_meta ) {
+	global $wpdb;
+	$wpdb->query( $wpdb->prepare(
+		"UPDATE  $wpdb->postmeta
+		SET meta_key = %s
+		WHERE meta_key = %s;"
+		, $new_meta, $old_meta )
+	);
+}
+
+/**
+ * Migrate a custom taxonomy to a new key
+ *
+ * @since 0.3.2
+ */
+function _lroundups_convert_taxonomy_name( $old_tax, $new_tax ) {
+	global $wpdb;
+	$wpdb->query( $wpdb->prepare(
+		"UPDATE $wpdb->term_taxonomy
+		SET taxonomy = %s
+		WHERE taxonomy = %s;"
+		, $new_tax, $old_tax )
+	);
+}
