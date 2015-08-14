@@ -46,24 +46,25 @@ function lroundups_migrate_options() {
 		'argo_link_mailchimp_template',
 		'argo_link_mailchimp_list',
 	);
-	
+
 	// check for old options and replace the old prefixes with lroundups_
 	foreach ( $old_options as $old_option ) {
 		$new_option = str_replace(
-			array('argo_link_roundups_', 'link_roundups_'), 'lroundups_', $old_option
-		);
-		 
+			array('argo_link_roundups_', 'link_roundups_'), 'lroundups_', $old_option);
 		$old_value = get_option($old_option);
-		
 		$result = update_option($new_option, $old_value);
 		if ($result)
 			delete_option($old_option);
 	}
-	
-	// check if argo-links flush option is around, we don't need it so just delete it
-	// option if true triggered func. that 
-	// 1) flush_rewrite_rules() 2) delete_option('argo_flush')
-	// since been replaced with transient
-	delete_option('argolinks_flush');
 }
 add_action( 'lroundups_update_0.3', 'lroundups_migrate_options', 10 );
+
+/**
+ * Get rid of an old option
+ *
+ * @since 0.3.2
+ */
+function lroundups_delete_option() {
+	delete_option('argolinks_flush');
+}
+add_action( 'lroundups_update_0.3.2', 'lroundups_delete_argolinks_flush_option', 10 );

@@ -67,7 +67,7 @@ require_once( 'inc/updates/index.php' );
  * @see lroundups_flush_permalinks
  */
 function lroundups_activation() {
-	set_transient( 'lroundups_flush', true, 5 * MINUTE_IN_SECONDS );
+	set_transient( 'lroundups_flush', true, 30 );
 }
 register_activation_hook( __FILE__, 'lroundups_activation' );
 
@@ -82,9 +82,9 @@ register_activation_hook( __FILE__, 'lroundups_activation' );
  * @see lroundups_flush_permalinks
  */
 function lroundups_deactivation() {
-	if( get_transient('lroundups_flush' ) != '' ) {
-    delete_transient( 'lroundups_flush');
-    }
+	if ( get_transient('lroundups_flush' ) !== false ) {
+		delete_transient( 'lroundups_flush');
+	}
 }
 register_deactivation_hook( __FILE__, 'lroundups_deactivation' );
 
@@ -103,7 +103,7 @@ register_deactivation_hook( __FILE__, 'lroundups_deactivation' );
  * @see lroundups_deactivation
  */
 function lroundups_flush_permalinks() {
-	if (get_transient('lroundups_flush') === true ) {
+	if (get_transient('lroundups_flush') === true) {
 		flush_rewrite_rules();
 		delete_transient( 'lroundups_flush' );
 		return true;
