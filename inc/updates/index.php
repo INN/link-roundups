@@ -21,40 +21,36 @@ function lroundups_perform_update() {
 
 	if ( lroundups_need_updates() ) {
 		/** --------------------------------------------------------
- 		 * 0.3 Updates
- 		 * =============================== 
- 		 * - Migrate Custom Post Types
- 		 *  · argolinkroundups → roundups
- 		 *  · argolinks → rounduplink
- 		 * - Migrate Plugin Options
- 		 *		 All argo_link_* and link_roundups_* dropped in favor of lroundups_*
- 		 *		 --------------------------------------------------------
- 		 * 		'argo_link_roundups_custom_url'
+		 * 0.3 Updates
+		 * ===============================
+		 * - Migrate Custom Post Types
+		 *  · argolinkroundups → roundups
+		 *  · argolinks → rounduplink
+		 * - Migrate Plugin Options
+		 *		 All argo_link_* and link_roundups_* dropped in favor of lroundups_*
+		 *		 --------------------------------------------------------
+		 *		'argo_link_roundups_custom_url'
 		 * 		'argo_link_roundups_custom_html'
 		 * 		'link_roundups_custom_name_singular'
 		 * 		'link_roundups_custom_name_plural'
 		 * 		'argo_link_roundups_use_mailchimp_integration'
 		 * 		'argo_link_roundups_mailchimp_api_key'
 		 * 		'argo_link_mailchimp_template'
-		 * 		'argo_link_mailchimp_list'	 
- 		 * ------------------------------------------------------ */
+		 * 		'argo_link_mailchimp_list'
+		 * ------------------------------------------------------ */
 		do_action( 'lroundups_update_0.3', lroundups_version(), get_option( 'lroundups_version' ) );
 
 		/** --------------------------------------------------------
- 		 * 0.3.1 Updates
- 		 * =============================== 
- 		 * - Complete Options Migration
- 		 * - Migrate Saved Link Custom Post fields 
- 		 *  · argo_link_url → lr_url
- 		 *  · argo_link_description → lr_desc
- 		 *  · argo_link_source → lr_source
- 		 *  · argo_link_img_url_import → lr_img
- 		 * ------------------------------------------------------ */
-		do_action( 'lroundups_update_0.3.1', lroundups_version(), get_option('lroundups_version') );
-
-		// do_action( 'lroundups_update_0.3.2', lroundups_version(), get_option('lroundups_version') );
-
-		// do_action( 'lroundups_update_0.4', lroundups_version(), get_option('lroundups_version') );
+		 * 0.3.2 Updates
+		 * ===============================
+		 * - Complete Options Migration
+		 * - Migrate Saved Link Custom Post fields
+		 *  · lr_url → lr_url
+		 *  · lr_desc → lr_desc
+		 *  · lr_source → lr_source
+		 *  · lr_img → lr_img
+		 * ------------------------------------------------------ */
+		do_action( 'lroundups_update_0.3.2', lroundups_version(), get_option('lroundups_version') );
 
 		// Set version.
 		update_option( 'lroundups_version', lroundups_version() );
@@ -94,7 +90,7 @@ function lroundups_need_updates() {
 		else
 			return false;
 	}
-	
+
 	// if 'lroundups_version' isn't present, the settings are old!
 	return true;
 
@@ -114,12 +110,11 @@ function lroundups_update_admin_notice() {
 	if ( lroundups_need_updates() && !( isset( $_GET['page'] ) && $_GET['page'] == 'update-lroundups' ) ) {
 	?>
 	<div class="update-nag" style="display: block;">
-		<?php 
-			printf( 
-				'<p>' . __( 'Link Roundups has been updated! IMPORTANT: Please <a href="%s">click here</a> to run a required database upgrade.', 'link-roundups' ) . '</p>',
-			    admin_url( 'index.php?page=update-lroundups' )
-			);
-		?>
+		<p><?php
+		printf(
+			__('Link Roundups has been updated! IMPORTANT: Please <a href="%s">click here</a> to run a required database upgrade.', 'link-roundups'),
+			admin_url('index.php?page=update-lroundups')
+		); ?></p>
 	</div>
 	<?php
 	}

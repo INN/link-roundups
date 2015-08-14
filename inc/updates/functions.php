@@ -25,15 +25,20 @@ add_action( 'lroundups_update_0.3', 'lroundups_update_post_types', 10, 2 );
  * Note: _lroundups_convert_posts_meta() indiscriminately targets ALL post types
  * This is okay because argo_link_* is a unique prefix, but note for future use.
  *
- * @since 0.3.1
+ * @since 0.3.2
  */
 function lroundups_update_post_terms( $to, $from ) {
-	_lroundups_convert_posts_meta( 'argo_link_url', 'lr_url' );
-	_lroundups_convert_posts_meta( 'argo_link_description', 'lr_desc' );
-	_lroundups_convert_posts_meta( 'argo_link_source', 'lr_source' );
-	_lroundups_convert_posts_meta( 'argo_link_img_url_import', 'lr_img' );
+	$old_metas = array(
+		'argo_link_url' => 'lr_url',
+		'argo_link_description' => 'lr_desc',
+		'argo_link_source' => 'lr_source',
+		'argo_link_img_url_import' => 'lr_img'
+	);
+
+	foreach ($old_metas as $old_meta => $new_meta)
+		_lroundups_convert_posts_meta($old_meta, $new_meta);
 }
-add_action( 'lroundups_update_0.3.1', 'lroundups_update_post_terms', 15, 2 );
+add_action( 'lroundups_update_0.3.2', 'lroundups_update_post_terms', 15, 2 );
 
 /**
  * Update taxonomy name
@@ -64,7 +69,7 @@ function _lroundups_convert_posts( $old_post_type, $new_post_type ) {
 /**
  * Migrate any old custom meta fields to new keys
  *
- * @since 0.3.1
+ * @since 0.3.2
  */
 function _lroundups_convert_posts_meta( $old_meta, $new_meta ) {
 	global $wpdb;
@@ -107,17 +112,25 @@ function lroundups_migrate_options() {
 		'argo_link_mailchimp_template',
 		'argo_link_mailchimp_list',
 	);
-	
+
+	// check for old options and replace the old prefixes with lroundups_
 	foreach ( $old_options as $old_option ) {
 		$new_option = str_replace(
-				array('argo_link_roundups_', 'link_roundups_'), 'lroundups_', $old_option
-		);
-		 
+			array('argo_link_roundups_', 'link_roundups_'), 'lroundups_', $old_option);
 		$old_value = get_option($old_option);
-		
 		$result = update_option($new_option, $old_value);
 		if ($result)
 			delete_option($old_option);
 	}
 }
 add_action( 'lroundups_update_0.3', 'lroundups_migrate_options', 10 );
+
+/**
+ * Get rid of an old option
+ *
+ * @since 0.3.2
+ */
+function lroundups_delete_option() {
+	delete_option('argolinks_flush');
+}
+add_action( 'lroundups_update_0.3.2', 'lroundups_delete_argolinks_flush_option', 10 );
