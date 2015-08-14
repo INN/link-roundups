@@ -85,7 +85,7 @@ add_action( 'lroundups_update_0.3.2', 'lroundups_update_taxonomy_name', 20, 2 );
  *
  * @since 0.3.2
  */
-function lroundups_delete_option() {
+function lroundups_delete_argolinks_flush_option() {
 	delete_option('argolinks_flush');
 }
 add_action( 'lroundups_update_0.3.2', 'lroundups_delete_argolinks_flush_option', 10 );
@@ -102,9 +102,9 @@ add_action( 'lroundups_update_0.3.2', 'lroundups_delete_argolinks_flush_option',
 function _lroundups_convert_posts( $old_post_type, $new_post_type ) {
 	global $wpdb;
 	$wpdb->query( $wpdb->prepare(
-		"UPDATE  $wpdb->posts
-		SET  `post_type` =  %s
-		WHERE  `post_type` = %s;"
+		"UPDATE $wpdb->posts
+		SET post_type = %s
+		WHERE post_type = %s;"
 		, $new_post_type, $old_post_type )
 	);
 }
@@ -118,8 +118,8 @@ function _lroundups_convert_posts_meta( $old_meta, $new_meta ) {
 	global $wpdb;
 	$wpdb->query( $wpdb->prepare(
 		"UPDATE  $wpdb->postmeta
-		SET  `meta_key` =  `%s`
-		WHERE  `meta_key` = `%s`;"
+		SET meta_key = %s
+		WHERE meta_key = %s;"
 		, $new_meta, $old_meta )
 	);
 }
@@ -132,9 +132,9 @@ function _lroundups_convert_posts_meta( $old_meta, $new_meta ) {
 function _lroundups_convert_taxonomy_name( $old_tax, $new_tax ) {
 	global $wpdb;
 	$wpdb->query( $wpdb->prepare(
-		"UPDATE  $wpdb->term_taxonomy
-		SET  `taxonomy` =  `%s`
-		WHERE  `taxonomy` = `%s`;"
+		"UPDATE $wpdb->term_taxonomy
+		SET taxonomy = %s
+		WHERE taxonomy = %s;"
 		, $new_tax, $old_tax )
 	);
 }
