@@ -22,7 +22,7 @@ class LRoundups {
 
 		// Add the Link Roundups Options sub menu
 		add_action( 'admin_menu', array( __CLASS__, 'add_lroundups_options_page') );
-		
+
 		// Save our custom post fields! Very important!
 		add_action( 'save_post', array( __CLASS__, 'save_custom_fields') );
 
@@ -187,7 +187,7 @@ class LRoundups {
 		register_setting( 'lroundups-settings-group', 'lroundups_custom_name_plural' );
 		register_setting(
 			'lroundups-settings-group', 'lroundups_use_mailchimp_integration',
-			array( __CLASS__, 'validate_mailchimp_integration' ) 
+			array( __CLASS__, 'validate_mailchimp_integration' )
 		);
 		register_setting( 'lroundups-settings-group', 'lroundups_mailchimp_api_key' );
 		register_setting( 'lroundups-settings-group', 'lroundups_mailchimp_template' );
@@ -236,19 +236,21 @@ class LRoundups {
 				array( 'include_drag_and_drop' => true )
 			);
 
-			// The endpoint is lists/list, to list the lists, but there is no lists->list. 
+			// The endpoint is lists/list, to list the lists, but there is no lists->list.
 			// getList with no args is equivalent.
 			$lists = $mcapi->lists->getList();
 		}
-		
+
 		// get the custom url
 		$defined_url = get_option('lroundups_custom_url');
-		
+
 		// check if settings have been updated and if there is a custom slug
-		if( isset($_GET['settings-updated']) && !empty($defined_url)) {
+		// TODO: don't flush rewrite rules unless they've actually chanaged since
+		// the last time they were flushed.
+		if (isset($_GET['settings-updated']) && !empty($defined_url)) {
 			flush_rewrite_rules();
 		}
-		
+
 		// get settings fields for options page
 		include_once dirname( LROUNDUPS_PLUGIN_FILE ) . '/templates/options.php';
 	}
