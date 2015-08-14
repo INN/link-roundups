@@ -57,13 +57,13 @@ class LRoundupsClassTest extends WP_UnitTestCase {
 		$test_url = 'http://testurl';
 		$test_des = 'TKTK';
 
-		$_POST['argo_link_url'] = $test_url;
-		$_POST['argo_link_description'] = $test_des;
+		$_POST['lr_url'] = $test_url;
+		$_POST['lr_desc'] = $test_des;
 
 		LRoundups::save_custom_fields($this->roundup_post);
 
-		$post_url = get_post_meta($this->roundup_post, 'argo_link_url', true);
-		$post_des = get_post_meta($this->roundup_post, 'argo_link_description', true);
+		$post_url = get_post_meta($this->roundup_post, 'lr_url', true);
+		$post_des = get_post_meta($this->roundup_post, 'lr_desc', true);
 
 		$this->assertEquals($test_url, $post_url);
 		$this->assertEquals($test_des, $post_des);

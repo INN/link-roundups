@@ -152,11 +152,11 @@ class LRoundups {
 	 * @since 0.1
 	 */
 	public static function save_custom_fields( $post_id ) {
-		if ( isset( $_POST['argo_link_url'] ) ){
-			update_post_meta( ( isset( $_POST['post_id'] ) ? $_POST['post_ID'] : $post_id ), 'argo_link_url', $_POST["argo_link_url"] );
+		if ( isset( $_POST['lr_url'] ) ){
+			update_post_meta( ( isset( $_POST['post_id'] ) ? $_POST['post_ID'] : $post_id ), 'lr_url', $_POST["lr_url"] );
 		}
-		if ( isset( $_POST['argo_link_description'] ) ) {
-			update_post_meta( ( isset($_POST['post_id'] ) ? $_POST['post_ID'] : $post_id ), 'argo_link_description', $_POST['argo_link_description'] );
+		if ( isset( $_POST['lr_desc'] ) ) {
+			update_post_meta( ( isset($_POST['post_id'] ) ? $_POST['post_ID'] : $post_id ), 'lr_desc', $_POST['lr_desc'] );
 		}
 	}
 

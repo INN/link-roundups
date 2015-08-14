@@ -34,17 +34,17 @@ class saved_links_widget extends WP_Widget {
           				$custom = get_post_custom( $post->ID ); ?>
           				<?php if ( get_post_type( $post ) === 'roundup' ) continue; ?>
 	                  	<div class="post-lead clearfix">
-	                      	<h5><?php echo ( isset( $custom["argo_link_url"][0] ) ) ? '<a href="' . $custom["argo_link_url"][0] . '">' . get_the_title() . '</a>' : get_the_title(); ?></h5>
+	                      	<h5><?php echo ( isset( $custom["lr_url"][0] ) ) ? '<a href="' . $custom["lr_url"][0] . '">' . get_the_title() . '</a>' : get_the_title(); ?></h5>
 
 	                      	<?php
-	                      	if ( isset( $custom["argo_link_description"][0] ) ) {
+	                      	if ( isset( $custom["lr_desc"][0] ) ) {
 		                      	echo '<p class="description">';
-		                      	echo ( function_exists( 'largo_trim_sentences' ) ) ? largo_trim_sentences($custom["argo_link_description"][0], $instance['num_sentences']) : $custom["argo_link_description"][0];
+		                      	echo ( function_exists( 'largo_trim_sentences' ) ) ? largo_trim_sentences($custom["lr_desc"][0], $instance['num_sentences']) : $custom["lr_desc"][0];
 		                      	echo '</p>';
 	                      	}
-	                      	if ( isset($custom["argo_link_source"][0] ) ) {
+	                      	if ( isset($custom["lr_source"][0] ) ) {
 		                      	echo '<p class="source">' . __('Source: ', 'link-roundups') . '<span>';
-		                      	echo ( isset( $custom["argo_link_url"][0] ) ) ? '<a href="' . $custom["argo_link_url"][0] . '">' . $custom["argo_link_source"][0] . '</a>' : $custom["argo_link_source"][0];
+		                      	echo ( isset( $custom["lr_url"][0] ) ) ? '<a href="' . $custom["lr_url"][0] . '">' . $custom["lr_source"][0] . '</a>' : $custom["lr_source"][0];
 		                      	echo '</span></p>';
 	                      	}
 	                      	?>
