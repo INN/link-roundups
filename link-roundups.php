@@ -68,6 +68,7 @@ require_once( 'inc/updates/index.php' );
  */
 function lroundups_activation() {
 	set_transient( 'lroundups_flush', true, 30 );
+	set_transient( 'lroundups_welcome', true, 30);
 }
 register_activation_hook( __FILE__, 'lroundups_activation' );
 
@@ -112,11 +113,43 @@ function lroundups_flush_permalinks() {
 }
 
 /**
- * Include CSS and Javascript files used on the post edit screen.
+ * Welcome Page redirect
+ * @since 0.3.2
+ */
+function lroundups_welcome_redirect() {
+	// Bail if no transient
+    if ( ! get_transient( 'lroundups_welcome' ) ) {
+    	return;
+  	}
+  
+  // delete redirect transient before we do stuff
+  delete_transient( 'lroundups_welcome' );
+  
+  // decide this is a bad idea for network activations or bulk
+  if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
+  	return;
+  }
+  
+  // kosher redirect to link roundups welcome page
+  wp_safe_redirect( 
+  	add_query_arg ( 
+  		array ( 'page' => 'lr-welcome' ), 
+  		admin_url('edit.php?post_type=roundup') 
+  	) 
+  );
+}
+add_action( 'admin_init', 'lroundups_welcome_redirect' );
+
+// the welcome page gets included here
+require_once __DIR__. '/inc/welcome/greetings.php'; // license in directory
+
+
+/**
+ * Include CSS and Javascript files in Dashboard
  *
  * @since 0.2
  */
-function link_roundups_enqueue_assets() {
+function link_roundups_admin_enqueue_assets() {
 	$plugin_path = plugins_url( basename( __DIR__ ), __DIR__ );
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
@@ -138,7 +171,7 @@ function link_roundups_enqueue_assets() {
 		wp_enqueue_style( 'links-common' );
 	}
 }
-add_action( 'admin_enqueue_scripts', 'link_roundups_enqueue_assets' );
+add_action( 'admin_enqueue_scripts', 'link_roundups_admin_enqueue_assets' );
 
 /**
  * Load plugin textdomain.
