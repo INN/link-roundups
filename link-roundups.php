@@ -133,7 +133,7 @@ function link_roundups_enqueue_assets() {
 	wp_register_style( 'links-common', $plugin_path . '/css/links-common' . $suffix . '.css' );
 
 	$screen = get_current_screen();
-	if ( $screen->base == 'post' && $screen->post_type == 'roundup' ) {
+	if ( $screen->base == 'post' && ( $screen->post_type == 'roundup' || $screen->post_type == 'rounduplink' ) ) {
 		wp_enqueue_script( 'link-roundups' );
 		wp_enqueue_style( 'links-common' );
 	}
