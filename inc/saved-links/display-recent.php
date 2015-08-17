@@ -262,7 +262,6 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 $links_list_table = new Saved_Links_List_Table();
 $links_list_table->prepare_items();
 $links_list_table->display();
-
 // Reset Query
 wp_reset_query();
 

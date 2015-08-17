@@ -152,11 +152,11 @@ class LRoundups {
 	 * @since 0.1
 	 */
 	public static function save_custom_fields( $post_id ) {
-		if ( isset( $_POST['argo_link_url'] ) ){
-			update_post_meta( ( isset( $_POST['post_id'] ) ? $_POST['post_ID'] : $post_id ), 'argo_link_url', $_POST["argo_link_url"] );
+		if ( isset( $_POST['lr_url'] ) ){
+			update_post_meta( ( isset( $_POST['post_id'] ) ? $_POST['post_ID'] : $post_id ), 'lr_url', $_POST["lr_url"] );
 		}
-		if ( isset( $_POST['argo_link_description'] ) ) {
-			update_post_meta( ( isset($_POST['post_id'] ) ? $_POST['post_ID'] : $post_id ), 'argo_link_description', $_POST['argo_link_description'] );
+		if ( isset( $_POST['lr_desc'] ) ) {
+			update_post_meta( ( isset($_POST['post_id'] ) ? $_POST['post_ID'] : $post_id ), 'lr_desc', $_POST['lr_desc'] );
 		}
 	}
 
@@ -187,7 +187,7 @@ class LRoundups {
 		register_setting( 'lroundups-settings-group', 'lroundups_custom_name_plural' );
 		register_setting(
 			'lroundups-settings-group', 'lroundups_use_mailchimp_integration',
-			array( __CLASS__, 'validate_mailchimp_integration' ) 
+			array( __CLASS__, 'validate_mailchimp_integration' )
 		);
 		register_setting( 'lroundups-settings-group', 'lroundups_mailchimp_api_key' );
 		register_setting( 'lroundups-settings-group', 'lroundups_mailchimp_template' );
@@ -211,7 +211,6 @@ class LRoundups {
 
 	public static function build_lroundups_options_page() {
 		$mc_api_key = get_option( 'lroundups_mailchimp_api_key' );
-
 		/**
 		 * It's not possible to use this functionality if curl is not enabled in php.
 		 */
@@ -237,10 +236,22 @@ class LRoundups {
 				array( 'include_drag_and_drop' => true )
 			);
 
-			// The endpoint is lists/list, to list the lists, but there is no lists->list. getList with no args is equivalent.
+			// The endpoint is lists/list, to list the lists, but there is no lists->list.
+			// getList with no args is equivalent.
 			$lists = $mcapi->lists->getList();
 		}
 
+		// get the custom url
+		$defined_url = get_option('lroundups_custom_url');
+
+		// check if settings have been updated and if there is a custom slug
+		// TODO: don't flush rewrite rules unless they've actually chanaged since
+		// the last time they were flushed.
+		if (isset($_GET['settings-updated']) && !empty($defined_url)) {
+			flush_rewrite_rules();
+		}
+
+		// get settings fields for options page
 		include_once dirname( LROUNDUPS_PLUGIN_FILE ) . '/templates/options.php';
 	}
 }
