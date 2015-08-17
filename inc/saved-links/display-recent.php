@@ -1,310 +1,338 @@
 <?php
 /**
-  * @package Link_Roundups
-  * @since 0.1
-  */
+ * Recent Saved Links Custom Meta Panel
+ * for Link Roundups Post Type
+ *
+ * @package Link_Roundups
+ * @since 0.1
+ */
 
-/*
-* Recent Saved Links Custom Meta Panel
-* for Link Roundups Post Type
-*/
-
-/** WordPress Admin Bootstrap */
+// WordPress Admin Bootstrap
 require_once( '../../../../../wp-admin/admin.php' );
+require_once( './class-wp-list-table-clone.php' );
 
-global $post;
+/**
+ * Class to generate the table of saved links in the link roundups editor
+ *
+ * @link http://www.smashingmagazine.com/2011/11/native-admin-tables-wordpress/
+ * @see clone_WP_List_Table
+ * @see ./README.md
+ * @since 0.3.2
+ */
+class Saved_Links_List_Table extends clone_WP_List_Table {
+	/**
+	 * Run the WP_List_Table constructor and set the class names
+	 *
+	 * @since 0.3.2
+	 */
+	function __construct() {
+		parent::__construct( array(
+			'singular' => 'lroundups-link',
+			'plural' => 'lroundups-links',
+		));
+	}
 
-// The Query
+	/**
+	 * Additional decorations for the table: "Send to editor" button and "Date range" filter
+	 *
+	 * @param string $which is either "top" or "bottom", and tells you which nav you're outputting.
+	 * @since 0.3.2
+	 */
+	function bulk_actions( $which ) {
+		// this will display at top and bottom
+		?>
+		<button class='button append-saved-links' style='float:left;'><?php _e( 'Send to Editor', 'link-roundups' ); ?></button>
+		<?php
+		if ( $which == 'top' ) {
+			// Date range:
+			?>
+			<div style='float:left;'>
+				<form action='' method='get' id='filter_links'>
+					<label for='link_date'><b><?php _e( 'Date Range:', 'link-roundups' ); ?></b></label>
+					<select name='link_date'>
+						<option value='today' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'today' ) ? 'selected' : '' );?>><?php _e( 'Today',' link-roundups' ); ?></option>
+						<option value='this_week' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'this_week' ) ? 'selected' : '' );?>><?php _e( 'This Week',' link-roundups' ); ?></option>
+						<option value='this_month' <?php echo ( ( isset( $_REQUEST['link_date']) && $_REQUEST['link_date'] == 'this_month' ) ? 'selected' : '' );?>><?php _e( 'This Month',' link-roundups' ); ?></option>
+						<option value='this_year' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'this_year' ) ? 'selected' : '' );?>><?php _e( 'This Year',' link-roundups' ); ?></option>
+						<option value='show_all' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'show_all' ) ? 'selected' : '' );?>><?php _e( 'Show All',' link-roundups' ); ?></option>
+					</select>
+					<?php if( isset( $_REQUEST['orderby'] ) ) : ?>
+						<input type='hidden' name='orderby' value='<?php echo $_REQUEST['orderby']; ?>'/>
+					<?php endif;?>
+					<?php if( isset($_REQUEST['order'] ) ) : ?>
+						<input type='hidden' name='order' value='<?php echo $_REQUEST['order']; ?>'/>
+					<?php endif;?>
+					<input class='button' type='submit' value='Filter'/><span class="spinner"></span>
+				</form>
+			</div>
+		<?php
+		}
+		if ( $which == 'bottom' ) {
+			// Nothing to see here.
+		}
+	}
 
-/*Build our query for what links to show!*/
-$posts_per_page = ( isset( $_REQUEST['posts_per_page'] ) ? $_REQUEST['posts_per_page'] : 15 );
-$page = ( isset( $_REQUEST['lroundups_page'] ) ? $_REQUEST['lroundups_page'] : 1);
-$default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ), 'day' => date( 'd' ) );
-/*Sort out passed filter dates*/
-if ( isset($_REQUEST['link_date'] ) ) {
-  if ( $_REQUEST['link_date'] == 'today' ) {
-    $default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ), 'day' => date( 'd' ) );
-  } elseif ( $_REQUEST['link_date'] == 'this_week ') {
-    $default_date = array( 'year' => date( 'Y' ), 'w' => date( 'W' ));
-  } elseif ( $_REQUEST['link_date'] == 'this_month' ) {
-    $default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ) );
-  } elseif ( $_REQUEST['link_date'] == 'this_year') {
-    $default_date = array( 'year' => date( 'Y' ) );
-  } elseif( $_REQUEST['link_date'] == 'show_all' ) {
-    $default_date = array();
-  }
+	/**
+	 * Set the column IDs and titles for the table
+	 *
+	 * @since 0.3.2
+	 */
+	function get_columns() {
+		return $columns = array(
+			// name => text,
+			'cb' => 'cb', // single_row_columns will turn this into a checkbox.
+			'title' => 'Title',
+			'post_author' => 'Author',
+			'tags' => 'Tags',
+			'date' => 'Date'
+		);
+	}
+
+	/**
+	 * Set which columns are sortable
+	 *
+	 * @since 0.3.2
+	 */
+	function get_sortable_columns() {
+		return $columns = array(
+			'title' => 'post_title',
+			'post_author' => 'post_author',
+			'tags' => 'tags_input',
+			'date' => 'post_date'
+		);
+	}
+
+	/**
+	 * Build the query of posts that should be displayed, and run the query, and fill $this->items with those posts.
+	 *
+	 * @since 0.3.2
+	 */
+	function prepare_items() {
+
+		/*
+		 * Pagination
+		 */
+
+		// Number of posts per page, from $_REQUEST
+		$posts_per_page = ( isset( $_REQUEST['posts_per_page'] ) ? $_REQUEST['posts_per_page'] : 15 );
+		// Which page of results to get, from $_REQUEST
+		$page = ( isset( $_REQUEST['lroundups_page'] ) ? $_REQUEST['lroundups_page'] : 1);
+
+		/*
+		 * Date
+		 */
+
+		// Define the default date query
+		$default_date = array(
+			'year' => date( 'Y' ),
+			'monthnum' => date( 'm' ),
+			'day' => date( 'd' )
+		);
+		// Turn the filter date button's response into a meaningful WP_Query date argument
+		if ( isset($_REQUEST['link_date'] ) ) {
+			switch ($_REQUEST['link_date']) {
+				case 'today':
+					$default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ), 'day' => date( 'd' ) );
+				case 'this_week':
+					$default_date = array( 'year' => date( 'Y' ), 'w' => date( 'W' ));
+				case 'this_month':
+					$default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ) );
+				case 'this_year':
+					$default_date = array( 'year' => date( 'Y' ) );
+				case 'show_all':
+					$default_date = array();
+			}
+		}
+
+		// Generic arguments
+		$args = array(
+			'post_type' 	=> 'rounduplink',
+			'orderby' 		=> ( isset($_REQUEST['orderby'] ) ? $_REQUEST['orderby'] : 'date' ),
+			'order' 		=> ( isset($_REQUEST['order'] ) ? $_REQUEST['order'] : 'desc' ),
+			'posts_per_page' => -1
+		);
+
+		// Join the date query with the generic args.
+		$args = array_merge( $args, $default_date );
+
+		$screen = get_current_screen();
+		$_wp_column_headers;
+
+		$the_posts_count_query = new WP_Query( $args );
+		$total_post_count = $the_posts_count_query->post_count;
+		unset($the_posts_count_query); // to save memory
+
+		// Set the pagination links automagically
+		$this->set_pagination_args(array(
+			'total_items' => $total_post_count,
+			'total_pages' => ceil($total_post_count/$posts_per_page),
+			'per_page' => $posts_per_page,
+		));
+
+		// Set the columns
+		$columns = $this->get_columns();
+		$_wp_column_headers[$screen->id] = $columns;
+
+		// Fetch the items
+		$links_query = new WP_Query($args);
+		$this->items = $links_query->posts;
+		/* This is where we begin to deviate from http://www.smashingmagazine.com/2011/11/native-admin-tables-wordpress/
+		 * Smash Magazine uses wpdb->get_results, and defines its own display_rows method to parse that.
+		 * WP_Query does the following instead::
+		 *   wp_query->get_posts()
+		 *      wpdb->get_results
+		 *      then WP_Query converts those results to WP_Post objects and stores it in the $links_query->posts.
+		 * Since we can override any of WP_List_Table's functions, we can use whatever flavor of item we want in $this->items. $this->items is parsed in $this->display_rows, which runs $this->single_row($item) for each item, which wraps $this->single_row_columns($item) in a <tr>. We'll replace the single_row() method.
+		 */
+	}
+
+	/*
+	 * Turn a WP_Post object into a row for the table
+	 * Mostly copied from WP_Posts_List_Table's single_row.
+	 *
+	 * @param $post WP_Post object
+	 * @since 0.3.2
+	 */
+	function single_row($post) {
+		$post = get_post($post);
+		$classes .= "lroundups-link";
+
+		print "<tr class='$classes' data-post-id='$post->ID'>";
+		list( $columns, $hidden, $sortable, $primary ) = $this->get_column_info();
+		foreach ( $columns as $column_name => $column_display_name ) {
+			$classes = "$column_name column-$column_name";
+			if ( $primary === $column_name ) {
+				$classes .= ' has-row-actions column-primary';
+			}
+			if ( in_array( $column_name, $hidden ) ) {
+				$classes .= ' hidden';
+			}
+			// Instead of using esc_attr(), we strip tags to get closer to a user-friendly string.
+			$data = 'data-colname="' . wp_strip_all_tags( $column_display_name ) . '"';
+			$attributes = "class='$classes' $data";
+			switch ($column_name) {
+				case 'cb':
+					echo '<th scope="row" class="check-column">';
+					echo $this->column_cb( $post ); // Creates a checkbox for the $post
+					echo '</th>';
+					break;
+				case 'title':
+					echo "<td $attributes>";
+					echo $post->post_title;
+					echo $this->handle_row_actions( $post, $column_name, $primary );
+					echo "</td>";
+					break;
+				case 'post_author':
+					echo "<td $attributes>";
+					echo the_author_meta('display_name', $post->post_author);
+					echo "</td>";
+					break;
+				case 'tags':
+					echo "<td $attributes>";
+					echo get_the_term_list($post->ID, 'argo-link-tags', '', ', ', '');
+					echo "</td>";
+					break;
+				case 'date':
+					echo "<td $attributes>";
+					echo get_the_date( '', $post->ID);
+					echo "</td>";
+					break;
+			}
+		}
+		print "</tr>";
+	}
+	
+	/**
+	 * Output a checkbox for a given WP_Post object
+	 *
+	 * @param $post WP_Post
+	 * @since 0.3.2
+	 */
+	function column_cb( $post ) { ?>
+		<label class="screen-reader-text" for="cb-select-<?php echo $post->ID; ?>"><?php
+				printf( __( 'Select %s' ), _draft_or_post_title() );
+		?></label>
+		<input id="cb-select-<?php echo $post->ID; ?>" type="checkbox" class="cb-select" name="post[]" value="<?php the_ID(); ?>" />
+		<div class="locked-indicator"></div>
+	<?php
+	}
 }
-$args = array(
-	'post_type' 	=> 'rounduplink',
-	'orderby' 		=> ( isset($_REQUEST['orderby'] ) ? $_REQUEST['orderby'] : 'date' ),
-	'order' 		=> ( isset($_REQUEST['order'] ) ? $_REQUEST['order'] : 'desc' ),
-	'posts_per_page' => -1
-);
-$args = array_merge( $args, $default_date );
-$the_posts_count_query = new WP_Query( $args );
-$total_post_count = $the_posts_count_query->post_count;
-$the_posts_count_query = '';
-$the_query = new WP_Query( array_merge( $args, array( 'posts_per_page' => $posts_per_page, 'paged' => $page ) ) );
-$from_result = 1;
-$to_result = $posts_per_page;
-if ($page != 1) {
-  $from_result = $posts_per_page * ( $page - 1 );
-  $to_result = $from_result + $posts_per_page - 1;
-}
-if ($to_result > $total_post_count)
-  $to_result = $total_post_count;
 
-/*Build pagination links*/
-$pagination_first = 1;
-$pagination_previous = $page - 1;
-$pagination_next = $page + 1;
-$pagination_last = ceil( $total_post_count / $posts_per_page );
-
-$query_url = '';
-$query_url .= ( isset( $_REQUEST['orderby'] ) ? '&orderby='.$_REQUEST['orderby']: '' );
-$query_url .= ( isset( $_REQUEST['order'] ) ? '&order='.$_REQUEST['order']: '' );
-$query_url .= ( isset( $_REQUEST['link_date'] ) ? '&link_date='.$_REQUEST['link_date']: '' );
-?>
-<div class='display-saved-links'>
-  <div class='pagination'>
-    <div style='float:left'>
-      <button class='button append-saved-links'><?php _e( 'Send to Editor', 'link-roundups' ); ?></button>
-      <form action='' method='get' id='filter_links'>
-        <label for='link_date'><b><?php _e( 'Date Range:', 'link-roundups' ); ?></b></label>
-        <select name='link_date'>
-          <option value='today' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'today' ) ? 'selected' : '' );?>><?php _e( 'Today',' link-roundups' ); ?></option>
-          <option value='this_week' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'this_week' ) ? 'selected' : '' );?>><?php _e( 'This Week',' link-roundups' ); ?></option>
-          <option value='this_month' <?php echo ( ( isset( $_REQUEST['link_date']) && $_REQUEST['link_date'] == 'this_month' ) ? 'selected' : '' );?>><?php _e( 'This Month',' link-roundups' ); ?></option>
-          <option value='this_year' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'this_year' ) ? 'selected' : '' );?>><?php _e( 'This Year',' link-roundups' ); ?></option>
-          <option value='show_all' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'show_all' ) ? 'selected' : '' );?>><?php _e( 'Show All',' link-roundups' ); ?></option>
-        </select>
-        <?php if( isset( $_REQUEST['orderby'] ) ) : ?>
-          <input type='hidden' name='orderby' value='<?php echo $_REQUEST['orderby']; ?>'/>
-        <?php endif;?>
-        <?php if( isset($_REQUEST['order'] ) ) : ?>
-          <input type='hidden' name='order' value='<?php echo $_REQUEST['order']; ?>'/>
-        <?php endif;?>
-        <input class='button' type='submit' value='Filter'/>
-      </form>
-    </div>
-    <div class="page-navi" style='float:right'>
-      <?php echo $from_result . ' - ' . $to_result . ' ' . __( 'of', 'link-roundups' ) . ' ' . $total_post_count; ?>
-      <?php if(!($page <= 6)):?>
-        <a class="button" href='lroundups_page=<?php echo $pagination_first;?><?php echo $query_url; ?>' title='First'>&laquo;</a>
-      <?php endif; ?>
-      <?php if(!($page == 1)):?>
-        <a class="button" href='lroundups_page=<?php echo $pagination_previous;?><?php echo $query_url; ?>' title='Previous'>&laquo;</a>
-      <?php endif; ?>
-      <?php
-        $start = 1;
-        $count = 0;
-        if ( $page == 1 ) {
-          if ( $pagination_last >= 11 ) {
-            $count = $start + 10;
-          } else {
-            $count = $pagination_last;
-          }
-        } else if ( $page == $pagination_last ) {
-          if ( $pagination_last <= 11 ) {
-            $start = 1;
-            $count = $pagination_last;
-          } else {
-            $start = $pagination_last - 11;
-            $count = $start + 11;
-          }
-        } else {
-          if( $pagination_last <= 11 ) {
-            $start = 1;
-            $count = $pagination_last;
-          } else if ( ( $page + 5 ) > $pagination_last ) {
-            $start = $pagination_last - 10;
-            $count = $start + 10;
-          } else if ( ( $page - 5 ) <= 0 ) {
-            $start = 1;
-            $count = 11;
-          } else {
-            $start = $page - 5;
-            $count = $start + 10;
-          }
-        }
-        while ( $start <= $count ) {
-          echo "<a href='lroundups_page=$start$query_url' class='button " . ( $start == $page ? 'current' : '' ) . "'>$start</a> &nbsp;";
-          $start++;
-        }
-      ?>
-      <?php if ( !( $page == $pagination_last ) ) : ?>
-        <a class="button" href='lroundups_page=<?php echo $pagination_next;?><?php echo $query_url; ?>' title='Next'>&raquo;</a>
-      <?php endif; ?>
-      <?php if ( !( $page >= ( $pagination_last - 5 ) ) ) : ?>
-        <a class="button" href='lroundups_page=<?php echo $pagination_last;?><?php echo $query_url; ?>' title='Last'>&raquo;</a>
-      <?php endif;?>
-    </div>
-  </div>
-
-  <!-- START TABLE -->
-  <table class="wp-list-table widefat fixed posts" cellspacing="0">
-    <tr>
-      <th scope="col" id="cb" class="manage-column column-cb check-column" style=""><input type="checkbox" id='check-all-boxes'></th>
-      <th scope="col" id="title" class="manage-column column-title <?php echo (isset($_REQUEST['orderby']) && $_REQUEST['orderby'] == 'title' ? 'sorted' : 'sortable');?> <?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'title' && $_REQUEST['order'] == 'desc' ? 'desc' : 'asc') : 'desc');?>" style=""><a href="post_type=rounduplink&orderby=title&order=<?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'title' && $_REQUEST['order'] == 'desc' ? 'asc' : 'desc') : 'desc');?><?php echo (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_date']: ''); ?>"><span>Title</span><span class="sorting-indicator"></span></a></th>
-      <th scope="col" id="author" class="manage-column column-author <?php echo (isset($_REQUEST['orderby']) && $_REQUEST['orderby'] == 'author' ? 'sorted' : 'sortable');?> <?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'author' && $_REQUEST['order'] == 'desc' ? 'desc' : 'asc') : 'desc');?>" style=""><a href="post_type=rounduplink&orderby=author&order=<?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'author' && $_REQUEST['order'] == 'desc' ? 'asc' : 'desc') : 'desc');?><?php echo (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_date']: ''); ?>"><span>Author</span><span class="sorting-indicator"></span></a></th>
-      <th scope="col" id="link-tags" class="manage-column column-link-tags" style="">Tags</th>
-      <th scope="col" id="date" class="manage-column column-date <?php echo (isset($_REQUEST['orderby']) && $_REQUEST['orderby'] == 'date' ? 'sorted' : 'sortable');?> <?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'date' && $_REQUEST['order'] == 'desc' ? 'desc' : 'asc') : 'desc');?>" style=""><a href="post_type=rounduplink&orderby=date&order=<?php echo (isset($_REQUEST['orderby']) ? ($_REQUEST['orderby'] == 'date' && $_REQUEST['order'] == 'desc' ? 'asc' : 'desc') : 'desc');?><?php echo (isset($_REQUEST['link_date']) ? '&link_date='.$_REQUEST['link_date']: ''); ?>"><span>Date</span><span class="sorting-indicator"></span></a></th>
-    </tr>
-
-    <?php $i=1; ?>
-    <?php if ($the_query->have_posts()) : while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
-      <tr id='<?php echo get_the_ID(); ?>' class='<?php echo ($i%2 ? 'alternate' : '')?>'>
-        <th scope="row" id="cb" class="manage-column column-cb check-column" style="">
-          <input type="checkbox" class='lroundups-link' value='<?php echo get_the_ID(); ?>'/>
-        </th>
-        <td scope="row" id="title" class="manage-column column-title sortable desc" style="">
-          <span id="title-<?php echo get_the_ID();?>"><?php echo the_title(); ?></span><br />
-          <?php
-          $custom = get_post_custom($post->ID);
-          ?>
-          <span id='url-<?php echo get_the_ID();?>'style='font-size:10px;'><em><?php echo (isset($custom["lr_url"][0]) ? $custom["lr_url"][0] : ''); ?></em></span>
-          <span id='description-<?php echo get_the_ID();?>'style='display:none;'><em><?php echo (isset($custom["lr_desc"][0]) ? $custom["lr_desc"][0] : ''); ?></em></span>
-          <span id='source-<?php echo get_the_ID();?>'style='display:none;'><em><?php echo (isset($custom["lr_source"][0]) ? $custom["lr_source"][0] : ''); ?></em></span>
-
-        </td>
-        <td scope="row" id="author" class="manage-column column-author sortable desc" style=""><span><?php the_author();?></span></td>
-        <td scope="row" id="link-tags" class="manage-column column-link-tags" style="">
-        <?php
-        $terms = get_the_terms(get_the_ID(), 'lr-tags');
-            if (count($terms) > 1) {
-              foreach ($terms as $term) {
-                echo $term->name.", ";
-              }
-            } else {
-              echo "&nbsp;";
-            }
-            $terms = "";
-        ?>
-        </td>
-        <td scope="row" id="date" class="manage-column column-date sortable asc" style=""><span><?php echo get_the_date(); ?></span></td>
-      </tr>
-      <?php $i++;?>
-    <?php endwhile; else : // below is the blank template if no links are found ?>
-      <tr id="blank" class='alternate'>
-        <th scope="row" id="cb" class="manage-column column-cb check-column" style=""></th>
-        <td scope="row" id="title" class="manage-column column-title sortable desc" style="">
-          <span class="none-found"><?php _e('No links found.', 'link-roundups'); ?></span><small><?php _e('Try selecting a different Date Range above.', 'link-roundups'); ?></small><br />
-        <td scope="row" id="author" class="manage-column column-author sortable desc" style=""><span>&nbsp;</span></td>
-        <td scope="row" id="link-tags" class="manage-column column-link-tags" style="">
-        	 
-        </td>
-        <td scope="row" id="date" class="manage-column column-date sortable asc" style=""><span>&nbsp;</span></td>
-      </tr>
-      <?php $hide = true; ?>
-    <?php endif; ?>
-  </table>
-
-  <div class='pagination'>
-    <div style='float:left'>
-      <button class='button append-saved-links'>Send to Editor</button>
-    </div>
-    <div class="page-navi" style='float:right'>
-      <br />
-      <?php echo $from_result . ' - ' . $to_result . ' ' . __( 'of', 'link-roundups' ) . ' ' . $total_post_count; ?>
-      <?php if(!($page <= 6)):?>
-        <a class="button" href='lroundups_page=<?php echo $pagination_first;?><?php echo $query_url; ?>' title='First'>&laquo;</a>
-      <?php endif; ?>
-      <?php if(!($page == 1)):?>
-        <a class="button" href='lroundups_page=<?php echo $pagination_previous;?><?php echo $query_url; ?>' title='Previous'>&laquo;</a>
-      <?php endif; ?>
-      <?php
-        $start = 1;
-        $count = 0;
-        if ($page == 1) {
-          if ($pagination_last >= 11) {
-            $count = $start + 10;
-          } else {
-            $count = $pagination_last;
-          }
-        } else if ($page == $pagination_last) {
-          if ($pagination_last <= 11) {
-            $start = 1;
-            $count = $pagination_last;
-          } else {
-            $start = $pagination_last - 11;
-            $count = $start + 11;
-          }
-        } else {
-          if($pagination_last <= 11) {
-            $start = 1;
-            $count = $pagination_last;
-          } else if (($page + 5) > $pagination_last) {
-            $start = $pagination_last - 10;
-            $count = $start + 10;
-          } else if (($page - 5) <= 0) {
-            $start = 1;
-            $count = 11;
-          } else {
-            $start = $page - 5;
-            $count = $start + 10;
-          }
-        }
-        while ($start <= $count) {
-          echo "<a href='lroundups_page=$start$query_url' class='button ".($start == $page ? 'current' : '')."'>$start</a> &nbsp;";
-          $start++;
-        }
-      ?>
-      <?php if(!($page == $pagination_last)):?>
-        <a class="button" href='lroundups_page=<?php echo $pagination_next;?><?php echo $query_url; ?>' title='Next'>&raquo;</a>
-      <?php endif; ?>
-      <?php if(!($page >= ($pagination_last - 5))):?>
-        <a class="button" href='lroundups_page=<?php echo $pagination_last;?><?php echo $query_url; ?>' title='Last'>&raquo;</a>
-      <?php endif;?>
-    </div>
-  </div>
-</div>
-<?php
+// Set up and generate the table.
+$links_list_table = new Saved_Links_List_Table();
+$links_list_table->prepare_items();
+$links_list_table->display();
 // Reset Query
 wp_reset_query();
 
-/**
- * Get a shortcode string in a jQuery context.
- * Returns a PHP concatenated string of jQuery concatenated selectors. Sorry.
- *
- * @since 0.3
+/*
+ * JavaScripts for the table's functionality
  */
-function link_roundups_get_shortcode() {
-$javascript_title = <<<JAVASCRIPT_TITLE
-'+jQuery('#title-'+jQuery(this).val()).text()+'
-JAVASCRIPT_TITLE;
-  $shortcode = "[rounduplink ";
-  $shortcode .= "id=\"'+jQuery(this).val()+'\" ";
-  $shortcode .= "title=\"".$javascript_title."\"]";
-  return $shortcode;
-}
-
 ?>
 <script type='text/javascript'>
 jQuery(function(){
+
+  /**
+   * From a checkbox element, find the post ID and title, and return a WP shortcode.
+   *
+   * @since 0.3.2
+   */
+  var link_roundups_get_shortcode = function(checkbox) {
+    var row = jQuery(checkbox).parent().parent(),
+      post_id = row.data('post-id'),
+      title = row.find('.column-title').text();
+    return '[rounduplink id="' + post_id + '" title="' + title + '"]';
+  };
+
+  /**
+   * When "Send to Editor" is clicked, send checked stories to the editor
+   * Also, do not reload the page
+   *
+   * @since 0.3.2
+   * @uses link_roundups_get_shortcode
+   */
   jQuery('.append-saved-links').bind('click',function(){
-    // this is the class for the checkbox in the table, we check how it's doing
-    jQuery('.lroundups-link').each(function(){
+    // find all the roundups links in the table, and send them to the editor if they're checked
+    jQuery('.lroundups-link .cb-select').each(function(){
       if (jQuery(this).is(":checked"))
-        send_to_editor('<?php echo link_roundups_get_shortcode(); ?>');
+        send_to_editor(link_roundups_get_shortcode(this));
     });
     return false;
-    });
+  });
+
+  /**
+   * If an <a> inside the "Recent Saved Links" div is clicked, submit its href to this file and display the response.
+   *
+   * @since 0.1
+   */
   jQuery('div.display-saved-links a').bind("click",function(){
     var urlOptions = jQuery(this).attr('href');
     jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(LROUNDUPS_PLUGIN_FILE); ?>inc/saved-links/display-recent.php?'+urlOptions);
     return false;
   });
+
+  /**
+   * When "Filter Links" is clicked, fill the table display area with the HTML produced by this file, when supplied with the query args.
+   */
   jQuery("#filter_links").bind("submit", function() {
-    jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(LROUNDUPS_PLUGIN_FILE); ?>inc/saved-links/display-recent.php?'+jQuery(this).serialize());
+    var self=jQuery(this);
+    self.find(".spinner").css('visibility','visible');
+    jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(LROUNDUPS_PLUGIN_FILE); ?>inc/saved-links/display-recent.php?'+jQuery(self).serialize(), function() {
+      self.find(".spinner").css('visibility','hidden');
+    });
     return false;
   });
-  jQuery('#check-all-boxes').change(function(){
+
+  /**
+   * Check all the checkboxes if the "Check all boxes" checkbox is checked, and if it's unchecked, uncheck all the checkboxes.
+   */
+  jQuery('#cb-select-all-1,#cb-select-all-2').change(function(){
     if (jQuery(this).is(':checked')) {
-      jQuery('.lroundups-link').each(function(){
+      jQuery('.lroundups-links input[type=checkbox]').each(function(){
         jQuery(this).prop("checked", true);
       });
     } else {
-      jQuery('.lroundups-link').each(function(){
+      jQuery('.lroundups-links input[type=checkbox]').each(function(){
         jQuery(this).prop("checked", false);
       });
     }
