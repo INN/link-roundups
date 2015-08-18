@@ -1,54 +1,55 @@
 === Link Roundups ===
-Contributors: inn_nerds
+Contributors: inn_nerds, willhaynes24, dryanpress
+Tags: bookmark, links, newsletter, api, email, widget, 
 Donate link: http://bit.ly/1N4nSJJ
-Tags: newsletters, mailchimp, links, curation, aggregation
 Requires at least: 4.1
-Tested up to: 4.2.3
+Tested up to: 4.2.4
 Stable tag: 0.3.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A WordPress plugin to make it easy to collect links from around the web, turn them into roundup posts and streamline the production of daily/weekly roundup newsletters using MailChimp. Built and maintained by INN Nerds.
+Curate links from around the web, create roundup posts -- optionally sent as email newsletters with MailChimp -- and use widgets to publish feeds.
 
 == Description ==
+Link Roundups enables you to:
+* Curate links
+* Create link roundup posts
+* Optionally send the roundup posts to MailChimp to be distributed to your subscribers
 
-= Current plugin features =
+It also includes two widgets:
+* A widget to display your recently saved links
+* A widget to display your recent link roundup posts (with the ability to limit by category)
 
-* **Link Roundups** Create curated lists of links based on Saved Links via the WordPress dashboard
-* **Saved Links** Add and edit links to places around the web via the WordPress dashboard
-* **Custom HTML for links** Customize the presentation of Saved Links in Link Roundups
-* **Link Roundups Widget** Display most recent Link Roundup posts by date
-* **Saved Links Widget** Display a feed of your recent Saved Links, optionally filtered by tags
-* **Browser Bookmark** Create new Saved Links via a browser bookmarklet
-* **MailChimp Integration** Create new MailChimp campaigns based on a Link Roundup
+The plugin includes a browser bookmark that you can drag to your browser\'s bookmark bar, allowing you to save links directly to your WordPress site. This bookmark attempts to pre-fill fields like link title, source, URL and featured image and also allows you to add a description to each link viewable when published on your site.
+
+In its\' previous life, Link Roundups was called Argo Links.
 
 == Installation ==
+Link Roundups can be installed like any other WordPress plugin.
 
-1. Install the Link Roundups plugin via the Wordpress.org plugin directory
-2. Activate the plugin
-3. Navigate to the Admin -> Link Roundups -> Options page to configure the plugin
-4. Done!
+From WordPress.org or within your WordPress Dashboard:
+* Go to wordpress.org/plugins or Plugins --> Add New
+* Search for \"Link Roundups\"
+* In your Dashboard, click Install. From WordPress.org, download the .ZIP archive, and choose \"Upload Plugin\" on the Add New page instead of searching.
+* Activate the plugin and you\'re off!
 
-[Read more about installing plugins here](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
+From GitHub:
+Download the contents of this repository.
+Unzip the package and rename the folder to \"link-roundups\" (the folder will be called \"link-roundups-master\" but this may cause problems if you don\'t rename it before uploading to your site)
+Upload the folder to your WordPress installation in the wp-content/plugins directory
+Login to WordPress, click on Plugins in the left hand menu
+Select the Link Roundups plugin and click \"activate\"
+Review the plugin settings under the Settings > Link Roundups menu
+Installation directly from the WordPress.org plugin directory coming soon!
+
+== Frequently Asked Questions ==
+Where can I find Documentation?
+Full plugin documentation is available on GitHub, where you may also contribute pull requests and issue reports.
+https://github.com/INN/link-roundups
+
+Who makes this?
+Link Roundups is made by the INN Nerds (http://nerds.inn.org), and is a fork of argo-links -- a project of NPR and The Knight Foundation.
 
 == Changelog ==
-
-= 0.3.1 =
-
-- Update readme.txt 'requires at least' to match readme.md
-- Add [release.sh](https://github.com/INN/link-roundups/blob/master/release.sh) for pushing changes to wordpress.org
-- Fix the browser bookmarklet
-
-= 0.3.0 =
-
-- Initial public release
-- Added a Gruntfile.js to manage compiling and minfying CSS and Javascript assets
-- Renamed the plugin from Argo Links to Link Roundups
-- Removed (most) traces of Argo Links from source code
-- Reorganized the project's file, directory layout
-- Added an update framework to help move from Argo Links to Link Roundups
-- Added ability to rename Link Roundup posts
-- Added ability to modify Link Roundup URL slug
-- Changed label for "Argo Link This!" button to "Save to Site"
-- Added ability to create a MailChimp campaign based on a Link Roundup post
-- Prepared the plugin for release on wordpress.org
+Change Log and Release Notes are available on GitHub.
+https://github.com/INN/link-roundups
