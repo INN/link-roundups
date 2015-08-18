@@ -178,6 +178,17 @@ class SavedLinks {
 		<input type="checkbox" value="1" name="lr_img" id="lr_img"><label for="lr_img"><?php _e( 'Import as feature image', 'link-roundups' ); ?></label>
 		</p>
 	<?php }
+		// did the social media image fail to import?
+		// @see browser-bookmark.php -- function load() for transient set
+		if( get_transient('failed_img_import') === true) {
+		  	// first we must delete the transient
+			delete_transient('failed_img_import');
+		    // now lets return the error
+		    // no matter where we spit this out, WordPress CSS yanks this div and spits out
+		    // at the top of the singular post edit screen
+			echo '<div class="error settings-error notice">' . __('<h3>Failed to Import Social Media Image</h3><p>Please upload an image manually.</p>','link-roundups') . '</div>';
+		}
+	
 	}
 
 	/**

@@ -189,7 +189,11 @@ class Save_To_Site_Button {
 		if( !empty($meta['ogp']['image']) ) {
 			self::$imgUrl = $meta['ogp']['image'];
 		}
-
+		if( empty($meta['ogp']['image']) ) {
+			// set a temporary transient to explain img import failure
+			set_transient('failed_img_import', true, 10);
+		}
+		
 		/**
          * Default Link Roundups Values for Custom Meta
          *
