@@ -186,11 +186,14 @@ class Save_To_Site_Button {
 		}
 
 		self::$imgUrl = '';
+		// if there IS a social URL, set it!
 		if( !empty($meta['ogp']['image']) ) {
 			self::$imgUrl = $meta['ogp']['image'];
 		}
+		// if there ISN'T a social URL, spit error!
 		if( empty($meta['ogp']['image']) ) {
 			// set a temporary transient to explain img import failure
+			// @see class-saved-links.php
 			set_transient('failed_img_import', true, 10);
 		}
 		
