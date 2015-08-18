@@ -19,10 +19,10 @@
 		<p><?php _e( 'Drag the Save to Site bookmarklet below to your web browser\'s Bookmarks Toolbar.<br /><em>If you can\'t drag, click the Clipboard.</em>', 'link-roundups' ); ?></p>
 
 		<p class="pressthis-bookmarklet-wrapper">
-			<a class="pressthis-bookmarklet" onclick="return false;" href="<?php echo Save_To_Site_Button::shortcut_link(); ?>"><span><?php _e( '<span class="replace-text">Save to Site</span>', 'link-roundups' ); ?></span></a>
+			<a class="pressthis-bookmarklet" onclick="return false;" href="<?php echo Save_To_Site_Button::shortcut_link(); ?>"><span><?php _e( '<strong class="replace-text">Save to Site</strong>', 'link-roundups' ); ?></span></a>
 			<button type="button" class="button button-secondary pressthis-js-toggle js-show-pressthis-code-wrap" aria-expanded="false" aria-controls="pressthis-code-wrap">
 				<span class="dashicons dashicons-clipboard"></span>
-				<span class="screen-reader-text"><?php _e( 'Copy <span class="replace-text">Save to Site</span> bookmarklet code', 'link-roundups' ) ?></span>
+				<span class="screen-reader-text"><?php _e( 'Copy <strong class="replace-text">Save to Site</strong> bookmarklet code', 'link-roundups' ) ?></span>
 			</button>
 		</p>
 
@@ -38,12 +38,13 @@
 		<h4><?php _e( 'Direct link (best for mobile and tablets)', 'link-roundups' ); ?></h4>
 		<p><?php _e( 'Follow the link to open Save to Site. Then add it to your device&#8217;s bookmarks or home screen.', 'link-roundups' ); ?></p>
 		<p>
-			<a class="button button-secondary" href="<?php echo Save_To_Site_Button::shortcut_link(); ?>"><?php _e( 'Open <span class="replace-text">Save to Site</span>', 'link-roundups' ) ?></a>
+			<a class="button button-secondary" href="<?php echo Save_To_Site_Button::shortcut_link(); ?>"><?php _e( 'Open <strong class="replace-text">Save to Site</strong>', 'link-roundups' ) ?></a>
 		</p>
 		<script>
 			jQuery( document ).ready( function( $ ) {
 				var $showPressThisWrap = $( '.js-show-pressthis-code-wrap' );
 				var $pressthisCode = $( '.js-pressthis-code' );
+				var $bookmarkToggle = $( '#bookmarkName');
 
 				$showPressThisWrap.on( 'click', function( event ) {
 					var $this = $( this );
@@ -58,14 +59,12 @@
 					setTimeout( function() { self.select(); }, 50 );
 				});
 				
-				$( '#bookmarkName' ).on( 'click change input keyup', function() {
-					var self = this;
-					var customName = self.document.getElementById('#bookmarkName').value;
-					self.alert(customName);
-					
-					$('span.replace-text').replaceWith('<span class="replaced">David Ryan</span>');
-					
+				$bookmarkToggle.on('click change input keyup', function(event) {
+					var $this = $(this);
+					var value = '<strong class="replaced">'+ $("bookmarkName").val() +'</strong>';
+					$('strong.replace-text').replaceWith($this.value)
 				});
+				
 
 			});
 			
