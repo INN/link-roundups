@@ -8,7 +8,7 @@ Stable tag: 0.3.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Curate links from around the web, create roundup posts -- optionally sent as email newsletters with MailChimp -- and use widgets to publish feeds.
+Curate links from around the web. Create roundup posts -- optionally sent as email newsletters with MailChimp -- and use widgets to publish feeds.
 
 == Description ==
 Link Roundups enables you to:
@@ -20,7 +20,7 @@ It also includes two widgets:
 * A widget to display your recently saved links
 * A widget to display your recent link roundup posts (with the ability to limit by category)
 
-The plugin includes a browser bookmark that you can drag to your browser\'s bookmark bar, allowing you to save links directly to your WordPress site. This bookmark attempts to pre-fill fields like link title, source, URL and featured image and also allows you to add a description to each link viewable when published on your site.
+The plugin includes a browser bookmark that you can drag to your browser\'s bookmark bar, allowing you to save links directly to your WordPress site while browsing. This bookmark attempts to pre-fill fields for links including title, source, URL and featured image and also allows you to add a description to each link.
 
 In its\' previous life, Link Roundups was called Argo Links.
 
@@ -49,6 +49,10 @@ https://github.com/INN/link-roundups
 
 Who makes this?
 Link Roundups is made by the INN Nerds (http://nerds.inn.org), and is a fork of argo-links -- a project of NPR and The Knight Foundation.
+
+== Screenshots ==
+1. Customize Link Roundups by renaming the roundup post type, customizing the link template used in link roundups and more.
+2. Use the Browser Bookmark tool to save links with information pre-filled.
 
 == Changelog ==
 Change Log and Release Notes are available on GitHub.
