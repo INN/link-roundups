@@ -535,21 +535,26 @@ class SavedLinks {
 	public static function get_html( $post = null, $link_class = null ) {
 
 		$post = get_post(  $post ); // getting a saved link...
+		$passed_class = $link_class; 
 
 		if( !$post )
 			return;
 
 		$meta = get_post_meta( $post->ID ); // getting meta fields from saved link...
-
-		// first lets get the kind of link
-		$style_class = $link_class; // $link_class is defined below in rounduplink_shortcode()
-		// now check if it's sponsored and set the $sponsored_title
-
-		$sponsored_title = !empty( $style_class ) ? __( 'SPONSORED: ', 'link-roundups' ) : '';
+		
+		// check shortcode for class attribute ($link_class defined below)
+		// now check if it's sponsored and set special $pre_title if so
+		// otherwise don't return anything to append ( : '' ; on next line)
+		if ('sponsored' == $passed_class) {
+			$pre_title = 'Sponsored: ';
+		}
+		else {
+			$pre_title = '';
+		}
 
 		$url = !empty( $meta['lr_url']) ? $meta['lr_url'][0] : '';
 		$link_title = get_the_title( $post->ID );
-		$title = $sponsored_title . '' . $link_title;
+		$title = sprintf( __('%1$s%2$s'), $pre_title, $link_title );
 		$description = array_key_exists( 'lr_desc', $meta ) ? $meta['lr_desc'][0] : '';
 		$source = !empty( $meta['lr_source']) ? $meta['lr_source'][0] : '';
 
