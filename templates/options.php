@@ -76,15 +76,11 @@ EOT;
 				</ul></blockquote>
 				<h4 style="margin-bottom:0;padding-bottom:0;"><?php _e( 'Default HTML', 'link-roundups' ); ?></h4><br />
 				<code><?php echo htmlspecialchars($default_html); ?></code><br />
-				<h4><?php _e( 'Sponsored Link Styling', 'link-roundups' ); ?></h4>
+				<h4><?php _e( 'Link Styling', 'link-roundups' ); ?></h4>
 				<?php 
-					printf(
-						__( '%s is the proper selector to use in your CSS.', 'link-roundups' ),
-						'<code>.lr-saved-link.sponsored</code>'
-					);
+					echo '<p>' . __('Adding an additional attribute <code>class="*"</code> to the <code>[rounduplink ... ]</code> shortcode will let you inject a single class to customize via CSS. This allows you to add custom style to each link.</p>', 'link-roundups') . '</p>';
+					echo '<p>' . __('You might use sponsored, breaking, editors-pick, or something else to customize with style.</p>','link-roundups') . '</p>';
 				?>
-				<h4><?php _e( 'General Styling of Saved Links Output', 'link-roundups' ); ?></h4>
-				<p><?php _e( 'Add custom styles to your theme\'s CSS based on selectors and structure above.', 'link-roundups' ); ?></p>
 			</div>
 			
 			<div id="mailchimp" class="card">
