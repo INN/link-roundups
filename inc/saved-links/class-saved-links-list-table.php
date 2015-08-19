@@ -202,7 +202,6 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 	 */
 	function single_row($post) {
 		$post = get_post($post);
-		var_log($post);
 		$classes .= "lroundups-link";
 
 		print "<tr class='$classes' data-post-id='$post->ID'>";
