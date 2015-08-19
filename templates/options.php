@@ -1,6 +1,6 @@
 <?php
 $default_html = <<<EOT
-<p class='lr-saved-link#!CLASS!#'><a href='#!URL!#'>#!TITLE!#</a>&ndash;<span class='description'>#!DESCRIPTION!#</span><em>#!SOURCE!#</em></p>
+<p class='lr-saved-link#!CLASS!#'><a href='#!URL!#'>#!TITLE!#</a>&ndash;<span class='description'>#!DESCRIPTION!#</span> <em>#!SOURCE!#</em></p>
 EOT;
 ?>
 <div class="wrap">
