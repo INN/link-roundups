@@ -206,6 +206,7 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 
 		print "<tr class='$classes' data-post-id='$post->ID'>";
 		list( $columns, $hidden, $sortable, $primary ) = $this->get_column_info();
+
 		foreach ( $columns as $column_name => $column_display_name ) {
 			$classes = "$column_name column-$column_name";
 			if ( $primary === $column_name ) {
@@ -236,7 +237,7 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 					break;
 				case 'tags':
 					echo "<td $attributes>";
-					echo get_the_term_list($post->ID, 'argo-link-tags', '', ', ', '');
+					echo get_the_term_list($post->ID, 'lr-tags', '', ', ', '');
 					echo "</td>";
 					break;
 				case 'date':
