@@ -145,17 +145,6 @@ jQuery(function(){
     return false;
   });
 
-  function link_roundups_replace_table( response ) {
-    jQuery('#lroundups-display-area').html(response);
-  }
-  function link_roundups_get_table( urlOptions ) {
-    var data = {
-      'action': 'lroundups_saved_links_list_table_render',
-      'urlOptions': urlOptions
-    }
-    jQuery.post(ajaxurl, data, link_roundups_replace_table);
-  }
-
   /**
    * If an <a> inside the "Recent Saved Links" div is clicked, submit its href to this file and display the response.
    *
@@ -163,18 +152,29 @@ jQuery(function(){
    */
   jQuery('div.display-saved-links a').bind("click",function(){
     var urlOptions = jQuery(this).attr('href');
-   
+    var data = {
+      'action': 'lroundups_saved_links_list_table_render',
+      'urlOptions': urlOptions
+    }
+    jQuery.post(ajaxurl, data).done(function( response ){
+      jQuery('#lroundups-display-area').html(response);
+    });
     return false;
   });
 
   /**
    * When "Filter Links" is clicked, fill the table display area with the HTML produced by this file, when supplied with the query args.
    */
-  jQuery("#filter_links").bind("submit", function() {
+  jQuery("#filter_links").bind("click", function() {
     var self=jQuery(this);
     self.find(".spinner").css('visibility','visible');
     console.log(jQuery(self).serialize());
-    jQuery('#lroundups-display-area').load('<?php echo plugin_dir_url(LROUNDUPS_PLUGIN_FILE); ?>inc/saved-links/display-recent.php?'+jQuery(self).serialize(), function() {
+    var data = {
+      'action': 'lroundups_saved_links_list_table_render',
+      'urlOptions': urlOptions
+    }
+    jQuery.post(ajaxurl, data).done(function( response ){
+      jQuery('#lroundups-display-area').html(response);
       self.find(".spinner").css('visibility','hidden');
     });
     return false;

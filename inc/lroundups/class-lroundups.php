@@ -142,10 +142,8 @@ class LRoundups {
 				'action': 'lroundups_saved_links_list_table_render',
 			}
 			jQuery.post(ajaxurl, data).done( function( response ){
-				console.log(response);
 				jQuery('#lroundups-display-area').html(response );
 			});
-			jQuery( '#lroundups-display-area' ).load( '<?php echo plugin_dir_url(LROUNDUPS_PLUGIN_FILE); ?>inc/saved-links/display-recent.php' );
 		});
 		</script>
 	<?php

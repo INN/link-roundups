@@ -69,7 +69,7 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 					<?php if( isset($_REQUEST['order'] ) ) : ?>
 						<input type='hidden' name='order' value='<?php echo $_REQUEST['order']; ?>'/>
 					<?php endif;?>
-					<input class='button' type='submit' value='Filter'/><span class="spinner"></span>
+					<input id="filter_links" class='button' type='submit' value='Filter'/><span class="spinner"></span>
 				</form>
 			</div>
 		<?php
