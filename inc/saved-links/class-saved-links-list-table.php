@@ -54,7 +54,7 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 			// Date range:
 			?>
 			<div style='float:left;'>
-				<form action='' method='get' id='filter_links'>
+				<form action='' method='get' id='filter_links_container'>
 					<label for='link_date'><b><?php _e( 'Date Range:', 'link-roundups' ); ?></b></label>
 					<select name='link_date'>
 						<option value='today' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'today' ) ? 'selected' : '' );?>><?php _e( 'Today',' link-roundups' ); ?></option>

@@ -136,7 +136,7 @@ jQuery(function(){
    * @since 0.3.2
    * @uses link_roundups_get_shortcode
    */
-  jQuery('.append-saved-links').bind('click',function(){
+  jQuery('.append-saved-links').bind('click', this , function(foo){
     // find all the roundups links in the table, and send them to the editor if they're checked
     jQuery('.lroundups-link .cb-select').each(function(){
       if (jQuery(this).is(":checked"))
@@ -150,7 +150,7 @@ jQuery(function(){
    *
    * @since 0.1
    */
-  jQuery('div.display-saved-links a').bind("click",function(){
+  jQuery('div.display-saved-links a').bind("click", this , function(foo){
     var urlOptions = jQuery(this).attr('href');
     var data = {
       'action': 'lroundups_saved_links_list_table_render',
@@ -165,7 +165,7 @@ jQuery(function(){
   /**
    * When "Filter Links" is clicked, fill the table display area with the HTML produced by this file, when supplied with the query args.
    */
-  jQuery("#filter_links").bind("click", function() {
+  jQuery("#filter_links").click(function() {
     var self=jQuery(this);
     self.find(".spinner").css('visibility','visible');
     console.log(jQuery(self).serialize());
