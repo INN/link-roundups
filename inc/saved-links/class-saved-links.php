@@ -55,6 +55,9 @@ class SavedLinks {
 
 		/* Register a shortcode to display links */
 		add_shortcode( 'rounduplink', array( __CLASS__,'rounduplink_shortcode' ) );
+
+		/* Register the ajax call that renders the Saved_Links_List_table class*/
+		add_action( 'wp_ajax_lroundups_saved_links_list_table_render', array( __CLASS__, 'lroundups_saved_links_list_table_render'));
 	}
 
 	public static function plugin_mce_css( $mce_css ) {
@@ -641,6 +644,23 @@ class SavedLinks {
 		$html = ob_get_clean();
 
 		return $html;
+	}
 
+	/*
+	 * Load the Saved_Links_List_Table class
+	 *
+	 * @since 0.3.2
+	 */
+	public static function lroundups_saved_links_list_table_render() {
+		require_once( __DIR__ . '/class-saved-links-list-table.php' );
+
+		// Set up and generate the table.
+		$links_list_table = new Saved_Links_List_Table();
+		$links_list_table->prepare_items();
+		$links_list_table->display();
+		// Reset Query
+		wp_reset_query();
+
+		wp_die();
 	}
 }
