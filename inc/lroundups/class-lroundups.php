@@ -139,10 +139,11 @@ class LRoundups {
 		<script type='text/javascript'>
 		jQuery(function(){
 			var data = {
-				'action': 'lroundups_saved_links_list_table_render',
-			}
-			jQuery.post(ajaxurl, data).done( function( response ){
-				jQuery('#lroundups-display-area').html(response );
+				'action': 'lroundups_saved_links_list_table_render'
+			};
+
+			jQuery.post(ajaxurl, data).done(function(response) {
+				jQuery('#lroundups-display-area').html(response);
 			});
 		});
 		</script>
