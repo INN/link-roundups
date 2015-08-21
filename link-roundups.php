@@ -135,6 +135,8 @@ function link_roundups_enqueue_assets() {
 	$screen = get_current_screen();
 	if ( $screen->base == 'post' && $screen->post_type == 'roundup' ) {
 		wp_enqueue_script( 'link-roundups' );
+	}
+	if ( $screen->base == 'post' && ( $screen->post_type == 'roundup' || $screen->post_type == 'rounduplink' ) ) {
 		wp_enqueue_style( 'links-common' );
 	}
 }
