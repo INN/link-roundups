@@ -114,7 +114,13 @@ class SavedLinks {
 	 * @since 0.1
 	 */
 	public static function add_custom_post_fields() {
-		add_meta_box( 'saved_links_meta', __( 'Link Information', 'link-roundups' ), array( __CLASS__, 'display_custom_fields' ), 'rounduplink', 'normal', 'low' );
+		add_meta_box(
+			'saved_links_meta',
+			__( 'Link Information', 'link-roundups' ),
+			array( __CLASS__, 'display_custom_fields' ),
+			'rounduplink',
+			'normal','low'
+		);
 	}
 
 	/**
@@ -148,12 +154,25 @@ class SavedLinks {
 		$link_img_src = Save_To_Site_Button::default_imgUrl();
 
 	?>
-	<p><label><?php _e( 'URL:', 'link-roundups' ); ?></label><br />
-	<input type='text' name='lr_url' value='<?php echo $link_url; ?>' style='width:98%;'/></p>
-	<p><label><?php _e ( 'Description:', 'link-roundups' ); ?></label><br />
-	<textarea cols="100" rows="5" name="lr_desc" style='width:98%;'><?php echo $link_description; ?></textarea></p>
-	<p><label><?php _e( 'Source:', 'link-roundups' ); ?></label><br />
-	<input type='text' name='lr_source' value='<?php echo $link_source; ?>' style='width:98%;'/></p>
+	<p>
+		<label><?php _e( 'URL:', 'link-roundups' ); ?></label><br />
+		<input type='text' name='lr_url' value='<?php echo $link_url; ?>' style='width:98%;'/>
+	</p>
+
+	<p>
+		<label><?php _e ( 'Description:', 'link-roundups' ); ?></label><br />
+		<?php
+			wp_editor($link_description, 'lr_desc', array(
+				'teeny' => true,
+				'media_buttons' => false
+			));
+		?>
+	</p>
+
+	<p>
+		<label><?php _e( 'Source:', 'link-roundups' ); ?></label><br />
+		<input type='text' name='lr_source' value='<?php echo $link_source; ?>' style='width:98%;'/>
+	</p>
 
 	<?php if( $link_img_src ) { ?>
 		<p><label><?php _e( 'Import featured image:', 'link-roundups' ); ?></label><br />
