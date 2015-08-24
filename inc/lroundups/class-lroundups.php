@@ -129,8 +129,7 @@ class LRoundups {
 		}
 		// check if styles have been removed
 		$remove_styles = get_option('lroundups_dequeue_styles');
-		if(!empty($remove_styles)) {}
-		else {
+		if (empty($remove_styles)) {
 			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 			$mce_css .= plugins_url( 'css/lroundups' . $suffix . '.css', LROUNDUPS_PLUGIN_FILE );
 			return $mce_css;
@@ -141,8 +140,7 @@ class LRoundups {
 	public static function add_styles() {
 		// check if styles should be removed
 		$remove_styles = get_option('lroundups_dequeue_styles');
-		if(!empty($remove_styles)) {}
-		else {
+		if (empty($remove_styles)) {
 			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG )  ? '' : '.min';
 			$css = plugins_url(  'css/lroundups' . $suffix . '.css', LROUNDUPS_PLUGIN_FILE);
 			wp_enqueue_style( 'link-roundups', $css, array(), 1 );
