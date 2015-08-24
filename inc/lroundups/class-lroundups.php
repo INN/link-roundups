@@ -16,15 +16,20 @@ class LRoundups {
 
 		// Register the custom post type of roundup
 		add_action('init', array( __CLASS__, 'register_post_type' ) );
-
-		// Add our custom post fields for our custom post type
-		add_action( 'admin_init', array( __CLASS__, 'add_custom_post_fields' ) );
-
+		
 		// Add the Link Roundups Options sub menu
 		add_action( 'admin_menu', array( __CLASS__, 'add_lroundups_options_page') );
 
+		// Add our custom post fields for our custom post type
+		add_action( 'admin_init', array( __CLASS__, 'add_custom_post_fields' ) );
+		
 		// Save our custom post fields! Very important!
 		add_action( 'save_post', array( __CLASS__, 'save_custom_fields') );
+
+		/*Add our css stylesheet into the header*/
+		add_action( 'admin_print_styles', array( __CLASS__,'add_styles' ) );
+		add_action( 'wp_print_styles', array( __CLASS__, 'add_styles' ) );
+		add_filter( 'mce_css', array( __CLASS__,'plugin_mce_css' ) );
 
 		// Make sure our custom post type gets pulled into the river
 		add_filter( 'pre_get_posts', array( __CLASS__,'my_get_posts') );
@@ -114,6 +119,33 @@ class LRoundups {
 
 		register_post_type( 'roundup', $roundup_options );
 	}
+	
+	/*Add our css stylesheet into tinymce*/
+	public static function plugin_mce_css( $mce_css ) {
+		if ( !empty( $mce_css ) ) {
+			$mce_css .= ',';
+		} else {
+			$mce_css = '';
+		}
+		// check if styles have been removed
+		$remove_styles = get_option('lroundups_dequeue_styles');
+		if (empty($remove_styles)) {
+			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+			$mce_css .= plugins_url( 'css/lroundups' . $suffix . '.css', LROUNDUPS_PLUGIN_FILE );
+			return $mce_css;
+		}
+	}
+
+	/*Add our css stylesheet into the header*/
+	public static function add_styles() {
+		// check if styles should be removed
+		$remove_styles = get_option('lroundups_dequeue_styles');
+		if (empty($remove_styles)) {
+			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG )  ? '' : '.min';
+			$css = plugins_url(  'css/lroundups' . $suffix . '.css', LROUNDUPS_PLUGIN_FILE);
+			wp_enqueue_style( 'link-roundups', $css, array(), 1 );
+		}
+	}
 
 	/**
 	 * Register meta box for custom fields on roundup edit pages.
@@ -189,6 +221,7 @@ class LRoundups {
 		// register our settings
 		register_setting( 'lroundups-settings-group', 'lroundups_custom_url' );
 		register_setting( 'lroundups-settings-group', 'lroundups_custom_html' );
+		register_setting( 'lroundups-settings-group', 'lroundups_dequeue_styles' );
 		register_setting( 'lroundups-settings-group', 'lroundups_custom_name_singular' );
 		register_setting( 'lroundups-settings-group', 'lroundups_custom_name_plural' );
 		register_setting(

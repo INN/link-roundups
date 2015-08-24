@@ -10,7 +10,7 @@ module.exports = function(grunt) {
 
     var CSS_LESS_FILES = {
         'css/lroundups.css': 'less/lroundups.less',
-        'css/links-common.css': 'less/links-common.less',
+        'css/lroundups-admin.css': 'less/lroundups-admin.less',
     };
 
     grunt.initConfig({

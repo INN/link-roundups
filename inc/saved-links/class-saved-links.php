@@ -8,13 +8,14 @@
  */
 class SavedLinks {
 
+	protected static $notices = array();
+
 	/**
 	 * Initialize the class.
 	 *
 	 * @since 0.1
 	 */
 	public static function init() {
-
 		/*Register the custom post type of for saved links: rounduplinks */
 		add_action( 'init', array( __CLASS__, 'register_post_type' ) );
 
@@ -40,11 +41,6 @@ class SavedLinks {
 		add_action( 'widgets_init', array( __CLASS__, 'add_saved_links_widget' ) );
 		add_action( 'widgets_init', array( __CLASS__, 'add_link_roundups_widget' ) );
 
-		/*Add our css stylesheet into the header*/
-		add_action( 'admin_print_styles', array( __CLASS__,'add_styles' ) );
-		add_action( 'wp_print_styles', array( __CLASS__, 'add_styles' ) );
-		add_filter( 'mce_css', array( __CLASS__,'plugin_mce_css' ) );
-
 		/* Argo links have no content, so we have to generate it on request */
 		add_filter( 'the_content', array( __CLASS__,'the_content' ) );
 		add_filter( 'the_excerpt', array( __CLASS__,'the_excerpt' ) );
@@ -53,29 +49,14 @@ class SavedLinks {
 		add_filter( 'the_author', array( __CLASS__,'the_author' ) );
 		add_filter( 'the_author_posts_link', array( __CLASS__,'the_author_posts_link' ) );
 
+		/* If we have any admin_notices, print them */
+		add_action('admin_notices', array(__CLASS__, 'admin_notices'));
+
 		/* Register a shortcode to display links */
 		add_shortcode( 'rounduplink', array( __CLASS__,'rounduplink_shortcode' ) );
 
 		/* Register the ajax call that renders the Saved_Links_List_table class*/
 		add_action( 'wp_ajax_lroundups_saved_links_list_table_render', array( __CLASS__, 'lroundups_saved_links_list_table_render'));
-	}
-
-	public static function plugin_mce_css( $mce_css ) {
-		if ( !empty( $mce_css ) ) {
-			$mce_css .= ',';
-		} else {
-			$mce_css = '';
-		}
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-		$mce_css .= plugins_url( 'css/lroundups' . $suffix . '.css', LROUNDUPS_PLUGIN_FILE );
-		return $mce_css;
-	}
-
-	/*Add our css stylesheet into the header*/
-	public static function add_styles() {
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG )  ? '' : '.min';
-		$css = plugins_url(  'css/lroundups' . $suffix . '.css', LROUNDUPS_PLUGIN_FILE);
-		wp_enqueue_style( 'link-roundups', $css, array(), 1 );
 	}
 
 	/**
@@ -204,9 +185,10 @@ class SavedLinks {
 			$attachment_id = self::lroundups_media_sideload_image( $_POST['argo_link_img_url'], $post_id );
 			if( !empty( $attachment_id ) && !is_wp_error( $attachment_id )  ) {
 				update_post_meta( ( isset( $_POST['post_ID'] ) ? $_POST['post_ID'] : $post_id ), '_thumbnail_id', $attachment_id );
+			} else {
+				self::add_notice('error', 'Unable to import featured image.');
 			}
 		}
-
 	}
 
 	/**
@@ -663,4 +645,41 @@ class SavedLinks {
 
 		wp_die();
 	}
+
+	/**
+	 * A utility function for adding admin notices after the save_post action has fired
+	 *
+	 * @since 0.3.2
+	 */
+	public static function add_notice($type, $message) {
+		self::$notices[] = array($type, urlencode($message));
+		add_filter('redirect_post_location', array(__CLASS__, 'add_notice_query_var'), 99);
+	}
+
+	/**
+	 * When the post save_post redirect happens, make sure we're adding the notices arg if necessary
+	 *
+	 * @since 0.3.2
+	 */
+	public static function add_notice_query_var($location) {
+		if (!empty(self::$notices)) {
+			remove_filter('redirect_post_location', array(__CLASS__, 'add_notice_query_var'), 99);
+			return add_query_arg(array('lroundups_notices' => self::$notices), $location);
+		}
+	}
+
+	/**
+	 * If the lroundups_notices $_GET arg is set, print our admin notices
+	 *
+	 * @since 0.3.2
+	 */
+	public static function admin_notices() {
+		if (!isset($_GET['lroundups_notices']))
+			return;
+
+		foreach ($_GET['lroundups_notices'] as $notice) { ?>
+			<div class="<?php echo $notice[0]; ?>"><p><?php echo urldecode($notice[1]); ?></p></div>
+	<?php }
+	}
+
 }
