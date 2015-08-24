@@ -18,6 +18,9 @@ class SavedLinks {
 		/*Register the custom post type of for saved links: rounduplinks */
 		add_action( 'init', array( __CLASS__, 'register_post_type' ) );
 
+		/*Register custom post type archive template to handle display*/
+		add_filter( 'archive_template', array( __CLASS__, 'rounduplink_archive_template' ) );
+
 		/*Register our custom taxonomy of "argo-link-categories" so we can have our own tags/categories for our Argo Links post type*/
 		/* moved into a function per wordpress 3.0 issues with calling it directly*/
 		add_action( 'init', array( __CLASS__, 'register_rounduplinks_taxonomy' ) );
@@ -81,6 +84,21 @@ class SavedLinks {
 			'has_archive' 	=> true
 		));
 	}
+	
+	/**
+	 * Register the Roundup Link post type
+	 *
+	 * @since 0.3.2
+	 */
+	public static function rounduplink_archive_template( $archive_template ) {
+     global $post;
+
+     if ( is_post_type_archive ( 'rounduplink' ) ) {
+          $archive_template = dirname( LROUNDUPS_PLUGIN_FILE ) . '/inc/saved-links/archive-rounduplink.php';
+     }
+     return $archive_template;
+	 }
+	
 
 	/**
 	 * Register our custom taxonomy
@@ -466,7 +484,7 @@ class SavedLinks {
 	 */
 	public static function the_content($content) {
 
-		// Only run for argo_links
+		// Only run for rounduplinks
 		global $post;
 
 		if (!isset($post))
