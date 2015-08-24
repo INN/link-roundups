@@ -16,13 +16,13 @@ class LRoundups {
 
 		// Register the custom post type of roundup
 		add_action('init', array( __CLASS__, 'register_post_type' ) );
-		
+
 		// Add the Link Roundups Options sub menu
 		add_action( 'admin_menu', array( __CLASS__, 'add_lroundups_options_page') );
 
 		// Add our custom post fields for our custom post type
 		add_action( 'admin_init', array( __CLASS__, 'add_custom_post_fields' ) );
-		
+
 		// Save our custom post fields! Very important!
 		add_action( 'save_post', array( __CLASS__, 'save_custom_fields') );
 
