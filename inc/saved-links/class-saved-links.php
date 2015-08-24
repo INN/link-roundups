@@ -153,12 +153,37 @@ class SavedLinks {
 	<input type='text' name='lr_source' value='<?php echo $link_source; ?>' style='width:98%;'/></p>
 
 	<?php if( $link_img_src ) { ?>
-		<p><label><?php _e( 'Import featured image:', 'link-roundups' ); ?></label><br />
+		<p><label><?php _e( 'Import Featured Image:', 'link-roundups' ); ?></label><br />
 		<img src="<?php echo $link_img_src ?>" width="300" />
 		<input type='hidden' name='argo_link_img_url' value='<?php echo $link_img_src; ?>'/><br>
-		<input type="checkbox" value="1" name="lr_img" id="lr_img"><label for="lr_img"><?php _e( 'Import as feature image', 'link-roundups' ); ?></label>
+		<input type="checkbox" value="1" name="lr_img" id="lr_img"><label for="lr_img"><?php _e( 'Use social media image?', 'link-roundups' ); ?></label>
 		</p>
-	<?php }
+	<?php } else {
+				
+				// did the social media image fail to import?
+				// @see browser-bookmark.php -- function load() for transient set
+				if( get_transient('failed_img_import') === true ) {
+		  			// first delete the transient
+					delete_transient('failed_img_import');
+		    		// check transient is gone as this may get set frequently by multiple 
+		    		if( get_transient('failed_img_import') !== true) {
+					//double-check the image field is blank
+					$screen = get_current_screen();
+					// checking that we're in post-new.php, otherwise notice will fire incessently
+					if ( 'add' === $screen->action && empty($link_img_src) ) {
+						// no matter where we spit this out, WordPress CSS yanks this div and spits out
+		    			// at the top of the singular post edit screen
+						echo '<div class="error settings-error notice">' . __('<h3>Failed to Import a Social Media Image for Featured Image</h3><p>Please upload an image manually.</h3>','link-roundups') . '</div>';
+						
+					}
+
+				}
+				else {
+				   echo '<div class="error settings-error notice">' . __('<h3>Transient didn\'t delete. Try refreshing, but this likely indicates an issue with your WordPress installation.</h3>','link-roundups') . '</div>';
+
+				}
+	      }
+		}
 	}
 
 	/**
