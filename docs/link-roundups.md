@@ -1,4 +1,4 @@
-# How to Create Link Roundups
+## How to Create Link Roundups
 
 Now that you have some Saved Links, you're ready to create your first Link Roundup. 
 
@@ -21,3 +21,11 @@ Once you have the links that make up your roundup in the editor window, you can 
 ![Screenshot showing the post editor](img/link-roundup-heading.png)
 
 When you're satisfied with the description and links that you've added to your roundup, publish your post and congratulate yourself on some excellent curatorial work.
+
+# Link Roundups Options
+
+Link Roundups Options enable the following:
+- Rename the Link Roundups Post Type (including public URL slug!)
+- Modify the output of saved links within the [rounduplink.. ] shortcode
+- Disable built-in styles (bring your own CSS)
+- Enable Mailchimp integration and set defaults

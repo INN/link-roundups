@@ -40,11 +40,6 @@ class SavedLinks {
 		add_action( 'widgets_init', array( __CLASS__, 'add_saved_links_widget' ) );
 		add_action( 'widgets_init', array( __CLASS__, 'add_link_roundups_widget' ) );
 
-		/*Add our css stylesheet into the header*/
-		add_action( 'admin_print_styles', array( __CLASS__,'add_styles' ) );
-		add_action( 'wp_print_styles', array( __CLASS__, 'add_styles' ) );
-		add_filter( 'mce_css', array( __CLASS__,'plugin_mce_css' ) );
-
 		/* Argo links have no content, so we have to generate it on request */
 		add_filter( 'the_content', array( __CLASS__,'the_content' ) );
 		add_filter( 'the_excerpt', array( __CLASS__,'the_excerpt' ) );
@@ -55,24 +50,6 @@ class SavedLinks {
 
 		/* Register a shortcode to display links */
 		add_shortcode( 'rounduplink', array( __CLASS__,'rounduplink_shortcode' ) );
-	}
-
-	public static function plugin_mce_css( $mce_css ) {
-		if ( !empty( $mce_css ) ) {
-			$mce_css .= ',';
-		} else {
-			$mce_css = '';
-		}
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-		$mce_css .= plugins_url( 'css/lroundups' . $suffix . '.css', LROUNDUPS_PLUGIN_FILE );
-		return $mce_css;
-	}
-
-	/*Add our css stylesheet into the header*/
-	public static function add_styles() {
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG )  ? '' : '.min';
-		$css = plugins_url(  'css/lroundups' . $suffix . '.css', LROUNDUPS_PLUGIN_FILE);
-		wp_enqueue_style( 'link-roundups', $css, array(), 1 );
 	}
 
 	/**
