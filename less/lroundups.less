@@ -55,3 +55,28 @@ Saved Links Widget
     }
   }
 }
+
+// fix for display of checkbox in header of saved links admin box
+.wp-list-table.lroundups-links {
+  tfoot td,
+  thead td {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 3px;
+    input {
+      margin-left: 8px;
+    }
+  }
+  thead td {
+    border-bottom: 1px solid #e1e1e1
+  }
+  tfoot td {
+    border-top: 1px solid #e1e1e1
+  }
+}
+button.button.append-saved-links {
+  margin: 10px 10px 10px 0;
+}
+.tablenav .actions select[name="link_date"] {
+  float: none;
+}

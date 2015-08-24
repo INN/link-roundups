@@ -170,7 +170,13 @@ class LRoundups {
 		<div id='lroundups-display-area'></div>
 		<script type='text/javascript'>
 		jQuery(function(){
-			jQuery( '#lroundups-display-area' ).load( '<?php echo plugin_dir_url(LROUNDUPS_PLUGIN_FILE); ?>inc/saved-links/display-recent.php' );
+			var data = {
+				'action': 'lroundups_saved_links_list_table_render'
+			};
+
+			jQuery.post(ajaxurl, data).done(function(response) {
+				jQuery('#lroundups-display-area').html(response);
+			});
 		});
 		</script>
 	<?php
