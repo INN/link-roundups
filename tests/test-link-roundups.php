@@ -58,7 +58,7 @@ class LinkRoundupsFunctionsTests extends WP_UnitTestCase {
 
 		global $wp_styles, $wp_scripts;
 		$this->assertTrue(!empty($wp_scripts->registered['link-roundups']));
-		$this->assertTrue(!empty($wp_styles->registered['links-common']));
+		$this->assertTrue(!empty($wp_styles->registered['lroundups-admin']));
 	}
 
 }

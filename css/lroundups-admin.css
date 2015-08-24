@@ -1,0 +1,94 @@
+/* ==========================================================================
+Modal
+========================================================================== */
+.lroundups-modal {
+  position: fixed;
+  width: 500px;
+  min-height: 180px;
+  background: #fafafa;
+  border: 1px solid #ccc;
+  top: 100px;
+  left: 50%;
+  margin-left: -250px;
+  display: none;
+  z-index: 10000;
+  box-shadow: 0 1px 12px #999;
+  border-radius: 4px;
+}
+.lroundups-modal-header {
+  background: #eee;
+  width: 100%;
+  float: left;
+  border-bottom: 1px solid #ddd;
+}
+.lroundups-modal-close {
+  float: right;
+  margin: 10px;
+  color: #555;
+}
+.lroundups-modal-close:hover {
+  color: #222;
+  cursor: pointer;
+}
+.lroundups-modal-content,
+.lroundups-modal-actions {
+  padding: 10px;
+  float: left;
+  clear: both;
+  width: 480px;
+}
+.lroundups-modal-content {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 50px;
+  padding-top: 20px;
+}
+.lroundups-modal-actions {
+  bottom: 0;
+  position: absolute;
+  text-align: right;
+  border-top: 1px solid #eee;
+}
+.lroundups-modal-actions .spinner {
+  display: none;
+}
+#lroundups-modal-overlay {
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  display: none;
+}
+body.lroundups-modal-open .lroundups-modal {
+  display: none;
+}
+body.lroundups-modal-open .lroundups-modal.show,
+body.lroundups-modal-open #lroundups-modal-overlay {
+  display: block;
+}
+.lroundups-error-modal strong {
+  color: #a00;
+}
+/* ==========================================================================
+Create MailChimp Campaign Button
+========================================================================== */
+#link-roundups-publish-actions {
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+#link-roundups-publish-actions input[type="submit"] {
+  display: inline-block;
+  margin: 10px auto;
+}
+/* ==========================================================================
+New Saved Links dialog
+========================================================================== */
+.wp-admin.post-new-php.post-type-rounduplink #minor-publishing-actions {
+  display: none;
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImxlc3MvbHJvdW5kdXBzLWFkbWluLmxlc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBR0E7RUFDRSxlQUFBO0VBQ0EsWUFBQTtFQUNBLGlCQUFBO0VBQ0EsbUJBQUE7RUFDQSxzQkFBQTtFQUNBLFVBQUE7RUFDQSxTQUFBO0VBQ0EsbUJBQUE7RUFDQSxhQUFBO0VBQ0EsY0FBQTtFQUNBLDJCQUFBO0VBQ0Esa0JBQUE7O0FBR0Y7RUFDRSxnQkFBQTtFQUNBLFdBQUE7RUFDQSxXQUFBO0VBQ0EsNkJBQUE7O0FBRUY7RUFDRSxZQUFBO0VBQ0EsWUFBQTtFQUNBLFdBQUE7O0FBRUYsc0JBQXNCO0VBQ3BCLFdBQUE7RUFDQSxlQUFBOztBQUdGO0FBQ0E7RUFDRSxhQUFBO0VBQ0EsV0FBQTtFQUNBLFdBQUE7RUFDQSxZQUFBOztBQUVGO0VBQ0UsZUFBQTtFQUNBLGtCQUFBO0VBQ0EsbUJBQUE7RUFDQSxpQkFBQTs7QUFFRjtFQUNFLFNBQUE7RUFDQSxrQkFBQTtFQUNBLGlCQUFBO0VBQ0EsMEJBQUE7O0FBSkYsd0JBS0U7RUFDRSxhQUFBOztBQUlKO0VBQ0UsTUFBQTtFQUNBLE9BQUE7RUFDQSxlQUFBO0VBQ0EsYUFBQTtFQUNBLFdBQUE7RUFDQSxZQUFBO0VBQ0EsK0JBQUE7RUFDQSxhQUFBOztBQUdGLElBQUkscUJBQXNCO0VBQ3hCLGFBQUE7O0FBRUYsSUFBSSxxQkFBc0IsaUJBQWdCO0FBQzFDLElBQUkscUJBQXNCO0VBQ3hCLGNBQUE7O0FBR0Ysc0JBQXVCO0VBQ3JCLFdBQUE7Ozs7O0FBTUY7RUFDRSxrQkFBQTtFQUNBLDZCQUFBO0VBQ0EsbUJBQUE7RUFDQSxvQkFBQTs7QUFKRiw4QkFLRSxNQUFLO0VBQ0gscUJBQUE7RUFDQSxpQkFBQTs7Ozs7QUFNSixTQUFTLGFBQWEsc0JBQXVCO0VBQzNDLGFBQUEiLCJzb3VyY2VzQ29udGVudCI6WyIvKiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PVxuTW9kYWxcbj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09ICovXG4ubHJvdW5kdXBzLW1vZGFsIHtcbiAgcG9zaXRpb246IGZpeGVkO1xuICB3aWR0aDogNTAwcHg7XG4gIG1pbi1oZWlnaHQ6IDE4MHB4O1xuICBiYWNrZ3JvdW5kOiAjZmFmYWZhO1xuICBib3JkZXI6IDFweCBzb2xpZCAjY2NjO1xuICB0b3A6IDEwMHB4O1xuICBsZWZ0OiA1MCU7XG4gIG1hcmdpbi1sZWZ0OiAtMjUwcHg7XG4gIGRpc3BsYXk6IG5vbmU7XG4gIHotaW5kZXg6IDEwMDAwO1xuICBib3gtc2hhZG93OiAwIDFweCAxMnB4ICM5OTk7XG4gIGJvcmRlci1yYWRpdXM6IDRweDtcbn1cblxuLmxyb3VuZHVwcy1tb2RhbC1oZWFkZXIge1xuICBiYWNrZ3JvdW5kOiAjZWVlO1xuICB3aWR0aDogMTAwJTtcbiAgZmxvYXQ6IGxlZnQ7XG4gIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjZGRkO1xufVxuLmxyb3VuZHVwcy1tb2RhbC1jbG9zZSB7XG4gIGZsb2F0OiByaWdodDtcbiAgbWFyZ2luOiAxMHB4O1xuICBjb2xvcjogIzU1NTtcbn1cbi5scm91bmR1cHMtbW9kYWwtY2xvc2U6aG92ZXIge1xuICBjb2xvcjogIzIyMjtcbiAgY3Vyc29yOiBwb2ludGVyO1xufVxuXG4ubHJvdW5kdXBzLW1vZGFsLWNvbnRlbnQsXG4ubHJvdW5kdXBzLW1vZGFsLWFjdGlvbnMge1xuICBwYWRkaW5nOiAxMHB4O1xuICBmbG9hdDogbGVmdDtcbiAgY2xlYXI6IGJvdGg7XG4gIHdpZHRoOiA0ODBweDtcbn1cbi5scm91bmR1cHMtbW9kYWwtY29udGVudCB7XG4gIGZvbnQtc2l6ZTogMTZweDtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICBtYXJnaW4tYm90dG9tOiA1MHB4O1xuICBwYWRkaW5nLXRvcDogMjBweDtcbn1cbi5scm91bmR1cHMtbW9kYWwtYWN0aW9ucyB7XG4gIGJvdHRvbTogMDtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB0ZXh0LWFsaWduOiByaWdodDtcbiAgYm9yZGVyLXRvcDogMXB4IHNvbGlkICNlZWU7XG4gIC5zcGlubmVyIHtcbiAgICBkaXNwbGF5OiBub25lO1xuICB9XG59XG5cbiNscm91bmR1cHMtbW9kYWwtb3ZlcmxheSB7XG4gIHRvcDogMDtcbiAgbGVmdDogMDtcbiAgcG9zaXRpb246IGZpeGVkO1xuICB6LWluZGV4OiA5OTk5O1xuICB3aWR0aDogMTAwJTtcbiAgaGVpZ2h0OiAxMDAlO1xuICBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuMjUpO1xuICBkaXNwbGF5OiBub25lO1xufVxuXG5ib2R5Lmxyb3VuZHVwcy1tb2RhbC1vcGVuIC5scm91bmR1cHMtbW9kYWwge1xuICBkaXNwbGF5OiBub25lO1xufVxuYm9keS5scm91bmR1cHMtbW9kYWwtb3BlbiAubHJvdW5kdXBzLW1vZGFsLnNob3csXG5ib2R5Lmxyb3VuZHVwcy1tb2RhbC1vcGVuICNscm91bmR1cHMtbW9kYWwtb3ZlcmxheSB7XG4gIGRpc3BsYXk6IGJsb2NrO1xufVxuXG4ubHJvdW5kdXBzLWVycm9yLW1vZGFsIHN0cm9uZyB7XG4gIGNvbG9yOiAjYTAwO1xufVxuXG4vKiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PVxuQ3JlYXRlIE1haWxDaGltcCBDYW1wYWlnbiBCdXR0b25cbj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09ICovXG4jbGluay1yb3VuZHVwcy1wdWJsaXNoLWFjdGlvbnMge1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjY2NjO1xuICBtYXJnaW4tYm90dG9tOiAxMHB4O1xuICBwYWRkaW5nLWJvdHRvbTogMTBweDtcbiAgaW5wdXRbdHlwZT1cInN1Ym1pdFwiXSB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICAgIG1hcmdpbjogMTBweCBhdXRvO1xuICB9XG59XG4vKiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PVxuTmV3IFNhdmVkIExpbmtzIGRpYWxvZ1xuPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0gKi9cbi53cC1hZG1pbi5wb3N0LW5ldy1waHAucG9zdC10eXBlLXJvdW5kdXBsaW5rICNtaW5vci1wdWJsaXNoaW5nLWFjdGlvbnN7XG4gIGRpc3BsYXk6IG5vbmU7XG59XG4iXX0= */

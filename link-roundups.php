@@ -128,12 +128,12 @@ function link_roundups_enqueue_assets() {
 		array( 'links-common' ), 0.3, true
 	);
 
-	wp_register_style( 'links-common', $plugin_path . '/css/links-common' . $suffix . '.css' );
+	wp_register_style( 'lroundups-admin', $plugin_path . '/css/lroundups-admin' . $suffix . '.css' );
 
 	$screen = get_current_screen();
-	if ( $screen->base == 'post' && $screen->post_type == 'roundup' ) {
+	if ( $screen->base == 'post' && ( $screen->post_type == 'roundup' || $screen->post_type == 'rounduplink' ) ) {
 		wp_enqueue_script( 'link-roundups' );
-		wp_enqueue_style( 'links-common' );
+		wp_enqueue_style( 'lroundups-admin' );
 	}
 }
 add_action( 'admin_enqueue_scripts', 'link_roundups_enqueue_assets' );
