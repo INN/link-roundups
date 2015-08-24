@@ -9,7 +9,7 @@
 				?>
 			</header><!-- .page-header -->
 			
-			<div class="rounduplink-archive-wrapper">
+			<div class="lr-arch-wrapper">
 
 			<?php /* Start the Loop */ ?>
 			<?php while ( have_posts() ) : the_post(); ?>
