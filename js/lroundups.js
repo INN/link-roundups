@@ -113,5 +113,21 @@ var LR = LR || {};
             }
             return false;
         });
+
+        // Some helpful stuff for the default link html option
+        $('.lroundups-restore-default-html').click(function() {
+            if ($(this).is(':disabled'))
+                return;
+
+            var val = $('<div />').html(LROUNDUPS_DEFAULT_LINK_HTML).html();
+            $('[name="lroundups_custom_html"]').val(val);
+            $(this).attr('disabled', true);
+            return false;
+        });
+
+        $('[name="lroundups_custom_html"]').on('input propertychange', function() {
+            if ($(this).val() !== LROUNDUPS_DEFAULT_LINK_HTML)
+                $('.lroundups-restore-default-html').removeAttr('disabled');
+        });
     })
 })();

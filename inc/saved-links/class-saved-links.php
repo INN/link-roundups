@@ -1,5 +1,7 @@
 <?php
 
+define('LROUNDUPS_DEFAULT_LINK_HTML', '<p class="lr-saved-link #!CLASS!#"><a href="#!URL!#">#!TITLE!#</a>&ndash;<span class="description">#!DESCRIPTION!#</span><em>#!SOURCE!#</em></p>');
+
 /**
  * The Argo Links class
  * So we don't have function naming conflicts.
@@ -533,63 +535,35 @@ class SavedLinks {
 	 * @param string $content content passed in by the filter (should be empty).
 	 */
 	public static function get_html( $post = null, $link_class = null ) {
+		$post = get_post($post);
 
-		$post = get_post(  $post ); // getting a saved link...
-		$passed_class = $link_class; 
-
-		if( !$post )
+		if(!$post)
 			return;
 
-		$meta = get_post_meta( $post->ID ); // getting meta fields from saved link...
-		
-		// check shortcode for class attribute ($link_class defined below)
-		// now check if it's sponsored and set special $pre_title if so
-		// otherwise don't return anything to append ( : '' ; on next line)
-		if ('sponsored' == $passed_class) {
-			$pre_title = 'Sponsored: ';
-		}
-		else {
-			$pre_title = '';
-		}
+		$meta = get_post_meta($post->ID);
 
-		$url = !empty( $meta['lr_url']) ? $meta['lr_url'][0] : '';
-		$link_title = get_the_title( $post->ID );
-		$title = sprintf( __('%1$s%2$s'), $pre_title, $link_title );
-		$description = array_key_exists( 'lr_desc', $meta ) ? $meta['lr_desc'][0] : '';
-		$source = !empty( $meta['lr_source']) ? $meta['lr_source'][0] : '';
+		$url = !empty($meta['lr_url'])? $meta['lr_url'][0] : '';
+		$description = array_key_exists('lr_desc', $meta)? $meta['lr_desc'][0] : '';
+		$source = !empty($meta['lr_source'])? $meta['lr_source'][0] : '';
 
-		ob_start();
-		/* begin shortcode output
+		/**
+		 * Allow the ability to manipulate the link title based on the post and link class
 		 *
-		 * NOTE:
-		 * This default output is overwritten 98% of the time by $lroundups_html
-		 * regardless of whether you've modified the code in setting
-		 * Needs improvement in future version
-		*/
-		?>
-	  <p class='lr-saved-link#!CLASS!#'>
-		<a href='#!URL!#'>#!TITLE!#</a>
-		&ndash;
-		<span class='description'>#!DESCRIPTION!#</span>
-		<em>#!SOURCE!#</em>
-	  </p>
+		 * @since 0.3.2
+		 */
+		$title = apply_filters(
+			'lroundups_link_title', get_the_title($post->ID), $post, $link_class);
 
-	  <?php
-		$default_html = ob_get_clean();
+		$lroundups_html = get_option('lroundups_custom_html');
 
-		if ( get_option( 'lroundups_custom_html' ) != '' ) {
-			$lroundups_html = get_option( 'lroundups_custom_html' );
-			$lroundups_html = preg_replace( "/\"/", "'", $lroundups_html );
-		} else {
-			$lroundups_html = $default_html;
-		}
+		if ($lroundups_html == '')
+			$lroundups_html = LROUNDUPS_DEFAULT_LINK_HTML;
 
-		$lroundups_html = str_replace( '#!URL!#', $url, $lroundups_html);
-		$lroundups_html = str_replace( '#!TITLE!#', $title, $lroundups_html);
-		$lroundups_html = str_replace( '#!DESCRIPTION!#', $description, $lroundups_html);
-		$lroundups_html = str_replace( '#!SOURCE!#', $source, $lroundups_html);
-		$lroundups_html = str_replace( '#!CLASS!#', $link_class, $lroundups_html);
-		// $link_class is defined below in rounduplink_shortcode()
+		$lroundups_html = str_replace('#!URL!#', $url, $lroundups_html);
+		$lroundups_html = str_replace('#!TITLE!#', $title, $lroundups_html);
+		$lroundups_html = str_replace('#!DESCRIPTION!#', $description, $lroundups_html);
+		$lroundups_html = str_replace('#!SOURCE!#', $source, $lroundups_html);
+		$lroundups_html = str_replace('#!CLASS!#', $link_class, $lroundups_html);
 
 		return $lroundups_html;
 	}
@@ -609,7 +583,6 @@ class SavedLinks {
 			$atts
 		);
 
-		// check if a link has style like 'sponsored'
 		$link_class = (!empty($a['class']))? ' ' . $a['class'] : '';
 
 		// send it all over to get_html (see above)

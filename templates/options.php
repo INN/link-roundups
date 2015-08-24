@@ -1,22 +1,17 @@
-<?php
-$default_html = <<<EOT
-<p class='lr-saved-link#!CLASS!#'><a href='#!URL!#'>#!TITLE!#</a>&ndash;<span class='description'>#!DESCRIPTION!#</span><em>#!SOURCE!#</em></p>
-EOT;
-?>
 <div class="wrap">
 	<h2><?php _e( 'Link Roundups Options', 'link-roundups' ); ?></h2>
 
 	<?php settings_errors(); ?>
-	
+
 	<h4><?php _e( 'Documentation', 'link-roundups' ); ?></h4>
-	
-	<?php 
+
+	<?php
 		printf(
 			'<p>' . __( 'Read about these settings and using this plugin in <a href="%s">the documentation on GitHub</a>.', 'link-roundups' ) . '</p>',
 			'https://github.com/INN/link-roundups/tree/master/docs'
 		);
 	?>
-	
+
 	<a href="#rename"><strong><?php _e( 'Rename Link Roundups', 'link-roundups' ); ?></strong></a> | <a href="#html"><strong><?php _e( 'Custom HTML for Displaying Links', 'link-roundups' ); ?></strong></a> | <a href="#mailchimp"><strong><?php _e( 'Mailchimp Integration', 'link-roundups' ); ?></strong></a>
 	<form method="post" action="options.php">
 		<?php settings_fields( 'lroundups-settings-group' ); ?>
@@ -25,7 +20,7 @@ EOT;
 			<div id="rename" class="card">
 				<h3><?php _e( 'Rename Link Roundups', 'link-roundups' ); ?></h3>
 				<p><?php _e( 'You might call it a Daily Digest. Recap. Team Newsletter. Etc.', 'link-roundups' ); ?></p> 
-				<?php 
+				<?php
 					printf(
 						'<p>' . __( 'Modify the Post Type Name displayed in the WordPress Dashboard Menus and Pages and the Post Type Slug (<a href="%s">learn more</a>) used in the public URL for each Link Roundup post.', 'link-roundups' ) . '</p>',
 						'http://codex.wordpress.org/Glossary#Post_Slug'
@@ -41,10 +36,10 @@ EOT;
 				<h5 style="margin: 0; padding: 0;"><?php _e( 'Current URL Slug for Link Roundups:', 'link-roundups' ); ?></h5>
 				<code style="display:block; margin: 0.33em 0;">
 					<?php echo get_site_url(); ?>/
-					<strong><?php 
+					<strong><?php
 					$custom_slug_setting = get_option( 'lroundups_custom_url' );
-					
-					if(!empty($custom_slug_setting)) { 
+
+					if(!empty($custom_slug_setting)) {
 						$current_slug = $custom_slug_setting; // apply custom slug
 					} else {
 						$current_slug = 'roundup'; // set plugin default to roundup
@@ -54,8 +49,8 @@ EOT;
 				<?php $custom_slug = get_option( 'lroundups_custom_url' ); ?>
 				<input type="text" name="lroundups_custom_url" value="<?php echo $custom_slug; ?>" />
 				<p><?php _e( 'Must be lowercase with no spaces or special characters -- dashes allowed.', 'link-roundups' ); ?></p>
-			    <?php 
-				    printf( 
+			    <?php
+				    printf(
 				    	'<p>' . __( '<strong>IMPORTANT</strong>: Whenever you define a new Custom URL Slug, you <strong>must</strong> also update your <a href="%s"><strong>Permalink Settings</strong></a>.', 'link-roundups' ) . '</p>',
 			    		admin_url( '/options-permalink.php' )
 			    	);
@@ -64,8 +59,13 @@ EOT;
 			<div id="html" class="card">
 				<h3><?php _e( 'Custom HTML for Displaying Links', 'link-roundups' ); ?></h3>
 				<p><?php _e( 'Modify the display and style of Saved Links.', 'link-roundups' ); ?></p>
-				<textarea name="lroundups_custom_html" cols='70' rows='6' ><?php echo ( get_option( 'lroundups_custom_html' ) != '' ? get_option( 'lroundups_custom_html' )	: $default_html ); ?></textarea>
-				<em><?php _e( 'Single quotes are REQUIRED in Custom HTML. Double quotes will be automatically converted to single quotes before use.', 'link-roundups' ); ?></em><br /><br />
+				<textarea name="lroundups_custom_html" cols='70' rows='6' ><?php echo ( get_option( 'lroundups_custom_html' ) != '' ? get_option( 'lroundups_custom_html' ) : LROUNDUPS_DEFAULT_LINK_HTML ); ?></textarea>
+
+				<p><button disabled="disabled" class="lroundups-restore-default-html">Restore default link HTML</button></p>
+				<script type="text/javascript">
+					var LROUNDUPS_DEFAULT_LINK_HTML = <?php echo json_encode(LROUNDUPS_DEFAULT_LINK_HTML); ?>;
+				</script>
+
 				<?php _e( 'The following tags will be replaced with the URL, Title, Description, and Source automatically when the Saved Link is pushed into the Post Editor.', 'link-roundups' ); ?><br />
 				<blockquote><ul style="list-style-type:square;">
 				<li><code>#!URL!#</code></li>
@@ -74,15 +74,14 @@ EOT;
 				<li><code>#!SOURCE!#</code></li>
 				<li><code>#!CLASS!#</code><em><small><?php _e( 'Intended for the paragraph wrapper', 'link-roundups' ); ?></small></em></li>
 				</ul></blockquote>
-				<h4 style="margin-bottom:0;padding-bottom:0;"><?php _e( 'Default HTML', 'link-roundups' ); ?></h4><br />
-				<code><?php echo htmlspecialchars($default_html); ?></code><br />
+
 				<h4><?php _e( 'Link Styling', 'link-roundups' ); ?></h4>
-				<?php 
-					echo '<p>' . __('Adding an additional attribute <code>class="*"</code> to the <code>[rounduplink ... ]</code> shortcode will let you inject a single class to customize via CSS. This allows you to add custom style to each link.</p>', 'link-roundups') . '</p>';
-					echo '<p>' . __('You might use sponsored, breaking, editors-pick, or something else to customize with style.</p>','link-roundups') . '</p>';
-				?>
+				<?php
+					echo '<p>' . __('You can add custom classes to your links by using the "class" attribute of the rounduplink shortcode.', 'link-roundups') . '</p>';
+					echo '<p>' . __('For example: <code>[rounduplink class="sponsored" ... ]</code>', 'link-roundups') . '</p>';
+					echo '<p>' . __('With a custom class in place, you can modify the display of certain links via your theme stylesheet.', 'link-roudnups') . '</p>'; ?>
 			</div>
-			
+
 			<div id="mailchimp" class="card">
 				<h3><?php _e( 'MailChimp Integration', 'link-roundups' ); ?></h3>
 					<p style="margin-bottom:5px;">
