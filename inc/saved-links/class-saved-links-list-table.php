@@ -261,6 +261,38 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 		<div class="locked-indicator"></div>
 	<?php
 	}
+
+	/**
+	 * Print an edit link for the saved link in question
+	 *
+	 * @since 0.3.2
+	 */
+	protected function handle_row_actions( $item, $column_name, $primary ) {
+		return '<div class="row-actions"><a href="' . get_edit_post_link($item->ID, '') . '" target="_new">Edit</a></div>';
+	}
+
+	/**
+	 * Generate the table navigation above or below the table
+	 *
+	 * We're overriding this method to omit the nonce that clone_WP_List_Table usually includes
+	 *
+	 * @since 0.3.2
+	 */
+	protected function display_tablenav( $which ) {
+?>
+	<div class="tablenav <?php echo esc_attr( $which ); ?>">
+
+		<div class="alignleft actions bulkactions">
+			<?php $this->bulk_actions( $which ); ?>
+		</div>
+<?php
+		$this->extra_tablenav( $which );
+		$this->pagination( $which );
+?>
+
+		<br class="clear" />
+	</div>
+<?php
+	}
+
 }
-
-
