@@ -8,13 +8,14 @@
  */
 class SavedLinks {
 
+	protected static $notices = array();
+
 	/**
 	 * Initialize the class.
 	 *
 	 * @since 0.1
 	 */
 	public static function init() {
-
 		/*Register the custom post type of for saved links: rounduplinks */
 		add_action( 'init', array( __CLASS__, 'register_post_type' ) );
 
@@ -47,6 +48,9 @@ class SavedLinks {
 		add_filter( 'author_link ', array( __CLASS__,'the_permalink' ) );
 		add_filter( 'the_author', array( __CLASS__,'the_author' ) );
 		add_filter( 'the_author_posts_link', array( __CLASS__,'the_author_posts_link' ) );
+
+		/* If we have any admin_notices, print them */
+		add_action('admin_notices', array(__CLASS__, 'admin_notices'));
 
 		/* Register a shortcode to display links */
 		add_shortcode( 'rounduplink', array( __CLASS__,'rounduplink_shortcode' ) );
@@ -178,9 +182,10 @@ class SavedLinks {
 			$attachment_id = self::lroundups_media_sideload_image( $_POST['argo_link_img_url'], $post_id );
 			if( !empty( $attachment_id ) && !is_wp_error( $attachment_id )  ) {
 				update_post_meta( ( isset( $_POST['post_ID'] ) ? $_POST['post_ID'] : $post_id ), '_thumbnail_id', $attachment_id );
+			} else {
+				self::add_notice('error', 'Unable to import featured image.');
 			}
 		}
-
 	}
 
 	/**
@@ -620,4 +625,41 @@ class SavedLinks {
 		return $html;
 
 	}
+
+	/**
+	 * A utility function for adding admin notices after the save_post action has fired
+	 *
+	 * @since 0.3.2
+	 */
+	public static function add_notice($type, $message) {
+		self::$notices[] = array($type, urlencode($message));
+		add_filter('redirect_post_location', array(__CLASS__, 'add_notice_query_var'), 99);
+	}
+
+	/**
+	 * When the post save_post redirect happens, make sure we're adding the notices arg if necessary
+	 *
+	 * @since 0.3.2
+	 */
+	public static function add_notice_query_var($location) {
+		if (!empty(self::$notices)) {
+			remove_filter('redirect_post_location', array(__CLASS__, 'add_notice_query_var'), 99);
+			return add_query_arg(array('lroundups_notices' => self::$notices), $location);
+		}
+	}
+
+	/**
+	 * If the lroundups_notices $_GET arg is set, print our admin notices
+	 *
+	 * @since 0.3.2
+	 */
+	public static function admin_notices() {
+		if (!isset($_GET['lroundups_notices']))
+			return;
+
+		foreach ($_GET['lroundups_notices'] as $notice) { ?>
+			<div class="<?php echo $notice[0]; ?>"><p><?php echo urldecode($notice[1]); ?></p></div>
+	<?php }
+	}
+
 }
