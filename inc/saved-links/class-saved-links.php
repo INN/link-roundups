@@ -459,7 +459,7 @@ class SavedLinks {
 	 *
 	 * @param string $content content passed in by the filter (should be empty).
 	 */
-	public static function the_author_posts_link(  $link) {
+	public static function the_author_posts_link($link) {
 		global $post;
 
 		if ( !( 'rounduplink' == $post->post_type ) ) {
@@ -494,9 +494,11 @@ class SavedLinks {
 	 * @param string $content content passed in by the filter (should be empty).
 	 */
 	public static function the_content($content) {
-
 		// Only run for argo_links
 		global $post;
+
+		if (is_post_type_archive('rounduplink'))
+			return get_post_meta($post->ID, 'lr_desc', true);
 
 		if (!isset($post))
 			return $content;
