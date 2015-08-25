@@ -129,10 +129,14 @@ var LR = LR || {};
             return false;
         });
 
-        $('[name="lroundups_custom_html"]').on('input propertychange', function() {
-            if ($(this).val() !== LROUNDUPS_DEFAULT_LINK_HTML)
+        var check_restore_button = function() {
+            if ($('[name="lroundups_custom_html"]').val() !== LROUNDUPS_DEFAULT_LINK_HTML)
                 $('.lroundups-restore-default-html').removeAttr('disabled');
-        });
+        };
+
+        check_restore_button();
+
+        $('[name="lroundups_custom_html"]').on('input propertychange', check_restore_button);
 
         /**
          * From a checkbox element, find the post ID and title, and return a WP shortcode.
