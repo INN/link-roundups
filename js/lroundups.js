@@ -119,24 +119,26 @@ var LR = LR || {};
          *
          * @since 0.3.2
          */
-        $('.lroundups-restore-default-html').click(function() {
-            if ($(this).is(':disabled'))
-                return;
+        if (typeof LROUNDUPS_DEFAULT_LINK_HTML !== 'undefined') {
+            $('.lroundups-restore-default-html').click(function() {
+                if ($(this).is(':disabled'))
+                    return;
 
-            var val = $('<div />').html(LROUNDUPS_DEFAULT_LINK_HTML).html();
-            $('[name="lroundups_custom_html"]').val(val);
-            $(this).attr('disabled', true);
-            return false;
-        });
+                var val = $('<div />').html(LROUNDUPS_DEFAULT_LINK_HTML).html();
+                $('[name="lroundups_custom_html"]').val(val);
+                $(this).attr('disabled', true);
+                return false;
+            });
 
-        var check_restore_button = function() {
-            if ($('[name="lroundups_custom_html"]').val() !== LROUNDUPS_DEFAULT_LINK_HTML)
-                $('.lroundups-restore-default-html').removeAttr('disabled');
-        };
+            var check_restore_button = function() {
+                if ($('[name="lroundups_custom_html"]').val() !== LROUNDUPS_DEFAULT_LINK_HTML)
+                    $('.lroundups-restore-default-html').removeAttr('disabled');
+            };
 
-        check_restore_button();
+            check_restore_button();
 
-        $('[name="lroundups_custom_html"]').on('input propertychange', check_restore_button);
+            $('[name="lroundups_custom_html"]').on('input propertychange', check_restore_button);
+        }
 
         /**
          * From a checkbox element, find the post ID and title, and return a WP shortcode.
