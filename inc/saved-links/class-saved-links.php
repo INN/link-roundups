@@ -1,6 +1,12 @@
 <?php
 
-define('LROUNDUPS_DEFAULT_LINK_HTML', '<p class="lr-saved-link #!CLASS!#"><a href="#!URL!#">#!TITLE!#</a>&ndash;<span class="description">#!DESCRIPTION!#</span><em>#!SOURCE!#</em></p>');
+ob_start(); ?>
+<p class="lr-saved-link #!CLASS!#">
+	#!IMAGE!#
+	<a href="#!URL!#">#!TITLE!#</a>&ndash;<span class="description">#!DESCRIPTION!#</span> <em>#!SOURCE!#</em>
+</p><?php
+
+define('LROUNDUPS_DEFAULT_LINK_HTML', ob_get_clean());
 
 /**
  * The Argo Links class
@@ -497,11 +503,11 @@ class SavedLinks {
 		// Only run for argo_links
 		global $post;
 
-		if (is_post_type_archive('rounduplink'))
-			return get_post_meta($post->ID, 'lr_desc', true);
-
 		if (!isset($post))
 			return $content;
+
+		if (is_post_type_archive('rounduplink'))
+			return get_post_meta($post->ID, 'lr_desc', true);
 
 		if ( ! ( 'rounduplink' == $post->post_type ) )
 			return $content;
@@ -570,6 +576,11 @@ class SavedLinks {
 		$lroundups_html = str_replace('#!DESCRIPTION!#', $description, $lroundups_html);
 		$lroundups_html = str_replace('#!SOURCE!#', $source, $lroundups_html);
 		$lroundups_html = str_replace('#!CLASS!#', $link_class, $lroundups_html);
+
+		if (has_post_thumbnail($post->ID))
+			$lroundups_html = str_replace('#!IMAGE!#', get_the_post_thumbnail($post->ID), $lroundups_html);
+		else
+			$lroundups_html = str_replace('#!IMAGE!#', '', $lroundups_html);
 
 		return $lroundups_html;
 	}
