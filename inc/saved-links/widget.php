@@ -84,7 +84,7 @@ class saved_links_widget extends WP_Widget {
 			'num_sentences' => 2,
 			'linktext' => '',
 			'linkurl' => '',
-			'show_featured_image' => 'on'
+			'show_featured_image' => null
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
 		?>
