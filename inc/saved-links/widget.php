@@ -33,7 +33,11 @@ class saved_links_widget extends WP_Widget {
           			while ( $my_query->have_posts() ) : $my_query->the_post();
           				$custom = get_post_custom( $post->ID ); ?>
           				<?php if ( get_post_type( $post ) === 'roundup' ) continue; ?>
-	                  	<div class="post-lead clearfix">
+						<div class="post-lead clearfix">
+							<?php if (has_post_thumbnail($post->ID) && $instance['show_featured_image'] == 'on') {
+								echo get_the_post_thumbnail($post->ID);
+							} ?>
+
 	                      	<h5><?php echo ( isset( $custom["lr_url"][0] ) ) ? '<a href="' . $custom["lr_url"][0] . '">' . get_the_title() . '</a>' : get_the_title(); ?></h5>
 
 	                      	<?php
@@ -69,16 +73,18 @@ class saved_links_widget extends WP_Widget {
 		$instance['num_sentences'] = strip_tags( $new_instance['num_sentences'] );
 		$instance['linktext'] = $new_instance['linktext'];
 		$instance['linkurl'] = $new_instance['linkurl'];
+		$instance['show_featured_image'] = $new_instance['show_featured_image'];
 		return $instance;
 	}
 
 	function form( $instance ) {
 		$defaults = array(
-			'title' 			=> __( 'Recent Links', 'link-roundups' ),
-			'num_posts' 		=> 5,
-			'num_sentences' 	=> 2,
-			'linktext' 			=> '',
-			'linkurl' 			=> ''
+			'title' => __( 'Recent Links', 'link-roundups' ),
+			'num_posts' => 5,
+			'num_sentences' => 2,
+			'linktext' => '',
+			'linkurl' => '',
+			'show_featured_image' => 'on'
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
 		?>
@@ -99,6 +105,11 @@ class saved_links_widget extends WP_Widget {
 			<input id="<?php echo $this->get_field_id( 'num_sentences' ); ?>" name="<?php echo $this->get_field_name( 'num_sentences' ); ?>" value="<?php echo $instance['num_sentences']; ?>" style="width:90%;" />
 		</p>
 		<?php endif; ?>
+
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('show_featured_image'); ?>" name="<?php echo $this->get_field_name('show_featured_image'); ?>" <?php checked($instance['show_featured_image'], 'on'); ?> />
+			<label for="<?php echo $this->get_field_id('show_featured_image'); ?>"><?php _e('Show featured images?', 'link-roundups'); ?></label>
+		</p>
 
 		<p><strong>More Link</strong><br /><small><?php _e( 'If you would like to add a more link at the bottom of the widget, add the link text and url here.', 'link-roundups' ); ?></small></p>
 		<p>
