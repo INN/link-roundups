@@ -138,6 +138,9 @@ function link_roundups_enqueue_assets() {
 		wp_enqueue_script( 'link-roundups' );
 		wp_enqueue_style( 'lroundups-admin' );
 	}
+
+	if ($screen->base == 'roundup_page_link-roundups-options')
+		wp_enqueue_script('link-roundups');
 }
 add_action( 'admin_enqueue_scripts', 'link_roundups_enqueue_assets' );
 

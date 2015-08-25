@@ -115,6 +115,26 @@ var LR = LR || {};
         });
 
         /**
+         *  Some helpful stuff for the default link html option
+         *
+         * @since 0.3.2
+         */
+        $('.lroundups-restore-default-html').click(function() {
+            if ($(this).is(':disabled'))
+                return;
+
+            var val = $('<div />').html(LROUNDUPS_DEFAULT_LINK_HTML).html();
+            $('[name="lroundups_custom_html"]').val(val);
+            $(this).attr('disabled', true);
+            return false;
+        });
+
+        $('[name="lroundups_custom_html"]').on('input propertychange', function() {
+            if ($(this).val() !== LROUNDUPS_DEFAULT_LINK_HTML)
+                $('.lroundups-restore-default-html').removeAttr('disabled');
+        });
+
+        /**
          * From a checkbox element, find the post ID and title, and return a WP shortcode.
          *
          * @since 0.3.2
