@@ -187,8 +187,11 @@ function lroundups_update_page_view() { ?>
 		<h2><?php _e ( 'Link Roundups Database Update', 'link-roundups' ); ?></h2>
 		<div class="update-message">
 			<p><?php _e( 'Link Roundups plugin has been updated to version', 'link-roundups' ); echo " " . lroundups_version(); ?>.
+
 			<p><?php _e( 'This update will migrate <strong>Argo Links</strong> and <strong>Argo Link Roundups</strong> to the new <strong>Saved Links</strong> and <strong>Link Roundups</strong> formats respectively.', 'link-roundups' ); ?></p>
 			<p><?php _e( 'This process will restore previous Argo Links and Argo Link Roundups posts to your site.', 'link-roundups' ); ?></p>
+			<p><?php _e( '<strong>NOTE:</strong> instances of the "Argo Links Widget" will <strong>NOT</strong> be migrated during the update. Replace instances of "Argo Links Widget" with "Saved Links Widget" after updating.', 'link-roundups' ); ?></p>
+
 			<p><?php _e( 'Please run the following update function.', 'link-roundups' ); ?></p>
 			<p class="submit-container">
 				<input type="submit" class="button-primary" id="update" name="update" value="<?php _e( 'Update the database!', 'link-roundups' ); ?>">
