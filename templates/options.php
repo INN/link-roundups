@@ -73,7 +73,7 @@
 				<li><code>#!DESCRIPTION!#</code></li>
 				<li><code>#!SOURCE!#</code></li>
 				<li><code>#!CLASS!#</code><em><small><?php _e( 'Intended for the paragraph wrapper', 'link-roundups' ); ?></small></em></li>
-				<li><code>#!IMAGE!#</code><em><small><?php _e( 'Used to determine the placement of the featured image, if available', 'link-roundups'); ?></li>
+				<li><code>#!IMAGE!#</code><em><small><?php _e( 'Used to determine the placement of the featured image, if available', 'link-roundups'); ?></small></em></li>
 				</ul></blockquote>
 
 				<h4><?php _e( 'Link Styling', 'link-roundups' ); ?></h4>
