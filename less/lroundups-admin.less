@@ -91,3 +91,47 @@ Create MailChimp Campaign Button
     margin: 10px auto;
   }
 }
+/* ==========================================================================
+New Saved Links dialog
+========================================================================== */
+.wp-admin.post-new-php.post-type-rounduplink #minor-publishing-actions{
+  display: none;
+}
+
+/* ==========================================================================
+Recent Roundups Editor Styles
+========================================================================== */
+#link_roundups_roundup {
+  .inside {
+    min-height: 250px;
+  }
+  .pagination {
+    margin: 10px 0;
+    &:last-child {
+	  padding-bottom: 15px;
+    }
+  }
+  #filter_links {
+    margin: 10px 0;
+  }
+}
+
+div.display-saved-links {
+  div.pagination {
+    height:30px;
+    span,
+    a {
+      color: #000;
+      text-decoration: none;
+    }
+    .current {
+        color: #C7C7C7;
+    }
+  }
+  .none-found {
+  margin:.25em 0 0.5em 0;
+  display:block;
+  font-style:italic;
+  font-weight:bold;
+  }
+}

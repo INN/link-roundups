@@ -94,4 +94,16 @@ class SavedLinksClassTests extends WP_UnitTestCase {
 		$this->markTestIncomplete('This test has not been implemented yet.');
 	}
 
+	function test_add_notice() {
+		$this->markTestIncomplete('This test has not been implemented yet.');
+	}
+
+	function test_add_notice_query_var() {
+		$this->markTestIncomplete('This test has not been implemented yet.');
+	}
+
+	function test_admin_notices() {
+		$this->markTestIncomplete('This test has not been implemented yet.');
+	}
+
 }

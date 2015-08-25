@@ -122,7 +122,6 @@
 			<?php } ?>
 				</div>
 
-
 		<p class="submit">
 			<input type="submit" class="button-primary" value="<?php _e( 'Save Changes', 'link-roundups' ) ?>" />
 		</p>
