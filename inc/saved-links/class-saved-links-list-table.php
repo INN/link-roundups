@@ -137,12 +137,16 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 			switch ($_REQUEST['link_date']) {
 				case 'today':
 					$default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ), 'day' => date( 'd' ) );
+					break;
 				case 'this_week':
 					$default_date = array( 'year' => date( 'Y' ), 'w' => date( 'W' ));
+					break;
 				case 'this_month':
 					$default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ) );
+					break;
 				case 'this_year':
 					$default_date = array( 'year' => date( 'Y' ) );
+					break;
 				case 'show_all':
 					$default_date = array();
 			}
