@@ -93,7 +93,7 @@ module.exports = function(grunt) {
                 ]
             },
             files: {
-                src: '**/*.php',
+                src: ['**/*.php', '!release/**/*'],
                 expand: true
             }
         },
