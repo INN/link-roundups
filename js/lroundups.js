@@ -173,15 +173,17 @@ var LR = LR || {};
          *
          * @since 0.1
          */
-        $('body').on('click', 'div.display-saved-links a', function() {
-            var urlOptions = $(this).attr('href');
-            var data = {
-                'action': 'lroundups_saved_links_list_table_render',
-                'urlOptions': urlOptions
-            }
-            $.post(ajaxurl, data).done(function(response) {
+        $('body').on('click', '#link_roundups_roundup thead a, #link_roundups_roundup tfoot a', function() {
+            var url = $(this).attr('href'),
+                query = url.match(/(\?)(.*)$/)[2],
+                date = $('#link_roundups_roundup').find('select[name="link_date"]').val();
+
+            query += '&link_date=' + date + '&action=lroundups_saved_links_list_table_render';
+
+            $.get(ajaxurl, query).done(function(response) {
                 $('#lroundups-display-area').html(response);
             });
+
             return false;
         });
 
