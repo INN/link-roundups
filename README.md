@@ -10,7 +10,7 @@ A WordPress plugin to make it easy to collect links from around the web, turn th
 
 **Tested up to:** 4.2.3
 
-**Stable tag:** 0.3.1
+**Stable tag:** 0.3.2
 
 **License:** GPLv2 or later
 
@@ -95,8 +95,3 @@ Link Roundup posts have some default styling for your saved links to make sure y
 For information on the development status of this plugin, check the [development milestones on github](https://github.com/INN/link-roundups/milestones).
 
 If you'd like to contribute to the project, please see our [contributing guidelines](contributing.md).
-
-
-## Changelog
-
-#### Version 0.3 - Initial Public Release

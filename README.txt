@@ -4,7 +4,7 @@ Donate link: http://bit.ly/1N4nSJJ
 Tags: newsletters, mailchimp, links, curation, aggregation
 Requires at least: 4.1
 Tested up to: 4.2.3
-Stable tag: 0.3.1
+Stable tag: 0.3.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,21 @@ Collect links from around the web, turn them into roundup posts and streamline t
 [Read more about installing plugins here](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
 == Changelog ==
+
+= 0.3.2 =
+
+- Submitted the plugin to WordPress.org
+- Removed all references to Argo Links from the code (except where necessary for migrations and updates)
+- Push to MailChimp functionality: if a campaign for a Link Roundup was deleted in Mailchimp, don't show the "Edit in MailChimp" link in the post editor
+- Automated flushing permalink settings when setting custom slugs for Link Roundups
+- If we're able to find a featured image for a Saved Link, display it alongside the link on the front end
+- Display an admin notice when the plugin fails to import a featured image for a Saved Link
+- Add an option to dequeue Link Roundups front end CSS
+- Provide a general way of adding classes to individual Saved Link shortcodes to make customization for different types of links possible
+- Use TinyMCE editor for Saved Link descriptions
+- Provide a link to edit Saved Links in the "Recent Saved Links" meta box on Link Roundup editor pages
+- Fix display of Saved Link archive pages
+- Note on the update/upgrade page that instances of "Argo Links Widget" must be replaced with "Saved Links Widget" after update
 
 = 0.3.1 =
 
