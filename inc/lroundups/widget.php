@@ -25,7 +25,6 @@ class link_roundups_widget extends WP_Widget {
 			$query_args = array (
 				'post__not_in' 	=> get_option( 'sticky_posts' ),
 				'showposts' 	=> $instance['num_posts'],
-				'exceprt'		=> $instance['show_excerpt'],
 				'post_type' 	=> 'post',
 				'post_status'	=> 'publish'
 			);
