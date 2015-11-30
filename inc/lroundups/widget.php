@@ -5,12 +5,12 @@
  */
 class link_roundups_widget extends WP_Widget {
 
-	function link_roundups_widget() {
+	function __construct() {
 		$widget_ops = array(
 			'classname' 	=> 'link-roundups',
 			'description' 	=> 'Show your most recent link roundups in the sidebar', 'link-roundups'
 		);
-		$this->WP_Widget( 'link_roundups_widget', __( 'Link Roundups Widget', 'link-roundups' ), $widget_ops );
+		parent::__construct(  'link_roundups_widget', __( 'Link Roundups Widget', 'link-roundups' ), $widget_ops );
 	}
 
 	function widget( $args, $instance ) {

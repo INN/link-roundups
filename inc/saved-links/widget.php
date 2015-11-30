@@ -4,7 +4,7 @@
  */
 class saved_links_widget extends WP_Widget {
 
-	function saved_links_widget() {
+	function __construct() {
 		$widget_ops = array(
 			'classname' 	=> 'saved-links',
 			'description' 	=> __( 'Show your most recently saved links in a sidebar widget', 'link-roundups' )
