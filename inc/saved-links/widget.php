@@ -57,7 +57,7 @@ class saved_links_widget extends WP_Widget {
 	            <?php
 	            	endwhile;
 	            } else {
-	    			_e( '<p class="error"><strong>You don\'t have any recent links or the argo links plugin is not active.</strong></p>', 'link-roundups' );
+	    			_e( '<p class="error"><strong>You don\'t have any recent links or the link roundups plugin is not active.</strong></p>', 'link-roundups' );
 	    		} // end recent links
 
     		if ( $instance['linkurl'] != '' ) { ?>
