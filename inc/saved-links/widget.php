@@ -1,10 +1,12 @@
 <?php
 /*
- * argo Recent Posts
+ * Saved Links Widget
+ * displays a list of your recently saved links
+ *
  */
 class saved_links_widget extends WP_Widget {
 
-	function __construct() {
+	function saved_links_widget() {
 		$widget_ops = array(
 			'classname' 	=> 'saved-links',
 			'description' 	=> __( 'Show your most recently saved links in a sidebar widget', 'link-roundups' )
@@ -13,56 +15,62 @@ class saved_links_widget extends WP_Widget {
 	}
 
 	function widget( $args, $instance ) {
+		
 		extract( $args );
-		$title = apply_filters( 'widget_title', $instance['title'] );
+		
+		// make it possible for the widget title to be a link
+		$title = apply_filters('widget_title', empty( $instance['title'] ) ? __('Recent Links' , 'link-roundups') : $instance['title'], $instance, $this->id_base);
 
 		echo $before_widget;
 
-		if ( $title )
-			echo $before_title . $title . $after_title; ?>
+		if ( $title ) echo $before_title . $title . $after_title;
 
-			<?php
-			$query_args = array (
-				'post__not_in' 	=> get_option( 'sticky_posts' ),
-				'showposts' 	=> $instance['num_posts'],
-				'post_type' 	=> 'rounduplink',
-				'post_status'	=> 'publish'
-			);
-			$my_query = new WP_Query( $query_args );
-          		if ( $my_query->have_posts() ) {
-          			while ( $my_query->have_posts() ) : $my_query->the_post();
-          				$custom = get_post_custom( $post->ID ); ?>
-          				<?php if ( get_post_type( $post ) === 'roundup' ) continue; ?>
-						<div class="post-lead clearfix">
-							<?php if (has_post_thumbnail($post->ID) && $instance['show_featured_image'] == 'on') {
-								echo get_the_post_thumbnail($post->ID);
-							} ?>
+		$query_args = array (
+			'post__not_in' 	=> get_option( 'sticky_posts' ),
+			'showposts' 	=> $instance['num_posts'],
+			'post_type' 	=> 'rounduplink',
+			'post_status'	=> 'publish'
+		);
+		$my_query = new WP_Query( $query_args );
+        
+        if ( $my_query->have_posts() ) {
+        	while ( $my_query->have_posts() ) : $my_query->the_post();
+			$custom = get_post_custom( $post->ID );
+        
+			// skip roundups
+			if ( get_post_type( $post ) === 'roundup' ) continue; ?>
+					
+					
+			<div class="post-lead clearfix">
+				<?php if (has_post_thumbnail($post->ID) && $instance['show_featured_image'] == 'on') {
+					echo get_the_post_thumbnail($post->ID);
+				} ?>
+				
+				<h5><?php echo ( isset( $custom["lr_url"][0] ) ) ? '<a href="' . $custom["lr_url"][0] . '">' . get_the_title() . '</a>' : get_the_title(); ?></h5>
+				
+				<?php
+					if ( isset( $custom["lr_desc"][0] ) ) {
+						echo '<p class="description">';
+						echo ( function_exists( 'largo_trim_sentences' ) ) ? largo_trim_sentences($custom["lr_desc"][0], $instance['num_sentences']) : $custom["lr_desc"][0];
+						echo '</p>';
+					}
+					if ( isset($custom["lr_source"][0] ) ) {
+						echo '<p class="source">' . __('Source: ', 'link-roundups') . '<span>';
+						echo ( isset( $custom["lr_url"][0] ) ) ? '<a href="' . $custom["lr_url"][0] . '">' . $custom["lr_source"][0] . '</a>' : $custom["lr_source"][0];
+						echo '</span></p>';
+					}
+				?>
+			</div> <!-- /.post-lead -->
+	        
+	    <?php
+	        endwhile;
+	    } else {
+	    	_e( '<p class="error"><strong>You don\'t have any recent links or the link roundups plugin is not active.</strong></p>', 'link-roundups' );
+	    } // end recent links
 
-	                      	<h5><?php echo ( isset( $custom["lr_url"][0] ) ) ? '<a href="' . $custom["lr_url"][0] . '">' . get_the_title() . '</a>' : get_the_title(); ?></h5>
-
-	                      	<?php
-	                      	if ( isset( $custom["lr_desc"][0] ) ) {
-		                      	echo '<p class="description">';
-		                      	echo ( function_exists( 'largo_trim_sentences' ) ) ? largo_trim_sentences($custom["lr_desc"][0], $instance['num_sentences']) : $custom["lr_desc"][0];
-		                      	echo '</p>';
-	                      	}
-	                      	if ( isset($custom["lr_source"][0] ) ) {
-		                      	echo '<p class="source">' . __('Source: ', 'link-roundups') . '<span>';
-		                      	echo ( isset( $custom["lr_url"][0] ) ) ? '<a href="' . $custom["lr_url"][0] . '">' . $custom["lr_source"][0] . '</a>' : $custom["lr_source"][0];
-		                      	echo '</span></p>';
-	                      	}
-	                      	?>
-
-	                  	</div> <!-- /.post-lead -->
-	            <?php
-	            	endwhile;
-	            } else {
-	    			_e( '<p class="error"><strong>You don\'t have any recent links or the link roundups plugin is not active.</strong></p>', 'link-roundups' );
-	    		} // end recent links
-
-    		if ( $instance['linkurl'] != '' ) { ?>
-				<p class="morelink"><a href="<?php echo $instance['linkurl']; ?>"><?php echo $instance['linktext']; ?></a></p>
-			<?php }
+    	if ( $instance['linkurl'] != '' ) { ?>
+			<p class="morelink"><a href="<?php echo $instance['linkurl']; ?>"><?php echo $instance['linktext']; ?></a></p>
+		<?php }
 		echo $after_widget;
 	}
 
