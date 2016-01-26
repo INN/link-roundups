@@ -15,9 +15,9 @@ class saved_links_widget extends WP_Widget {
 	}
 
 	function widget( $args, $instance ) {
-		
+
 		extract( $args );
-		
+
 		// make it possible for the widget title to be a link
 		$title = apply_filters('widget_title', empty( $instance['title'] ) ? __('Recent Links' , 'link-roundups') : $instance['title'], $instance, $this->id_base);
 
@@ -26,28 +26,38 @@ class saved_links_widget extends WP_Widget {
 		if ( $title ) echo $before_title . $title . $after_title;
 
 		$query_args = array (
-			'post__not_in' 	=> get_option( 'sticky_posts' ),
-			'showposts' 	=> $instance['num_posts'],
-			'post_type' 	=> 'rounduplink',
-			'post_status'	=> 'publish'
+			'post__not_in' => get_option( 'sticky_posts' ),
+			'showposts'    => $instance['num_posts'],
+			'post_type'    => 'rounduplink',
+			'post_status'  => 'publish'
 		);
 		$my_query = new WP_Query( $query_args );
-        
-        if ( $my_query->have_posts() ) {
-        	while ( $my_query->have_posts() ) : $my_query->the_post();
+		
+		if ( $my_query->have_posts() ) {
+			while ( $my_query->have_posts() ) : $my_query->the_post();
 			$custom = get_post_custom( $post->ID );
-        
+
 			// skip roundups
 			if ( get_post_type( $post ) === 'roundup' ) continue; ?>
-					
-					
+
 			<div class="post-lead clearfix">
 				<?php if (has_post_thumbnail($post->ID) && $instance['show_featured_image'] == 'on') {
 					echo get_the_post_thumbnail($post->ID);
 				} ?>
-				
-				<h5><?php echo ( isset( $custom["lr_url"][0] ) ) ? '<a href="' . $custom["lr_url"][0] . '">' . get_the_title() . '</a>' : get_the_title(); ?></h5>
-				
+
+				<h5><?php
+					if ( isset( $custom["lr_url"][0] ) ) {
+						$output = '<a href="' . $custom["lr_url"][0] . '" ';
+						if ( $instance['new_window'] == 'on' ) {
+							$output .= 'target="_blank" ';
+						}
+						$output .= '>' . get_the_title() . '</a>';
+					} else {
+						$output = get_the_title();
+					}
+					echo $output;
+					?></h5>
+
 				<?php
 					if ( isset( $custom["lr_desc"][0] ) ) {
 						echo '<p class="description">';
@@ -55,20 +65,31 @@ class saved_links_widget extends WP_Widget {
 						echo '</p>';
 					}
 					if ( isset($custom["lr_source"][0] ) ) {
-						echo '<p class="source">' . __('Source: ', 'link-roundups') . '<span>';
-						echo ( isset( $custom["lr_url"][0] ) ) ? '<a href="' . $custom["lr_url"][0] . '">' . $custom["lr_source"][0] . '</a>' : $custom["lr_source"][0];
-						echo '</span></p>';
+						$lr_source = '<p class="source">' . __('Source: ', 'link-roundups') . '<span>';
+						if ( !empty( $custom["lr_url"][0] ) ) {
+							$lr_output .= '<a href="' . $custom["lr_url"][0] . '" ';
+							if ( $instance['new_window'] == 'on' ) {
+								$output .= 'target="_blank" ';
+							}
+							$lr_output .= '>' . $custom["lr_source"][0] . '</a>';
+						} else {
+							var_log("meh");
+							$lr_source .= $custom["lr_source"][0];
+						}
+						$lr_source .= '</span></p>';
+						var_log($lr_source);
+						echo $lr_source;
 					}
 				?>
 			</div> <!-- /.post-lead -->
-	        
-	    <?php
-	        endwhile;
-	    } else {
-	    	_e( '<p class="error"><strong>You don\'t have any recent links or the link roundups plugin is not active.</strong></p>', 'link-roundups' );
-	    } // end recent links
+			
+		<?php
+			endwhile;
+		} else {
+			_e( '<p class="error"><strong>You don\'t have any recent links or the link roundups plugin is not active.</strong></p>', 'link-roundups' );
+		} // end recent links
 
-    	if ( $instance['linkurl'] != '' ) { ?>
+		if ( $instance['linkurl'] != '' ) { ?>
 			<p class="morelink"><a href="<?php echo $instance['linkurl']; ?>"><?php echo $instance['linktext']; ?></a></p>
 		<?php }
 		echo $after_widget;
@@ -82,12 +103,14 @@ class saved_links_widget extends WP_Widget {
 		$instance['linktext'] = $new_instance['linktext'];
 		$instance['linkurl'] = $new_instance['linkurl'];
 		$instance['show_featured_image'] = $new_instance['show_featured_image'];
+		$instance['new_window'] = $new_instance['new_window'];
 		return $instance;
 	}
 
 	function form( $instance ) {
 		$defaults = array(
 			'title' => __( 'Recent Links', 'link-roundups' ),
+			'new_window' => 1,
 			'num_posts' => 5,
 			'num_sentences' => 2,
 			'linktext' => '',
@@ -105,6 +128,11 @@ class saved_links_widget extends WP_Widget {
 		<p>
 			<label for="<?php echo $this->get_field_id( 'num_posts' ); ?>"><?php _e( 'Number of posts to show:', 'link-roundups' ); ?></label>
 			<input id="<?php echo $this->get_field_id( 'num_posts' ); ?>" name="<?php echo $this->get_field_name( 'num_posts' ); ?>" value="<?php echo $instance['num_posts']; ?>" style="width:90%;" />
+		</p>
+
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id('new_window'); ?>" name="<?php echo $this->get_field_name('new_window'); ?>" <?php checked($instance['new_window'], 'on'); ?> />
+			<label for="<?php echo $this->get_field_id('new_window'); ?>"><?php _e('Open links in new window', 'link-roundups'); ?></label>
 		</p>
 
 		<?php if ( function_exists( 'largo_trim_sentences' ) ) : ?>
