@@ -67,17 +67,15 @@ class saved_links_widget extends WP_Widget {
 					if ( isset($custom["lr_source"][0] ) ) {
 						$lr_source = '<p class="source">' . __('Source: ', 'link-roundups') . '<span>';
 						if ( !empty( $custom["lr_url"][0] ) ) {
-							$lr_output .= '<a href="' . $custom["lr_url"][0] . '" ';
+							$lr_source .= '<a href="' . $custom["lr_url"][0] . '" ';
 							if ( $instance['new_window'] == 'on' ) {
-								$output .= 'target="_blank" ';
+								$lr_source .= 'target="_blank" ';
 							}
-							$lr_output .= '>' . $custom["lr_source"][0] . '</a>';
+							$lr_source .= '>' . $custom["lr_source"][0] . '</a>';
 						} else {
-							var_log("meh");
 							$lr_source .= $custom["lr_source"][0];
 						}
 						$lr_source .= '</span></p>';
-						var_log($lr_source);
 						echo $lr_source;
 					}
 				?>
