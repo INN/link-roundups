@@ -6,39 +6,32 @@ p.lr-saved-link {
   display: block;
   vertical-align: top;
   width: 100%;
+  a {
+    font-weight: bold;
+    text-decoration: none;
+    vertical-align: top;
+  }
+  em {
+    color: #808080;
+  }
+  img {
+    float: left;
+    margin: 0 1em 1em 0;
+  }
+  &.sponsored {
+    background-color: #EDF1F4;
+    font-style: italic;
+    color: #808080;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 0.2em 0;
+  }
 }
 
 .wp-editor p.lr-saved-link {
   background-position: 0px 1px;
 }
 
-p.lr-saved-link a {
-  font-weight: bold;
-  text-decoration: none;
-  vertical-align: top;
-}
-
-p.lr-saved-link em {
-  color: #808080;
-}
-
-p.lr-saved-link img {
-  float: left;
-  margin: 0 1em 1em 0;
-}
-
-/* ==========================================================================
-Sponsored Link Style
-========================================================================== */
-
-p.lr-saved-link.sponsored {
-  background-color: #EDF1F4;
-  font-style: italic;
-  color: #808080;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin: 0.2em 0;
-}
 
 /* ==========================================================================
 Saved Links Widget
@@ -47,7 +40,6 @@ Saved Links Widget
   h5 {
     margin-bottom: 2px;
   	font-weight:700;
-    padding: 0 3px;
   }
   p {
     margin-bottom: 12px;
