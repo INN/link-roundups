@@ -49,6 +49,12 @@ require_once(__DIR__ . '/inc/compatibility.php');
 
 
 /**
+ * Add compatibility filters for INN/Largo
+ */
+require_once(__DIR__ . '/inc/compatibility-largo.php');
+
+
+/**
  * Initialize the plugin using its init() function
  */
 LRoundups::init();
