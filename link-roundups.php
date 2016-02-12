@@ -34,8 +34,9 @@ require_once(__DIR__ . '/inc/lroundups/widget.php');
 /**
  * Mailchimp API and Modal Functions
  */
-require_once(__DIR__ . '/vendor/mailchimp-api-php/src/Mailchimp.php'); // API files
-require_once(__DIR__ . '/inc/lroundups/mailchimp-admin.php'); // Integration Code
+if ( ! class_exists( 'Mailchimp' ) ) {
+	require_once __DIR__ . '/vendor/autoload.php';
+}
 
 /**
  * Save to Site Browser Bookmark Tool

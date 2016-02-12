@@ -118,6 +118,7 @@ class LRoundups {
 			$roundup_options['rewrite'] = array( 'slug' => $slug_opt );
 
 		register_post_type( 'roundup', $roundup_options );
+		mailchimp_tools_register_for_post_type( 'roundup', array( 'preview' => true ) );
 	}
 	
 	/*Add our css stylesheet into tinymce*/
