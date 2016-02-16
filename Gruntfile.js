@@ -11,6 +11,7 @@ module.exports = function(grunt) {
     var CSS_LESS_FILES = {
         'css/lroundups.css': 'less/lroundups.less',
         'css/lroundups-admin.css': 'less/lroundups-admin.less',
+        'css/lroundups-editor.css': 'less/lroundups-editor.less'
     };
 
     grunt.initConfig({
@@ -51,6 +52,7 @@ module.exports = function(grunt) {
                     cwd: 'js',
                     src: [
                         'links-common.js',
+                        'lroundups-editor.js',
                         'lroundups.js',
                         '!*.min.js'
                     ],

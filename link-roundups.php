@@ -152,6 +152,30 @@ function link_roundups_enqueue_assets() {
 add_action( 'admin_enqueue_scripts', 'link_roundups_enqueue_assets' );
 
 /**
+ * Add TinyMCE editor plugin to enable clickable/editable roundup blocks in posts
+ *
+ * @since 0.3
+ */
+function lr_add_tinymce_plugin( $plugins ) {
+	$plugin_path = plugins_url( basename( __DIR__ ), __DIR__ );
+	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+	$plugins['link_roundups_editor'] = $plugin_path . '/js/lroundups-editor' . $suffix . '.js';
+	return $plugins;
+}
+add_filter( 'mce_external_plugins', 'lr_add_tinymce_plugin', 4 );
+
+/**
+ * Add CSS to the post editor for the TinyMCE roundup block editor plugin
+ *
+ * @since 0.3
+ */
+function lroundups_add_editor_styles() {
+	$plugin_path = plugins_url( basename( __DIR__ ), __DIR__ );
+	add_editor_style( $plugin_path . '/css/lroundups-editor.css' );
+}
+add_action( 'admin_init', 'lroundups_add_editor_styles' );
+
+/**
  * Load plugin textdomain.
  *
  * @since 0.3

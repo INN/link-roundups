@@ -1,0 +1,16 @@
+/* TinyMCE Inline Editable Blocks */
+.lr-block {
+  border: 1px solid transparent;
+  text-align: center;
+  background: #eee;
+  padding: 4px;
+  border: 1px solid #ddd;
+  font-weight: bold;
+  font-size: 1em;
+}
+.lr-block:hover {
+  border: 1px solid #ccc;
+  background: #ddd;
+  cursor: pointer;
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImxlc3MvbHJvdW5kdXBzLWVkaXRvci5sZXNzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFDQTtFQUNFLDZCQUFBO0VBQ0Esa0JBQUE7RUFDQSxnQkFBQTtFQUNBLFlBQUE7RUFDQSxzQkFBQTtFQUNBLGlCQUFBO0VBQ0EsY0FBQTs7QUFFRixTQUFTO0VBQ1Asc0JBQUE7RUFDQSxnQkFBQTtFQUNBLGVBQUEiLCJzb3VyY2VzQ29udGVudCI6WyIvKiBUaW55TUNFIElubGluZSBFZGl0YWJsZSBCbG9ja3MgKi9cbi5sci1ibG9jayB7XG4gIGJvcmRlcjogMXB4IHNvbGlkIHRyYW5zcGFyZW50O1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIGJhY2tncm91bmQ6ICNlZWU7XG4gIHBhZGRpbmc6IDRweDtcbiAgYm9yZGVyOiAxcHggc29saWQgI2RkZDtcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gIGZvbnQtc2l6ZTogMWVtO1xufVxuLmxyLWJsb2NrOmhvdmVyIHtcbiAgYm9yZGVyOiAxcHggc29saWQgI2NjYztcbiAgYmFja2dyb3VuZDogI2RkZDtcbiAgY3Vyc29yOiBwb2ludGVyO1xufVxuIl19 */
