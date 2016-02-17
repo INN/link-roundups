@@ -20,7 +20,8 @@
     },
 
     events: {
-      'click .remove': 'removePost'
+      'click .remove': 'removePost',
+      'click .close': 'close'
     },
 
     render: function() {
@@ -57,7 +58,7 @@
     },
 
     save: function(e) {
-      var ids = this.addedPosts.map(function(post) { return post.get('ID'); });
+      var ids = _.map(this.$el.find('.added-posts li'), function(el, idx) { return $(el).data('id'); });
       var s = '[' + shortcode_string + ' ids="' + ids.join(',') + '" name="' + this.name + '"]';
       this.editor.insertContent(s);
       this.editor.focus();
