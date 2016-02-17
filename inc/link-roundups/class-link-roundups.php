@@ -7,9 +7,9 @@
  */
 
 /**
- * The LRoundups class - so we don't have function naming conflicts with link-roundups
+ * The LinkRoundups class - so we don't have function naming conflicts with link-roundups
  */
-class LRoundups {
+class LinkRoundups {
 
 	// Initialize the plugin
 	public static function init() {
@@ -24,22 +24,22 @@ class LRoundups {
 		add_action( 'admin_init', array( __CLASS__, 'add_custom_post_fields' ) );
 
 		// Save our custom post fields! Very important!
-		add_action( 'save_post', array( __CLASS__, 'save_custom_fields') );
+		add_action( 'save_post', array( __CLASS__, 'save_custom_fields' ) );
 
 		/*Add our css stylesheet into the header*/
-		add_action( 'admin_print_styles', array( __CLASS__,'add_styles' ) );
+		add_action( 'admin_print_styles', array( __CLASS__, 'add_styles' ) );
 		add_action( 'wp_print_styles', array( __CLASS__, 'add_styles' ) );
-		add_filter( 'mce_css', array( __CLASS__,'plugin_mce_css' ) );
+		add_filter( 'mce_css', array( __CLASS__, 'plugin_mce_css' ) );
 
 		// Make sure our custom post type gets pulled into the river
-		add_filter( 'pre_get_posts', array( __CLASS__,'my_get_posts') );
+		add_filter( 'pre_get_posts', array( __CLASS__, 'lr_get_posts' ) );
 
 	}
 
 	// Pull the linkroundups into the queries for is_home, is_tag, is_category, is_archive
 
 	// Merge the post_type query var if there is already a custom post type being pulled in otherwise do post & linkroundups
-	public static function my_get_posts( &$query ) {
+	public static function lr_get_posts( &$query ) {
 		// bail out early if suppress filters is set to true
 		if ( $query->get( 'suppress_filters' ) ) return;
 		if ( is_admin() ) return;
@@ -118,9 +118,11 @@ class LRoundups {
 			$roundup_options['rewrite'] = array( 'slug' => $slug_opt );
 
 		register_post_type( 'roundup', $roundup_options );
-		mailchimp_tools_register_for_post_type( 'roundup', array( 'preview' => true ) );
+		if ( function_exists( 'mailchimp_tools_register_for_post_type' ) ) {
+			mailchimp_tools_register_for_post_type( 'roundup', array( 'preview' => true ) );
+		}
 	}
-	
+
 	/*Add our css stylesheet into tinymce*/
 	public static function plugin_mce_css( $mce_css ) {
 		if ( !empty( $mce_css ) ) {

@@ -35,10 +35,10 @@ var LR = LR || {};
             this.template = _.template($('#lroundups-modal-tmpl').html());
 
             if (!this.content)
-                this.content = (typeof options.content !== 'undefined')? options.content : '';
+                this.content = (options && typeof options.content !== 'undefined')? options.content : '';
 
             if (!this.actions)
-                this.actions = (typeof options.actions !== 'undefined')? options.actions : {};
+                this.actions = (options && typeof options.actions !== 'undefined')? options.actions : {};
 
             this.setEvents();
 

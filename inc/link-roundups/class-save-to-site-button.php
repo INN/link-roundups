@@ -45,7 +45,7 @@ class Save_To_Site_Button {
 	 *
 	 * @since 0.3
 	 */
-	function init() {
+	public static function init() {
 
 		add_filter( 'redirect_post_location', array( __CLASS__, 'redirect' ) );
 
@@ -105,7 +105,7 @@ class Save_To_Site_Button {
 	 *
 	 * @return String. Javascript bookmarklet code.
 	 */
-	static function shortcut_link() {
+	public static function shortcut_link() {
 
 		// This is the default 'Press This!' button link.
 		$shortcut_link = htmlspecialchars( get_shortcut_link() );
@@ -151,7 +151,7 @@ class Save_To_Site_Button {
 		self::$url = wp_kses( urldecode( self::$url ), null );
 
 		// Get meta data from url
-		$meta = lroundups_scrape_url(self::$url); // func. contains WPSimpleScraper
+		$meta = Save_To_Site_Button::scrape_url(self::$url); // func. contains WPSimpleScraper
 		$meta = $meta['meta'];
 
 		// Default title
@@ -272,6 +272,36 @@ class Save_To_Site_Button {
 	 */
 	public static function default_imgUrl( $imgUrl = null ) {
 		return self::$imgUrl;
+	}
+
+	/**
+	 * Fetches info from a page's <meta> tags and
+	 * returns an array of that information.
+	 *
+	 * @see http://code.ramonkayo.com/simple-scraper/
+	 * @see link-roundups-browser-bookmark.php
+	 * @since 0.3
+	 *
+	 * @param string $url the url of the page to scrape
+	 */
+	public static function scrape_url($url) {
+
+		require_once __DIR__. '/inc/WPSimpleScraper.php'; // license in directory
+
+		$response = array();
+		try {
+			$scraper = new WPSimpleScraper($url);
+			$data = $scraper->getAllData();
+
+			$response['success'] = true;
+			$response['meta'] = $data;
+		} catch (Exception $e) {
+			$response['success'] = false;
+			$response['message'] = 'Something went wrong.';
+			$response['meta'] = false;
+		}
+
+		return $response;
 	}
 
 }

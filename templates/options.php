@@ -83,46 +83,6 @@
 					echo '<p>' . __('With a custom class in place, you can modify the display of certain links via your theme stylesheet.', 'link-roudnups') . '</p>'; ?>
 			</div>
 
-			<div id="mailchimp" class="card">
-				<h3><?php _e( 'MailChimp Integration', 'link-roundups' ); ?></h3>
-					<p style="margin-bottom:5px;">
-						<label for="lroundups_use_mailchimp_integration">
-							<?php _e( 'Enable MailChimp Integration?', 'link-roundups' ); ?>
-							<input type="checkbox" name="lroundups_use_mailchimp_integration"
-								<?php checked( get_option( 'lroundups_use_mailchimp_integration' ), 'on', true ); ?> />
-						</label>
-					</p>
-					<p>
-						<label for="lroundups_mailchimp_api_key">
-							<?php _e( 'MailChimp API Key', 'link-roundups' ); ?>
-							<input style="width: 300px;" type="text" name="lroundups_mailchimp_api_key"
-								value="<?php echo get_option( 'lroundups_mailchimp_api_key' ); ?>"
-								placeholder="Mailchimp API Key" />
-						</label>
-					</p>
-					<p><a href="http://kb.mailchimp.com/accounts/management/about-api-keys#Find-or-Generate-Your-API-Key"><?php _e( 'Find your MailChimp API Key', 'link-roundups' ); ?></a></p>
-			<?php if ((bool) get_option('lroundups_use_mailchimp_integration') && !empty($templates)) { ?>
-				<h4><?php _e( 'MailChimp Templates', 'link-roundups' ); ?></h4>
-					<select name="lroundups_mailchimp_template">
-						<option value=""></option>
-						<?php foreach ( $templates['user'] as $key => $template ) { ?>
-							<option <?php selected(get_option('lroundups_mailchimp_template'), $template['id'], true); ?> value="<?php echo $template['id']; ?>" /><?php echo $template['name']; ?></option>
-						<?php } ?>
-					</select>
-					<p><?php _e( 'Choose a MailChimp template to use as the basis for Link Roundup email campaigns.', 'link-roundups' ); ?></p>
-			<?php } ?>
-			<?php if ( ( bool ) get_option( 'lroundups_use_mailchimp_integration') && !empty( $lists ) ) { ?>
-				<h4><?php _e( 'MailChimp Lists', 'link-roundups' ); ?></h4>
-					<select name="lroundups_mailchimp_list">
-						<option value=""></option>
-						<?php foreach ( $lists['data'] as $key => $list ) { ?>
-							<option <?php selected( get_option( 'lroundups_mailchimp_list' ), $list['id'], true ); ?> value="<?php echo $list['id']; ?>" /><?php echo $list['name']; ?></option>
-						<?php } ?>
-					</select>
-					<p><?php _e( 'Choose a MailChimp list that your Link Roundup email campaigns will be sent to.', 'link-roundups' ); ?></p>
-			<?php } ?>
-				</div>
-
 		<p class="submit">
 			<input type="submit" class="button-primary" value="<?php _e( 'Save Changes', 'link-roundups' ) ?>" />
 		</p>

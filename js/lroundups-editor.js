@@ -2,6 +2,25 @@
   var $ = jQuery,
       shortcode_string = 'roundup';
 
+  var RoundupBlockModal = LR.Modal.extend({
+    content: '',
+
+    actions: {
+      'Save': 'save',
+      'Close': 'close'
+    },
+
+    render: function() {
+      var tmpl = _.template($('#lroundups-post-tmpl').html());
+      this.content = tmpl({
+        title: this.title,
+        posts: this.posts
+      });
+      return LR.Modal.prototype.render.apply(this, arguments);
+    }
+
+  });
+
   wp.mce.roundup = {
     shortcode_data: {},
 
@@ -24,8 +43,20 @@
       wp.mce.roundup.popupwindow(tinyMCE.activeEditor, values);
     },
 
-    popupwindow: function(editor, values, onsubmit_callback) {
-      console.log('edit');
+    popupwindow: function(editor, values) {
+      $.ajax({
+        url: ajaxurl,
+        dataType: 'json',
+        data: {
+          action: 'roundup_block_posts'
+        },
+        success: function(data) {
+          var modal = new RoundupBlockModal();
+          modal.posts = new Backbone.Collection(data);
+          modal.title = values.name;
+          modal.render();
+        }
+      });
     }
   };
 
