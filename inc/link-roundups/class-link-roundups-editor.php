@@ -27,7 +27,12 @@ class LinkRoundupsEditor {
 	 * @since 0.3
 	 */
 	public static function add_editor_styles() {
-		add_editor_style( LROUNDUPS_DIR_URI . '/css/lroundups-editor.css' );
+		$style_file = LROUNDUPS_DIR_URI . '/css/lroundups-editor.css';
+		wp_register_style( 'lroundups-editor', LROUNDUPS_DIR_URI . '/css/lroundups-editor.css' );
+		add_editor_style( $style_file );
+		add_action( 'admin_enqueue_scripts', function() {
+			wp_enqueue_style( 'lroundups-editor' );
+		});
 	}
 
 	/**
@@ -39,7 +44,6 @@ class LinkRoundupsEditor {
 		$screen = get_current_screen();
 		if ( $screen->base == 'post' && $screen->post_type == 'roundup' ) {
 			LinkRoundupsEditor::modal_underscore_template();
-			LinkRoundupsEditor::posts_underscore_template();
 
 	?>
 		<script type="text/javascript">
@@ -67,27 +71,36 @@ class LinkRoundupsEditor {
 				<% }); %>
 			</div>
 		</script>
-	<?php }
 
-	public static function posts_underscore_template() { ?>
+		<script type="text/template" id="lroundups-posts-tmpl">
+			<h3><%= name %></h3>
+			<div class="flex-container">
+				<div class="added-section section">
+					<h4>Added items:</h4>
+					<div class="roundup-posts-container">
+						<ul class="sortable connected added-posts">
+							<li class="no-posts">No items added.</li>
+						</ul>
+					</div>
+				</div>
+				<div class="available-section section">
+					<h4>Available items:</h4>
+					<input type="text" class="typeahead" placeholder="Search for posts..." />
+					<div class="roundup-posts-container">
+						<ul class="available-posts sortable connected">
+						</ul>
+					</div>
+				</div>
+			</div>
+		</script>
+
 		<script type="text/template" id="lroundups-post-tmpl">
-			<h3><%= title %></h3>
-			<h4>Add posts:</h4>
-			<div class="selected-roundup-posts">
-				<p>No posts selected. Add some posts below.</p>
-			</div>
-			<h4>Search:</h4>
-			<input type="text" class="typeahead" placeholder="Start typing..." />
-			<div class="roundup-posts-container">
-				<ul class="roundup-posts">
-				<% posts.each(function(post, idx) { %>
-					<li>
-						<%= post.get('post_title') %>
-						<p class="actions"><a href="#">Edit</a> | <a href="#">Add</a></p>
-					</li>
-				<% }); %>
-				</ul>
-			</div>
+			<% posts.each(function(post, idx) { %>
+				<li data-id="<%= post.get('ID') %>">
+					<%= post.get('post_title') %>
+					<p class="actions"><a class="edit" data-id="<%= post.get('ID') %>" href="#">Edit</a> | <a class="remove" data-id="<%= post.get('ID') %>" href="#">Remove</a></p>
+				</li>
+			<% }); %>
 		</script>
 	<?php }
 
@@ -101,29 +114,53 @@ class LinkRoundupsEditor {
 
 		return array_merge( array(
 			'post_id' => $post->ID,
-			'ajax_nonce' => wp_create_nonce( 'lroundups_ajax_nonce' )
+			'ajax_nonce' => wp_create_nonce( 'lroundups_ajax_nonce' ),
+			'plugin_url' => LROUNDUPS_DIR_URI
 		), $add );
 	}
 
-
 	/*
-	 * Load 
+	 * Load posts for the roundupp block editor
 	 *
 	 * @since 0.3.2
 	 */
 	public static function roundup_block_posts() {
-		// Generic arguments
+		check_ajax_referer('lroundups_ajax_nonce', 'security');
+
+		$exisitingIds = array();
+		if ( isset( $_POST['existingIds'] ) ) {
+			$exisitingIds = $_POST['existingIds'];
+		}
+
+		// Default arguments
 		$args = apply_filters('link_roundups_roundup_block_post_query', array(
 			'post_type' => 'rounduplink',
 			'orderby' => 'date',
 			'order' => 'desc',
-			'posts_per_page' => -1
+			'posts_per_page' => 250
 		));
 		$query = new WP_Query($args);
 		$posts = $query->get_posts();
-		foreach ( $posts as $post ) {
+		$ids = array_map(function($x) { return $x->ID; }, $posts);
+
+		// If any of the post ids in the shortcode attribute don't show up
+		// in the queried posts, try finding them separately
+		foreach ($exisitingIds as $exisitingId) {
+			if ( ! in_array( $exisitingId, $ids ) ) {
+				$p = get_post( $exisitingId );
+				if ( ! empty( $p ) && ! is_wp_error( $p ) ) {
+					array_push( $posts, $p );
+				}
+			}
+		}
+
+		usort( $posts, function($a, $b) { return strcmp( $b->post_date, $a->post_date ); } );
+
+		foreach ( $posts as $idx => $post ) {
+			$post->order = $idx;
 			$post->custom_fields = get_post_custom( $post->ID );
 		}
+
 		print json_encode($posts);
 		wp_die();
 	}

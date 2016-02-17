@@ -1,0 +1,23 @@
+{
+  "name": "link-roundups",
+  "description": "A WordPress plugin to make it easy to collect links from around the web, turn them into roundup posts and streamline the production of daily/weekly roundup newsletters using MailChimp.",
+  "main": "link-roundups.php",
+  "authors": [
+    "INN Nerds <nerds@inn.org>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/INN/link-roundups",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "js/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "typeahead.js": "^0.11.1"
+  }
+}

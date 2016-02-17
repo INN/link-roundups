@@ -75,6 +75,7 @@ var LR = LR || {};
             $('body').removeClass('lroundups-modal-open');
             this.$el.removeClass('show');
             this.$el.addClass('hide');
+            this.$el.remove()
             return false;
         }
     });
