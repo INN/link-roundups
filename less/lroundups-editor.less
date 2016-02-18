@@ -18,14 +18,14 @@
 ========================================================================== */
 .lroundups-modal {
   position: fixed;
-  width: 700px;
+  width: 500px;
   min-height: 180px;
   max-height: 80%;
   background: #fafafa;
   border: 1px solid #ccc;
   top: 100px;
   left: 50%;
-  margin-left: -340px;
+  margin-left: -250px;
   display: none;
   z-index: 100102;
   box-shadow: 0 1px 12px #999;
@@ -53,7 +53,7 @@
   padding: 10px;
   float: left;
   clear: both;
-  width: 680px;
+  width: 480px;
 }
 .lroundups-modal-content {
   font-size: 16px;
@@ -94,6 +94,18 @@ body.lroundups-modal-open #lroundups-modal-overlay {
 }
 
 /* Specific to the roundup block editor modal */
+.lroundups-modal {
+  &.roundup-block-modal {
+    top: 75px;
+    width: 700px;
+    margin-left: -340px;
+
+    .lroundups-modal-content,
+    .lroundups-modal-actions {
+      width: 680px;
+    }
+  }
+}
 .flex-container {
   display: flex;
   justify-content: space-between;
@@ -106,7 +118,15 @@ body.lroundups-modal-open #lroundups-modal-overlay {
     padding-right: 2%;
     border-right: 1px solid #ccc;
   }
+
+  .twitter-typeahead {
+    width: 100%;
+  }
+  .typeahead {
+    width: 90%;
+  }
 }
+
 .roundup-posts-container {
   max-height: 380px;
   overflow: scroll;
@@ -144,5 +164,18 @@ body.lroundups-modal-open #lroundups-modal-overlay {
     border: 1px solid #999;
     box-shadow: inset 1px 1px 8px #ddd;
     padding: 8px;
+  }
+}
+
+/* Link/post edit modal */
+.lroundups-modal.link-edit-modal {
+  .lroundups-modal-content {
+    input, textarea {
+      width: 100%;
+    }
+
+    textarea {
+      min-height: 100px;
+    }
   }
 }

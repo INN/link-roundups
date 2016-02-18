@@ -72,11 +72,13 @@ var LR = LR || {};
         },
 
         close: function() {
+          if ($('.lroundups-modal').length <= 1) {
             $('body').removeClass('lroundups-modal-open');
-            this.$el.removeClass('show');
-            this.$el.addClass('hide');
-            this.$el.remove()
-            return false;
+          }
+          this.$el.removeClass('show');
+          this.$el.addClass('hide');
+          this.$el.remove()
+          return false;
         }
     });
 

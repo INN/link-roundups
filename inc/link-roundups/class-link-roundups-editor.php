@@ -8,6 +8,7 @@ class LinkRoundupsEditor {
 		add_action( 'admin_init', array( __CLASS__, 'add_editor_styles' ) );
 		add_action( 'admin_footer', array( __CLASS__, 'add_modal_template' ) );
 		add_action( 'wp_ajax_roundup_block_posts', array( __CLASS__, 'roundup_block_posts' ) );
+		add_action( 'wp_ajax_roundup_update_post', array( __CLASS__, 'roundup_update_post' ) );
 		add_shortcode( 'roundup_block', array( __CLASS__, 'roundup_block_shortcode' ) );
 	}
 
@@ -80,7 +81,19 @@ class LinkRoundupsEditor {
 		$style_file = LROUNDUPS_DIR_URI . '/css/lroundups-editor.css';
 		wp_register_style( 'lroundups-editor', LROUNDUPS_DIR_URI . '/css/lroundups-editor.css' );
 		add_editor_style( $style_file );
+
+		wp_register_script(
+			'lroundups-typeahead',
+			LROUNDUPS_DIR_URI . '/js/vendor/typeahead.js/dist/typeahead.jquery.min.js'
+		);
+		wp_register_script(
+			'lroundups-jquery-serialize-object',
+			LROUNDUPS_DIR_URI . '/js/vendor/jquery-serialize-object/dist/jquery.serialize-object.min.js'
+		);
+
 		add_action( 'admin_enqueue_scripts', function() {
+			wp_enqueue_script( 'lroundups-typeahead' );
+			wp_enqueue_script( 'lroundups-jquery-serialize-object' );
 			wp_enqueue_style( 'lroundups-editor' );
 		});
 	}
@@ -124,6 +137,7 @@ class LinkRoundupsEditor {
 
 		<script type="text/template" id="lroundups-posts-tmpl">
 			<h3><%= name %></h3>
+			<p>Drag items from right to left to add them to the "<%= name %>" block.</p>
 			<div class="flex-container">
 				<div class="added-section section">
 					<h4>Added items:</h4>
@@ -137,7 +151,7 @@ class LinkRoundupsEditor {
 				</div>
 				<div class="available-section section">
 					<h4>Available items:</h4>
-					<input type="text" disabled class="typeahead" placeholder="Search for posts..." />
+					<input type="text" disabled class="typeahead" placeholder="Search the last month's items..." />
 					<div class="roundup-posts-container">
 						<ul class="available-posts sortable connected">
 							<li class="loading">Loading...</li>
@@ -155,6 +169,31 @@ class LinkRoundupsEditor {
 				</li>
 			<% }); %>
 		</script>
+
+		<script type="text/template" id="lroundups-post-edit-tmpl">
+			<small>Currently editing:</small>
+			<h4><%= post_title %></h4>
+			<p>
+				<label>Title</label>
+				<input type="text" name="post_title" value="<%= post_title %>"/>
+			</p>
+			<p>
+				<label>Subheadline</label>
+				<input type="text" name="custom_fields[lr_subhed]" value="<%= custom_fields.lr_subhed %>"/>
+			</p>
+			<p>
+				<label>URL</label>
+				<input type="text" name="custom_fields[lr_url]" value="<%= custom_fields.lr_url %>" />
+			</p>
+			<p>
+				<label>Description</label>
+				<textarea name="custom_fields[lr_desc]"><%= custom_fields.lr_desc %></textarea>
+			</p>
+			<p>
+				<label>Source</label>
+				<input type="text" name="custom_fields[lr_source]" value="<%= custom_fields.lr_source %>" />
+			</p>
+		</script>
 	<?php }
 
 	/**
@@ -170,6 +209,40 @@ class LinkRoundupsEditor {
 			'ajax_nonce' => wp_create_nonce( 'lroundups_ajax_nonce' ),
 			'plugin_url' => LROUNDUPS_DIR_URI
 		), $add );
+	}
+
+	/*
+	 * Update a saved link/post
+	 *
+	 * @since 0.3.2
+	 */
+	public static function roundup_update_post() {
+		check_ajax_referer('lroundups_ajax_nonce', 'security');
+
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			wp_die();
+		}
+
+		if ( isset( $_POST['post'] ) ) {
+			$post_data = json_decode(stripslashes($_POST['post']), true);
+
+			$custom_fields = $post_data['custom_fields'];
+			unset($post_data['custom_fields']);
+
+			$post_id = wp_update_post( $post_data );
+
+			if ( is_wp_error( $post_id ) ) {
+				$errors = $post_id->get_error_messages();
+				print json_encode( array( 'success' => false, 'message' => $errors ) );
+				wp_die();
+			}
+
+			foreach ( $custom_fields as $meta_key => $meta_value ) {
+				update_post_meta( $post_id, $meta_key, $meta_value );
+			}
+			print json_encode( array( 'success' => true ) );
+		}
+		wp_die();
 	}
 
 	/*
@@ -190,7 +263,9 @@ class LinkRoundupsEditor {
 			'post_type' => 'rounduplink',
 			'orderby' => 'date',
 			'order' => 'desc',
-			'posts_per_page' => 250
+			'posts_per_page' => -1,
+			'year' => date( 'Y' ),
+			'monthnum' => date( 'm' )
 		));
 		$query = new WP_Query($args);
 		$posts = $query->get_posts();

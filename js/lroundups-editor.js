@@ -2,8 +2,75 @@
   var $ = jQuery,
       shortcode_string = 'roundup_block';
 
+  var LinkModel = Backbone.Model.extend({
+    save: function(data, options) {
+      if (typeof data !== 'undefined') {
+        this.set(data);
+      }
+
+      $.ajax({
+        url: ajaxurl,
+        dataType: 'json',
+        method: 'post',
+        data: {
+          action: 'roundup_update_post',
+          security: LR.ajax_nonce,
+          post: JSON.stringify(this.toJSON())
+        },
+        success: function(data) {
+          if (typeof options.success !== 'undefined') {
+            options.success(this);
+          }
+        }
+      });
+    }
+  });
+
+  var LinkCollection = Backbone.Collection.extend({
+    model: LinkModel
+  });
+
+  /* Link edit modal */
+  var LinkEditModal = LR.Modal.extend({
+    className: 'link-edit-modal',
+
+    content: '',
+
+    actions: {
+      'Update': 'update',
+      'Cancel': 'close'
+    },
+
+    initialize: function(options) {
+      this.controller = options.controller;
+      LR.Modal.prototype.initialize.apply(this, arguments);
+    },
+
+    render: function() {
+      var tmpl = _.template($('#lroundups-post-edit-tmpl').html());
+      this.content = tmpl(this.model.toJSON());
+      LR.Modal.prototype.render.apply(this, arguments);
+      return this;
+    },
+
+    update: function() {
+      var self = this,
+          data = this.$el.find(':input').serializeObject();
+
+      this.showSpinner();
+      this.model.save(data, { success: function() {
+        self.hideSpinner();
+        self.close();
+        self.controller.renderAdded();
+      }});
+      return false;
+    }
+  });
+
   /* Modal used for editing the contents of an editable block */
   var RoundupBlockModal = LR.Modal.extend({
+    className: 'roundup-block-modal',
+
     content: '',
 
     searchFields: [
@@ -12,7 +79,7 @@
       'post_excerpt'
     ],
 
-    addedPosts: new Backbone.Collection(),
+    addedPosts: new LinkCollection(),
 
     actions: {
       'Save': 'save',
@@ -21,7 +88,8 @@
 
     events: {
       'click .remove': 'removePost',
-      'click .close': 'close'
+      'click .close': 'close',
+      'click .edit': 'editLink'
     },
 
     render: function() {
@@ -131,6 +199,19 @@
           self.addedPosts.remove([post]);
         }
       });
+    },
+
+    editLink: function(event) {
+      var self = this,
+          target = $(event.currentTarget),
+          link = self.addedPosts.findWhere({ "ID": target.data('id') }),
+          linkModal = new LinkEditModal({
+            model: link,
+            controller: this
+          });
+
+      linkModal.render();
+      return false;
     },
 
     addPost: function(event) {
@@ -254,7 +335,6 @@
         },
         success: function(data) {
           self.modal.posts.reset(data);
-          //self.setupModal.call(self, data);
         }
       });
     },
@@ -263,12 +343,12 @@
       this.modal = new RoundupBlockModal();
 
       // Posts available to select
-      this.modal.posts = new Backbone.Collection(data);
+      this.modal.posts = new LinkCollection(data);
       this.modal.posts.comparator = 'order';
       this.modal.posts.on('reset', this.modal.render.bind(this.modal));
 
       // Collection to track posts added to this block
-      this.modal.addedPosts = new Backbone.Collection();
+      this.modal.addedPosts = new LinkCollection();
 
       // The name and ids attributes of the shortcode passed to the modal
       this.modal.name = this.values.name;
@@ -283,9 +363,7 @@
   };
 
   $(document).ready(function() {
-    $.getScript(LR.plugin_url + '/js/vendor/typeahead.js/dist/typeahead.jquery.min.js', function() {
-      wp.mce.views.register(shortcode_string, wp.mce.roundup_block);
-    });
+    wp.mce.views.register(shortcode_string, wp.mce.roundup_block);
   });
 
 })();

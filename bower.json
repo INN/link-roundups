@@ -18,6 +18,7 @@
     "tests"
   ],
   "dependencies": {
-    "typeahead.js": "^0.11.1"
+    "typeahead.js": "^0.11.1",
+    "jquery-serialize-object": "^2.5.0"
   }
 }
