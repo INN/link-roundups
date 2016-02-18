@@ -129,15 +129,18 @@ class LinkRoundupsEditor {
 					<h4>Added items:</h4>
 					<div class="roundup-posts-container">
 						<ul class="sortable connected added-posts">
-							<li class="no-posts">No items added.</li>
+							<li class="<% if (hasPosts) { %>loading<% } else { %>no-posts<% } %>">
+								<% if (hasPosts) { %>Loading...<% } else { %>No items have been added.<% } %>
+							</li>
 						</ul>
 					</div>
 				</div>
 				<div class="available-section section">
 					<h4>Available items:</h4>
-					<input type="text" class="typeahead" placeholder="Search for posts..." />
+					<input type="text" disabled class="typeahead" placeholder="Search for posts..." />
 					<div class="roundup-posts-container">
 						<ul class="available-posts sortable connected">
+							<li class="loading">Loading...</li>
 						</ul>
 					</div>
 				</div>

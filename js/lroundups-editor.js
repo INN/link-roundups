@@ -30,8 +30,16 @@
           existingPosts = [];
 
       this.content = tmpl({
-        name: this.name
+        name: this.name,
+        hasPosts: (typeof this.ids !== 'undefined')
       });
+
+      LR.Modal.prototype.render.apply(this, arguments);
+
+      this.showSpinner();
+
+      if (this.posts.length <= 0)
+        return;
 
       if (typeof this.ids !== 'undefined') {
         var ids = this.ids.split(',');
@@ -49,11 +57,11 @@
         this.posts.remove(existingPosts);
       }
 
-      LR.Modal.prototype.render.apply(this, arguments);
       this.renderAdded();
       this.renderAvailable();
       this.setupTypehead();
       this.connectSortables();
+      this.hideSpinner();
       return this;
     },
 
@@ -69,6 +77,8 @@
       if (this.posts.length <= 0)
         return false;
 
+      this.$el.find('.loading').remove();
+
       var tmpl = _.template($('#lroundups-post-tmpl').html()),
           content = tmpl({ posts: this.posts });
       this.$el.find('.available-posts').html(content);
@@ -80,7 +90,7 @@
 
     renderAdded: function() {
       if (this.addedPosts.length <= 0) {
-        this.$el.find('.added-posts').html('<li class="no-posts">No posts found.</li>')
+        this.$el.find('.added-posts').html('<li class="no-posts">No items have been added.</li>')
         return false;
       }
 
@@ -95,6 +105,13 @@
       this.$el.find('.sortable').sortable({
         connectWith: '.connected',
         placeholder: "ui-state-highlight"
+      });
+
+      this.$el.find('.sortable').on('sortstart', function(event, ui) {
+        $('body').addClass('sorting');
+      });
+      this.$el.find('.sortable').on('sortdeactivate', function(event, ui) {
+        $('body').removeClass('sorting');
       });
 
       this.$el.find('.sortable').on('sortreceive', function(event, ui) {
@@ -148,6 +165,8 @@
         source: self.queryCallback.bind(self)
       });
 
+      self.$el.find('.typeahead').removeAttr('disabled');
+
       self.$el.find('.typeahead').on('input', function() {
         if ($(this).val() == '') {
           self.$el.find('.available-posts li').show();
@@ -191,8 +210,7 @@
   });
 
   /* TinyMCE editable roundup blocks */
-  wp.mce.roundup = {
-    shortcode_data: {},
+  wp.mce.roundup_block = {
 
     template: _.template(
       '<div class="lr-block">' +
@@ -209,8 +227,7 @@
     edit: function(data, update) {
       var shortcode_data = wp.shortcode.next(shortcode_string, data);
       var values = shortcode_data.shortcode.attrs.named;
-      values['innercontent'] = shortcode_data.shortcode.content;
-      wp.mce.roundup.fetchStories(tinyMCE.activeEditor, values);
+      wp.mce.roundup_block.fetchStories(tinyMCE.activeEditor, values);
     },
 
     fetchStories: function(editor, values) {
@@ -224,6 +241,8 @@
         existingIds = values.ids.split(',');
       }
 
+      self.setupModal();
+
       $.ajax({
         url: ajaxurl,
         dataType: 'json',
@@ -234,38 +253,39 @@
           security: LR.ajax_nonce
         },
         success: function(data) {
-          self.setupModal.call(self, data);
+          self.modal.posts.reset(data);
+          //self.setupModal.call(self, data);
         }
       });
     },
 
     setupModal: function(data) {
-      var modal = new RoundupBlockModal();
+      this.modal = new RoundupBlockModal();
 
       // Posts available to select
-      modal.posts = new Backbone.Collection(data);
-      modal.posts.comparator = 'order';
+      this.modal.posts = new Backbone.Collection(data);
+      this.modal.posts.comparator = 'order';
+      this.modal.posts.on('reset', this.modal.render.bind(this.modal));
 
       // Collection to track posts added to this block
-      modal.addedPosts = new Backbone.Collection();
+      this.modal.addedPosts = new Backbone.Collection();
 
       // The name and ids attributes of the shortcode passed to the modal
-      modal.name = this.values.name;
-      modal.ids = this.values.ids;
+      this.modal.name = this.values.name;
+      this.modal.ids = this.values.ids;
 
       // The TinyMCE editor
-      modal.editor = this.editor;
+      this.modal.editor = this.editor;
 
-      // Render and open the modal!
-      modal.render();
+      // Render and open
+      this.modal.render();
     }
   };
 
   $(document).ready(function() {
     $.getScript(LR.plugin_url + '/js/vendor/typeahead.js/dist/typeahead.jquery.min.js', function() {
-      wp.mce.views.register(shortcode_string, wp.mce.roundup);
+      wp.mce.views.register(shortcode_string, wp.mce.roundup_block);
     });
   });
 
-  console.log('here');
 })();

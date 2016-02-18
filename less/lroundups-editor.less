@@ -97,9 +97,15 @@ body.lroundups-modal-open #lroundups-modal-overlay {
 .flex-container {
   display: flex;
   justify-content: space-between;
+  align-items: stretch;
 }
 .lroundups-modal-content .section {
-  width: 46%;
+  width: 48%;
+
+  &.added-section {
+    padding-right: 2%;
+    border-right: 1px solid #ccc;
+  }
 }
 .roundup-posts-container {
   max-height: 380px;
@@ -115,7 +121,8 @@ body.lroundups-modal-open #lroundups-modal-overlay {
   ul li:hover {
     cursor: move;
   }
-  ul li.no-posts {
+  ul li.no-posts,
+  ul li.loading {
     border: none;
   }
   .added-posts {
@@ -125,5 +132,17 @@ body.lroundups-modal-open #lroundups-modal-overlay {
     .actions {
       display: none;
     }
+  }
+  .ui-sortable-helper {
+    background: #fafafa;
+    box-shadow: 1px 1px 8px #555555;
+    border: none;
+    padding: 8px;
+  }
+
+  body.sorting & {
+    border: 1px solid #999;
+    box-shadow: inset 1px 1px 8px #ddd;
+    padding: 8px;
   }
 }
