@@ -61,7 +61,7 @@ class SavedLinks {
 		add_action('admin_notices', array(__CLASS__, 'admin_notices'));
 
 		/* Register a shortcode to display links */
-		add_shortcode( 'rounduplink', array( __CLASS__,'rounduplink_shortcode' ) );
+		add_shortcode( 'rounduplink', array( __CLASS__, 'rounduplink_shortcode' ) );
 
 		/* Register the ajax call that renders the Saved_Links_List_table class*/
 		add_action( 'wp_ajax_lroundups_saved_links_list_table_render', array( __CLASS__, 'lroundups_saved_links_list_table_render'));

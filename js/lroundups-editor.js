@@ -1,6 +1,6 @@
 (function() {
   var $ = jQuery,
-      shortcode_string = 'roundup';
+      shortcode_string = 'roundup_block';
 
   /* Modal used for editing the contents of an editable block */
   var RoundupBlockModal = LR.Modal.extend({

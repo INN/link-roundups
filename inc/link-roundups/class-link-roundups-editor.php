@@ -8,6 +8,56 @@ class LinkRoundupsEditor {
 		add_action( 'admin_init', array( __CLASS__, 'add_editor_styles' ) );
 		add_action( 'admin_footer', array( __CLASS__, 'add_modal_template' ) );
 		add_action( 'wp_ajax_roundup_block_posts', array( __CLASS__, 'roundup_block_posts' ) );
+		add_shortcode( 'roundup_block', array( __CLASS__, 'roundup_block_shortcode' ) );
+	}
+
+	/**
+	 * Render a roundup block shortcode
+	 *
+	 * @since 0.3.2
+	 */
+	public static function roundup_block_shortcode( $attrs ) {
+		$content = '';
+
+		/**
+		 * Allow for filtering the heading of a roundup block
+		 */
+		$content .= apply_filters(
+			'link_roundup_block_shortcode_heading',
+			'<h3>' . $attrs['name'] . '</h3>',
+			$attrs,
+			$ids
+		);
+
+		// The link html for each item included in the block
+		$ids = ( isset( $attrs['ids'] ) ) ? explode( ',', $attrs['ids'] ) : array();
+		foreach ( $ids as $id ) {
+			/**
+			 * Allow for filtering/replacing the function used to format individual links
+			 * in a roundup block
+			 */
+			$formatting_func = apply_filters(
+				'link_roundup_block_shortcode_link_format_func',
+				'SavedLinks::get_html',
+				$attrs,
+				$id
+			);
+			/**
+			 * Allow for filtering the generated content for an individual link in a roundup
+			 * block
+			 */
+			$content .= apply_filters(
+				'link_roundup_block_shortcode_link_content',
+				call_user_func( $formatting_func, $id ),
+				$attrs,
+				$id
+			);
+		}
+
+		/**
+		 * Allow for filtering/replacing the entire contents of a roundup block
+		 */
+		print apply_filters( 'link_roundup_block_content', $content, $attrs, $ids );
 	}
 
 	/**
