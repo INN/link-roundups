@@ -3,11 +3,20 @@
       shortcode_string = 'roundup_block';
 
   var LinkModel = Backbone.Model.extend({
+    saving: false,
+
     save: function(data, options) {
+      var self = this;
+
+      if (this.saving) {
+        return false;
+      }
+
       if (typeof data !== 'undefined') {
         this.set(data);
       }
 
+      this.saving = true;
       $.ajax({
         url: ajaxurl,
         dataType: 'json',
@@ -18,6 +27,7 @@
           post: JSON.stringify(this.toJSON())
         },
         success: function(data) {
+          self.saving = false;
           if (typeof options.success !== 'undefined') {
             options.success(this);
           }
@@ -53,10 +63,22 @@
       return this;
     },
 
+    close: function() {
+      if (this.model.saving) {
+        return false;
+      }
+      LR.Modal.prototype.close.apply(this, arguments);
+    },
+
     update: function() {
+      if (this.model.saving) {
+        return false;
+      }
+
       var self = this,
           data = this.$el.find(':input').serializeObject();
 
+      this.disableActions();
       this.showSpinner();
       this.model.save(data, { success: function() {
         self.hideSpinner();
@@ -64,6 +86,10 @@
         self.controller.renderAdded();
       }});
       return false;
+    },
+
+    disableActions: function() {
+      this.$el.find('.lroundups-modal-actions .button').addClass('disabled');
     }
   });
 
@@ -172,7 +198,8 @@
 
       this.$el.find('.sortable').sortable({
         connectWith: '.connected',
-        placeholder: "ui-state-highlight"
+        placeholder: "ui-state-highlight",
+        forcePlaceholderSize: true
       });
 
       this.$el.find('.sortable').on('sortstart', function(event, ui) {
@@ -182,23 +209,38 @@
         $('body').removeClass('sorting');
       });
 
-      this.$el.find('.sortable').on('sortreceive', function(event, ui) {
-        var target = $(event.target),
-            item =  ui.item,
-            post;
+      this.$el.find('.sortable').on('sortreceive', this.sortReceive.bind(this));
+      this.$el.find('.sortable.added-posts').on('sortstop', this.sortStop.bind(this));
+    },
 
-        if (target.hasClass('added-posts')) {
-          target.find('.no-posts').remove();
-          post = self.posts.findWhere({ "ID": item.data('id') });
-          self.addedPosts.add([post]);
-          self.posts.remove([post]);
-          self.renderAdded();
-        } else if (target.hasClass('available-posts')) {
-          post = self.addedPosts.findWhere({ "ID": item.data('id') });
-          self.posts.add([post]);
-          self.addedPosts.remove([post]);
-        }
-      });
+    sortReceive: function(event, ui) {
+      var self = this,
+          target = $(event.target),
+          item =  ui.item,
+          post;
+
+      if (target.hasClass('added-posts')) {
+        target.find('.no-posts').remove();
+        post = self.posts.findWhere({ "ID": item.data('id') });
+        self.addedPosts.add([post]);
+        self.posts.remove([post]);
+        self.renderAdded();
+      } else if (target.hasClass('available-posts')) {
+        post = self.addedPosts.findWhere({ "ID": item.data('id') });
+        self.posts.add([post]);
+        self.addedPosts.remove([post]);
+      }
+    },
+
+    sortStop: function(event, ui) {
+      var self = this,
+          target = $(event.target),
+          item = ui.item,
+          idx= item.parent().find('li').index(item);
+
+      post = self.addedPosts.findWhere({ "ID": item.data('id') });
+      self.addedPosts.remove([post], { silent: true });
+      self.addedPosts.add([post], { at: idx });
     },
 
     editLink: function(event) {
