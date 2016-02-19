@@ -286,7 +286,7 @@ class Save_To_Site_Button {
 	 */
 	public static function scrape_url($url) {
 
-		require_once __DIR__. '/inc/WPSimpleScraper.php'; // license in directory
+		require_once LROUNDUPS_PLUGIN_DIR . '/inc/WPSimpleScraper.php'; // license in directory
 
 		$response = array();
 		try {
