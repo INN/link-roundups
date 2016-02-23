@@ -58,7 +58,7 @@ class LinkRoundupsEditor {
 		/**
 		 * Allow for filtering/replacing the entire contents of a roundup block
 		 */
-		print apply_filters( 'link_roundup_block_content', $content, $attrs, $ids );
+		return apply_filters( 'link_roundup_block_content', $content, $attrs, $ids );
 	}
 
 	/**
