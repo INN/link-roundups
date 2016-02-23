@@ -30,6 +30,13 @@ class LinkRoundupsEditor {
 			$ids
 		);
 
+		$content .= apply_filters(
+			'link_roundup_block_before_links',
+			'',
+			$attrs,
+			$ids
+		);
+
 		// The link html for each item included in the block
 		$ids = ( isset( $attrs['ids'] ) ) ? explode( ',', $attrs['ids'] ) : array();
 		foreach ( $ids as $id ) {
@@ -54,6 +61,13 @@ class LinkRoundupsEditor {
 				$id
 			);
 		}
+
+		$content .= apply_filters(
+			'link_roundup_block_after_links',
+			'',
+			$attrs,
+			$ids
+		);
 
 		/**
 		 * Allow for filtering/replacing the entire contents of a roundup block
