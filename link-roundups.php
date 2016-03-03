@@ -10,7 +10,14 @@ Author URI: http://nerds.inn.org/
 License: GPLv2
 
 Seeking Link Roundups Post Type functions? They use lroundups instead of link-roundups.
-*/
+ */
+
+/**
+ * Mailchimp API and Modal Functions
+ */
+if ( ! class_exists( 'Mailchimp' ) && file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	require_once __DIR__ . '/vendor/autoload.php';
+}
 
 /**
  * Link Roundups init
@@ -35,13 +42,6 @@ function link_roundups_init() {
 	require_once(__DIR__ . '/inc/link-roundups/class-link-roundups.php');
 	require_once(__DIR__ . '/inc/link-roundups/class-link-roundups-editor.php');
 	require_once(__DIR__ . '/inc/link-roundups/class-link-roundups-widget.php');
-
-	/**
-	 * Mailchimp API and Modal Functions
-	 */
-	if ( ! class_exists( 'Mailchimp' ) && file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-		require_once __DIR__ . '/vendor/autoload.php';
-	}
 
 	/**
 	 * Save to Site Browser Bookmark Tool
