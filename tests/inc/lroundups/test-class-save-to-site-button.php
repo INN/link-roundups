@@ -26,15 +26,7 @@ class Save_To_Site_Button_Tests extends WP_UnitTestCase {
 		$this->markTestIncomplete('This test has not been implemented yet.');
 	}
 
-	function test_redirect() {
-		$this->markTestIncomplete('This test has not been implemented yet.');
-	}
-
 	function test_shortcut_link() {
-		$this->markTestIncomplete('This test has not been implemented yet.');
-	}
-
-	function test_manageAjaxRequest() {
 		$this->markTestIncomplete('This test has not been implemented yet.');
 	}
 
