@@ -12,7 +12,7 @@
 		);
 	?>
 
-	<a href="#rename"><strong><?php _e( 'Rename Link Roundups', 'link-roundups' ); ?></strong></a> | <a href="#html"><strong><?php _e( 'Custom HTML for Displaying Links', 'link-roundups' ); ?></strong></a> | <a href="#mailchimp"><strong><?php _e( 'Mailchimp Integration', 'link-roundups' ); ?></strong></a>
+	<a href="#rename"><strong><?php _e( 'Rename Link Roundups', 'link-roundups' ); ?></strong></a> | <a href="#html"><strong><?php _e( 'Custom HTML for Displaying Links', 'link-roundups' ); ?></strong></a>
 	<form method="post" action="options.php">
 		<?php settings_fields( 'lroundups-settings-group' ); ?>
 		<?php do_settings_fields( 'lroundups-settings-group', null ); ?>

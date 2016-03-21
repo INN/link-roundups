@@ -227,62 +227,9 @@ class LinkRoundups {
 		register_setting( 'lroundups-settings-group', 'lroundups_dequeue_styles' );
 		register_setting( 'lroundups-settings-group', 'lroundups_custom_name_singular' );
 		register_setting( 'lroundups-settings-group', 'lroundups_custom_name_plural' );
-		register_setting(
-			'lroundups-settings-group', 'lroundups_use_mailchimp_integration',
-			array( __CLASS__, 'validate_mailchimp_integration' )
-		);
-		register_setting( 'lroundups-settings-group', 'lroundups_mailchimp_api_key' );
-		register_setting( 'lroundups-settings-group', 'lroundups_mailchimp_template' );
-		register_setting( 'lroundups-settings-group', 'lroundups_mailchimp_list' );
-	}
-
-	public static function validate_mailchimp_integration($input) {
-		// Can't have an empty MailChimp API Key if the integration functionality is enabled.
-		if ( empty( $_POST['lroundups_mailchimp_api_key'] ) && !empty( $input ) ) {
-			add_settings_error(
-				'lroundups_use_mailchimp_integration',
-				'lroundups_use_mailchimp_integration_error',
-				'Please enter a valid MailChimp API Key.',
-				'error'
-			);
-			return '';
-		}
-
-		return $input;
 	}
 
 	public static function build_lroundups_options_page() {
-		$mc_api_key = get_option( 'lroundups_mailchimp_api_key' );
-		/**
-		 * It's not possible to use this functionality if curl is not enabled in php.
-		 */
-		if ( ! function_exists('curl_init') ) {
-			add_settings_error(
-				'lroundups_use_mailchimp_integration',
-				'curl_not_enabled',
-				__('Curl is not enabled on your server. The MailChimp features will not work without curl. Please contact your server administrator to have curl enabled.', 'link-roundups'),
-				'error'
-			);
-			delete_option( 'lroundups_use_mailchimp_integration' );
-
-		// only query MailChimp if it's possible to do so and if plugins are enabled
-		} else if ( get_option( 'lroundups_use_mailchimp_integration' ) && !empty( $mc_api_key ) ) {
-			$opts = array( 'debug' => ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? WP_DEBUG : false );
-			$mcapi = new Mailchimp( $mc_api_key, $opts );
-
-			$templates = $mcapi->templates->getList(
-				array(
-					'gallery' 	=> false,
-					'base' 		=> false
-				),
-				array( 'include_drag_and_drop' => true )
-			);
-
-			// The endpoint is lists/list, to list the lists, but there is no lists->list.
-			// getList with no args is equivalent.
-			$lists = $mcapi->lists->getList();
-		}
-
 		// get the custom url
 		$defined_url = get_option('lroundups_custom_url');
 
