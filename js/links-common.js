@@ -79,6 +79,14 @@ var LR = LR || {};
           this.$el.addClass('hide');
           this.$el.remove()
           return false;
+        },
+
+        hide: function() {
+          this.$el.hide();
+        },
+
+        show: function() {
+          this.$el.show();
         }
     });
 

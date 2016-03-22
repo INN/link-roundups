@@ -179,7 +179,14 @@ class LinkRoundupsEditor {
 			<% posts.each(function(post, idx) { %>
 				<li data-id="<%= post.get('ID') %>">
 					<%= post.get('post_title') %>
-					<p class="actions"><a class="edit" data-id="<%= post.get('ID') %>" href="#">Edit</a> | <a class="remove" data-id="<%= post.get('ID') %>" href="#">Remove</a></p>
+					<div class="actions">
+						<div class="added">
+							<a class="edit" data-id="<%= post.get('ID') %>" href="#">Edit</a> | <a class="remove" data-id="<%= post.get('ID') %>" href="#">Remove</a>
+						</div>
+						<div class="available">
+							<a class="add" data-id="<%= post.get('ID') %>" href="#">Add</a>
+						</div>
+					</div>
 				</li>
 			<% }); %>
 		</script>
@@ -218,10 +225,13 @@ class LinkRoundupsEditor {
 	public static function json_obj( $add = array() ) {
 		global $post;
 
+		$roundup_posts = self::roundup_block_posts_query();
+
 		return array_merge( array(
 			'post_id' => $post->ID,
 			'ajax_nonce' => wp_create_nonce( 'lroundups_ajax_nonce' ),
-			'plugin_url' => LROUNDUPS_DIR_URI
+			'plugin_url' => LROUNDUPS_DIR_URI,
+			'roundup_posts' => $roundup_posts
 		), $add );
 	}
 
@@ -259,14 +269,7 @@ class LinkRoundupsEditor {
 		wp_die();
 	}
 
-	/*
-	 * Load posts for the roundupp block editor
-	 *
-	 * @since 0.3.2
-	 */
-	public static function roundup_block_posts() {
-		check_ajax_referer('lroundups_ajax_nonce', 'security');
-
+	public static function roundup_block_posts_query() {
 		$exisitingIds = array();
 		if ( isset( $_POST['existingIds'] ) ) {
 			$exisitingIds = $_POST['existingIds'];
@@ -302,7 +305,17 @@ class LinkRoundupsEditor {
 			$post->order = $idx;
 			$post->custom_fields = get_post_custom( $post->ID );
 		}
+		return $posts;
+	}
 
+	/*
+	 * Load posts for the roundupp block editor
+	 *
+	 * @since 0.3.2
+	 */
+	public static function roundup_block_posts() {
+		check_ajax_referer('lroundups_ajax_nonce', 'security');
+		$posts = self::roundup_block_posts_query();
 		print json_encode($posts);
 		wp_die();
 	}

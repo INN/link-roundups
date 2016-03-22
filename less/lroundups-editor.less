@@ -5,8 +5,15 @@
   background: #eee;
   padding: 4px;
   border: 1px solid #ddd;
-  font-weight: bold;
-  font-size: 1em;
+
+  .lr-block-name {
+    font-weight: bold;
+    font-size: 1em;
+  }
+  ul {
+    margin-top: 8px;
+    text-align: left;
+  }
 }
 .lr-block:hover {
   border: 1px solid #ccc;
@@ -130,7 +137,7 @@ body.lroundups-modal-open #lroundups-modal-overlay {
 
 .roundup-posts-container {
   max-height: 380px;
-  overflow: scroll;
+  overflow-y: scroll;
   margin-top: 16px;
 
   ul li {
@@ -150,7 +157,12 @@ body.lroundups-modal-open #lroundups-modal-overlay {
     min-height: 100px;
   }
   .available-posts {
-    .actions {
+    .actions .added {
+      display: none;
+    }
+  }
+  .added-posts {
+    .actions .available {
       display: none;
     }
   }

@@ -3,6 +3,8 @@
       shortcode_string = 'roundup_block';
 
   var LinkModel = Backbone.Model.extend({
+    idAttribute: 'ID',
+
     saving: false,
 
     save: function(data, options) {
@@ -59,6 +61,7 @@
     render: function() {
       var tmpl = _.template($('#lroundups-post-edit-tmpl').html());
       this.content = tmpl(this.model.toJSON());
+      this.controller.hide();
       LR.Modal.prototype.render.apply(this, arguments);
       return this;
     },
@@ -67,6 +70,7 @@
       if (this.model.saving) {
         return false;
       }
+      this.controller.show();
       LR.Modal.prototype.close.apply(this, arguments);
     },
 
@@ -115,7 +119,8 @@
     events: {
       'click .remove': 'removePost',
       'click .close': 'close',
-      'click .edit': 'editLink'
+      'click .edit': 'editLink',
+      'click .add': 'addLink'
     },
 
     render: function() {
@@ -256,12 +261,15 @@
       return false;
     },
 
-    addPost: function(event) {
-      var self = this,
-          target = $(event.currentTarget);
+    addLink: function(event) {
+      var target = $(event.currentTarget),
+          item = target.closest('li'),
+          post = this.posts.findWhere({ "ID": target.data('id') });
 
-      var postToAdd = self.posts.findWhere({ "ID": target.data('id') });
-      self.addedPosts.add([postToAdd]);
+      this.posts.remove([post]);
+      this.addedPosts.add([post]);
+      this.renderAdded();
+      item.remove();
       return false;
     },
 
@@ -337,13 +345,31 @@
 
     template: _.template(
       '<div class="lr-block">' +
-        '<% if (typeof name !== "undefined" ) { %><%= name %><% } else { %>Link Roundup Block<% } %>' +
+        '<span class="lr-block-name"><% if (typeof name !== "undefined" ) { %><%= name %><% } else { %>Link Roundup Block<% } %></span>' +
+        '<% if (posts.length > 0 ) { %>' +
+        '<ul><% posts.each(function(post) { %><li><%= post.get("post_title") %></li><% }) %></ul>' +
+        '<% } %>' +
       '</div>'
     ),
 
     getContent: function() {
-      var options = this.shortcode.attrs.named;
+      var options = this.shortcode.attrs.named,
+          posts = new LinkCollection(LR.roundup_posts),
+          existingPosts = [];
+
+      if (typeof options.ids !== 'undefined') {
+        var ids = options.ids.split(',');
+
+        _.each(ids, function(id, idx) {
+          var p = posts.findWhere({ "ID": Number(id) });
+          if (p) {
+            existingPosts.push(p);
+          }
+        });
+      }
+
       options['innercontent'] = this.shortcode.content;
+      options['posts'] = new LinkCollection(existingPosts);
       return this.template(options);
     },
 
@@ -384,8 +410,10 @@
     setupModal: function(data) {
       this.modal = new RoundupBlockModal();
 
+      window.t = this.modal;
+
       // Posts available to select
-      this.modal.posts = new LinkCollection(data);
+      this.modal.posts = new LinkCollection(LR.roundup_posts);
       this.modal.posts.comparator = 'order';
       this.modal.posts.on('reset', this.modal.render.bind(this.modal));
 
