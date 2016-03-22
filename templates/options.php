@@ -59,11 +59,11 @@
 			<div id="html" class="card">
 				<h3><?php _e( 'Custom HTML for Displaying Links', 'link-roundups' ); ?></h3>
 				<p><?php _e( 'Modify the display and style of Saved Links.', 'link-roundups' ); ?></p>
-				<textarea name="lroundups_custom_html" cols='70' rows='6' ><?php echo ( get_option( 'lroundups_custom_html' ) != '' ? get_option( 'lroundups_custom_html' ) : LROUNDUPS_DEFAULT_LINK_HTML ); ?></textarea>
+				<textarea name="lroundups_custom_html" cols='70' rows='6' ><?php echo ( get_option( 'lroundups_custom_html' ) != '' ? get_option( 'lroundups_custom_html' ) : SavedLinks::lroundups_default_link_html() ); ?></textarea>
 
 				<p><button disabled="disabled" class="lroundups-restore-default-html">Restore default link HTML</button></p>
 				<script type="text/javascript">
-					var LROUNDUPS_DEFAULT_LINK_HTML = <?php echo json_encode(LROUNDUPS_DEFAULT_LINK_HTML); ?>;
+					var LROUNDUPS_DEFAULT_LINK_HTML = <?php echo json_encode( SavedLinks::lroundups_default_link_html() ); ?>;
 				</script>
 
 				<?php _e( 'The following tags will be replaced with the URL, Title, Description, and Source automatically when the Saved Link is pushed into the Post Editor.', 'link-roundups' ); ?><br />
