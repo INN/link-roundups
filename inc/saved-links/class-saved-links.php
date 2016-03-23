@@ -542,7 +542,7 @@ class SavedLinks {
 	 *
 	 * @param string $content content passed in by the filter (should be empty).
 	 */
-	public static function get_html($post=null, $link_class=null) {
+	public static function get_html($post=null, $link_class=null, $attrs=array()) {
 		$post = get_post( $post );
 
 		if ( ! $post ) {
@@ -575,7 +575,13 @@ class SavedLinks {
 			$link_class
 		);
 
-		$lroundups_html = get_option( 'lroundups_custom_html' );
+		$lroundups_html = apply_filters(
+			'lroundups_custom_html',
+			get_option( 'lroundups_custom_html' ),
+			$post,
+			$link_class,
+			$attrs
+		);
 
 		if ( $lroundups_html == '' ) {
 			$lroundups_html = self::lroundups_default_link_html();

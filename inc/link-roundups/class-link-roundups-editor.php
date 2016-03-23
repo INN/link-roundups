@@ -56,7 +56,7 @@ class LinkRoundupsEditor {
 			 */
 			$content .= apply_filters(
 				'link_roundup_block_shortcode_link_content',
-				call_user_func( $formatting_func, $id ),
+				call_user_func( $formatting_func, $id, 'roundup_block_link', $attrs ),
 				$attrs,
 				$id
 			);
