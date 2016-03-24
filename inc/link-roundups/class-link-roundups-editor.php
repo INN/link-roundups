@@ -270,11 +270,6 @@ class LinkRoundupsEditor {
 	}
 
 	public static function roundup_block_posts_query() {
-		$exisitingIds = array();
-		if ( isset( $_POST['existingIds'] ) ) {
-			$exisitingIds = $_POST['existingIds'];
-		}
-
 		// Default arguments
 		$args = apply_filters('link_roundups_roundup_block_post_query', array(
 			'post_type' => 'rounduplink',
@@ -290,6 +285,31 @@ class LinkRoundupsEditor {
 
 		// If any of the post ids in the shortcode attribute don't show up
 		// in the queried posts, try finding them separately
+		global $post;
+
+		$exisitingIds = array();
+		if ( isset( $post ) ) {
+			/**
+			 * Check the post for blocks with existing ids
+			 */
+			preg_match_all( '/\[roundup_block.*ids\=\"([0-9,]+)\".*\]/', $post->post_content, $matches );
+			if ( ! empty( $matches ) ) {
+				foreach ( $matches[1] as $group ) {
+					$foundIds = split(',', $group);
+					foreach ( $foundIds as $id ) {
+						array_push( $exisitingIds, $id );
+					}
+				}
+			}
+		} else {
+			/**
+			 * Request from post editor may send existing ids over the wire
+			 */
+			if ( isset( $_POST['existingIds'] ) ) {
+				$exisitingIds = $_POST['existingIds'];
+			}
+		}
+
 		foreach ($exisitingIds as $exisitingId) {
 			if ( ! in_array( $exisitingId, $ids ) ) {
 				$p = get_post( $exisitingId );
