@@ -380,37 +380,13 @@
     },
 
     fetchStories: function(editor, values) {
-      var self = this,
-          existingIds = [];
-
-      self.values = values;
-      self.editor = editor;
-
-      if (typeof values.ids !== 'undefined') {
-        existingIds = values.ids.split(',');
-      }
-
-      self.setupModal();
-
-      $.ajax({
-        url: ajaxurl,
-        dataType: 'json',
-        method: 'post',
-        data: {
-          action: 'roundup_block_posts',
-          existingIds: existingIds,
-          security: LR.ajax_nonce
-        },
-        success: function(data) {
-          self.modal.posts.reset(data);
-        }
-      });
+      this.values = values;
+      this.editor = editor;
+      this.setupModal();
     },
 
     setupModal: function(data) {
       this.modal = new RoundupBlockModal();
-
-      window.t = this.modal;
 
       // Posts available to select
       this.modal.posts = new LinkCollection(LR.roundup_posts);
