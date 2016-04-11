@@ -57,6 +57,8 @@ class SavedLinks {
 
 		/* Register the ajax call that renders the Saved_Links_List_table class*/
 		add_action( 'wp_ajax_lroundups_saved_links_list_table_render', array( __CLASS__, 'lroundups_saved_links_list_table_render' ) );
+
+		add_filter( 'gettext', array( __CLASS__, 'change_publish_button' ), 10, 2 );
 	}
 
 	/**
@@ -87,6 +89,21 @@ class SavedLinks {
 			'taxonomies' 	=> array(),
 			'has_archive' 	=> true
 		));
+	}
+
+	public static function change_publish_button( $translation, $text ) {
+		if ( function_exists( 'get_current_screen' ) ) {
+			$screen = get_current_screen();
+			if ( ! empty( $screen ) ) {
+				if ( $screen->post_type == 'rounduplink' ) {
+					if ( $text == 'Publish' ) {
+						return 'Save link';
+					}
+				}
+			}
+		}
+
+		return $translation;
 	}
 
 	/**
