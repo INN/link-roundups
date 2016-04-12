@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/INN/wordpress-mailchimp-tools.git",
-                "reference": "b1e15406cf26b02c1b68d5c1334b38f2f5fbc251"
+                "reference": "35c78ec49e43b220e9d6d283cdbdcc503c7e40f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/INN/wordpress-mailchimp-tools/zipball/b1e15406cf26b02c1b68d5c1334b38f2f5fbc251",
-                "reference": "b1e15406cf26b02c1b68d5c1334b38f2f5fbc251",
+                "url": "https://api.github.com/repos/INN/wordpress-mailchimp-tools/zipball/35c78ec49e43b220e9d6d283cdbdcc503c7e40f5",
+                "reference": "35c78ec49e43b220e9d6d283cdbdcc503c7e40f5",
                 "shasum": ""
             },
             "require": {
@@ -52,7 +52,7 @@
                 "api",
                 "email"
             ],
-            "time": "2016-04-12 12:45:52"
+            "time": "2016-04-12 16:04:24"
         },
         {
             "name": "mailchimp/mailchimp",
