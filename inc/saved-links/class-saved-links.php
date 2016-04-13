@@ -574,13 +574,13 @@ class SavedLinks {
 			$source = ! empty( $meta['lr_source'] ) ? $meta['lr_source'][0] : '';
 		} else {
 			// Fallback when post types other than 'rounduplink' are used in Link Roundups
-			if ( ! empty( $meta['lr_url'] ) ) {
+			if ( ! empty( $meta['lr_url'] ) && ! empty( $meta['lr_url'][0] ) ) {
 				$url = $meta['lr_url'][0];
 			} else {
 				$url = get_permalink( $post );
 			}
 
-			if ( ! empty( $meta['lr_desc'] ) ) {
+			if ( ! empty( $meta['lr_desc'] ) && ! empty( $meta['lr_desc'][0] ) ) {
 				$description = $meta['lr_desc'][0];
 			} else if ( ! empty( $post->post_excerpt ) ) {
 				$description = $post->post_excerpt;
@@ -588,7 +588,7 @@ class SavedLinks {
 				$description = $post->post_content;
 			}
 
-			if ( ! empty( $meta['lr_source'] ) ) {
+			if ( ! empty( $meta['lr_source'] ) && ! empty( $meta['lr_source'][0] )  ) {
 				$source = $meta['lr_source'][0];
 			} else {
 				$author = get_userdata( $post->post_author );
