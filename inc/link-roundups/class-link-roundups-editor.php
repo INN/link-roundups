@@ -243,7 +243,7 @@ class LinkRoundupsEditor {
 	public static function roundup_update_post() {
 		check_ajax_referer('lroundups_ajax_nonce', 'security');
 
-		if ( ! current_user_can( 'edit_posts' ) ) {
+		if ( ! current_user_can( apply_filters( 'link_roundups_minimum_capability', 'edit_posts' ) ) ) {
 			wp_die();
 		}
 

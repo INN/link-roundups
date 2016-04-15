@@ -83,7 +83,7 @@ class SavedLinks {
 			),
 			'description' 	=> __( 'Saved Links', 'link-roundups' ),
 			'supports' 		=> array( 'title', 'thumbnail' ),
-			'public' 		=> true,
+			'public' 		=> current_user_can( apply_filters( 'link_roundups_minimum_capability', 'edit_posts' ) ) ? true : false,
 			'menu_position' => 6,
 			'menu_icon'     => 'dashicons-admin-links',
 			'taxonomies' 	=> array(),
@@ -324,7 +324,7 @@ class SavedLinks {
 			'edit.php?post_type=rounduplink',
 			__( 'Add Browser Bookmark', 'link-roundups' ),
 			__( 'Add Browser Bookmark', 'link-roundups' ),
-			'edit_posts',
+			apply_filters( 'link_roundups_minimum_capability', 'edit_posts' ),
 			'install-browser-bookmark',
 			array(
 				__CLASS__, 'build_lroundups_page'

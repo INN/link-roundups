@@ -107,7 +107,7 @@ class LinkRoundups {
 				'title', 'editor', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'custom-fields',
 				'comments', 'revisions', 'page-attributes', 'post-formats'
 			),
-			'public' 		=> true,
+			'public' 		=> current_user_can( apply_filters( 'link_roundups_minimum_capability', 'edit_posts' ) ) ? true : false,
 			'menu_position' => 7,
 			'menu_icon' 	=> 'dashicons-list-view',
 			'taxonomies' 	=> apply_filters( 'roundup_taxonomies', array( 'category','post_tag' ) ),
@@ -211,7 +211,7 @@ class LinkRoundups {
 			'edit.php?post_type=roundup', 	// $parent_slug
 			'Options', 						// $page_title
 			'Options', 						// $menu_title
-			'edit_posts', 					// $capability
+			apply_filters( 'link_roundups_minimum_capability', 'edit_posts' ), // $capability
 			'link-roundups-options',  	    // $menu_slug
 			array( __CLASS__, 'build_lroundups_options_page' ) 	// $function
 		);
