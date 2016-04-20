@@ -107,7 +107,7 @@ class LinkRoundups {
 				'title', 'editor', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'custom-fields',
 				'comments', 'revisions', 'page-attributes', 'post-formats'
 			),
-			'public' 		=> current_user_can( apply_filters( 'link_roundups_minimum_capability', 'edit_posts' ) ) ? true : false,
+			'public' 		=> true,
 			'menu_position' => 7,
 			'menu_icon' 	=> 'dashicons-list-view',
 			'taxonomies' 	=> apply_filters( 'roundup_taxonomies', array( 'category','post_tag' ) ),
