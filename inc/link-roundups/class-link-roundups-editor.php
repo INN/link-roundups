@@ -179,6 +179,7 @@ class LinkRoundupsEditor {
 			<% posts.each(function(post, idx) { %>
 				<li data-id="<%= post.get('ID') %>">
 					<%= post.get('post_title') %>
+					<div class="status">Status: <em><%= post.getStatus() %></em></div>
 					<div class="actions">
 						<div class="added">
 							<a class="edit" data-id="<%= post.get('ID') %>" href="#">Edit</a> | <a class="remove" data-id="<%= post.get('ID') %>" href="#">Remove</a>
@@ -200,19 +201,41 @@ class LinkRoundupsEditor {
 			</p>
 			<p>
 				<label>Subheadline</label>
-				<input type="text" name="custom_fields[lr_subhed]" value="<%= custom_fields.lr_subhed %>"/>
+				<% if (custom_fields.lr_subhed) { %>
+					<input type="text" name="custom_fields[lr_subhed]" value="<%= custom_fields.lr_subhed %>"/>
+				<% } else { %>
+					<input type="text" name="custom_fields[lr_subhed]" value="<%= custom_fields.lr_subhed %>"/>
+				<% } %>
 			</p>
 			<p>
 				<label>URL</label>
-				<input type="text" name="custom_fields[lr_url]" value="<%= custom_fields.lr_url %>" />
+				<% if (custom_fields.lr_url) { %>
+					<input type="text" name="custom_fields[lr_url]" value="<%= custom_fields.lr_url %>" />
+				<% } else if (post_permalink) { %>
+					<input type="text" name="custom_fields[lr_url]" value="<%= post_permalink %>" />
+				<% } else { %>
+					<input type="text" name="custom_fields[lr_url]" />
+				<% } %>
 			</p>
 			<p>
 				<label>Description</label>
-				<textarea name="custom_fields[lr_desc]"><%= custom_fields.lr_desc %></textarea>
+				<% if (custom_fields.lr_desc) { %>
+					<textarea name="custom_fields[lr_desc]"><%= custom_fields.lr_desc %></textarea>
+				<% } else if (post_excerpt) { %>
+					<textarea name="custom_fields[lr_desc]"><%= post_excerpt %></textarea>
+				<% } else { %>
+					<textarea name="custom_fields[lr_desc]"></textarea>
+				<% } %>
 			</p>
 			<p>
 				<label>Source</label>
-				<input type="text" name="custom_fields[lr_source]" value="<%= custom_fields.lr_source %>" />
+				<% if (custom_fields.lr_source) { %>
+					<input type="text" name="custom_fields[lr_source]" value="<%= custom_fields.lr_source %>" />
+				<% } else if (post_author_display_name) { %>
+					<input type="text" name="custom_fields[lr_source]" value="<%= post_author_display_name %>" />
+				<% } else { %>
+					<input type="text" name="custom_fields[lr_source]" />
+				<% } %>
 			</p>
 		</script>
 	<?php }
@@ -324,6 +347,9 @@ class LinkRoundupsEditor {
 		foreach ( $posts as $idx => $post ) {
 			$post->order = $idx;
 			$post->custom_fields = get_post_custom( $post->ID );
+			$author = get_userdata( $post->post_author );
+			$post->post_author_display_name = $author->data->display_name;
+			$post->post_permalink = get_permalink( $post->ID );
 		}
 		return $posts;
 	}

@@ -7,6 +7,32 @@
 
     saving: false,
 
+    getStatus: function() {
+      var post_status = this.get('post_status');
+
+      if (post_status == 'private') {
+        return 'Privately Published';
+      }
+
+      if (post_status == 'publish') {
+        return 'Published';
+      }
+
+      if (post_status == 'future') {
+        return 'Scheduled';
+      }
+
+      if (post_status == 'pending') {
+        return 'Pending Review';
+      }
+
+      if (post_status == 'draft' || post_status == 'auto-draft') {
+        return 'Draft';
+      }
+
+      return post_status;
+    },
+
     save: function(data, options) {
       var self = this;
 
