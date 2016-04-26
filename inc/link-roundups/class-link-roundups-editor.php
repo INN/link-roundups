@@ -231,8 +231,8 @@ class LinkRoundupsEditor {
 				<label>Source</label>
 				<% if (custom_fields.lr_source) { %>
 					<input type="text" name="custom_fields[lr_source]" value="<%= custom_fields.lr_source %>" />
-				<% } else if (post_author_display_name) { %>
-					<input type="text" name="custom_fields[lr_source]" value="<%= post_author_display_name %>" />
+				<% } else if (source) { %>
+					<input type="text" name="custom_fields[lr_source]" value="<%= source %>" />
 				<% } else { %>
 					<input type="text" name="custom_fields[lr_source]" />
 				<% } %>
@@ -347,8 +347,7 @@ class LinkRoundupsEditor {
 		foreach ( $posts as $idx => $post ) {
 			$post->order = $idx;
 			$post->custom_fields = get_post_custom( $post->ID );
-			$author = get_userdata( $post->post_author );
-			$post->post_author_display_name = $author->data->display_name;
+			$post->source = get_bloginfo( 'name' );
 			$post->post_permalink = get_permalink( $post->ID );
 		}
 		return $posts;

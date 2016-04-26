@@ -591,8 +591,7 @@ class SavedLinks {
 			if ( ! empty( $meta['lr_source'] ) && ! empty( $meta['lr_source'][0] )  ) {
 				$source = $meta['lr_source'][0];
 			} else {
-				$author = get_userdata( $post->post_author );
-				$source = $author->display_name;
+				$source = get_bloginfo( 'name' );
 			}
 		}
 
