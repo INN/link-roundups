@@ -193,9 +193,13 @@
     save: function(e) {
       var ids = _.map(this.$el.find('.added-posts li'), function(el, idx) { return $(el).data('id'); });
       var s = '[' + shortcode_string + ' ids="' + ids.join(',') + '" name="' + this.name + '"]';
-      this.editor.insertContent(s);
-      this.editor.focus();
-      this.close();
+      var self = this;
+
+      this.shortcode.getNodes(function(editor, node, contentNode) {
+        self.shortcode.update(s, editor, node);
+        self.editor.focus();
+        self.close();
+      });
     },
 
     renderAvailable: function() {
@@ -402,12 +406,13 @@
     edit: function(data, update) {
       var shortcode_data = wp.shortcode.next(shortcode_string, data);
       var values = shortcode_data.shortcode.attrs.named;
-      wp.mce.roundup_block.fetchStories(tinyMCE.activeEditor, values);
+      wp.mce.roundup_block.fetchStories(tinyMCE.activeEditor, values, this);
     },
 
-    fetchStories: function(editor, values) {
+    fetchStories: function(editor, values, shortcode) {
       this.values = values;
       this.editor = editor;
+      this.shortcode = shortcode;
       this.setupModal();
     },
 
@@ -428,6 +433,7 @@
 
       // The TinyMCE editor
       this.modal.editor = this.editor;
+      this.modal.shortcode = this.shortcode;
 
       // Render and open
       this.modal.render();
