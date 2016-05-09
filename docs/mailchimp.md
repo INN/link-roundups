@@ -16,13 +16,11 @@ In order to use the MailChimp features of Link Roundups, you'll need to sign up 
 4. Click "Create A Key". A new key will appear in the list.
 5. Click the "Label" field of your new API key. Name it after the site you're using Argo Links on. For example: "example.com argo links"
 6. Copy the API key. This will be a long string of characters from 0-9 and a-f.
-7. On your website, go to Dashboard > Link Roundups > Options.
+7. On your website, go to **Dashboard > Link Roundups > Options**.
 8. Paste the MailChimp API Key into the appropriate field, then check "Enable MailChimp API Integration".
 9. Press "Save Changes".
 
 ![Link Roundups MailChimp API settings](./img/link-roundups-mailchimp-integration.png)
-
-Next: Creating a template in Mailchimp that your post will use.
 
 ## Creating a template in the MailChimp dashboard
 
@@ -64,7 +62,7 @@ These template tags are not required, but you may wish to use them in your templ
 
 ## Choosing the MailChimp Template and List to use
 
-So now you have at least one template saved in MailChimp, and we're assuming you also have a list of subscribers for your newsletter. Go back to the Link Roundups Options page in Dashboard &raquo; Link Roundups &raquo; Options, and choose your template, and which MailChiimp List you want to use:
+So now you have at least one template saved in MailChimp, and we're assuming you also have a list of subscribers for your newsletter. Go back to the Link Roundups Options page in **Link Roundups > Options**, and choose your template, and which MailChiimp List you want to use:
 
 ![Link Roundups MailChimp API settings](./img/link-roundups-options-mailchimp-2.png)
 
@@ -73,5 +71,7 @@ So now you have at least one template saved in MailChimp, and we're assuming you
 Once you have [saved some links](saving-links.md) and [created a link roundup post](link-roundups.md), you can send the link roundup post to MailChimp as a draft campaign.
 
 In the Link Roundups editor, above the standard WordPress "Publish" button you'll find a button to "Create a MailChimp Campaign."
+
+![Create a MailChimp Campaign button in a Link Roundups  post edit screen](./img/create-mailchimp-campaign-button.png)
 
 When you click "Create a MailChimp Campaign" you will be asked to confirm the action. The Link Roundups plugin will contact MailChimp to create the campaign and, upon success, present you with a link to finish editing the campaign in the MailChimp dashboard.
