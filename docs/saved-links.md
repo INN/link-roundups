@@ -24,11 +24,17 @@ Once you've [installed and activated the plugin](installation.md), you should se
 
 1. In WordPress find Saved Links in the main menu and navigate to New Saved Link.
 
-![Saved links area of the WordPress dashboard](img/all-saved-links.png)
+![Saved links area of the WordPress dashboard](img/new-saved-link-screen.png)
 
 2. Add a Title for your Link
 3. A URL is required, paste a valid URL in the URL field.
 3. Optionally define a custom slug, provide a short description and the source of your Saved Link.
+
+## Editing Saved Links
+
+Visit the dashboard screen under **Saved Links > Saved Links** to see all your Saved Links. You can edit them just like other post types. 
+
+![Saved links area of the WordPress dashboard](img/all-saved-links.png)
 
 ## Saved Links Widget
 
