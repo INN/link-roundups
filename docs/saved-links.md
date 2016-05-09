@@ -28,7 +28,7 @@ Once you've [installed and activated the plugin](installation.md), you should se
 
 2. Add a Title for your Link
 3. A URL is required, paste a valid URL in the URL field.
-3. Optionally define a custom slug, provide a short description and the source of your Saved Link.
+3. Optionally define a custom slug, add a Featured Image, and provide a short description and the source of your Saved Link.
 
 ## Editing Saved Links
 
