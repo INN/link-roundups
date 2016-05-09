@@ -72,6 +72,6 @@ Once you have [saved some links](saving-links.md) and [created a link roundup po
 
 In the Link Roundups editor, above the standard WordPress "Publish" button you'll find a button to "Create a MailChimp Campaign."
 
-![Create a MailChimp Campaign button in a Link Roundups  post edit screen](./img/create-mailchimp-campaign-button.png)
+![Create MailChimp Campaign button in the post editor](./img/link-roundup-mailchimp-button.png)
 
 When you click "Create a MailChimp Campaign" you will be asked to confirm the action. The Link Roundups plugin will contact MailChimp to create the campaign and, upon success, present you with a link to finish editing the campaign in the MailChimp dashboard.
