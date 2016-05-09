@@ -1,6 +1,6 @@
 # Link Roundups Documentation
 
-![link roundup](img/published-roundup.png)
+![link roundup post on a website](img/link-roundup-page-example.png)
 
 This plugin makes it easy to collect links from across the web and share them right from your WordPress Dashboard.
 
