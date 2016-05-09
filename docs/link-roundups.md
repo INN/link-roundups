@@ -1,4 +1,4 @@
-## How to Create Link Roundups
+# How to Create Link Roundups
 
 Assuming you have some [Saved Links](/docs/saved-links.md), you're ready to create your first Link Roundup.
 
