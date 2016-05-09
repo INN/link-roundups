@@ -36,16 +36,6 @@ Visit the dashboard screen under **Saved Links > Saved Links** to see all your S
 
 ![Saved links area of the WordPress dashboard](img/all-saved-links.png)
 
-## Saved Links Widget
-
-Now that you have some Saved Links you can use the Saved Links Widget to display them. Add it to a sidebar and check the widget's settings:
-
-![Saved links widget settings](img/saved-links-widget.png)
-
-The title defaults to "Recent Links" but you can change that as needed. You can set the number of Saved Links to display, adjust the excerpt length, show featured images, and add a More link with a url at the bottom of the widget.
-
-![Saved Links widget displayed in a sidebar](img/recent-links-sidebar.png)
-
 ## Using Saved Links in Link Roundups
 
 Now that you have some Saved Links you can use them in Link Roundups posts which display like other posts on your site. If you have a MailChimp account for your email newsletter, you can also easily publish Link Roundup posts as MailChimp campaigns from your WordPress dashboard.
