@@ -20,6 +20,8 @@ In order to use the MailChimp features of Link Roundups, you'll need to sign up 
 8. Paste the MailChimp API Key into the appropriate field, then check "Enable MailChimp API Integration".
 9. Press "Save Changes".
 
+![Link Roundups MailChimp API settings](./img/link-roundups-mailchimp-integration.png)
+
 Next: Creating a template in Mailchimp that your post will use.
 
 ## Creating a template in the MailChimp dashboard
@@ -60,9 +62,11 @@ These template tags are not required, but you may wish to use them in your templ
 - `*|ROUNDUPDATE|*` - The date the Links Roundu post was published
 - `*|ROUNDUPPERMALINK|*` - A link back to the original Link Roundup post
 
-## Choosing the template to use
+## Choosing the MailChimp Template and List to use
 
-So now you have at least one template saved in MailChimp. Go back to the Link Roundups Options page in Dashboard &raquo; Link Roundups &raquo; Options, and choose your template.
+So now you have at least one template saved in MailChimp, and we're assuming you also have a list of subscribers for your newsletter. Go back to the Link Roundups Options page in Dashboard &raquo; Link Roundups &raquo; Options, and choose your template, and which MailChiimp List you want to use:
+
+![Link Roundups MailChimp API settings](./img/link-roundups-options-mailchimp-2.png)
 
 # Creating a MailChimp Campaign
 
