@@ -1,6 +1,6 @@
 ## How to Create Link Roundups
 
-Assuming you have some Saved Links, you're ready to create your first Link Roundup.
+Assuming you have some [Saved Links](/docs/saved-links.md), you're ready to create your first Link Roundup.
 
 1) Go to **Link Roundups** and click Add Link Roundup from your WordPress Dashboard.
 

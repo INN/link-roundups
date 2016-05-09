@@ -38,4 +38,8 @@ Visit the dashboard screen under **Saved Links > Saved Links** to see all your S
 
 ## Using Saved Links in Link Roundups
 
-Now that you have some Saved Links you can use them in Link Roundups posts which display like other posts on your site. If you have a MailChimp account for your email newsletter, you can also easily publish Link Roundup posts as MailChimp campaigns from your WordPress dashboard.
+Now that you have some Saved Links you can:
+
+- [Use them in Link Roundups posts](/docs/link-roundups.md) which display like other posts on your site. 
+- If you have a MailChimp account for your email newsletter, you can also easily [publish Link Roundup posts as MailChimp campaigns](/docs/mailchimp.md) from your WordPress dashboard.
+- You can also display Saved Links in the [Saved Links Widget](/docs/widgets.md).
