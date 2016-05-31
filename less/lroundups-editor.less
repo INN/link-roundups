@@ -27,7 +27,13 @@
   position: fixed;
   width: 500px;
   min-height: 180px;
-  max-height: 80%;
+  height: 100%;
+  max-height: 600px;
+
+  @media (max-height: 600px) {
+    max-height: 400px;
+  }
+
   background: #fafafa;
   border: 1px solid #ccc;
   top: 100px;
@@ -37,6 +43,7 @@
   z-index: 100102;
   box-shadow: 0 1px 12px #999;
   border-radius: 4px;
+  overflow: hidden;
 }
 
 .lroundups-modal-header {
@@ -136,9 +143,22 @@ body.lroundups-modal-open #lroundups-modal-overlay {
 }
 
 .roundup-posts-container {
-  max-height: 380px;
+  max-height: 276px;
+
+  @media (max-height: 600px) {
+    max-height: 200px;
+  }
+
   overflow-y: scroll;
   margin-top: 16px;
+
+  .added-section & {
+    max-height: 320px;
+
+    @media (max-height: 600px) {
+      max-height: 400px;
+    }
+  }
 
   ul li {
     font-size: 14px;
