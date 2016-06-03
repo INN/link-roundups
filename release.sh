@@ -162,8 +162,8 @@ function write_trunk() {
 
   if [[ $is_master != "" ]]
   then
-    echo "Writing to $trunk_path";
     trunk_path=$svn_path/trunk;
+    echo "Writing to $trunk_path";
 
     # overwrite with unzip
     OUT=`rm -rf $trunk_path && unzip -o release/wp-release.zip -d $trunk_path`;
