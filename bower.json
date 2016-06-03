@@ -1,6 +1,6 @@
 {
   "name": "link-roundups",
-  "description": "A WordPress plugin to make it easy to collect links from around the web, turn them into roundup posts and streamline the production of daily/weekly roundup newsletters using MailChimp.",
+  "description": "A WordPress plugin that makes it easy to collect links, turn them into roundup posts and produce roundup newsletters using MailChimp.",
   "main": "link-roundups.php",
   "authors": [
     "INN Nerds <nerds@inn.org>"
