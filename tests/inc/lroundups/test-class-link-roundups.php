@@ -25,11 +25,11 @@ class LinkRoundupsClassTest extends WP_UnitTestCase {
 			'`LinkRoundups::init` returns null and uses only core WordPress functions.');
 	}
 
-	function test_my_get_posts() {
+	function test_lr_get_posts() {
 		$test_query = new WP_Query();
 		$test_query->is_home = true;
 
-		LinkRoundups::my_get_posts($test_query);
+		LinkRoundups::lr_get_posts($test_query);
 
 		$this->assertTrue(
 			in_array('roundup', $test_query->query_vars['post_type']));
@@ -77,11 +77,6 @@ class LinkRoundupsClassTest extends WP_UnitTestCase {
 	function test_register_mysettings() {
 		$this->markTestSkipped(
 			'`LinkRoundups::register_mysettings` returns null and uses only core WordPress functions.');
-	}
-
-	function test_validate_mailchimp_integration() {
-		$ret = LinkRoundups::validate_mailchimp_integration('test');
-		$this->assertEquals($ret, '');
 	}
 
 	function test_build_lroundups_options_page() {
