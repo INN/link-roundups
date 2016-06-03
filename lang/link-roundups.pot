@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the link-roundups package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: link-roundups 0.3.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-26 10:06-0500\n"
+"POT-Creation-Date: 2016-06-03 14:45-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,54 +18,53 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: inc/lroundups/class-lroundups.php:260
-msgid ""
-"Curl is not enabled on your server. The MailChimp features will not work "
-"without curl. Please contact your server administrator to have curl enabled."
-msgstr ""
-
-#: inc/lroundups/widget.php:13
+#: inc/link-roundups/class-link-roundups-widget.php:13
 msgid "Link Roundups Widget"
 msgstr ""
 
-#: inc/lroundups/widget.php:52
+#: inc/link-roundups/class-link-roundups-widget.php:51
 msgid ""
 "<p class=\"error\"><strong>You don't have any recent links or the Link "
 "Roundups plugin is not active.</strong></p>"
 msgstr ""
 
-#: inc/lroundups/widget.php:84 inc/saved-links/widget.php:93
+#: inc/link-roundups/class-link-roundups-widget.php:83
+#: inc/saved-links/class-saved-links-widget.php:122
 msgid "Title:"
 msgstr ""
 
-#: inc/lroundups/widget.php:89 inc/saved-links/widget.php:98
+#: inc/link-roundups/class-link-roundups-widget.php:88
+#: inc/saved-links/class-saved-links-widget.php:127
 msgid "Number of posts to show:"
 msgstr ""
 
-#: inc/lroundups/widget.php:94
+#: inc/link-roundups/class-link-roundups-widget.php:93
 msgid "Limit to category: "
 msgstr ""
 
-#: inc/lroundups/widget.php:95
+#: inc/link-roundups/class-link-roundups-widget.php:94
 msgid "None (all categories)"
 msgstr ""
 
-#: inc/lroundups/widget.php:98
+#: inc/link-roundups/class-link-roundups-widget.php:97
 msgid "More Link"
 msgstr ""
 
-#: inc/lroundups/widget.php:98 inc/saved-links/widget.php:114
+#: inc/link-roundups/class-link-roundups-widget.php:97
+#: inc/saved-links/class-saved-links-widget.php:148
 msgid ""
 "If you would like to add a more link at the bottom of the widget, add the "
 "link text and url here."
 msgstr ""
 
-#: inc/lroundups/widget.php:100 inc/saved-links/widget.php:116
+#: inc/link-roundups/class-link-roundups-widget.php:99
+#: inc/saved-links/class-saved-links-widget.php:150
 msgid "Link text:"
 msgstr ""
 
-#: inc/lroundups/widget.php:105 inc/saved-links/class-saved-links.php:166
-#: inc/saved-links/widget.php:121
+#: inc/link-roundups/class-link-roundups-widget.php:104
+#: inc/saved-links/class-saved-links-widget.php:155
+#: inc/saved-links/class-saved-links.php:175
 msgid "URL:"
 msgstr ""
 
@@ -97,172 +96,204 @@ msgstr ""
 msgid "Show All"
 msgstr ""
 
-#: inc/saved-links/class-saved-links-list-table.php:258
+#: inc/saved-links/class-saved-links-list-table.php:262
 #, php-format
 msgid "Select %s"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:78
-#: inc/saved-links/class-saved-links.php:90
+#: inc/saved-links/class-saved-links-widget.php:12
+msgid "Show your most recently saved links in a sidebar widget"
+msgstr ""
+
+#: inc/saved-links/class-saved-links-widget.php:14
+msgid "Saved Links Widget"
+msgstr ""
+
+#: inc/saved-links/class-saved-links-widget.php:22
+#: inc/saved-links/class-saved-links-widget.php:110
+msgid "Recent Links"
+msgstr ""
+
+#: inc/saved-links/class-saved-links-widget.php:68
+#: inc/saved-links/class-saved-links.php:681
+msgid "Source: "
+msgstr ""
+
+#: inc/saved-links/class-saved-links-widget.php:87
+msgid ""
+"<p class=\"error\"><strong>You don't have any recent links or the link "
+"roundups plugin is not active.</strong></p>"
+msgstr ""
+
+#: inc/saved-links/class-saved-links-widget.php:133
+msgid "Open links in new window"
+msgstr ""
+
+#: inc/saved-links/class-saved-links-widget.php:138
+msgid "Excerpt Length (# of Sentences):"
+msgstr ""
+
+#: inc/saved-links/class-saved-links-widget.php:145
+msgid "Show featured images?"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:72
+#: inc/saved-links/class-saved-links.php:84
 msgid "Saved Links"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:79
+#: inc/saved-links/class-saved-links.php:73
 msgid "Saved Link"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:80
-#: inc/saved-links/class-saved-links.php:81
+#: inc/saved-links/class-saved-links.php:74
+#: inc/saved-links/class-saved-links.php:75
 msgid "New Saved Link"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:82
+#: inc/saved-links/class-saved-links.php:76
 msgid "Edit"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:83
+#: inc/saved-links/class-saved-links.php:77
 msgid "Edit Saved Link"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:84
+#: inc/saved-links/class-saved-links.php:78
 msgid "View"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:85
+#: inc/saved-links/class-saved-links.php:79
 msgid "View Saved Link"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:86
+#: inc/saved-links/class-saved-links.php:80
 msgid "Search Saved Links"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:87
+#: inc/saved-links/class-saved-links.php:81
 msgid "No Saved Links found"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:88
+#: inc/saved-links/class-saved-links.php:82
 msgid "No Saved Links found in Trash"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:112
+#: inc/saved-links/class-saved-links.php:121
 msgid "Saved Link Tags"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:113
+#: inc/saved-links/class-saved-links.php:122
 msgid "Saved Link Tag"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:127
+#: inc/saved-links/class-saved-links.php:136
 msgid "Link Information"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:171
+#: inc/saved-links/class-saved-links.php:180
 msgid "Description:"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:181
+#: inc/saved-links/class-saved-links.php:190
 msgid "Source:"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:186
+#: inc/saved-links/class-saved-links.php:195
 msgid "Import featured image:"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:189
+#: inc/saved-links/class-saved-links.php:198
 msgid "Import as feature image"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:262
+#: inc/saved-links/class-saved-links.php:271
 msgid "Link Title"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:263
+#: inc/saved-links/class-saved-links.php:272
 msgid "Author"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:264
+#: inc/saved-links/class-saved-links.php:273
 msgid "URL"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:265
+#: inc/saved-links/class-saved-links.php:274
 msgid "Description"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:266
+#: inc/saved-links/class-saved-links.php:275
 msgid "Tags"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:267
+#: inc/saved-links/class-saved-links.php:276
 msgid "Date"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:316
-#: inc/saved-links/class-saved-links.php:317
+#: inc/saved-links/class-saved-links.php:325
+#: inc/saved-links/class-saved-links.php:326
 msgid "Add Browser Bookmark"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:337
+#: inc/saved-links/class-saved-links.php:346
 msgid "Add Save to Site Bookmark to Your Web Browser"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:342
-#: inc/saved-links/class-saved-links.php:353
+#: inc/saved-links/class-saved-links.php:351
+#: inc/saved-links/class-saved-links.php:362
 msgid "Save to Site"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:343
+#: inc/saved-links/class-saved-links.php:352
 msgid ""
 "Save to Site is a tool that lets you send Saved Links to your WordPress "
 "Dashboard while browsing the web."
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:344
+#: inc/saved-links/class-saved-links.php:353
 msgid ""
 "Click the Save to Site bookmark and a new WordPress window will popup, "
 "attempting to prefill Title, URL and Source information."
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:348
+#: inc/saved-links/class-saved-links.php:357
 msgid "Install Save to Site"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:349
+#: inc/saved-links/class-saved-links.php:358
 msgid "Browser Bookmarklet"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:350
+#: inc/saved-links/class-saved-links.php:359
 msgid ""
 "Drag the Save to Site bookmarklet below to your web browser's Bookmarks "
 "Toolbar.<br /><em>If you can't drag, click the Clipboard.</em>"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:356
+#: inc/saved-links/class-saved-links.php:365
 msgid "Copy Save to Site bookmarklet code"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:362
+#: inc/saved-links/class-saved-links.php:371
 msgid ""
 "If you can&#8217;t drag the bookmarklet to your bookmarks, copy the "
 "following code and create a new bookmark. Paste the code into the new "
 "bookmark&#8217;s URL field."
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:369
+#: inc/saved-links/class-saved-links.php:378
 msgid "Direct link (best for mobile and tablets)"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:370
+#: inc/saved-links/class-saved-links.php:379
 msgid ""
 "Follow the link to open Save to Site. Then add it to your device&#8217;s "
 "bookmarks or home screen."
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:373
+#: inc/saved-links/class-saved-links.php:382
 msgid "Open Save to Site"
-msgstr ""
-
-#: inc/saved-links/class-saved-links.php:632 inc/saved-links/widget.php:50
-msgid "Source: "
 msgstr ""
 
 #: inc/saved-links/class-wp-list-table-clone.php:143
@@ -375,32 +406,6 @@ msgstr ""
 msgid "Select All"
 msgstr ""
 
-#: inc/saved-links/widget.php:10
-msgid "Show your most recently saved links in a sidebar widget"
-msgstr ""
-
-#: inc/saved-links/widget.php:12
-msgid "Saved Links Widget"
-msgstr ""
-
-#: inc/saved-links/widget.php:60
-msgid ""
-"<p class=\"error\"><strong>You don't have any recent links or the argo links "
-"plugin is not active.</strong></p>"
-msgstr ""
-
-#: inc/saved-links/widget.php:82
-msgid "Recent Links"
-msgstr ""
-
-#: inc/saved-links/widget.php:104
-msgid "Excerpt Length (# of Sentences):"
-msgstr ""
-
-#: inc/saved-links/widget.php:111
-msgid "Show featured images?"
-msgstr ""
-
 #: inc/updates/index.php:115
 #, php-format
 msgid ""
@@ -507,10 +512,6 @@ msgstr ""
 msgid "Custom HTML for Displaying Links"
 msgstr ""
 
-#: templates/options.php:15
-msgid "Mailchimp Integration"
-msgstr ""
-
 #: templates/options.php:22
 msgid "You might call it a Daily Digest. Recap. Team Newsletter. Etc."
 msgstr ""
@@ -595,41 +596,21 @@ msgid ""
 msgstr ""
 
 #: templates/options.php:87
-msgid "MailChimp Integration"
+msgid "Save Changes"
 msgstr ""
 
-#: templates/options.php:90
-msgid "Enable MailChimp Integration?"
+#: vendor/inn/wordpress-mailchimp-tools/inc/admin/class-mailchimp-settings.php:44
+msgid "MailChimp API Settings"
 msgstr ""
 
-#: templates/options.php:97
+#: vendor/inn/wordpress-mailchimp-tools/inc/admin/class-mailchimp-settings.php:50
 msgid "MailChimp API Key"
 msgstr ""
 
-#: templates/options.php:103
+#: vendor/inn/wordpress-mailchimp-tools/templates/settings.php:2
+msgid "MailChimp Tools"
+msgstr ""
+
+#: vendor/inn/wordpress-mailchimp-tools/templates/settings.php:9
 msgid "Find your MailChimp API Key"
-msgstr ""
-
-#: templates/options.php:105
-msgid "MailChimp Templates"
-msgstr ""
-
-#: templates/options.php:112
-msgid ""
-"Choose a MailChimp template to use as the basis for Link Roundup email "
-"campaigns."
-msgstr ""
-
-#: templates/options.php:115
-msgid "MailChimp Lists"
-msgstr ""
-
-#: templates/options.php:122
-msgid ""
-"Choose a MailChimp list that your Link Roundup email campaigns will be sent "
-"to."
-msgstr ""
-
-#: templates/options.php:127
-msgid "Save Changes"
 msgstr ""
