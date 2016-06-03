@@ -4,7 +4,7 @@ Donate link: http://bit.ly/1N4nSJJ
 Tags: newsletters, mailchimp, links, curation, aggregation
 Requires at least: 4.1
 Tested up to: 4.2.3
-Stable tag: 0.3.2
+Stable tag: 0.4.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,16 @@ Collect links from around the web, turn them into roundup posts and streamline t
 [Read more about installing plugins here](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
 == Changelog ==
+
+= 0.4.0 =
+
+- Added "roundup block" shortcode and accompanying post editor user interface for editing blocks of saved links
+- Manage front-end Javascript dependencies using Bower
+- Manage PHP dependencies using Composer
+- Uses the wordpress-mailchimp-tools PHP package, brought to you by INN
+- Added MailChimp campaign editor meta box to the post editor
+- Added MailChimp campaign settings for roundup posts
+- Moved MailChimp API Key settings to Settings > MailChimp Settings menu
 
 = 0.3.2 =
 
