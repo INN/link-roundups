@@ -45,56 +45,10 @@ class Save_To_Site_Button {
 	 *
 	 * @since 0.3
 	 */
-	function init() {
-
-		add_filter( 'redirect_post_location', array( __CLASS__, 'redirect' ) );
-
+	public static function init() {
 		if ( isset( $_GET[ 'u' ] ) ) {
 			add_action( 'load-post-new.php', array( __CLASS__, 'load' ) );
 			add_action( 'load-post.php', array( __CLASS__, 'load' ) );
-		}
-		elseif ( isset($_REQUEST[ 'ajax' ]) ) {
-			// this is for video only
-			// from the original plugin, currently not really used.
-			add_action( 'load-post-new.php', array( __CLASS__, 'manageAjaxRequest' ) );
-		}
-
-	}
-
-	/**
-	 * Currently not used. Left as an example from original
-	 * plugin file of how to handle an ajax request from the page.
-	 *
-	 * This could be used to ajax-ify the fetching of URL information.
-	 *
-	 * @since 0.3
-	 */
-	public static function manageAjaxRequest() {
-
-		$selection = '';
-		if ( !empty($_GET['s']) ) {
-			$selection = str_replace('&apos;', "'", stripslashes($_GET['s']));
-			$selection = trim( htmlspecialchars( html_entity_decode($selection, ENT_QUOTES) ) );
-		}
-
-		if ( ! empty($selection) ) {
-			$selection = preg_replace('/(\r?\n|\r)/', '</p><p>', $selection);
-			$selection = '<p>' . str_replace('<p></p>', '', $selection) . '</p>';
-		}
-
-		$url = isset( $_GET[ 'u' ] ) ? esc_url( $_GET[ 'u' ] ) : '';
-		$image = isset( $_GET[ 'i' ] ) ? $_GET[ 'i' ] : '';
-
-
-		if ( !empty( $_REQUEST[ 'ajax' ] ) ) {
-			switch ( $_REQUEST[ 'ajax' ] ) {
-				case 'urlInfo':
-					// return urlInfo
-					break;
-				default:
-					// default case.
-			}
-			die();
 		}
 	}
 
@@ -105,7 +59,7 @@ class Save_To_Site_Button {
 	 *
 	 * @return String. Javascript bookmarklet code.
 	 */
-	static function shortcut_link() {
+	public static function shortcut_link() {
 
 		// This is the default 'Press This!' button link.
 		$shortcut_link = htmlspecialchars( get_shortcut_link() );
@@ -124,99 +78,77 @@ class Save_To_Site_Button {
 	}
 
 	/**
-	 * Passes ?u= query var through login process
-	 * so we retain all the good meta we gathered
-	 * @since 0.3
-	 *
-	 * @return url with query vars still attached.
-	 */
-	function redirect( $location ) {
-		$referrer = wp_get_referer();
-
-		if ( false !== strpos( $referrer, '?u=' ) || false !== strpos( $referrer, '&u=' ) )
-			$location = add_query_arg( 'u', 1, $location );
-
-		return $location;
-	}
-
-	/**
 	 * Sets up default values for new Saved Link.
 	 *
 	 * @since 0.3
 	 */
 	function load() {
+		$meta = $_POST['_meta'];
+		$links = $_POST['_links'];
+		$images = $_POST['_images'];
+		$embeds = $_POST['_embeds'];
 
-		// Default source
 		self::$url = isset( $_GET[ 'u' ] ) ? esc_url( $_GET[ 'u' ] ) : '';
 		self::$url = wp_kses( urldecode( self::$url ), null );
 
-		// Get meta data from url
-		$meta = lroundups_scrape_url(self::$url); // func. contains WPSimpleScraper
-		$meta = $meta['meta'];
-
 		// Default title
 		self::$title = '';
-		if( !empty($meta['ogp']['title']) ) {
-			self::$title = $meta['ogp']['title'];
+		if ( ! empty( $meta['og:title'] ) ) {
+			self::$title = $meta['og:title'];
 		} else {
-			self::$title = isset( $_GET[ 't' ] ) ? trim( strip_tags( html_entity_decode( stripslashes( $_GET[ 't' ] ), ENT_QUOTES ) ) ) : '';
+			self::$title = isset( $_POST[ 't' ] ) ? trim( strip_tags( html_entity_decode( stripslashes( $_POST[ 't' ] ), ENT_QUOTES ) ) ) : '';
 		}
 
 		$selection = '';
-		if ( !empty( $_GET[ 's' ] ) ) {
-			$selection = str_replace( '&apos;', "'", stripslashes( $_GET[ 's' ] ) );
-			$selection = trim( htmlspecialchars( html_entity_decode( $selection, ENT_QUOTES ) ) );
+		if ( ! empty( $_POST[ 's' ] ) ) {
+			$selection = str_replace( '&apos;', "'", stripslashes( $_POST[ 's' ] ) );
+			$selection = '<blockquote>' . trim( htmlspecialchars( html_entity_decode( $selection, ENT_QUOTES ) ) ) . '</blockquote>';
 		}
 
 		// Default description
 		self::$description = '';
 		if ( !empty( $selection ) ) {
 			self::$description = $selection;
-		} else if( !empty($meta['ogp']['description']) ) {
-			self::$description = $meta['ogp']['description'];
+		} else if( !empty($meta['og:description']) ) {
+			self::$description = $meta['og:description'];
 		}
 
 		// Default source
 		self::$source = '';
-		if( !empty($meta['ogp']['site_name']) ) {
-			self::$source = $meta['ogp']['site_name'];
+		if( !empty($meta['og:site_name']) ) {
+			self::$source = $meta['og:site_name'];
 		} else if( self::$url ) {
 			$url = parse_url(self::$url);
 			self::$source = $url['host'];
 		}
 
 		self::$imgUrl = '';
-		if( !empty($meta['ogp']['image']) ) {
-			self::$imgUrl = $meta['ogp']['image'];
+		if( ! empty( $meta['og:image'] ) ) {
+			self::$imgUrl = $meta['og:image'];
 		}
 
 		/**
-         * Default Link Roundups Values for Custom Meta
-         *
-         * Register default title, link URL, link description and link source.
-         * Used within popup so hides the Admin Bar
-         *
-         * @since x.x.x
-         *
-         * @param type  $var Description.
-         * @param array $args {
-         *     Short description about this hash.
-         *
-         *     @type type $var Description.
-         *     @type type $var Description.
-         * }
-         * @param type  $var Description.
-         */
-
+		 * Default Link Roundups Values for Custom Meta
+		 *
+		 * Register default title, link URL, link description and link source.
+		 * Used within popup so hides the Admin Bar
+		 *
+		 * @since x.x.x
+		 *
+		 * @param type  $var Description.
+		 * @param array $args {
+		 *     Short description about this hash.
+		 *
+		 *     @type type $var Description.
+		 *     @type type $var Description.
+		 * }
+		 * @param type  $var Description.
+		 */
 		add_filter( 'default_title', array( __CLASS__, 'default_title' ) );
 		add_filter( 'default_link_url', array( __CLASS__, 'default_link' ));
 		add_filter( 'default_link_description', array( __CLASS__, 'default_description' ) );
 		add_filter( 'default_link_source', array( __CLASS__, 'default_source' ) );
-
 		add_filter( 'show_admin_bar', '__return_false' );
-
-		self::manageAjaxRequest();
-
 	}
 
 	/**

@@ -35,10 +35,10 @@ var LR = LR || {};
             this.template = _.template($('#lroundups-modal-tmpl').html());
 
             if (!this.content)
-                this.content = (typeof options.content !== 'undefined')? options.content : '';
+                this.content = (options && typeof options.content !== 'undefined')? options.content : '';
 
             if (!this.actions)
-                this.actions = (typeof options.actions !== 'undefined')? options.actions : {};
+                this.actions = (options && typeof options.actions !== 'undefined')? options.actions : {};
 
             this.setEvents();
 
@@ -72,10 +72,21 @@ var LR = LR || {};
         },
 
         close: function() {
+          if ($('.lroundups-modal').length <= 1) {
             $('body').removeClass('lroundups-modal-open');
-            this.$el.removeClass('show');
-            this.$el.addClass('hide');
-            return false;
+          }
+          this.$el.removeClass('show');
+          this.$el.addClass('hide');
+          this.$el.remove()
+          return false;
+        },
+
+        hide: function() {
+          this.$el.hide();
+        },
+
+        show: function() {
+          this.$el.show();
         }
     });
 

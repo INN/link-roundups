@@ -20,3 +20,7 @@ node_modules
 ## Temporary test and release directories
 /wptest
 /release
+
+## Vendor libs
+vendor
+js/vendor

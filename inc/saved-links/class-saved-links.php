@@ -1,13 +1,5 @@
 <?php
 
-ob_start(); ?>
-<p class="lr-saved-link #!CLASS!#">
-	#!IMAGE!#
-	<a href="#!URL!#">#!TITLE!#</a>&ndash;<span class="description">#!DESCRIPTION!#</span> <em>#!SOURCE!#</em>
-</p><?php
-
-define('LROUNDUPS_DEFAULT_LINK_HTML', ob_get_clean());
-
 /**
  * The Argo Links class
  * So we don't have function naming conflicts.
@@ -50,21 +42,23 @@ class SavedLinks {
 		add_action( 'widgets_init', array( __CLASS__, 'add_link_roundups_widget' ) );
 
 		/* Argo links have no content, so we have to generate it on request */
-		add_filter( 'the_content', array( __CLASS__,'the_content' ) );
-		add_filter( 'the_excerpt', array( __CLASS__,'the_excerpt' ) );
-		add_filter( 'post_type_link', array( __CLASS__,'the_permalink' ), 0, 2);
-		add_filter( 'author_link ', array( __CLASS__,'the_permalink' ) );
-		add_filter( 'the_author', array( __CLASS__,'the_author' ) );
-		add_filter( 'the_author_posts_link', array( __CLASS__,'the_author_posts_link' ) );
+		add_filter( 'the_content', array( __CLASS__, 'the_content' ) );
+		add_filter( 'the_excerpt', array( __CLASS__, 'the_excerpt' ) );
+		add_filter( 'post_type_link', array( __CLASS__, 'the_permalink' ), 0, 2);
+		add_filter( 'author_link ', array( __CLASS__, 'the_permalink' ) );
+		add_filter( 'the_author', array( __CLASS__, 'the_author' ) );
+		add_filter( 'the_author_posts_link', array( __CLASS__, 'the_author_posts_link' ) );
 
 		/* If we have any admin_notices, print them */
 		add_action('admin_notices', array(__CLASS__, 'admin_notices'));
 
 		/* Register a shortcode to display links */
-		add_shortcode( 'rounduplink', array( __CLASS__,'rounduplink_shortcode' ) );
+		add_shortcode( 'rounduplink', array( __CLASS__, 'rounduplink_shortcode' ) );
 
 		/* Register the ajax call that renders the Saved_Links_List_table class*/
-		add_action( 'wp_ajax_lroundups_saved_links_list_table_render', array( __CLASS__, 'lroundups_saved_links_list_table_render'));
+		add_action( 'wp_ajax_lroundups_saved_links_list_table_render', array( __CLASS__, 'lroundups_saved_links_list_table_render' ) );
+
+		add_filter( 'gettext', array( __CLASS__, 'change_publish_button' ), 10, 2 );
 	}
 
 	/**
@@ -89,12 +83,27 @@ class SavedLinks {
 			),
 			'description' 	=> __( 'Saved Links', 'link-roundups' ),
 			'supports' 		=> array( 'title', 'thumbnail' ),
-			'public' 		=> true,
+			'public' 		=> current_user_can( apply_filters( 'link_roundups_minimum_capability', 'edit_posts' ) ) ? true : false,
 			'menu_position' => 6,
 			'menu_icon'     => 'dashicons-admin-links',
 			'taxonomies' 	=> array(),
 			'has_archive' 	=> true
 		));
+	}
+
+	public static function change_publish_button( $translation, $text ) {
+		if ( function_exists( 'get_current_screen' ) ) {
+			$screen = get_current_screen();
+			if ( ! empty( $screen ) ) {
+				if ( $screen->post_type == 'rounduplink' ) {
+					if ( $text == 'Publish' ) {
+						return 'Save link';
+					}
+				}
+			}
+		}
+
+		return $translation;
 	}
 
 	/**
@@ -108,10 +117,10 @@ class SavedLinks {
 			"lr-tags",
 			'rounduplink',
 			array(
-				'hierarchical' 		=> false,
-				'label' 			=> __( 'Saved Link Tags', 'link-roundups' ),
-				'singular_label' 	=> __( 'Saved Link Tag', 'link-roundups' ),
-				'rewrite' 			=> true
+				'hierarchical' => false,
+				'label' => __( 'Saved Link Tags', 'link-roundups' ),
+				'singular_label' => __( 'Saved Link Tag', 'link-roundups' ),
+				'rewrite' => true
 			)
 		);
 	}
@@ -258,13 +267,13 @@ class SavedLinks {
 	 */
 	public static function display_custom_columns($columns){
 		$columns = array(
-			'cb' 			=> '<input type=\"checkbox\" />',
-			'title' 		=> __( 'Link Title', 'link-roundups' ),
-			'author' 		=> __( 'Author', 'link-roundups' ),
-			'url' 			=> __( 'URL', 'link-roundups' ),
-			'description' 	=> __( 'Description', 'link-roundups' ),
-			'link-tags' 	=> __( 'Tags', 'link-roundups' ),
-			'date' 			=> __( 'Date', 'link-roundups' )
+			'cb' => '<input type=\"checkbox\" />',
+			'title' => __( 'Link Title', 'link-roundups' ),
+			'author' => __( 'Author', 'link-roundups' ),
+			'url' => __( 'URL', 'link-roundups' ),
+			'description' => __( 'Description', 'link-roundups' ),
+			'link-tags' => __( 'Tags', 'link-roundups' ),
+			'date' => __( 'Date', 'link-roundups' )
 		);
 		return $columns;
 	}
@@ -315,7 +324,7 @@ class SavedLinks {
 			'edit.php?post_type=rounduplink',
 			__( 'Add Browser Bookmark', 'link-roundups' ),
 			__( 'Add Browser Bookmark', 'link-roundups' ),
-			'edit_posts',
+			apply_filters( 'link_roundups_minimum_capability', 'edit_posts' ),
 			'install-browser-bookmark',
 			array(
 				__CLASS__, 'build_lroundups_page'
@@ -416,15 +425,18 @@ class SavedLinks {
 	 *
 	 * @param string $content content passed in by the filter (should be empty).
 	 */
-	public static function the_permalink( $url, $post =  null ) {
+	public static function the_permalink($url, $post=null) {
 		$post = get_post( $post );
 
 		// Only run for argo_links
 		$meta = get_post_meta( $post->ID );
 		$remoteUrl = !empty( $meta['lr_url'] ) ? $meta['lr_url'][0] : '';
 
-		if ( empty( $url ) || !( 'rounduplink' == $post->post_type ) ) {
-			return $url;
+		if ( empty( $remoteUrl ) || ! ( 'rounduplink' == $post->post_type ) ) {
+			remove_filter( 'post_type_link', array( __CLASS__, 'the_permalink' ), 0, 2);
+			$permalink = get_permalink( $post->ID );
+			add_filter( 'post_type_link', array( __CLASS__, 'the_permalink' ), 0, 2);
+			return $permalink;
 		}
 
 		return $remoteUrl;
@@ -473,11 +485,9 @@ class SavedLinks {
 		}
 
 		$meta = get_post_meta( $post->ID );
-
-		$url = !empty( $meta['lr_url'] ) ? $meta['lr_url'][0] : '';
+		$url = self::the_permalink( $post ); //! empty( $meta['lr_url'] ) ? $meta['lr_url'][0] : '';
 		$title = get_the_title( $post->ID );
-		$description = array_key_exists( 'lr_desc', $meta ) ? $meta['lr_desc'][0] : '';
-		$source = !empty( $meta['lr_source'] ) ? $meta['lr_source'][0] : '';
+		$source = ! empty( $meta['lr_source'] ) ? $meta['lr_source'][0] : '';
 
 		$link = sprintf(
 			'<a href="%1$s" title="%2$s" rel="author">%3$s</a>',
@@ -500,17 +510,20 @@ class SavedLinks {
 	 * @param string $content content passed in by the filter (should be empty).
 	 */
 	public static function the_content($content) {
-		// Only run for argo_links
+		// Only run for roundup links
 		global $post;
 
-		if (!isset($post))
+		if ( ! isset( $post ) ) {
 			return $content;
+		}
 
-		if (is_post_type_archive('rounduplink'))
-			return get_post_meta($post->ID, 'lr_desc', true);
+		if ( is_post_type_archive( 'rounduplink' ) ) {
+			return get_post_meta( $post->ID, 'lr_desc', true );
+		}
 
-		if ( ! ( 'rounduplink' == $post->post_type ) )
+		if ( ! ( 'rounduplink' == $post->post_type ) ) {
 			return $content;
+		}
 
 		return self::get_html( $post );
 	}
@@ -526,9 +539,9 @@ class SavedLinks {
 	 * @param string $content content passed in by the filter (should be empty).
 	 */
 	public static function the_excerpt($content) {
+		global $post;
 
 		// Only run for argo_links
-		global $post;
 		if ( ! ( 'rounduplink' == $post->post_type ) ) {
 			return $content;
 		}
@@ -546,17 +559,41 @@ class SavedLinks {
 	 *
 	 * @param string $content content passed in by the filter (should be empty).
 	 */
-	public static function get_html( $post = null, $link_class = null ) {
-		$post = get_post($post);
+	public static function get_html($post=null, $link_class=null, $attrs=array()) {
+		$post = get_post( $post );
 
-		if(!$post)
+		if ( ! $post ) {
 			return;
+		}
 
-		$meta = get_post_meta($post->ID);
+		$meta = get_post_meta( $post->ID );
 
-		$url = !empty($meta['lr_url'])? $meta['lr_url'][0] : '';
-		$description = array_key_exists('lr_desc', $meta)? $meta['lr_desc'][0] : '';
-		$source = !empty($meta['lr_source'])? $meta['lr_source'][0] : '';
+		if ( $post->post_type == 'rounduplink' ) {
+			$url = !empty($meta['lr_url'])? $meta['lr_url'][0] : '';
+			$description = array_key_exists( 'lr_desc', $meta ) ? $meta['lr_desc'][0] : '';
+			$source = ! empty( $meta['lr_source'] ) ? $meta['lr_source'][0] : '';
+		} else {
+			// Fallback when post types other than 'rounduplink' are used in Link Roundups
+			if ( ! empty( $meta['lr_url'] ) && ! empty( $meta['lr_url'][0] ) ) {
+				$url = $meta['lr_url'][0];
+			} else {
+				$url = get_permalink( $post );
+			}
+
+			if ( ! empty( $meta['lr_desc'] ) && ! empty( $meta['lr_desc'][0] ) ) {
+				$description = $meta['lr_desc'][0];
+			} else if ( ! empty( $post->post_excerpt ) ) {
+				$description = $post->post_excerpt;
+			} else {
+				$description = $post->post_content;
+			}
+
+			if ( ! empty( $meta['lr_source'] ) && ! empty( $meta['lr_source'][0] )  ) {
+				$source = $meta['lr_source'][0];
+			} else {
+				$source = get_bloginfo( 'name' );
+			}
+		}
 
 		/**
 		 * Allow the ability to manipulate the link title based on the post and link class
@@ -564,12 +601,23 @@ class SavedLinks {
 		 * @since 0.3.2
 		 */
 		$title = apply_filters(
-			'lroundups_link_title', get_the_title($post->ID), $post, $link_class);
+			'lroundups_link_title',
+			get_the_title( $post->ID ),
+			$post,
+			$link_class
+		);
 
-		$lroundups_html = get_option('lroundups_custom_html');
+		$lroundups_html = apply_filters(
+			'lroundups_custom_html',
+			get_option( 'lroundups_custom_html' ),
+			$post,
+			$link_class,
+			$attrs
+		);
 
-		if ($lroundups_html == '')
-			$lroundups_html = LROUNDUPS_DEFAULT_LINK_HTML;
+		if ( $lroundups_html == '' ) {
+			$lroundups_html = self::lroundups_default_link_html();
+		}
 
 		$lroundups_html = str_replace('#!URL!#', $url, $lroundups_html);
 		$lroundups_html = str_replace('#!TITLE!#', $title, $lroundups_html);
@@ -577,10 +625,11 @@ class SavedLinks {
 		$lroundups_html = str_replace('#!SOURCE!#', $source, $lroundups_html);
 		$lroundups_html = str_replace('#!CLASS!#', $link_class, $lroundups_html);
 
-		if (has_post_thumbnail($post->ID))
-			$lroundups_html = str_replace('#!IMAGE!#', get_the_post_thumbnail($post->ID), $lroundups_html);
-		else
-			$lroundups_html = str_replace('#!IMAGE!#', '', $lroundups_html);
+		if ( has_post_thumbnail( $post->ID ) ) {
+			$lroundups_html = str_replace( '#!IMAGE!#', get_the_post_thumbnail( $post->ID ), $lroundups_html );
+		 } else {
+			 $lroundups_html = str_replace( '#!IMAGE!#', '', $lroundups_html );
+		 }
 
 		return $lroundups_html;
 	}
@@ -593,7 +642,7 @@ class SavedLinks {
 	public static function rounduplink_shortcode( $atts ) {
 		$a = shortcode_atts(
 			array(
-				'id' 	=> '',
+				'id' => '',
 				'title' => '',
 				'class' => ''
 			),
@@ -603,10 +652,11 @@ class SavedLinks {
 		$link_class = (!empty($a['class']))? ' ' . $a['class'] : '';
 
 		// send it all over to get_html (see above)
-		if( $a['id'] != null )
+		if ( $a['id'] != null ) {
 			return self::get_html( $a['id'], $link_class ); // id and sponsored class
-		else
+		} else {
 			return '';
+		}
 	}
 
 	/**
@@ -621,7 +671,6 @@ class SavedLinks {
 	 * @param string $content content passed in by the filter (should be empty).
 	 */
 	public static function get_excerpt( $post ) {
-
 		$post = get_post( $post );
 		$custom = get_post_meta( $post->ID );
 
@@ -692,4 +741,12 @@ class SavedLinks {
 	<?php }
 	}
 
+	public static function lroundups_default_link_html() {
+		ob_start(); ?>
+		<p class="lr-saved-link #!CLASS!#">
+			#!IMAGE!#
+			<a href="#!URL!#">#!TITLE!#</a>&ndash;<span class="description">#!DESCRIPTION!#</span> <em>#!SOURCE!#</em>
+		</p><?php
+		return ob_get_clean();
+	}
 }

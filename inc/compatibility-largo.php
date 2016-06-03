@@ -11,7 +11,6 @@
  *
  */
 function lr_lmp_choose_partial($partial, $post_query) {
-	var_log($partial);
 	if ( is_object($post_query) && property_exists( $post_query, 'query_vars')) {
 		$post_query = $post_query->query_vars;
 	}
