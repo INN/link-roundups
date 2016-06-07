@@ -84,8 +84,8 @@ Click the **Create Draft** button to create a draft MailChimp campaign. You can 
 
 ![Send Test button in the Link Roundups edit screen](./img/link-roundup-send-test.png)
 
-The **Send Test** button won't appear until after creating a draft campaign. You will then also see a new ** MailChimp Campaign Preview** screen on the right side of the Link Roundup edit screen, where you can preview the campaign in a new window, or preview and edit the campaign in MailChimp:
+The **Send Test** button won't appear until after creating a draft campaign. You will then also see a new **MailChimp Campaign Preview** screen on the right side of the Link Roundup edit screen, where you can preview the campaign in a new window, or preview and edit the campaign in MailChimp:
 
 ![MailChimp Campaign Preview panel in the Link Roundups edit screen](./img/mailchimp-campaign-preview.png)
 
-When the draft campaign is ready to go, hist the **Send Now** button to launch the MailChimp campaign.
+When the draft campaign is ready to go, hist the **Send Now** button to launch the MailChimp campaign. You can also choose to launch the campaign from MailChimp if preferred.
