@@ -16,7 +16,7 @@ In order to use the MailChimp features of Link Roundups, you'll need to sign up 
 4. Click "Create A Key". A new key will appear in the list.
 5. Click the "Label" field of your new API key. Name it after the site you're using Link Roundups on. For example: "example.com links"
 6. Copy the API key. This will be a long string of characters from 0-9 and a-f.
-7. On your WordPress site, go to **Dashboard > Settings > MailChimp Setting**.
+7. On your WordPress site, go to **Dashboard > Settings > MailChimp Settings**.
 8. Paste the MailChimp API Key into the appropriate field.
 9. Press "Save Changes".
 
