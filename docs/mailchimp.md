@@ -68,10 +68,24 @@ So now you have at least one template saved in MailChimp, and we're assuming you
 
 # Creating a MailChimp Campaign
 
-Once you have [saved some links](saving-links.md) and [created a link roundup post](link-roundups.md), you can send the link roundup post to MailChimp as a draft campaign.
+Once you have [saved some links](saving-links.md) and [created a Link Roundup post](link-roundups.md), you can send the Link Roundup post to MailChimp as a draft campaign.
 
-In the Link Roundups editor, above the standard WordPress "Publish" button you'll find a button to "Create a MailChimp Campaign."
+In the Link Roundups editor make sure the **Mailchimp Campaign Editor** is visible. If not, visit Screen Options and select it to make it visible. You can now:
 
-![Create MailChimp Campaign button in the post editor](./img/link-roundup-mailchimp-button.png)
+- Choose a campaign type
+- Choose a list to send to
+- Give your campaign a title
+- Add the campaign subject line for email
+- Choose which MailChimp template to use for the campaign (defaults to what was set in Link Roundups > MailChimp Campaign Settings)
 
-When you click "Create a MailChimp Campaign" you will be asked to confirm the action. The Link Roundups plugin will contact MailChimp to create the campaign and, upon success, present you with a link to finish editing the campaign in the MailChimp dashboard.
+![Mailchimp Campaign Editor panel in the post editor](./img/link-roundup-campaign-editor.png)
+
+Click the **Create Draft** button to create a draft MailChimp campaign. You can then view the draft campaign in your [MailChimp campaigns](https://us13.admin.mailchimp.com/campaigns/), and make any needed changes there before sending. You can also send a test email from the Link Roundup edit screen:
+
+![Send Test button in the Link Roundups edit screen](./img/link-roundup-send-test.png)
+
+The **Send Test** button won't appear until after creating a draft campaign. You will then also see a new ** MailChimp Campaign Preview** screen on the right side of the Link Roundup edit screen, where you can preview the campaign in a new window, or preview and edit the campaign in MailChimp:
+
+![MailChimp Campaign Preview panel in the Link Roundups edit screen](./img/mailchimp-campaign-preview.png)
+
+When the draft campaign is ready to go, hist the **Send Now** button to launch the MailChimp campaign.
