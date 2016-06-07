@@ -14,13 +14,13 @@ In order to use the MailChimp features of Link Roundups, you'll need to sign up 
 2. Click on your account in the upper-right corner. In the drop-down menu, click "Account".
 3. Click on "Extras", then "API keys".
 4. Click "Create A Key". A new key will appear in the list.
-5. Click the "Label" field of your new API key. Name it after the site you're using Argo Links on. For example: "example.com argo links"
+5. Click the "Label" field of your new API key. Name it after the site you're using Link Roundups on. For example: "example.com links"
 6. Copy the API key. This will be a long string of characters from 0-9 and a-f.
-7. On your website, go to **Dashboard > Link Roundups > Options**.
-8. Paste the MailChimp API Key into the appropriate field, then check "Enable MailChimp API Integration".
+7. On your WordPress site, go to **Dashboard > Settings > MailChimp Setting**.
+8. Paste the MailChimp API Key into the appropriate field.
 9. Press "Save Changes".
 
-![Link Roundups MailChimp API settings](./img/link-roundups-mailchimp-integration.png)
+![Link Roundups MailChimp API settings](./img/link-roundups-mailchimp-settings.png)
 
 ## Creating a template in the MailChimp dashboard
 
@@ -47,9 +47,9 @@ Then, edit the template to insert the following tags where you want them to appe
 
 #### Required Tags:
 
-If these template tags are not present in your MailChimp template, you will be unable to create a new Argo Links Roundup Email Campaign.
+If these template tags are not present in your MailChimp template, you will be unable to create a new Links Roundup Email Campaign.
 
-- `*|ROUNDUPLINKS|*` - The actual list of links from the Argo Links Roundup post
+- `*|ROUNDUPLINKS|*` - The actual list of links from the Links Roundup post
 
 #### Optional Tags:
 
@@ -62,9 +62,9 @@ These template tags are not required, but you may wish to use them in your templ
 
 ## Choosing the MailChimp Template and List to use
 
-So now you have at least one template saved in MailChimp, and we're assuming you also have a list of subscribers for your newsletter. Go back to the Link Roundups Options page in **Link Roundups > Options**, and choose your template, and which MailChiimp List you want to use:
+So now you have at least one template saved in MailChimp, and we're assuming you also have a list of subscribers for your newsletter. In the WordPress Dashboard go to **Link Roundups > MailChimp Campaign Settings**, and choose your default campaign type, default mailing list, default template, and email address(es) for campaign tests:
 
-![Link Roundups MailChimp API settings](./img/link-roundups-options-mailchimp-2.png)
+![Link Roundups MailChimp Campaign settings](./img/link-roundup-campaign-settings.png)
 
 # Creating a MailChimp Campaign
 
