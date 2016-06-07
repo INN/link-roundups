@@ -22,6 +22,8 @@ Once you have the links that make up your roundup in the editor window, you can 
 
 ![New Link Roundup link in the Dashboard](./img/adding-link-roundup-3.png)
 
+## Add Categories and Tags
+
 You can also add Categories and Tags to the Link Roundup, like any other post. _Adding one or more Categories allows filtering display of Link Roundups by Category_.
 
 ## Creating a Link Roundup using roundup_block Shortcode
