@@ -293,14 +293,28 @@ class LinkRoundupsEditor {
 	}
 
 	public static function roundup_block_posts_query() {
+		$month_ago = strtotime('-30 days');
+		$now = strtotime('now');
+
 		// Default arguments
 		$args = apply_filters('link_roundups_roundup_block_post_query', array(
 			'post_type' => 'rounduplink',
 			'orderby' => 'date',
 			'order' => 'desc',
 			'posts_per_page' => -1,
-			'year' => date( 'Y' ),
-			'monthnum' => date( 'm' )
+			'date_query' => array(
+				'after' => array(
+					'year' => date( 'Y', $month_ago ),
+					'month' => date( 'n', $month_ago ),
+					'day' => date( 'j', $month_ago )
+				),
+				'before' => array(
+					'year' => date( 'Y', $now ),
+					'month' => date( 'n', $now ),
+					'day' => date( 'j', $now )
+				),
+				'inclusive' => true
+			)
 		));
 		$query = new WP_Query($args);
 		$posts = $query->get_posts();
