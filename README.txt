@@ -1,6 +1,6 @@
 === Link Roundups ===
 Contributors: inn_nerds
-Donate link: http://bit.ly/1N4nSJJ
+Donate link: https://inn.org/donate
 Tags: newsletters, mailchimp, links, curation, aggregation
 Requires at least: 4.1
 Tested up to: 4.2.3
