@@ -10,7 +10,7 @@ A WordPress plugin to make it easy to collect links from around the web, turn th
 
 **Tested up to:** 4.2.3
 
-**Stable tag:** 0.3.2
+**Stable tag:** 0.4.0
 
 **License:** GPLv2 or later
 
@@ -51,7 +51,7 @@ Installation directly from the WordPress.org plugin directory coming soon!
 ## Features
 
 #### Saved Links
-![New Saved Link](https://raw.githubusercontent.com/INN/link-roundups/master/docs/img/new-saved-link.png)
+![New Saved Link](https://raw.githubusercontent.com/INN/link-roundups/master/docs/img/new-saved-link-npr.png)
 
 Curate links from around the web and save them in WordPress using a handy browser bookmark. You can also add your own descriptions and organize saved links using tags.
 

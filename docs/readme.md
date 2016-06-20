@@ -1,8 +1,13 @@
 # Link Roundups Documentation
 
-![link roundup](img/published-roundup.png)
+Link Roundups is a WordPress plugin that makes it easy to:
 
-This plugin makes it easy to collect links from across the web and share them right from your WordPress Dashboard.
+- collect links from around the web and save them in WordPress as Saved Links
+- turn them into Link Roundup posts
+- display Saved Links and Link Roundups in WordPress widgets on your site
+- streamline the production of daily/weekly roundup newsletters using MailChimp
+
+![link roundup post on a website](img/link-roundup-page-example.png)
 
 Get the brief introduction to plugin features in [the main Readme.md file](https://github.com/INN/link-roundups/blob/master/README.md).
 
