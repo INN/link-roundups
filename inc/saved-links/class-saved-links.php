@@ -83,7 +83,7 @@ class SavedLinks {
 			),
 			'description' 	=> __( 'Saved Links', 'link-roundups' ),
 			'supports' 		=> array( 'title', 'thumbnail' ),
-			'public' 		=> current_user_can( apply_filters( 'link_roundups_minimum_capability', 'edit_posts' ) ) ? true : false,
+			'public' 		=> true, // https://github.com/INN/link-roundups/issues/120
 			'menu_position' => 6,
 			'menu_icon'     => 'dashicons-admin-links',
 			'taxonomies' 	=> array(),
