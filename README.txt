@@ -4,7 +4,7 @@ Donate link: https://inn.org/donate
 Tags: newsletters, mailchimp, links, curation, aggregation
 Requires at least: 4.1
 Tested up to: 4.2.3
-Stable tag: 0.4.0
+Stable tag: 0.4.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,11 @@ Collect links from around the web, turn them into roundup posts and streamline t
 [Read more about installing plugins here](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
 == Changelog ==
+
+= 0.4.1 =
+
+- The default query for Saved Links in the roundup editor is now for the last 30 days
+- Fixed bug with Saved Links RSS feed not displaying to logged-out users
 
 = 0.4.0 =
 
