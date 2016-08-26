@@ -150,21 +150,21 @@ add_action( 'admin_menu', 'lroundups_register_update_page' );
  */
 function lroundups_update_page_view() { ?>
 	<style type="text/css">
-		.update-message {
+		.lroundups-update-message {
 			max-width: 700px;
 		}
-		.update-message,
-		.update-message p {
+		.lroundups-update-message,
+		.lroundups-update-message p {
 			font-size: 16px;
 		}
-		.update-message ul li {
+		.lroundups-update-message ul li {
 			list-style-type: disc;
 			list-style-position: inside;
 		}
-		.update-message .submit-container {
+		.lroundups-update-message .submit-container {
 			max-width: 178px;
 		}
-		.update-message .spinner {
+		.lroundups-update-message .spinner {
 			background: url(../wp-includes/images/spinner.gif) 0 0/20px 20px no-repeat;
 			-webkit-background-size: 20px 20px;
 			display: none;
@@ -176,8 +176,8 @@ function lroundups_update_page_view() { ?>
 			position: relative;
 			top: 4px;
 		}
-		.update-message .updated,
-		.update-message .error {
+		.lroundups-update-message .updated,
+		.lroundups-update-message .error {
 			padding-top: 16px;
 			padding-bottom: 16px;
 		}
@@ -185,7 +185,7 @@ function lroundups_update_page_view() { ?>
 	<div class="wrap">
 		<div id="icon-tools" class="icon32"></div>
 		<h2><?php _e ( 'Link Roundups Database Update', 'link-roundups' ); ?></h2>
-		<div class="update-message">
+		<div class="lroundups-update-message">
 			<p><?php _e( 'Link Roundups plugin has been updated to version', 'link-roundups' ); echo " " . lroundups_version(); ?>.
 
 			<p><?php _e( 'This update will migrate <strong>Argo Links</strong> and <strong>Argo Link Roundups</strong> to the new <strong>Saved Links</strong> and <strong>Link Roundups</strong> formats respectively.', 'link-roundups' ); ?></p>
