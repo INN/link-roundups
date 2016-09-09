@@ -34,15 +34,22 @@ function lroundups_migrate_options() {
 	// check for old options and replace the old prefixes with lroundups_
 	foreach ( $old_options as $old_option ) {
 		$new_option = str_replace(
-			array('argo_link_roundups_', 'link_roundups_'), 'lroundups_', $old_option);
-		$old_value = get_option($old_option);
-		$result = update_option($new_option, $old_value);
-		if ($result)
-			delete_option($old_option);
+			array( 'argo_link_roundups_', 'link_roundups_' ),
+			'lroundups_', $old_option
+		);
+		$old_value = get_option( $old_option );
+
+		if ( ! get_option( $new_option ) ) {
+			$result = update_option( $new_option, $old_value );
+		}
+
+		if ( $result ) {
+			delete_option( $old_option );
+		}
 	}
 }
 add_action( 'lroundups_update_0.3', 'lroundups_migrate_options', 10 );
-
+lroundups_migrate_options();
 /**
  * Update rounduplink post meta in database.
  *

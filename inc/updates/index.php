@@ -117,7 +117,6 @@ function lroundups_need_updates() {
  */
 function lroundups_update_admin_notice() {
 	if ( lroundups_need_updates() && !( isset( $_GET['page'] ) && $_GET['page'] == 'update-lroundups' ) ) {
-var_dump(  );
 	?>
 	<div class="update-nag" style="display: block;">
 		<p><?php
