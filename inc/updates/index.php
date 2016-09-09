@@ -117,13 +117,22 @@ function lroundups_need_updates() {
  */
 function lroundups_update_admin_notice() {
 	if ( lroundups_need_updates() && !( isset( $_GET['page'] ) && $_GET['page'] == 'update-lroundups' ) ) {
+var_dump(  );
 	?>
 	<div class="update-nag" style="display: block;">
 		<p><?php
-		printf(
-			__('Link Roundups has been updated! IMPORTANT: Please <a href="%s">click here</a> to run a required database upgrade.', 'link-roundups'),
-			admin_url('index.php?page=update-lroundups')
-		); ?></p>
+			if ( current_user_can( 'update_plugins' ) ) {
+				printf(
+					__('Link Roundups has been updated! IMPORTANT: Please <a href="%s">click here</a> to run a required database upgrade.', 'link-roundups'),
+					admin_url('index.php?page=update-lroundups')
+				);
+			} else {
+				printf(
+					__('Link Roundups has been updated! IMPORTANT: Please contact your site administrator to run a required database upgrade.', 'link-roundups'),
+					admin_url('index.php?page=update-lroundups')
+				);
+			}
+		?></p>
 	</div>
 	<?php
 	}
