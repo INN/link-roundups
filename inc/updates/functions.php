@@ -39,7 +39,7 @@ function lroundups_migrate_options() {
 		);
 		$old_value = get_option( $old_option );
 
-		if ( ! get_option( $new_option ) ) {
+		if ( $old_value ) {
 			$result = update_option( $new_option, $old_value );
 		}
 
@@ -49,7 +49,7 @@ function lroundups_migrate_options() {
 	}
 }
 add_action( 'lroundups_update_0.3', 'lroundups_migrate_options', 10 );
-lroundups_migrate_options();
+
 /**
  * Update rounduplink post meta in database.
  *
