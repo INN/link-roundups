@@ -1,5 +1,4 @@
 <?php
-
 /*
 Plugin Name: Link Roundups
 Plugin URI: https://github.com/INN/link-roundups
@@ -11,6 +10,15 @@ License: GPLv2
 
 Seeking Link Roundups Post Type functions? They use lroundups instead of link-roundups.
  */
+
+/**
+ * The code that runs during plugin activation.
+ */
+function activate_link_roundups() {
+	$plugin = get_plugin_data( __FILE__ );
+	update_option( 'lroundups_version', $plugin['Version'] );
+}
+register_activation_hook( __FILE__, 'activate_link_roundups' );
 
 /**
  * Mailchimp API and Modal Functions

@@ -75,7 +75,7 @@ function lroundups_version() {
 
 /**
  * Checks if updates need to be run.
- * Get's lroundups version from db and compares with value in plugin file 
+ * Get's lroundups version from db and compares with value in plugin file
  * @since 0.3
  *
  * @return boolean if updates need to be run
@@ -84,11 +84,20 @@ function lroundups_need_updates() {
 
 	// try to figure out which versions of the options are stored. Implemented in 0.3
 	if ( get_option( 'lroundups_version' ) ) {
+
 		$compare = version_compare( lroundups_version(), get_option( 'lroundups_version' ) );
-		if ( $compare == 1 )
-			return true;
-		else
+
+		// If the database version # is less than the plugin's version
+		if ( $compare == 1 ) {
+			// If the database is version is < the last database update
+			if ( 1 == version_compare( '0.3.2', get_option( 'lroundups_version' ) ) ) {
+				return true;
+			} else {
+				update_option( 'lroundups_version', lroundups_version() );
+			}
+		} else {
 			return false;
+		}
 	}
 
 	// if 'lroundups_version' isn't present, the settings are old!
@@ -111,10 +120,18 @@ function lroundups_update_admin_notice() {
 	?>
 	<div class="update-nag" style="display: block;">
 		<p><?php
-		printf(
-			__('Link Roundups has been updated! IMPORTANT: Please <a href="%s">click here</a> to run a required database upgrade.', 'link-roundups'),
-			admin_url('index.php?page=update-lroundups')
-		); ?></p>
+			if ( current_user_can( 'update_plugins' ) ) {
+				printf(
+					__('Link Roundups has been updated! IMPORTANT: Please <a href="%s">click here</a> to run a required database upgrade.', 'link-roundups'),
+					admin_url('index.php?page=update-lroundups')
+				);
+			} else {
+				printf(
+					__('Link Roundups has been updated! IMPORTANT: Please contact your site administrator to run a required database upgrade.', 'link-roundups'),
+					admin_url('index.php?page=update-lroundups')
+				);
+			}
+		?></p>
 	</div>
 	<?php
 	}
