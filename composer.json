@@ -9,6 +9,6 @@
         }
     ],
     "require": {
-        "inn/wordpress-mailchimp-tools": "dev-master"
+        "inn/wordpress-mailchimp-tools": "dev-mailchimp-api-v3"
     }
 }

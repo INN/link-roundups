@@ -23,7 +23,7 @@ register_activation_hook( __FILE__, 'activate_link_roundups' );
 /**
  * Mailchimp API and Modal Functions
  */
-if ( ! class_exists( 'Mailchimp' ) && file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+if ( ! class_exists( 'MailChimp' ) && file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 }
 
@@ -79,7 +79,7 @@ function link_roundups_init() {
 	 */
 	require_once( 'inc/updates/index.php' );
 
-	load_plugin_textdomain( 'link-roundups', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' ); 
+	load_plugin_textdomain( 'link-roundups', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
 }
 add_action( 'plugins_loaded', 'link_roundups_init' );
 
