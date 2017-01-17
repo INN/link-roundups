@@ -23,8 +23,8 @@ register_activation_hook( __FILE__, 'activate_link_roundups' );
 /**
  * Mailchimp API and Modal Functions
  */
-if ( ! class_exists( 'MailChimp' ) && file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-	require_once __DIR__ . '/vendor/autoload.php';
+if ( ! class_exists( 'MailChimp' ) && file_exists( __DIR__ . '/wordpress-mailchimp-tools/vendor/autoload.php' ) ) {
+	require_once __DIR__ . '/wordpress-mailchimp-tools/vendor/autoload.php';
 }
 
 /**
