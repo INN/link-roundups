@@ -1,3 +1,6 @@
 [submodule "vendor/mailchimp-api-php"]
 	path = vendor/mailchimp-api-php
 	url = https://bitbucket.org/mailchimp/mailchimp-api-php.git
+[submodule "wordpress-mailchimp-tools"]
+	path = wordpress-mailchimp-tools
+	url = https://github.com/INN/wordpress-mailchimp-tools.git

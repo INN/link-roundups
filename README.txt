@@ -4,7 +4,7 @@ Donate link: https://inn.org/donate
 Tags: newsletters, mailchimp, links, curation, aggregation
 Requires at least: 4.1
 Tested up to: 4.2.3
-Stable tag: 0.4.1
+Stable tag: 0.5
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

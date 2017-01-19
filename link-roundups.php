@@ -4,7 +4,7 @@ Plugin Name: Link Roundups
 Plugin URI: https://github.com/INN/link-roundups
 Description: Use Link Roundups to aggregate links and create roundup posts. Mailchimp API integration and browser bookmark tool. Formerly argo-links from NPR's Project Argo.
 Author: INN, Project Argo, Mission Data
-Version: 0.4.1
+Version: 0.5
 Author URI: http://nerds.inn.org/
 License: GPLv2
 
@@ -23,8 +23,8 @@ register_activation_hook( __FILE__, 'activate_link_roundups' );
 /**
  * Mailchimp API and Modal Functions
  */
-if ( ! class_exists( 'Mailchimp' ) && file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-	require_once __DIR__ . '/vendor/autoload.php';
+if ( ! class_exists( 'MailChimp' ) && file_exists( __DIR__ . '/wordpress-mailchimp-tools/vendor/autoload.php' ) ) {
+	require_once __DIR__ . '/wordpress-mailchimp-tools/vendor/autoload.php';
 }
 
 /**
@@ -79,7 +79,7 @@ function link_roundups_init() {
 	 */
 	require_once( 'inc/updates/index.php' );
 
-	load_plugin_textdomain( 'link-roundups', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' ); 
+	load_plugin_textdomain( 'link-roundups', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
 }
 add_action( 'plugins_loaded', 'link_roundups_init' );
 
