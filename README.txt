@@ -27,7 +27,8 @@ Collect links from around the web, turn them into roundup posts and streamline t
 1. Install the Link Roundups plugin via the Wordpress.org plugin directory
 2. Activate the plugin
 3. Navigate to the Admin -> Link Roundups -> Options page to configure the plugin
-4. Done!
+4. Navigate to the Admin -> Settings -> Mailchimp Settings page to configure the plugin's MailChimp integration, if desired
+5. Done!
 
 [Read more about installing plugins here](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
