@@ -39,7 +39,7 @@ Collect links from around the web, turn them into roundup posts and streamline t
 - Added "roundup block" shortcode and accompanying post editor user interface for editing blocks of saved links
 - Manage front-end Javascript dependencies using Bower
 - Manage PHP dependencies using Composer
-- Uses the wordpress-mailchimp-tools PHP package, brought to you by INN
+- Uses the [wordpress-mailchimp-tools](https://github.com/INN/wordpress-mailchimp-tools) PHP package, brought to you by INN
 - Added MailChimp campaign editor meta box to the post editor
 - Added MailChimp campaign settings for roundup posts
 - Moved MailChimp API Key settings to Settings > MailChimp Settings menu
