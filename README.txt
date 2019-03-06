@@ -2,11 +2,13 @@
 Contributors: inn_nerds
 Donate link: https://inn.org/donate
 Tags: newsletters, mailchimp, links, curation, aggregation
-Requires at least: 4.1
-Tested up to: 4.2.3
+Requires at least: 4.2
+Tested up to: 5.1
 Stable tag: 0.5
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Minimum PHP: 5.6
+
 
 Collect links from around the web, turn them into roundup posts and streamline the production of daily/weekly roundup newsletters using MailChimp.
 
@@ -46,6 +48,8 @@ Via manual upload:
 == Changelog ==
 
 = 0.5 (in development)
+
+- Updates Travis automated testing to support PHP 5.6, 7.1, 7.2
 
 = 0.4.1 =
 
