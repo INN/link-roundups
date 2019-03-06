@@ -47,6 +47,8 @@ Via manual upload:
 
 = 0.5 (in development)
 
+- Fixes the saved_links_widget constructor for error-free PHP7 compatibility. Pull request [#137](https://github.com/INN/link-roundups/pull/137) for issue [#132](https://github.com/INN/link-roundups/issues/132).
+
 = 0.4.1 =
 
 - The default query for Saved Links in the roundup editor is now for the last 30 days
