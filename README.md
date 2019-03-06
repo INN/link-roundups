@@ -2,20 +2,12 @@
 
 A WordPress plugin to make it easy to collect links from around the web, turn them into roundup posts and streamline the production of daily/weekly roundup newsletters using MailChimp. Built and maintained by [INN Nerds](http://nerds.inn.org).
 
-**Contributors:** The INN Nerds (David Ryan, Ryan Nagle, Ben Keith, Will Haynes, Adam Schweigert) and Project Argo (Corey Daley, Chris Amico, Wesley Lindamood)
-
-**Tags:** link, newsletter, widget, mailchimp
-
-**Requires at least:** 4.1
-
-**Tested up to:** 4.2.3
-
-**Stable tag:** 0.4.1
-
-**License:** GPLv2 or later
-
+**Contributors:** The INN Nerds (David Ryan, Ryan Nagle, Ben Keith, Will Haynes, Adam Schweigert) and Project Argo (Corey Daley, Chris Amico, Wesley Lindamood)  
+**Requires at least:** 4.1  
+**Tested up to:** 4.2.3  
+**Stable tag:** 0.4.1  
+**License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
-
 
 ## Overview
 
@@ -34,24 +26,14 @@ The plugin includes a browser bookmark that you can drag to your browser's bookm
 
 In its previous life, Link Roundups was called Argo Links.
 
-
 ## Installation
 
-Link Roundups can be installed like any other WordPress plugin.
-
-1. Download the contents of this repository.
-2. Unzip the package and rename the folder to "link-roundups" (the folder will be called "link-roundups-master" but this may cause problems if you don't rename it before uploading to your site)
-3. Upload the folder to your WordPress installation in the wp-content/plugins directory
-4. Login to WordPress, click on Plugins in the left hand menu
-5. Select the Link Roundups plugin and click "activate"
-6. Review the plugin settings under the Settings > Link Roundups menu
-
-Installation directly from the WordPress.org plugin directory coming soon!
+See the [installation instructions on WordPress.org](https://wordpress.org/plugins/link-roundups/#installation)
 
 ## Features
 
 #### Saved Links
-![New Saved Link](https://raw.githubusercontent.com/INN/link-roundups/master/docs/img/new-saved-link.png)
+![New Saved Link](./docs/img/new-saved-link.png)
 
 Curate links from around the web and save them in WordPress using a handy browser bookmark. You can also add your own descriptions and organize saved links using tags.
 
@@ -88,7 +70,6 @@ Link Roundup posts have some default styling for your saved links to make sure y
 3. [Send your roundup to MailChimp](docs/mailchimp.md)
 4. [Using Saved Link and Link Roundup widgets](docs/widgets.md)
 5. [__More →__](docs/readme.md)
-
 
 ## Development
 
