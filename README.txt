@@ -24,14 +24,28 @@ Collect links from around the web, turn them into roundup posts and streamline t
 
 == Installation ==
 
+Via WordPress.org:
+
 1. Install the Link Roundups plugin via the Wordpress.org plugin directory
 2. Activate the plugin
 3. Navigate to the Admin -> Link Roundups -> Options page to configure the plugin
 4. Done!
 
+Via manual upload:
+
+1. Download this plugin via the "Download" button on [WordPress.org](https://wordpress.org/plugins/link-roundups/#installation) or download a tagged release [from the GitHub releases page](https://github.com/INN/link-roundups/releases).
+2. Unzip the package and rename the folder to "link-roundups" (The folder may be named "link-roundups-master" or something else. Uploading the plugin with this name may cause problems if you don't rename it before uploading to your site.)
+3. Upload the folder to your WordPress installation in the `wp-content/plugins` directory
+4. Log in to your site's WordPress Dashboard, then click on Plugins in the left hand menu
+5. Select the Link Roundups plugin and click "activate"
+6. Review the plugin settings under the Settings > Link Roundups menu
+
+
 [Read more about installing plugins here](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
 == Changelog ==
+
+= 0.5 (in development)
 
 = 0.4.1 =
 
