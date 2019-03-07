@@ -62,6 +62,7 @@ before_script:
     - sed -i "s/yourpasswordhere//" wp-tests-config.php
     - mv wp-tests-config.php "$WP_TESTS_DIR/wp-tests-config.php"
     - cd "$WP_CORE_DIR/src/wp-content/plugins/$SLUG"
+    - phpunit --version
 
 script: phpunit
 
