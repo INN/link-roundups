@@ -49,7 +49,8 @@ Via manual upload:
 
 = 0.5 (in development)
 
-- Updates Travis automated testing to support PHP 5.6, 7.1, 7.2
+- Updates Travis automated testing to support PHP 5.6, 7.1, 7.2. Pull request [#138](https://github.com/INN/link-roundups/pull/138) for issue [#135](https://github.com/INN/link-roundups/issues/135).
+- Fixes the saved_links_widget constructor for error-free PHP7 compatibility. Pull request [#137](https://github.com/INN/link-roundups/pull/137) for issue [#132](https://github.com/INN/link-roundups/issues/132).
 
 = 0.4.1 =
 
