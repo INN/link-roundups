@@ -1,17 +1,45 @@
 # Travis CI Configuration File
 
+# Use Travis CI container-based infrastructure
+# See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
+sudo: false
+
 # Tell Travis CI we're using PHP
 language: php
 
 # PHP version used in first build configuration.
-php:
-    - "5.3"
-
-sudo: false
+# https://secure.php.net/supported-versions.php
+# php:
+#    # PHP pre-5.6 is EOL
+#    - "5.6"
+#    # PHP 7.0 is EOL
+#    - "7.1"
+#    - "7.2"
+#    - "7.3"
 
 # WordPress version used in first build configuration.
-env:
-    - WP_VERSION=4.2.1 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
+# env:
+#    - WP_VERSION=4.2.1 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
+
+# for a breakdown of why these versions were chosen, see https://github.com/INN/WP-DS-NPR-API/issues/12#issuecomment-374730094
+matrix:
+    include:
+      # PHPUnit 5
+      - php: 5.6
+        env: WP_VERSION=4.9 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
+      # PHPUnit 6
+      - php: 7.1
+        env: WP_VERSION=4.9 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
+      - php: 7.1
+        env: WP_VERSION=5.0 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
+      - php: 7.1
+        env: WP_VERSION=5.1 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
+      # PHPUnit 8, based on https://github.com/INN/link-roundups/issues/135#issuecomment-470357566
+      #- php: 7.2
+      #  env: WP_VERSION=5.1 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
+      # PHPUnit 8, based on https://github.com/INN/link-roundups/issues/135#issuecomment-470357566
+      #- php: 7.3
+      #  env: WP_VERSION=5.1 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
 
 # Only test the develop and master branches for now
 branches:
@@ -34,10 +62,6 @@ before_script:
     - sed -i "s/yourpasswordhere//" wp-tests-config.php
     - mv wp-tests-config.php "$WP_TESTS_DIR/wp-tests-config.php"
     - cd "$WP_CORE_DIR/src/wp-content/plugins/$SLUG"
+    - phpunit --version
 
 script: phpunit
-
-notifications:
-    hipchat:
-        rooms:
-            secure: mrJDwl2LYmWGY6gKUEsSnbGp3mQ8UhVQkb9oBmRSDx9T/hCSDx4Q2KDLo0OqCFIwDB5BevP16vDDWVmsg8Ldwk+Hh0YAmdUqBAXe21+17ojqSIAdQg6LgLrEFEBNVBlPu89xonRMnsai34RDCoRt5c9OLuWgGVMAcTojpQvPiII=
