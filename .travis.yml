@@ -34,14 +34,14 @@ matrix:
         env: WP_VERSION=5.0 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
       - php: 7.1
         env: WP_VERSION=5.1 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
-      # PHPUnit 7 not supported by WordPress
+      # PHPUnit 7, probably
       - php: 7.2
         env: WP_VERSION=4.9 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
       - php: 7.2
         env: WP_VERSION=5.0 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
       - php: 7.2
         env: WP_VERSION=5.1 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
-      # PHPUnit 8?
+      # PHPUnit 8, probably
       - php: 7.3
         env: WP_VERSION=4.9 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
       - php: 7.3
