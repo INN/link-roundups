@@ -1,0 +1,5 @@
+{
+    "require": {
+        "inn/wordpress-mailchimp-tools": "dev-master"
+    }
+}

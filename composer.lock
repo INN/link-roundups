@@ -1,0 +1,111 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "47140de8b990115d2553d445998ba8d3",
+    "packages": [
+        {
+            "name": "drewm/mailchimp-api",
+            "version": "v2.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/drewm/mailchimp-api.git",
+                "reference": "a6519cafba509e754e748d93f3532ad7f3aa515a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/drewm/mailchimp-api/zipball/a6519cafba509e754e748d93f3532ad7f3aa515a",
+                "reference": "a6519cafba509e754e748d93f3532ad7f3aa515a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "7.0.*",
+                "vlucas/phpdotenv": "^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DrewM\\MailChimp\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Drew McLellan",
+                    "email": "drew.mclellan@gmail.com",
+                    "homepage": "http://allinthehead.com/"
+                }
+            ],
+            "description": "Super-simple, minimum abstraction MailChimp API v3 wrapper",
+            "homepage": "https://github.com/drewm/mailchimp-api",
+            "time": "2019-03-28T15:20:43+00:00"
+        },
+        {
+            "name": "inn/wordpress-mailchimp-tools",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/INN/wordpress-mailchimp-tools.git",
+                "reference": "adf39095716e1ef14833acae858d42f056c51d95"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/INN/wordpress-mailchimp-tools/zipball/adf39095716e1ef14833acae858d42f056c51d95",
+                "reference": "adf39095716e1ef14833acae858d42f056c51d95",
+                "shasum": ""
+            },
+            "require": {
+                "drewm/mailchimp-api": "^2.5",
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "inc/"
+                ],
+                "files": [
+                    "mailchimp-tools.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "INN Nerds",
+                    "email": "nerds@inn.org",
+                    "homepage": "http://nerds.inn.org",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Collection of tools for authoring MailChimp newsletters via the WordPress dashboard",
+            "homepage": "https://nerds.inn.org/",
+            "keywords": [
+                "api",
+                "email"
+            ],
+            "time": "2019-03-07T03:17:40+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "inn/wordpress-mailchimp-tools": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
