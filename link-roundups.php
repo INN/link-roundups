@@ -7,6 +7,7 @@ Author: INN, Project Argo, Mission Data
 Version: 0.5
 Author URI: http://nerds.inn.org/
 License: GPLv2
+Text Domain: link-roundups
 
 Seeking Link Roundups Post Type functions? They use lroundups instead of link-roundups.
  */
