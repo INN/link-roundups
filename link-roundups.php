@@ -29,7 +29,11 @@ if ( ! class_exists( 'MailChimp' ) && file_exists( __DIR__ . '/vendor/autoload.p
 } else {
 	error_log(
 		sprintf(
-		__('Your installation of the Link Roundups Plugin is missing its vendor dependencies. Please visit %1$s for more information.', 'link-roundups'
+			// translators: %1$s is a URL.
+			__('Your installation of the Link Roundups Plugin is missing its vendor dependencies. Please visit %1$s for more information.', 'link-roundups'),
+			'https://github.com/INN/link-roundups/blob/136-update-wordpress-mailchimp-tools/docs/installation.md'
+		)
+	);
 }
 
 /**
