@@ -8,6 +8,7 @@ Stable tag: 0.5
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Minimum PHP: 5.6
+Text Domain: link-roundups
 
 
 Collect links from around the web, turn them into roundup posts and streamline the production of daily/weekly roundup newsletters using MailChimp.
