@@ -14,11 +14,12 @@ In order to use the MailChimp features of Link Roundups, you'll need to sign up 
 2. Click on your account in the upper-right corner. In the drop-down menu, click "Account".
 3. Click on "Extras", then "API keys".
 4. Click "Create A Key". A new key will appear in the list.
-5. Click the "Label" field of your new API key. Name it after the site you're using Argo Links on. For example: "example.com argo links"
+5. Click the "Label" field of your new API key. Name it after the site you're using Link Roundupss on. For example: "example.com link roundups"
 6. Copy the API key. This will be a long string of characters from 0-9 and a-f.
-7. On your website, go to **Dashboard > Link Roundups > Options**.
+7. On your website, go to **Dashboard > Settings > MailChimp Options**.
 8. Paste the MailChimp API Key into the appropriate field, then check "Enable MailChimp API Integration".
 9. Press "Save Changes".
+10. Go to **Link Roundups > MailChimp Campaign Settings** to configure your MailChimp campaigns.
 
 ![Link Roundups MailChimp API settings](./img/link-roundups-mailchimp-integration.png)
 
@@ -47,9 +48,9 @@ Then, edit the template to insert the following tags where you want them to appe
 
 #### Required Tags:
 
-If these template tags are not present in your MailChimp template, you will be unable to create a new Argo Links Roundup Email Campaign.
+If these template tags are not present in your MailChimp template, you will be unable to create a new Links Roundup Email Campaign.
 
-- `*|ROUNDUPLINKS|*` - The actual list of links from the Argo Links Roundup post
+- `*|ROUNDUPLINKS|*` - The actual list of links from the Links Roundup post
 
 #### Optional Tags:
 
