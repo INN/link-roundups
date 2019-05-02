@@ -58,7 +58,7 @@ These template tags are not required, but you may wish to use them in your templ
 
 - `*|ROUNDUPTITLE|*` - The Link Roundup post title
 - `*|ROUNDUPAUTHOR|*` - The author of the Link Roundup post
-- `*|ROUNDUPDATE|*` - The date the Links Roundu post was published
+- `*|ROUNDUPDATE|*` - The date the Links Roundup post was published
 - `*|ROUNDUPPERMALINK|*` - A link back to the original Link Roundup post
 
 ## Choosing the MailChimp Template and List to use
