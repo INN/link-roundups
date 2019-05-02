@@ -169,27 +169,29 @@ class LinkRoundups {
 	 * @since 0.1
 	 */
 	public static function display_custom_fields() {
-	?>
-		<div id='lroundups-display-area'></div>
-		<script type='text/javascript'>
-		jQuery(function(){
-			var data = {
-				'action': 'lroundups_saved_links_list_table_render'
-			};
+		?>
+			<div id='lroundups-display-area'></div>
+			<script type='text/javascript'>
+			jQuery(function(){
+				var data = {
+					'action': 'lroundups_saved_links_list_table_render'
+				};
 
-			jQuery.post(ajaxurl, data).done(function(response) {
-				jQuery('#lroundups-display-area').html(response);
+				jQuery.post(ajaxurl, data).done(function(response) {
+					jQuery('#lroundups-display-area').html(response);
+				});
 			});
-		});
-		</script>
-	<?php
+			</script>
+		<?php
 	}
 
 	/**
-	 * Save the custom post field data.	Very important!
+	 * Save the custom post field data.
 	 *
 	 * Wait, does this do anything on roundups!? - Will
+	 * Ben: Nope. Time to remove it?
 	 *
+	 * @todo: remove this
 	 * @since 0.1
 	 */
 	public static function save_custom_fields( $post_id ) {
