@@ -65,7 +65,7 @@ class saved_links_widget extends WP_Widget {
 						echo '</p>';
 					}
 					if ( isset($custom["lr_source"][0] ) ) {
-						$lr_source = '<p class="source">' . __('Source: ', 'link-roundups') . '<span>';
+						$lr_source = '<p class="source"><span class="source-label">' . __('Source: ', 'link-roundups') . '</span><span>';
 						if ( !empty( $custom["lr_url"][0] ) ) {
 							$lr_source .= '<a href="' . $custom["lr_url"][0] . '" ';
 							if ( $instance['new_window'] == 'on' ) {
