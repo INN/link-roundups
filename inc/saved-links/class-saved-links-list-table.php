@@ -45,7 +45,7 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 	 * @param string $which is either "top" or "bottom", and tells you which nav you're outputting.
 	 * @since 0.3.2
 	 */
-	function bulk_actions( $which ) {
+	function bulk_actions( $which = '' ) {
 		// this will display at top and bottom
 		?>
 		<button class='button append-saved-links' style='float:left;'><?php _e( 'Send to Editor', 'link-roundups' ); ?></button>
