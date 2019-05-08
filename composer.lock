@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "91fe4a3da7e9e2f489f61ba4705aeeb9",
+    "content-hash": "ba6cfea6e3786d295e278962e3f9cb61",
     "packages": [
         {
             "name": "drewm/mailchimp-api",
@@ -56,12 +56,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/INN/wordpress-mailchimp-tools.git",
-                "reference": "4e768f7661a2fe8fc2785140e8313280eb230c3f"
+                "reference": "4e07d4aab9cd43d8397d7d525addcc19699b3d8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/INN/wordpress-mailchimp-tools/zipball/4e768f7661a2fe8fc2785140e8313280eb230c3f",
-                "reference": "4e768f7661a2fe8fc2785140e8313280eb230c3f",
+                "url": "https://api.github.com/repos/INN/wordpress-mailchimp-tools/zipball/4e07d4aab9cd43d8397d7d525addcc19699b3d8d",
+                "reference": "4e07d4aab9cd43d8397d7d525addcc19699b3d8d",
                 "shasum": ""
             },
             "require": {
@@ -95,7 +95,7 @@
                 "api",
                 "email"
             ],
-            "time": "2019-05-02T22:26:18+00:00"
+            "time": "2019-05-07T23:29:48+00:00"
         }
     ],
     "packages-dev": [],
