@@ -33,9 +33,6 @@ class LinkRoundups {
 
 		// Make sure our custom post type gets pulled into the river
 		add_filter( 'pre_get_posts', array( __CLASS__, 'lr_get_posts' ) );
-
-		// Pass our custom data to the WordPress MailChimp Tools
-		add_filter( 'mailchimp_tools_campaign_content', array( __CLASS__, 'mailchimp_tools_campaign_content' ) );
 	}
 
 	// Pull the linkroundups into the queries for is_home, is_tag, is_category, is_archive
@@ -249,32 +246,5 @@ class LinkRoundups {
 
 		// get settings fields for options page
 		include_once dirname( LROUNDUPS_PLUGIN_FILE ) . '/templates/options.php';
-	}
-
-	/**
-	 * Pass our custom parameters to the campaign as template parameters
-	 *
-	 * @link https://github.com/INN/link-roundups/pull/139#issuecomment-488852947
-	 * @param Array $params the request body parameters, as described in the "put" section of https://developer.mailchimp.com/documentation/mailchimp/reference/campaigns/content/#%20
-	 * @param WP_Post $post The post that is being turned into a MailChimp Campaign
-	 * @param int $id The campaign ID
-	 * @uses mailchimp_tools_get_existing_campaign_data_for_post
-	 */
-	public static function mailchimp_tools_campaign_content( $params, $post = null, $id = null ) {
-		if ( empty ( $post ) || empty ( $id ) ) {
-			return $params;
-		}
-		if ( ! function_exists( 'mailchimp_tools_get_existing_campaign_data_for_post' ) ) {
-			return $params;
-		}
-
-		$cache = mailchimp_tools_get_existing_campaign_data_for_post( $post, true );
-		if ( empty ( $cache ) ) {
-			return $params;
-		}
-		error_log(var_export( $params, true));
-		error_log(var_export( $cache, true));
-
-		return $params;
 	}
 }

@@ -416,8 +416,6 @@ class LinkRoundupsEditor {
 		$author = get_user_by( 'id', $post->post_author );
 		$campaign_params['template']['sections']['roundupauthor'] = $author->display_name;
 
-		error_log(var_export( $campaign_params, true));
-
 		return $campaign_params;
 	}
 }
