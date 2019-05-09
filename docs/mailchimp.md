@@ -18,7 +18,7 @@ In order to use the MailChimp features of Link Roundups, you'll need to sign up 
 3. On your website, go to **Dashboard > Settings > MailChimp Options**.
 4. Paste the MailChimp API Key into the appropriate field
 5. Press "Save Changes".
-6. Go to **Link Roundups > MailChimp Campaign Settings** to configure your MailChimp campaigns.
+6. Go to **Settings > MailChimp Settings** to configure your MailChimp campaigns.
 
 ![Link Roundups MailChimp API settings](./img/link-roundups-mailchimp-integration.png)
 
