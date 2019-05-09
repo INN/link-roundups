@@ -34,7 +34,7 @@ You'll need a MailChimp template created and configured for use with Link Roundu
 
 ### Inserting editable content areas
 
-This plugin's MailChimp features depend on the presence of specific tags in your MailChimp template.
+This plugin's MailChimp features depend on the presence of specific markup in your custom MailChimp template.
 
 You'll have to edit your template to add them, so that they can be replaced with your content when you go to send a campaign.
 
@@ -77,11 +77,13 @@ These template tags are not required, but you may wish to use them in your templ
 - `mc:edit="roundupdate"` - The date the Links Roundup post was published
 - `mc:edit="rounduppermalink"` - A link back to the original Link Roundup post
 
-## Choosing the MailChimp Template and List to use
+## Choosing the MailChimp Template and Audience to use
 
-So now you have at least one template saved in MailChimp, and we're assuming you also have a list of subscribers for your newsletter. Go back to the Link Roundups Options page in **Link Roundups > Options**, and choose your template, and which MailChiimp List you want to use:
+So now you have at least one template saved in MailChimp, and we're assuming you also have a list of subscribers for your newsletter. Go to **Link Roundups > MailChimp Campaign Settings**, and choose :
 
-![Link Roundups MailChimp API settings](./img/link-roundups-options-mailchimp-2.png)
+- Your defauult adience to send campaigns to
+- Your default template for sending campaigns
+- The defalt email address which test campaigns are sent to.
 
 # Creating a MailChimp Campaign
 
@@ -91,4 +93,9 @@ In the Link Roundups editor, in a box near the bottom of the page you'll see an 
 
 ![Create MailChimp Campaign button in the post editor](./img/link-roundup-mailchimp-button.png)
 
-When you click "Create a MailChimp Campaign" you will be asked to confirm the action. The Link Roundups plugin will contact MailChimp to create the campaign and, upon success, present you with a link to finish editing the campaign in the MailChimp dashboard.
+Buttons that may appear at the bottom of this box are as follows:
+
+- Send now: Sends the campaign.
+- Create draft: Creates a draft camapign in MailChimp. You can update the draft using the Link Roundps editor or in MailChimp.
+- Send Test: Lets you send a draft campaign.
+- Update Draft: Refreshes the draft campaign in MailChimp with details from this editor.
