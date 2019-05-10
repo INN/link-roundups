@@ -22,7 +22,31 @@ Once you have the links that make up your roundup in the editor window, you can 
 
 ![New Link Roundup link in the Dashboard](./img/adding-link-roundup-3.png)
 
+## Add Categories and Tags
+
 You can also add Categories and Tags to the Link Roundup, like any other post. _Adding one or more Categories allows filtering display of Link Roundups by Category_.
+
+## Creating a Link Roundup using roundup_block Shortcode
+
+An alternative way to create a Link Round is to use a special shortcode with this format:
+
+`[roundup_block name="Today's Links"]`
+
+The name will be displayed as a header so just change it as desired. When you add this shortcode you'll see the name of the header in a grey box: 
+
+![Link Roundups shortcode displayed in the visual editor](./img/roundup_block_1.png)
+
+Hover over the box and a pencil icon appears. Click the pencil, and you'll be presented with a modal window to edit the contents:
+
+![adding links to a roundup](./img/adding-links-modal.png)
+
+Under each available item, click the Add button to add it to the Link Roundup:
+
+![Links added to a roundup](./img/added-links-modal.png)
+
+Click the Save button in the modal window and return to find your links in the Link Roundup edit screen:
+
+![Links added to a roundup](./img/todays-links.png)
 
 ## How Link Roundups are Displayed On Your Site
 

@@ -51,7 +51,7 @@ Installation directly from the WordPress.org plugin directory coming soon!
 ## Features
 
 #### Saved Links
-![New Saved Link](https://raw.githubusercontent.com/INN/link-roundups/master/docs/img/new-saved-link.png)
+![New Saved Link](https://raw.githubusercontent.com/INN/link-roundups/master/docs/img/new-saved-link-npr.png)
 
 Curate links from around the web and save them in WordPress using a handy browser bookmark. You can also add your own descriptions and organize saved links using tags.
 
