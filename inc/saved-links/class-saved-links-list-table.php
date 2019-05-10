@@ -42,10 +42,17 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 	/**
 	 * Additional decorations for the table: "Send to editor" button and "Date range" filter
 	 *
+	 * Default presentation: date filter is set to "This Month", and changing that should also change $this->prepare_items.
+	 *
 	 * @param string $which is either "top" or "bottom", and tells you which nav you're outputting.
 	 * @since 0.3.2
+	 * @see prepare_items
 	 */
 	function bulk_actions( $which = '' ) {
+		$request = $_REQUEST;
+		if ( ! isset( $request['link_date'] ) ) {
+			$request['link_date'] = 'this_month';
+		}
 		// this will display at top and bottom
 		?>
 		<button class='button append-saved-links' style='float:left;'><?php _e( 'Send to Editor', 'link-roundups' ); ?></button>
@@ -57,17 +64,17 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 				<form method='get' id='filter_links_container'>
 					<label for='link_date'><b><?php _e( 'Date Range:', 'link-roundups' ); ?></b></label>
 					<select name='link_date'>
-						<option value='today' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'today' ) ? 'selected' : '' );?>><?php _e( 'Today',' link-roundups' ); ?></option>
-						<option value='this_week' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'this_week' ) ? 'selected' : '' );?>><?php _e( 'This Week',' link-roundups' ); ?></option>
-						<option value='this_month' <?php echo ( ( isset( $_REQUEST['link_date']) && $_REQUEST['link_date'] == 'this_month' ) ? 'selected' : '' );?>><?php _e( 'This Month',' link-roundups' ); ?></option>
-						<option value='this_year' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'this_year' ) ? 'selected' : '' );?>><?php _e( 'This Year',' link-roundups' ); ?></option>
-						<option value='show_all' <?php echo ( ( isset( $_REQUEST['link_date'] ) && $_REQUEST['link_date'] == 'show_all' ) ? 'selected' : '' );?>><?php _e( 'Show All',' link-roundups' ); ?></option>
+						<option value='today'      <?php selected( $request['link_date'], 'today'      ); ?>><?php _e( 'Today',' link-roundups' ); ?></option>
+						<option value='this_week'  <?php selected( $request['link_date'], 'this_week'  ); ?>><?php _e( 'This Week',' link-roundups' ); ?></option>
+						<option value='this_month' <?php selected( $request['link_date'], 'this_month' ); ?>><?php _e( 'This Month',' link-roundups' ); ?></option>
+						<option value='this_year'  <?php selected( $request['link_date'], 'this_year'  ); ?>><?php _e( 'This Year',' link-roundups' ); ?></option>
+						<option value='show_all'   <?php selected( $request['link_date'], 'show_all'   ); ?>><?php _e( 'Show All',' link-roundups' ); ?></option>
 					</select>
-					<?php if( isset( $_REQUEST['orderby'] ) ) : ?>
-						<input type='hidden' name='orderby' value='<?php echo $_REQUEST['orderby']; ?>'/>
+					<?php if( isset( $request['orderby'] ) ) : ?>
+						<input type='hidden' name='orderby' value='<?php echo esc_attr( $request['orderby'] ); ?>'/>
 					<?php endif;?>
-					<?php if( isset($_REQUEST['order'] ) ) : ?>
-						<input type='hidden' name='order' value='<?php echo $_REQUEST['order']; ?>'/>
+					<?php if( isset($request['order'] ) ) : ?>
+						<input type='hidden' name='order' value='<?php echo esc_attr( $request['order'] ); ?>'/>
 					<?php endif;?>
 					<input id="filter_links" class='button' type='submit' value='Filter'/><span class="spinner"></span>
 				</form>
@@ -110,6 +117,7 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 	 * Build the query of posts that should be displayed, and run the query, and fill $this->items with those posts.
 	 *
 	 * @since 0.3.2
+	 * @see bulk_actions
 	 */
 	function prepare_items() {
 
@@ -127,25 +135,38 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 		 */
 
 		// Define the default date query
+		// This should match the vale set as default in $this->bulk_actions()
 		$default_date = array(
 			'year' => date( 'Y' ),
 			'monthnum' => date( 'm' ),
-			'day' => date( 'd' )
 		);
+
 		// Turn the filter date button's response into a meaningful WP_Query date argument
 		if ( isset($_REQUEST['link_date'] ) ) {
 			switch ($_REQUEST['link_date']) {
 				case 'today':
-					$default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ), 'day' => date( 'd' ) );
+					$default_date = array(
+						'year' => date( 'Y' ),
+						'monthnum' => date( 'm' ),
+						'day' => date( 'd' )
+					);
 					break;
 				case 'this_week':
-					$default_date = array( 'year' => date( 'Y' ), 'w' => date( 'W' ));
+					$default_date = array(
+						'year' => date( 'Y' ),
+						'w' => date( 'W' )
+					);
 					break;
 				case 'this_month':
-					$default_date = array( 'year' => date( 'Y' ), 'monthnum' => date( 'm' ) );
+					$default_date = array(
+						'year' => date( 'Y' ),
+						'monthnum' => date( 'm' )
+					);
 					break;
 				case 'this_year':
-					$default_date = array( 'year' => date( 'Y' ) );
+					$default_date = array(
+						'year' => date( 'Y' )
+					);
 					break;
 				case 'show_all':
 					$default_date = array();
