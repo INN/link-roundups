@@ -179,7 +179,9 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 
 		// Set the columns
 		$columns = $this->get_columns();
-		$_wp_column_headers[$screen->id] = $columns;
+		if ( isset( $screen ) ) {
+			$_wp_column_headers[$screen->id] = $columns;
+		}
 
 		// Fetch the items
 		$links_query = new WP_Query($args);
