@@ -294,27 +294,15 @@ class LinkRoundupsEditor {
 	}
 
 	public static function roundup_block_posts_query() {
-		$month_ago = strtotime('-30 days');
-		$now = strtotime('now');
-
 		// Default arguments
 		$args = apply_filters('link_roundups_roundup_block_post_query', array(
 			'post_type' => 'rounduplink',
 			'orderby' => 'date',
 			'order' => 'desc',
-			'posts_per_page' => -1,
+			'posts_per_page' => 10,
 			'date_query' => array(
-				'after' => array(
-					'year' => date( 'Y', $month_ago ),
-					'month' => date( 'n', $month_ago ),
-					'day' => date( 'j', $month_ago )
-				),
-				'before' => array(
-					'year' => date( 'Y', $now ),
-					'month' => date( 'n', $now ),
-					'day' => date( 'j', $now )
-				),
-				'inclusive' => true
+				'year' => date( 'Y' ),
+				'monthnum' => date( 'm' ),
 			)
 		));
 		$query = new WP_Query($args);
@@ -392,7 +380,6 @@ class LinkRoundupsEditor {
 	 * @link Why: https://github.com/INN/link-roundups/pull/139#issuecomment-488852947
 	 */
 	public static function mailchimp_tools_campaign_content( $campaign_params, $post, $id ) {
-		error_log(var_export( $id, true));
 		// shortcut if post not set
 		if ( empty( $post ) ) {
 			return $campaign_params;
