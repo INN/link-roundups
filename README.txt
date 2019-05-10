@@ -4,7 +4,7 @@ Donate link: https://inn.org/donate
 Tags: newsletters, mailchimp, links, curation, aggregation
 Requires at least: 4.2
 Tested up to: 5.2
-Stable tag: 0.5
+Stable tag: 1.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Minimum PHP: 5.6
@@ -48,7 +48,7 @@ Via manual upload:
 
 == Changelog ==
 
-= 0.5
+= 1.0
 
 - Tested up to WordPress 5.2 and PHP 7.3
 - Fixes many, many bugs.
