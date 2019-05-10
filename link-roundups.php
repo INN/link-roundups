@@ -61,11 +61,6 @@ function link_roundups_init() {
 	require_once(__DIR__ . '/inc/link-roundups/class-link-roundups-widget.php');
 
 	/**
-	 * Save to Site Browser Bookmark Tool
-	 */
-	require_once(__DIR__ . '/inc/link-roundups/class-save-to-site-button.php');
-
-	/**
 	 * Add Backwards Compatability with argo-links
 	 */
 	require_once(__DIR__ . '/inc/compatibility.php');
