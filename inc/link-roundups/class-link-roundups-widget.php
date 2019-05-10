@@ -14,8 +14,11 @@ class link_roundups_widget extends WP_Widget {
 	}
 
 	function widget( $args, $instance ) {
+
 		extract( $args );
-		$title = apply_filters( 'widget_title', $instance['title'] );
+		
+		// make it possible for the widget title to be a link
+		$title = apply_filters('widget_title', empty( $instance['title'] ) ? __('Recent Link Roundups' , 'link-roundups') : $instance['title'], $instance, $this->id_base);
 
 		echo $before_widget;
 
