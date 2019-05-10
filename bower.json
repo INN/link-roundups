@@ -3,7 +3,7 @@
   "description": "A WordPress plugin that makes it easy to collect links, turn them into roundup posts and produce roundup newsletters using MailChimp.",
   "main": "link-roundups.php",
   "authors": [
-    "INN Nerds <nerds@inn.org>"
+    "INN Labs <support@inn.org>"
   ],
   "license": "MIT",
   "homepage": "https://github.com/INN/link-roundups",
@@ -14,6 +14,7 @@
     "node_modules",
     "bower_components",
     "js/vendor",
+    "vendor",
     "test",
     "tests"
   ],

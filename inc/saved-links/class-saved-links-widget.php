@@ -23,7 +23,9 @@ class saved_links_widget extends WP_Widget {
 
 		echo $before_widget;
 
-		if ( $title ) echo $before_title . $title . $after_title;
+		if ( $title ) {
+			echo $before_title . $title . $after_title;
+		}
 
 		$query_args = array (
 			'post__not_in' => get_option( 'sticky_posts' ),
@@ -34,55 +36,64 @@ class saved_links_widget extends WP_Widget {
 		$my_query = new WP_Query( $query_args );
 		
 		if ( $my_query->have_posts() ) {
-			while ( $my_query->have_posts() ) : $my_query->the_post();
-			$custom = get_post_custom( $post->ID );
+			while ( $my_query->have_posts() ) {
+				$my_query->the_post();
+				$custom = get_post_custom( $post->ID );
 
-			// skip roundups
-			if ( get_post_type( $post ) === 'roundup' ) continue; ?>
+				// skip roundups
+				if ( get_post_type( $post ) === 'roundup' ) {
+					continue;
+				}
 
-			<div class="post-lead clearfix">
-				<?php if (has_post_thumbnail($post->ID) && $instance['show_featured_image'] == 'on') {
-					echo get_the_post_thumbnail($post->ID);
-				} ?>
-
-				<h5><?php
-					if ( isset( $custom["lr_url"][0] ) ) {
-						$output = '<a href="' . $custom["lr_url"][0] . '" ';
-						if ( $instance['new_window'] == 'on' ) {
-							$output .= 'target="_blank" ';
-						}
-						$output .= '>' . get_the_title() . '</a>';
-					} else {
-						$output = get_the_title();
-					}
-					echo $output;
-					?></h5>
-
-				<?php
-					if ( isset( $custom["lr_desc"][0] ) ) {
-						echo '<p class="description">';
-						echo ( function_exists( 'largo_trim_sentences' ) ) ? largo_trim_sentences($custom["lr_desc"][0], $instance['num_sentences']) : $custom["lr_desc"][0];
-						echo '</p>';
-					}
-					if ( isset($custom["lr_source"][0] ) ) {
-						$lr_source = '<p class="source">' . __('Source: ', 'link-roundups') . '<span>';
-						if ( !empty( $custom["lr_url"][0] ) ) {
-							$lr_source .= '<a href="' . $custom["lr_url"][0] . '" ';
-							if ( $instance['new_window'] == 'on' ) {
-								$lr_source .= 'target="_blank" ';
-							}
-							$lr_source .= '>' . $custom["lr_source"][0] . '</a>';
-						} else {
-							$lr_source .= $custom["lr_source"][0];
-						}
-						$lr_source .= '</span></p>';
-						echo $lr_source;
-					}
 				?>
-			</div> <!-- /.post-lead -->
-			
-		<?php
-			endwhile;
+
+				<div class="post-lead clearfix">
+					<?php
+						if (has_post_thumbnail($post->ID) && $instance['show_featured_image'] == 'on') {
+							echo get_the_post_thumbnail($post->ID);
+						}
+					?>
+
+					<h5>
+						<?php
+							if ( isset( $custom["lr_url"][0] ) ) {
+								$output = '<a href="' . $custom["lr_url"][0] . '" ';
+								if ( $instance['new_window'] == 'on' ) {
+									$output .= 'target="_blank" ';
+								}
+								$output .= '>' . get_the_title() . '</a>';
+							} else {
+								$output = get_the_title();
+							}
+							echo $output;
+						?>
+					</h5>
+
+					<?php
+						if ( isset( $custom["lr_desc"][0] ) && ! empty ( $custom["lr_desc"][0] ) ) {
+							echo '<p class="description">';
+							echo ( function_exists( 'largo_trim_sentences' ) ) ? largo_trim_sentences($custom["lr_desc"][0], $instance['num_sentences']) : $custom["lr_desc"][0];
+							echo '</p>';
+						}
+
+						if ( isset($custom["lr_source"][0] ) && ! empty ( $custom["lr_source"][0] ) ) {
+							$lr_source = '<p class="source"><span class="source-label">' . __('Source: ', 'link-roundups') . '</span><span>';
+							if ( !empty( $custom["lr_url"][0] ) ) {
+								$lr_source .= '<a href="' . $custom["lr_url"][0] . '" ';
+								if ( $instance['new_window'] == 'on' ) {
+									$lr_source .= 'target="_blank" ';
+								}
+								$lr_source .= '>' . $custom["lr_source"][0] . '</a>';
+							} else {
+								$lr_source .= $custom["lr_source"][0];
+							}
+							$lr_source .= '</span></p>';
+							echo $lr_source;
+						}
+					?>
+				</div> <!-- /.post-lead -->
+			<?php
+			}
 		} else {
 			_e( '<p class="error"><strong>You don\'t have any recent links or the link roundups plugin is not active.</strong></p>', 'link-roundups' );
 		} // end recent links
@@ -120,12 +131,12 @@ class saved_links_widget extends WP_Widget {
 
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'link-roundups' ); ?></label>
-			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:90%;" />
+			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:90%;" type="text"/>
 		</p>
 
 		<p>
 			<label for="<?php echo $this->get_field_id( 'num_posts' ); ?>"><?php _e( 'Number of posts to show:', 'link-roundups' ); ?></label>
-			<input id="<?php echo $this->get_field_id( 'num_posts' ); ?>" name="<?php echo $this->get_field_name( 'num_posts' ); ?>" value="<?php echo $instance['num_posts']; ?>" style="width:90%;" />
+			<input id="<?php echo $this->get_field_id( 'num_posts' ); ?>" name="<?php echo $this->get_field_name( 'num_posts' ); ?>" value="<?php echo $instance['num_posts']; ?>" style="width:90%;" type="number" min="1"/>
 		</p>
 
 		<p>
@@ -136,7 +147,7 @@ class saved_links_widget extends WP_Widget {
 		<?php if ( function_exists( 'largo_trim_sentences' ) ) : ?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'num_sentences' ); ?>"><?php _e( 'Excerpt Length (# of Sentences):', 'link-roundups' ); ?></label>
-			<input id="<?php echo $this->get_field_id( 'num_sentences' ); ?>" name="<?php echo $this->get_field_name( 'num_sentences' ); ?>" value="<?php echo $instance['num_sentences']; ?>" style="width:90%;" />
+			<input id="<?php echo $this->get_field_id( 'num_sentences' ); ?>" name="<?php echo $this->get_field_name( 'num_sentences' ); ?>" value="<?php echo $instance['num_sentences']; ?>" style="width:90%;" type="number" min="0"/>
 		</p>
 		<?php endif; ?>
 
@@ -153,7 +164,7 @@ class saved_links_widget extends WP_Widget {
 
 		<p>
 			<label for="<?php echo $this->get_field_id( 'linkurl' ); ?>"><?php _e( 'URL:', 'link-roundups' ); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'linkurl' ); ?>" name="<?php echo $this->get_field_name( 'linkurl' ); ?>" type="text" value="<?php echo $instance['linkurl']; ?>" />
+			<input class="widefat" id="<?php echo $this->get_field_id( 'linkurl' ); ?>" name="<?php echo $this->get_field_name( 'linkurl' ); ?>" type="url" value="<?php echo $instance['linkurl']; ?>" />
 		</p>
 
 	<?php

@@ -1,13 +1,12 @@
 # Link Roundups
 
-A WordPress plugin to make it easy to collect links from around the web, turn them into roundup posts and streamline the production of daily/weekly roundup newsletters using MailChimp. Built and maintained by [INN Nerds](http://nerds.inn.org).
+A WordPress plugin to make it easy to collect links from around the web, turn them into roundup posts and streamline the production of daily/weekly roundup newsletters using MailChimp. Built and maintained by [INN Labs](https://labs.inn.org).
 
-**Contributors:** The INN Nerds (David Ryan, Ryan Nagle, Ben Keith, Will Haynes, Adam Schweigert) and Project Argo (Corey Daley, Chris Amico, Wesley Lindamood)  
 **Requires at least:** 4.1  
-**Tested up to:** 4.2.3  
-**Stable tag:** 0.4.1  
+**Tested up to:** 5.2  
+**Stable tag:** See https://github.com/INN/link-roundups/releases
 **License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
+**License URI:** https://www.gnu.org/licenses/gpl-2.0.html
 
 ## Overview
 
@@ -32,3 +31,21 @@ For information on the development status of this plugin, check the [development
 If you'd like to contribute to the project, please see our [contributing guidelines](contributing.md).
 
 This plugin depends on [INN/wordpress-mailchimp-tools](https://github.com/INN/wordpress-mailchimp-tools), as well as some components imported via composer. 
+
+## Contributors:
+
+**The Institute for Nonprofit News:**
+
+- David Ryan
+- Ryan Nagle
+- Ben Keith
+- Will Haynes
+- Adam Schweigert
+- RC Lations
+- Josh Darby
+
+**Project Argo:**
+
+- Corey Daley
+- Chris Amico
+- Wesley Lindamood

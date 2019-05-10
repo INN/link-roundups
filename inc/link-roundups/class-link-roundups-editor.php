@@ -10,6 +10,7 @@ class LinkRoundupsEditor {
 		add_action( 'wp_ajax_roundup_block_posts', array( __CLASS__, 'roundup_block_posts' ) );
 		add_action( 'wp_ajax_roundup_update_post', array( __CLASS__, 'roundup_update_post' ) );
 		add_shortcode( 'roundup_block', array( __CLASS__, 'roundup_block_shortcode' ) );
+		add_filter( 'mailchimp_tools_campaign_content', array( __CLASS__, 'mailchimp_tools_campaign_content' ), 10, 3 );
 	}
 
 	/**
@@ -368,7 +369,7 @@ class LinkRoundupsEditor {
 	}
 
 	/*
-	 * Load posts for the roundupp block editor
+	 * Load posts for the roundup block editor
 	 *
 	 * @since 0.3.2
 	 */
@@ -377,5 +378,44 @@ class LinkRoundupsEditor {
 		$posts = self::roundup_block_posts_query();
 		print json_encode($posts);
 		wp_die();
+	}
+
+	/**
+	 * Apply information from a Link Roundup post to a WordPress MailChimp Tools email via the appropriate filter
+	 *
+	 * @param Array $campaign_params An array of request body parameters, as described in the "put" section of https://developer.mailchimp.com/documentation/mailchimp/reference/campaigns/content/#%20
+	 * @param WP_Post $post The post that is being turned into a MailChimp Campaign
+	 * @param int $id The campaign ID
+	 * @return Array $params
+	 *
+	 * @link the commit that implemented this filter: https://github.com/INN/wordpress-mailchimp-tools/commit/4e768f7661a2fe8fc2785140e8313280eb230c3f
+	 * @link Why: https://github.com/INN/link-roundups/pull/139#issuecomment-488852947
+	 */
+	public static function mailchimp_tools_campaign_content( $campaign_params, $post, $id ) {
+		error_log(var_export( $id, true));
+		// shortcut if post not set
+		if ( empty( $post ) ) {
+			return $campaign_params;
+		}
+
+		if ( ! ( $post instanceof WP_Post ) ) {
+			$post = get_post( $post );
+		}
+
+		if ( ! isset( $campaign_params['template'] ) ) {
+			$campaign_params['template'] = array();
+		}
+		if ( ! isset( $campaign_params['template']['sections'] ) ) {
+			$campaign_params['template']['sections'] = array();
+		}
+		$campaign_params['template']['sections']['rounduplinks'] = apply_filters( 'the_content', $post->post_content );
+		$campaign_params['template']['sections']['rounduptitle'] = $post->post_title;
+		$campaign_params['template']['sections']['roundupdate'] = get_the_date( '', $post->ID );
+		$campaign_params['template']['sections']['rounduppermalink'] = get_post_permalink( $post->ID );
+
+		$author = get_user_by( 'id', $post->post_author );
+		$campaign_params['template']['sections']['roundupauthor'] = $author->display_name;
+
+		return $campaign_params;
 	}
 }
