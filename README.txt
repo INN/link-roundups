@@ -53,6 +53,7 @@ Via manual upload:
 - Updates the [WordPress Mailchimp Tools](https://github.com/INN/wordpress-mailchimp-tools) submodule to use version 3 of the Mailchimp API, and gain various compatibility updates for modern PHP versions.
 - Updates Travis automated testing to support PHP 5.6, 7.1, 7.2. Pull request [#138](https://github.com/INN/link-roundups/pull/138) for issue [#135](https://github.com/INN/link-roundups/issues/135).
 - Fixes the saved_links_widget constructor for error-free PHP7 compatibility. Pull request [#137](https://github.com/INN/link-roundups/pull/137) for issue [#132](https://github.com/INN/link-roundups/issues/132).
+- Applies the widget_title filter to the title of the Link Roundups widget. Pull request [#152](https://github.com/INN/link-roundups/pull/152) for issue [#104](https://github.com/INN/link-roundups/issues/104).
 
 = 0.4.1 =
 
