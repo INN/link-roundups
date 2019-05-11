@@ -50,11 +50,16 @@ Via manual upload:
 
 = 1.0
 
+Highlights:
+- Now supports MailChimp API version 3 for sending your Link Roundup posts to subscribers.
+- Removes the bookmarklet for saving links from your browser bar. This depended on functionality that was [removed from WordPress in version 4.9](https://make.wordpress.org/core/2017/11/02/press-this-in-4-9/). It was spun out as an [official plugin](https://wordpress.org/plugins/press-this/), but has not been significantly maintained since then.
+
+The full list:
 - Tested up to WordPress 5.2 and PHP 7.3
 - Fixes many, many bugs.
 - Updates the [WordPress MailChimp Tools](https://github.com/INN/wordpress-mailchimp-tools) submodule to use version 3 of the MailChimp API, and gain various compatibility updates for modern PHP versions. Upgrading to the new MailChimp API means that users of the MailChimp campaign functionality in the Link Roundups plugin can now use MailChimp editable content areas in their templates, as described [in our documentation](https://github.com/INN/link-roundups/blob/master/docs/mailchimp.md).
 - Updates installation documentation. Pull request [#139](https://github.com/INN/link-roundups/pull/139) for issue [#145](https://github.com/INN/link-roundups/issues/145).
-- Removes the "Press-to-save" bookmarklet for saving links as Saved Links. This stopped working in WordPress 4.9, with the removal of WordPress' own "Press this!" bookmarklet functionality. Pull request []() for issue [#130](https://github.com/INN/link-roundups/issues/130).
+- Removes the "Press-to-save" bookmarklet for saving links as Saved Links. This stopped working in WordPress 4.9, with the removal of WordPress' own "Press this!" bookmarklet functionality. Pull request [#157](https://github.com/INN/link-roundups/pull/157) for issue [#130](https://github.com/INN/link-roundups/issues/130).
 - Applies the `'widget_title'` filter to the title of the Link Roundups widget. Pull request [#152](https://github.com/INN/link-roundups/pull/152) for issue [#104](https://github.com/INN/link-roundups/issues/104).
 - Wraps the `Source:` label in the Saved Links List widget in a `span.source-label`. Pull request [#139](https://github.com/INN/link-roundups/pull/139) for issue [#144](https://github.com/INN/link-roundups/issues/144).
 - Sets HTML5 input types on widget forms. Pull request [#139](https://github.com/INN/link-roundups/pull/139) for issue [#143](https://github.com/INN/link-roundups/issues/143).
