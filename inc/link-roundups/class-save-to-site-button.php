@@ -55,14 +55,29 @@ class Save_To_Site_Button {
 	/**
 	 * Returns the link for the bookmarklet button.
 	 *
+	 * If get_shortcut_link() returns an empty string (WP 4.9+) and
+	 * if the https://wordpress.org/plugins/press-this/ plugin is installed,
+	 * this plugin will use the plugin's bookmarklet code instead.
+	 *
 	 * @since 0.3
 	 *
+	 * @uses get_shortcut_link
+	 * @uses https://github.com/WordPress/press-this/blob/690c99c8cd8feba4fe4fbfff89a955a325e35505/press-this-plugin.php#L118-L173
 	 * @return String. Javascript bookmarklet code.
 	 */
 	public static function shortcut_link() {
 
 		// This is the default 'Press This!' button link.
-		$shortcut_link = htmlspecialchars( get_shortcut_link() );
+		$shortcut_link = '';
+
+		if ( function_exists( 'get_shortcut_link' ) ) {
+			$shortcut_link = htmlspecialchars( get_shortcut_link() );
+		}
+
+		// since 4.9, get_shortcut_link has returned the empty string.
+		if ( empty( $shortcut_link ) && function_exists( 'press_this_get_shortcut_link' ) ) {
+			$shortcut_link = htmlspecialchars( press_this_get_shortcut_link() );
+		}
 
 		$post_type = 'rounduplink';
 
@@ -74,7 +89,6 @@ class Save_To_Site_Button {
 		$shortcut_link = str_replace( '?v=', '&v=', $shortcut_link );
 
 		return $shortcut_link;
-
 	}
 
 	/**

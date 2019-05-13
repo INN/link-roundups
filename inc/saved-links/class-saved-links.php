@@ -371,7 +371,7 @@ class SavedLinks {
 				<?php _e( 'If you can&#8217;t drag the bookmarklet to your bookmarks, copy the following code and create a new bookmark. Paste the code into the new bookmark&#8217;s URL field.', 'link-roundups' ) ?>
 			</p>
 			<p>
-				<textarea class="js-pressthis-code" rows="5" cols="120" readonly="readonly" aria-labelledby="pressthis-code-desc"><?php echo htmlspecialchars( get_shortcut_link() ); ?></textarea>
+				<textarea class="js-pressthis-code" rows="5" cols="120" readonly="readonly" aria-labelledby="pressthis-code-desc"><?php echo esc_attr( Save_to_Site_Button::shortcut_link() ); ?></textarea>
 			</p>
 		</div>
 
