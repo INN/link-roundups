@@ -357,7 +357,7 @@ class SavedLinks {
 		/** WordPress Administration Bootstrap */
 		include_once( ABSPATH  . 'wp-admin/admin.php' );
 		?>
-			<h2><?php _e( 'Enable Save to Site bookmark on your site', 'link-roundups' ); ?></h2>
+			<h2><?php _e( 'Enable Save to Site bookmarklet for your site', 'link-roundups' ); ?></h2>
 
 			<div class="tool-box">
 				<div class="card">
@@ -381,7 +381,7 @@ class SavedLinks {
 										'tab' => 'search',
 										'type' => 'term',
 									),
-									admin_url( 'plugin-install.php' )
+									network_admin_url( 'plugin-install.php' )
 								),
 								'Install now'
 							);
