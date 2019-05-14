@@ -321,8 +321,7 @@ class SavedLinks {
 	 */
 	public static function add_save_to_site_sub_menu() {
 		if (
-			version_compare( get_bloginfo('version'), '4.9', '<' )
-			|| function_exists( 'press_this_get_shortcut_link' )
+			! empty( Save_to_Site_Button::shortcut_link() )
 		) {
 			add_submenu_page(
 				'edit.php?post_type=rounduplink',
