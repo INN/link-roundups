@@ -320,16 +320,82 @@ class SavedLinks {
 	 * @since 0.1
 	 */
 	public static function add_save_to_site_sub_menu() {
-		add_submenu_page(
-			'edit.php?post_type=rounduplink',
-			__( 'Add Browser Bookmark', 'link-roundups' ),
-			__( 'Add Browser Bookmark', 'link-roundups' ),
-			apply_filters( 'link_roundups_minimum_capability', 'edit_posts' ),
-			'install-browser-bookmark',
-			array(
-				__CLASS__, 'build_lroundups_page'
-			)
-		);
+		if (
+			version_compare( get_bloginfo('version'), '4.9', '<' )
+			|| function_exists( 'press_this_get_shortcut_link' )
+		) {
+			add_submenu_page(
+				'edit.php?post_type=rounduplink',
+				__( 'Add Browser Bookmark', 'link-roundups' ),
+				__( 'Add Browser Bookmark', 'link-roundups' ),
+				apply_filters( 'link_roundups_minimum_capability', 'edit_posts' ),
+				'install-browser-bookmark',
+				array(
+					__CLASS__, 'build_lroundups_page'
+				)
+			);
+		} else {
+			add_submenu_page(
+				'edit.php?post_type=rounduplink',
+				__( 'Add Browser Bookmark', 'link-roundups' ),
+				__( 'Add Browser Bookmark', 'link-roundups' ),
+				apply_filters( 'link_roundups_minimum_capability', 'edit_posts' ),
+				'install-browser-bookmark',
+				array(
+					__CLASS__, 'build_lroundups_page_admonition'
+				)
+			);
+		}
+	}
+
+	/**
+	 * Replacement Browser Bookmark Tool page for when the get_shortcut() function or equivalents are not available
+	 *
+	 * @see
+	 * @since 1.0
+	 */
+	public static function build_lroundups_page_admonition() {
+		/** WordPress Administration Bootstrap */
+		include_once( ABSPATH  . 'wp-admin/admin.php' );
+		?>
+			<h2><?php _e( 'Enable Save to Site bookmark on your site', 'link-roundups' ); ?></h2>
+
+			<div class="tool-box">
+				<div class="card">
+					<h3><?php _e( 'Save to Site', 'link-roundups' ) ?></h3>
+					<p><?php _e( 'Save to Site is a tool that lets you send Saved Links to your WordPress Dashboard while browsing the web.', 'link-roundups' );?></p>
+					<p><?php
+						printf(
+							// translators: %1$s is https://wordpress.org/plugins/press-this/
+							'Your website is not currently capable of generating the link used for the Save to Site bookmarklet. In order to use the Save to Site bookmarklet, you will need to install the official WordPress plugin <a href="%1$s">Press This</a>, which reimplements functionality that was removed from WordPress in version 4.9.',
+							'https://wordpress.org/plugins/press-this/'
+						);
+					?></p>
+
+					<?php
+						if ( current_user_can( 'install_plugins' ) ) {
+							printf(
+								'<a class="button button-primary" href="%1$s">%2$s</a>',
+								add_query_arg(
+									array(
+										's' => htmlspecialchars('"press this"'),
+										'tab' => 'search',
+										'type' => 'term',
+									),
+									admin_url( 'plugin-install.php' )
+								),
+								'Install now'
+							);
+						} else {
+							printf(
+								'<p>%1$s</p>',
+								__( 'Please contact your site administrator to have this plugin installed.', 'link-roundups' )
+							);
+						}
+					?>
+				</div>
+			</div>
+		<?php
 	}
 
 	/**
@@ -343,11 +409,11 @@ class SavedLinks {
 	include_once( ABSPATH  . 'wp-admin/admin.php' );
 	?>
 
-	<div id="icon-tools" class="icon32"><br></div><h2><?php _e( 'Add Save to Site Bookmark to Your Web Browser', 'link-roundups' ); ?></h2>
+	<h2><?php _e( 'Add Save to Site Bookmark to Your Web Browser', 'link-roundups' ); ?></h2>
 
 	<div class="tool-box">
 
-	 <div class="card pressthis">
+	<div class="card pressthis">
 	<h3><?php _e( 'Save to Site', 'link-roundups' ) ?></h3>
 	<p><?php _e( 'Save to Site is a tool that lets you send Saved Links to your WordPress Dashboard while browsing the web.', 'link-roundups' );?></p>
 	<p><?php _e( 'Click the Save to Site bookmark and a new WordPress window will popup, attempting to prefill Title, URL and Source information.', 'link-roundups' ); ?></p>
