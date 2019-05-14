@@ -1,5 +1,7 @@
 # Installation
 
+If you would like to use the [Saved Links "Save to Site" bookmarklet](saved-links.md), you may need to [install additional dependencies not included in this plugin](bookmarklet-dependencies.md), regardless of the method you use to install this plugin.
+
 ## WordPress Plugin Directory
 
 Install from https://wordpress.org/plugins/link-roundups/ !
