@@ -51,7 +51,7 @@ Via manual upload:
 = 1.0
 
 - Tested up to WordPress 5.2 and PHP 7.3
-- Fixes many, many bugs.
+- Reenables the "Save to Site" bookmarklet for saving links for Link Roundups, if the site admin is willing to use the [Press This](https://wordpress.org/plugins/press-this/) plugin to enable this feature. Pull request [#159](https://github.com/INN/link-roundups/pull/159) for issue [#130](https://github.com/INN/link-roundups/issues/130).
 - Updates the [WordPress MailChimp Tools](https://github.com/INN/wordpress-mailchimp-tools) submodule to use version 3 of the MailChimp API, and gain various compatibility updates for modern PHP versions. Upgrading to the new MailChimp API means that users of the MailChimp campaign functionality in the Link Roundups plugin can now use MailChimp editable content areas in their templates, as described [in our documentation](https://github.com/INN/link-roundups/blob/master/docs/mailchimp.md).
 - Updates installation documentation. Pull request [#139](https://github.com/INN/link-roundups/pull/139) for issue [#145](https://github.com/INN/link-roundups/issues/145).
 - Applies the `'widget_title'` filter to the title of the Link Roundups widget. Pull request [#152](https://github.com/INN/link-roundups/pull/152) for issue [#104](https://github.com/INN/link-roundups/issues/104).
