@@ -57,9 +57,12 @@ class saved_links_widget extends WP_Widget {
 					<h5>
 						<?php
 							if ( isset( $custom["lr_url"][0] ) ) {
-								$output = '<a href="' . $custom["lr_url"][0] . '" ';
+								$output = sprintf(
+									'<a href="%1$s" rel="noopener noreferrer"',
+									esc_attr( $custom["lr_url"][0] )
+								);
 								if ( $instance['new_window'] == 'on' ) {
-									$output .= 'target="_blank" ';
+									$output .= 'target="_blank"';
 								}
 								$output .= '>' . get_the_title() . '</a>';
 							} else {
@@ -79,7 +82,10 @@ class saved_links_widget extends WP_Widget {
 						if ( isset($custom["lr_source"][0] ) && ! empty ( $custom["lr_source"][0] ) ) {
 							$lr_source = '<p class="source"><span class="source-label">' . __('Source: ', 'link-roundups') . '</span><span>';
 							if ( !empty( $custom["lr_url"][0] ) ) {
-								$lr_source .= '<a href="' . $custom["lr_url"][0] . '" ';
+								$lr_source .= sprintf(
+									'<a href="%1$s" rel="noopener noreferrer"',
+									esc_attr( $custom["lr_url"][0] )
+								);
 								if ( $instance['new_window'] == 'on' ) {
 									$lr_source .= 'target="_blank" ';
 								}
