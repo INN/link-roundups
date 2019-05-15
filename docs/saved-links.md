@@ -2,6 +2,12 @@
 
 Once you've [installed and activated the plugin](installation.md), you should see new Saved Links and Link Roundup menu items in your Dashboard.
 
+## Preliminary prep work
+
+On the WordPress Dashboard, click on **Saved Links**", then "Add Browser Bookmark". If you are prompted with a screen like the following, you'll need to [follow the instructions to enable the bookmarklet on your site](./bookmarklet-dependencies.md).
+
+![A screenshot of a page titled "Enable Save to Site bookmarklet for your site" and the text explaining why and how to install a dependency.](img/save-to-site-bookmarklet-dependency.png)
+
 ## Save Links via Browser Bookmark Tool (Recommended)
 
 1. Under Saved Links, navigate to Add Browser Bookmark (Save to Site)
