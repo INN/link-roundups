@@ -4,8 +4,6 @@ Create MailChimp Campaign Button
 #link-roundups-publish-actions {
   text-align: center;
   border-bottom: 1px solid #ccc;
-  margin-bottom: 10px;
-  padding-bottom: 10px;
   input[type="submit"] {
     display: inline-block;
     margin: 10px auto;
@@ -23,17 +21,22 @@ Recent Roundups Editor Styles
 ========================================================================== */
 #link_roundups_roundup {
   .inside {
-    min-height: 250px;
   }
   .pagination {
     margin: 10px 0;
     &:last-child {
-	  padding-bottom: 15px;
+      padding-bottom: 15px;
     }
   }
   #filter_links {
-    margin: 10px 0;
+    margin: 0 10px 0;
   }
+}
+button.button.append-saved-links {
+  margin: 0 10px 0 0;
+}
+.tablenav .actions select[name="link_date"] {
+  float: none;
 }
 
 div.display-saved-links {
