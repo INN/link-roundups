@@ -53,11 +53,13 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 		if ( ! isset( $request['link_date'] ) ) {
 			$request['link_date'] = 'this_month';
 		}
+
 		// this will display at top and bottom
 		?>
-		<button class='button append-saved-links' style='float:left;'><?php _e( 'Send to Editor', 'link-roundups' ); ?></button>
+			<button class='button append-saved-links' style='float:left;'><?php _e( 'Send to Editor', 'link-roundups' ); ?></button>
 		<?php
-		if ( $which == 'top' ) {
+
+		if ( $which === 'top' ) {
 			// Date range:
 			?>
 			<div style='float:left;'>
@@ -81,6 +83,17 @@ class Saved_Links_List_Table extends clone_WP_List_Table {
 			</div>
 		<?php
 		}
+
+		if ( $which === 'bottom' ) {
+		?>
+			<div style='float:left;'>
+				<a class="button" href="<?php echo esc_attr( admin_url( 'post-new.php?post_type=rounduplink' ) ); ?>">
+					<?php echo strip_tags( __( 'Create new Saved Link', 'link-roundups' ) ); ?>
+				</a>
+			</div>
+		<?php
+		}
+
 	}
 
 	/**
