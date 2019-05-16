@@ -377,7 +377,7 @@ class SavedLinks {
 								'<a class="button button-primary" href="%1$s">%2$s</a>',
 								add_query_arg(
 									array(
-										's' => htmlspecialchars('"press this"'),
+										's' => htmlspecialchars('press-this'),
 										'tab' => 'search',
 										'type' => 'term',
 									),
