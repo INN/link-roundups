@@ -70,7 +70,10 @@ class Save_To_Site_Button {
 		// This is the default 'Press This!' button link.
 		$shortcut_link = '';
 
-		if ( function_exists( 'get_shortcut_link' ) ) {
+		if (
+			version_compare( get_bloginfo('version'), '4.9', '<' )
+			&& function_exists( 'get_shortcut_link' )
+		) {
 			$shortcut_link = htmlspecialchars( get_shortcut_link() );
 		}
 
