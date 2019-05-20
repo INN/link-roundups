@@ -7,7 +7,7 @@ Tested up to: 5.2
 Stable tag: 1.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Minimum PHP: 5.6
+Requires PHP: 5.6
 Text Domain: link-roundups
 
 
@@ -22,7 +22,7 @@ Collect links from around the web, turn them into roundup posts and streamline t
 * **Custom HTML for links** Customize the presentation of Saved Links in Link Roundups
 * **Link Roundups Widget** Display most recent Link Roundup posts by date
 * **Saved Links Widget** Display a feed of your recent Saved Links, optionally filtered by tags
-* **Browser Bookmark** Create new Saved Links via a browser bookmarklet
+* **Browser Bookmark** Create new Saved Links via a browser bookmarklet, on supported WordPress configurations
 * **MailChimp Integration** Create new MailChimp campaigns based on a Link Roundup
 
 == Installation ==
@@ -34,15 +34,7 @@ Via WordPress.org:
 3. Navigate to the Admin -> Link Roundups -> Options page to configure the plugin
 4. Done!
 
-Via manual upload:
-
-1. Download this plugin via the "Download" button on [WordPress.org](https://wordpress.org/plugins/link-roundups/#installation) or download a tagged release [from the GitHub releases page](https://github.com/INN/link-roundups/releases).
-2. Unzip the package and rename the folder to "link-roundups" (The folder may be named "link-roundups-master" or something else. Uploading the plugin with this name may cause problems if you don't rename it before uploading to your site.)
-3. Upload the folder to your WordPress installation in the `wp-content/plugins` directory
-4. Log in to your site's WordPress Dashboard, then click on Plugins in the left hand menu
-5. Select the Link Roundups plugin and click "activate"
-6. Review the plugin settings under the Settings > Link Roundups menu
-
+For other installation methods, [see this plugin's installation methods on GitHub](https://github.com/INN/link-roundups/blob/master/docs/installation.md).
 
 [Read more about installing plugins here](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
