@@ -3,10 +3,11 @@
 Plugin Name: Link Roundups
 Plugin URI: https://github.com/INN/link-roundups
 Description: Use Link Roundups to aggregate links and create roundup posts. Mailchimp API integration and browser bookmark tool. Formerly argo-links from NPR's Project Argo.
-Author: INN, Project Argo, Mission Data
-Version: 0.5
-Author URI: http://nerds.inn.org/
+Author: INN Labs
+Author URI: http://labs.inn.org/
+Version: 1.0
 License: GPLv2
+Text Domain: link-roundups
 
 Seeking Link Roundups Post Type functions? They use lroundups instead of link-roundups.
  */
@@ -23,8 +24,16 @@ register_activation_hook( __FILE__, 'activate_link_roundups' );
 /**
  * Mailchimp API and Modal Functions
  */
-if ( ! class_exists( 'MailChimp' ) && file_exists( __DIR__ . '/wordpress-mailchimp-tools/vendor/autoload.php' ) ) {
-	require_once __DIR__ . '/wordpress-mailchimp-tools/vendor/autoload.php';
+if ( ! class_exists( 'MailChimp' ) && file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	require_once __DIR__ . '/vendor/autoload.php';
+} else {
+	error_log(
+		sprintf(
+			// translators: %1$s is a URL.
+			__('Your installation of the Link Roundups Plugin is missing its vendor dependencies. Please visit %1$s for more information.', 'link-roundups'),
+			'https://github.com/INN/link-roundups/blob/136-update-wordpress-mailchimp-tools/docs/installation.md'
+		)
+	);
 }
 
 /**

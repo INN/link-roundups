@@ -14,58 +14,59 @@ class link_roundups_widget extends WP_Widget {
 	}
 
 	function widget( $args, $instance ) {
-
-		extract( $args );
-		
 		// make it possible for the widget title to be a link
 		$title = apply_filters('widget_title', empty( $instance['title'] ) ? __('Recent Link Roundups' , 'link-roundups') : $instance['title'], $instance, $this->id_base);
 
-		echo $before_widget;
+		echo $args['before_widget'];
 
-		if ( $title )
-			echo $before_title . $title . $after_title;
+		if ( !empty( $title ) ) {
+			echo $args['before_title'] . $title . $args['after_title'];
+		}
 
-			$query_args = array (
-				'post__not_in' 	=> get_option( 'sticky_posts' ),
-				'showposts' 	=> $instance['num_posts'],
-				'post_type' 	=> 'post',
-				'post_status'	=> 'publish'
-			);
-			if ( $instance['cat'] != '' ) $query_args['cat'] = $instance['cat'];
-			$my_query = new WP_Query( $query_args );
-          		if ( $my_query->have_posts() ) {
-          			while ( $my_query->have_posts() ) : $my_query->the_post();
-          				$custom = get_post_custom( $post->ID ); ?>
-	                  	<div class="post-lead clearfix">
-	                      	<?php
-	                      	// the date
-							$output .= '<span>' . get_the_date( 'F d Y' ) . '</span>';
-	                      	// the headline
-							$output .= '<h4><a href="' . get_permalink() . '">' . get_the_title() . '</a></h4>';
-							// the excerpt
-							$output .= '<p>' . get_the_excerpt() . '</p>';
-							echo $output;
-	                      	?>
+		$query_args = array (
+			'post__not_in' 	=> get_option( 'sticky_posts' ),
+			'posts_per_page' 	=> $instance['num_posts'],
+			'post_type' 	=> 'post',
+			'post_status'	=> 'publish'
+		);
 
-	                  	</div> <!-- /.post-lead -->
-	            <?php
-	            	endwhile;
-	            } else {
-	    			_e( '<p class="error"><strong>You don\'t have any recent links or the Link Roundups plugin is not active.</strong></p>', 'link-roundups' );
-	    		} // end recent links
+		if ( $instance['cat'] != '' ) $query_args['cat'] = $instance['cat'];
 
-    		if ( $instance['linkurl'] !='' ) { ?>
-				<p class="morelink"><a href="<?php echo $instance['linkurl']; ?>"><?php echo $instance['linktext']; ?></a></p>
-			<?php }
-		echo $after_widget;
+		$my_query = new WP_Query( $query_args );
+			if ( $my_query->have_posts() ) {
+				while ( $my_query->have_posts() ) : $my_query->the_post();
+					$custom = get_post_custom( $post->ID ); ?>
+					<div class="post-lead clearfix">
+						<?php
+						// the date
+						$output = '<span>' . get_the_date( 'F d Y' ) . '</span>';
+						// the headline
+						$output .= '<h4><a href="' . get_permalink() . '">' . get_the_title() . '</a></h4>';
+						// the excerpt
+						$output .= '<p>' . get_the_excerpt() . '</p>';
+						echo $output;
+						?>
+
+					</div> <!-- /.post-lead -->
+			<?php
+				endwhile;
+			} else {
+				_e( '<p class="error"><strong>You don\'t have any recent links or the Link Roundups plugin is not active.</strong></p>', 'link-roundups' );
+			} // end recent links
+
+		if ( $instance['linkurl'] !='' ) { ?>
+			<p class="morelink"><a href="<?php echo $instance['linkurl']; ?>"><?php echo $instance['linktext']; ?></a></p>
+		<?php }
+
+		echo $args['after_widget'];
 	}
 
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 		$instance['title'] = strip_tags( $new_instance['title'] );
-		$instance['num_posts'] = strip_tags( $new_instance['num_posts'] );
+		$instance['num_posts'] = intval( strip_tags( $new_instance['num_posts'] ) );
 		$instance['linktext'] = $new_instance['linktext'];
-		$instance['linkurl'] = $new_instance['linkurl'];
+		$instance['linkurl'] = esc_url_raw( $new_instance['linkurl'] );
 		$instance['cat'] = intval( $new_instance['cat'] );
 		return $instance;
 	}
@@ -84,12 +85,12 @@ class link_roundups_widget extends WP_Widget {
 
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'link-roundups' ); ?></label>
-			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:90%;" />
+			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:90%;" type="text"/>
 		</p>
 
 		<p>
 			<label for="<?php echo $this->get_field_id( 'num_posts' ); ?>"><?php _e( 'Number of posts to show:', 'link-roundups' ); ?></label>
-			<input id="<?php echo $this->get_field_id( 'num_posts' ); ?>" name="<?php echo $this->get_field_name( 'num_posts' ); ?>" value="<?php echo $instance['num_posts']; ?>" style="width:90%;" />
+			<input id="<?php echo $this->get_field_id( 'num_posts' ); ?>" name="<?php echo $this->get_field_name( 'num_posts' ); ?>" value="<?php echo $instance['num_posts']; ?>" style="width:90%;" type="number" min="1"/>
 		</p>
 
 		<p>
@@ -105,7 +106,7 @@ class link_roundups_widget extends WP_Widget {
 
 		<p>
 			<label for="<?php echo $this->get_field_id( 'linkurl' ); ?>"><?php _e( 'URL:', 'link-roundups' ); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'linkurl' ); ?>" name="<?php echo $this->get_field_name( 'linkurl' ); ?>" type="text" value="<?php echo $instance['linkurl']; ?>" />
+			<input class="widefat" id="<?php echo $this->get_field_id( 'linkurl' ); ?>" name="<?php echo $this->get_field_name( 'linkurl' ); ?>" type="url" value="<?php echo $instance['linkurl']; ?>" />
 		</p>
 
 	<?php

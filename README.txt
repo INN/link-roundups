@@ -1,12 +1,15 @@
 === Link Roundups ===
-Contributors: inn_nerds
+Contributors: innlabs
 Donate link: https://inn.org/donate
 Tags: newsletters, mailchimp, links, curation, aggregation
-Requires at least: 4.1
-Tested up to: 4.2.3
-Stable tag: 0.5
+Requires at least: 4.2
+Tested up to: 5.2
+Stable tag: 1.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Requires PHP: 5.6
+Text Domain: link-roundups
+
 
 Collect links from around the web, turn them into roundup posts and streamline the production of daily/weekly roundup newsletters using MailChimp.
 
@@ -19,19 +22,38 @@ Collect links from around the web, turn them into roundup posts and streamline t
 * **Custom HTML for links** Customize the presentation of Saved Links in Link Roundups
 * **Link Roundups Widget** Display most recent Link Roundup posts by date
 * **Saved Links Widget** Display a feed of your recent Saved Links, optionally filtered by tags
-* **Browser Bookmark** Create new Saved Links via a browser bookmarklet
+* **Browser Bookmark** Create new Saved Links via a browser bookmarklet, on supported WordPress configurations
 * **MailChimp Integration** Create new MailChimp campaigns based on a Link Roundup
 
 == Installation ==
+
+Via WordPress.org:
 
 1. Install the Link Roundups plugin via the Wordpress.org plugin directory
 2. Activate the plugin
 3. Navigate to the Admin -> Link Roundups -> Options page to configure the plugin
 4. Done!
 
+For other installation methods, [see this plugin's installation methods on GitHub](https://github.com/INN/link-roundups/blob/master/docs/installation.md).
+
 [Read more about installing plugins here](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
 == Changelog ==
+
+= 1.0
+
+- Tested up to WordPress 5.2 and PHP 7.3
+- Reenables the "Save to Site" bookmarklet for saving links for Link Roundups, if the site admin is willing to use the [Press This](https://wordpress.org/plugins/press-this/) plugin to enable this feature. Pull request [#159](https://github.com/INN/link-roundups/pull/159) for issue [#130](https://github.com/INN/link-roundups/issues/130).
+- Updates the [WordPress MailChimp Tools](https://github.com/INN/wordpress-mailchimp-tools) submodule to use version 3 of the MailChimp API, and gain various compatibility updates for modern PHP versions. Upgrading to the new MailChimp API means that users of the MailChimp campaign functionality in the Link Roundups plugin can now use MailChimp editable content areas in their templates, as described [in our documentation](https://github.com/INN/link-roundups/blob/master/docs/mailchimp.md).
+- Updates installation documentation. Pull request [#139](https://github.com/INN/link-roundups/pull/139) for issue [#145](https://github.com/INN/link-roundups/issues/145).
+- Applies the `'widget_title'` filter to the title of the Link Roundups widget. Pull request [#152](https://github.com/INN/link-roundups/pull/152) for issue [#104](https://github.com/INN/link-roundups/issues/104).
+- Wraps the `Source:` label in the Saved Links List widget in a `span.source-label`. Pull request [#139](https://github.com/INN/link-roundups/pull/139) for issue [#144](https://github.com/INN/link-roundups/issues/144).
+- Sets HTML5 input types on widget forms. Pull request [#139](https://github.com/INN/link-roundups/pull/139) for issue [#143](https://github.com/INN/link-roundups/issues/143).
+- Fixes the saved_links_widget constructor for error-free PHP7 compatibility. Pull request [#137](https://github.com/INN/link-roundups/pull/137) for issue [#132](https://github.com/INN/link-roundups/issues/132).
+- Updates the local clone of WP_List_Table, fixing compatibility, and updating docs for that process. Pull request [#139](https://github.com/INN/link-roundups/pull/139) for issues [#128](https://github.com/INN/link-roundups/issues/128) and [#118](https://github.com/INN/link-roundups/issues/118).
+- Updates Travis automated testing to support PHP 5.6, 7.1, 7.2. Pull request [#138](https://github.com/INN/link-roundups/pull/138) for issue [#135](https://github.com/INN/link-roundups/issues/135).
+- Improves maintainer docs. Pull request [#139](https://github.com/INN/link-roundups/pull/139) for issue [#140](https://github.com/INN/link-roundups/issues/140).
+
 
 = 0.4.1 =
 

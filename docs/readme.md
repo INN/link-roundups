@@ -19,3 +19,4 @@ Get the brief introduction to plugin features in [the main Readme.md file](https
 4. [MailChimp Integration](mailchimp.md)
 5. [WordPress Widgets](widgets.md)
 6. [Troubleshooting](troubleshooting.md)
+7. [Notes for this plugin's maintainers](maintainers.md)

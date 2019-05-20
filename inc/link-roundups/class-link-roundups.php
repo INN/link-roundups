@@ -33,7 +33,6 @@ class LinkRoundups {
 
 		// Make sure our custom post type gets pulled into the river
 		add_filter( 'pre_get_posts', array( __CLASS__, 'lr_get_posts' ) );
-
 	}
 
 	// Pull the linkroundups into the queries for is_home, is_tag, is_category, is_archive
@@ -169,30 +168,35 @@ class LinkRoundups {
 	 * @since 0.1
 	 */
 	public static function display_custom_fields() {
-	?>
-		<div id='lroundups-display-area'></div>
-		<script type='text/javascript'>
-		jQuery(function(){
-			var data = {
-				'action': 'lroundups_saved_links_list_table_render'
-			};
+		?>
+			<div id='lroundups-display-area'></div>
+			<script type='text/javascript'>
+			jQuery(function(){
+				var data = {
+					'action': 'lroundups_saved_links_list_table_render'
+				};
 
-			jQuery.post(ajaxurl, data).done(function(response) {
-				jQuery('#lroundups-display-area').html(response);
+				jQuery.post(ajaxurl, data).done(function(response) {
+					jQuery('#lroundups-display-area').html(response);
+				});
 			});
-		});
-		</script>
-	<?php
+			</script>
+		<?php
 	}
 
 	/**
-	 * Save the custom post field data.	Very important!
+	 * Save the custom post field data.
 	 *
 	 * Wait, does this do anything on roundups!? - Will
+	 * Ben: Nope. Time to remove it?
 	 *
+	 * @todo: remove this
 	 * @since 0.1
 	 */
 	public static function save_custom_fields( $post_id ) {
+		if ( isset( $_POST ) ) {
+			// error_log(var_export( $_POST['mailchimp'], true));
+		}
 		if ( isset( $_POST['lr_url'] ) ){
 			update_post_meta( ( isset( $_POST['post_id'] ) ? $_POST['post_ID'] : $post_id ), 'lr_url', $_POST["lr_url"] );
 		}

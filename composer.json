@@ -1,0 +1,5 @@
+{
+    "require": {
+        "inn/wordpress-mailchimp-tools": "dev-master#4ef8919f2e214ad0493c12405e6c8a263ac7a1c6"
+    }
+}
