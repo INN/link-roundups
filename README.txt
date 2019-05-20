@@ -4,7 +4,7 @@ Donate link: https://inn.org/donate
 Tags: newsletters, mailchimp, links, curation, aggregation
 Requires at least: 4.2
 Tested up to: 5.2
-Stable tag: 1.0
+Stable tag: 1.0.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 5.6
@@ -40,7 +40,7 @@ For other installation methods, [see this plugin's installation methods on GitHu
 
 == Changelog ==
 
-= 1.0
+= 1.0.0 =
 
 - Tested up to WordPress 5.2 and PHP 7.3
 - Reenables the "Save to Site" bookmarklet for saving links for Link Roundups, if the site admin is willing to use the [Press This](https://wordpress.org/plugins/press-this/) plugin to enable this feature. Pull request [#159](https://github.com/INN/link-roundups/pull/159) for issue [#130](https://github.com/INN/link-roundups/issues/130).

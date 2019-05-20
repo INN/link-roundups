@@ -5,7 +5,7 @@ Plugin URI: https://github.com/INN/link-roundups
 Description: Use Link Roundups to aggregate links and create roundup posts. Mailchimp API integration and browser bookmark tool. Formerly argo-links from NPR's Project Argo.
 Author: INN Labs
 Author URI: http://labs.inn.org/
-Version: 1.0
+Version: 1.0.0
 License: GPLv2
 Text Domain: link-roundups
 
