@@ -10,7 +10,7 @@
 			'<p>' . __( 'Read about these settings and using this plugin in <a href="%s">the documentation on GitHub</a>.', 'link-roundups' ) . '</p>',
 			'https://github.com/INN/link-roundups/tree/master/docs'
 		);
-	?>
+		?>
 
 	<a href="#rename"><strong><?php _e( 'Rename Link Roundups', 'link-roundups' ); ?></strong></a> | <a href="#html"><strong><?php _e( 'Custom HTML for Displaying Links', 'link-roundups' ); ?></strong></a>
 	<form method="post" action="options.php">
@@ -25,7 +25,7 @@
 						'<p>' . __( 'Modify the Post Type Name displayed in the WordPress Dashboard Menus and Pages and the Post Type Slug (<a href="%s">learn more</a>) used in the public URL for each Link Roundup post.', 'link-roundups' ) . '</p>',
 						'http://codex.wordpress.org/Glossary#Post_Slug'
 					);
-				?>
+					?>
 				<h4><?php _e( 'Custom Name', 'link-roundups' ); ?></h4>
 				<h5 style="margin-bottom: 0; padding-bottom: 0;"><?php _e( 'Singular (Default: Link Roundup)', 'link-roundups' ); ?></h5>
 				<input type="text" name="lroundups_custom_name_singular" value="<?php echo get_option( 'lroundups_custom_name_singular' ); ?>" />
@@ -36,25 +36,27 @@
 				<h5 style="margin: 0; padding: 0;"><?php _e( 'Current URL Slug for Link Roundups:', 'link-roundups' ); ?></h5>
 				<code style="display:block; margin: 0.33em 0;">
 					<?php echo get_site_url(); ?>/
-					<strong><?php
+					<strong>
+					<?php
 					$custom_slug_setting = get_option( 'lroundups_custom_url' );
 
-					if(!empty($custom_slug_setting)) {
+					if ( ! empty( $custom_slug_setting ) ) {
 						$current_slug = $custom_slug_setting; // apply custom slug
 					} else {
 						$current_slug = 'roundup'; // set plugin default to roundup
 					}
-					echo $current_slug; ?>
+					echo $current_slug;
+					?>
 					</strong>/random-roundup/</code>
 				<?php $custom_slug = get_option( 'lroundups_custom_url' ); ?>
 				<input type="text" name="lroundups_custom_url" value="<?php echo $custom_slug; ?>" />
 				<p><?php _e( 'Must be lowercase with no spaces or special characters -- dashes allowed.', 'link-roundups' ); ?></p>
-			    <?php
-				    printf(
-				    	'<p>' . __( '<strong>IMPORTANT</strong>: Whenever you define a new Custom URL Slug, you <strong>must</strong> also update your <a href="%s"><strong>Permalink Settings</strong></a>.', 'link-roundups' ) . '</p>',
-			    		admin_url( '/options-permalink.php' )
-			    	);
-			    ?>
+				<?php
+					printf(
+						'<p>' . __( '<strong>IMPORTANT</strong>: Whenever you define a new Custom URL Slug, you <strong>must</strong> also update your <a href="%s"><strong>Permalink Settings</strong></a>.', 'link-roundups' ) . '</p>',
+						admin_url( '/options-permalink.php' )
+					);
+					?>
 			</div>
 			<div id="html" class="card">
 				<h3><?php _e( 'Custom HTML for Displaying Links', 'link-roundups' ); ?></h3>
@@ -73,18 +75,19 @@
 				<li><code>#!DESCRIPTION!#</code></li>
 				<li><code>#!SOURCE!#</code></li>
 				<li><code>#!CLASS!#</code><em><small><?php _e( 'Intended for the paragraph wrapper', 'link-roundups' ); ?></small></em></li>
-				<li><code>#!IMAGE!#</code><em><small><?php _e( 'Used to determine the placement of the featured image, if available', 'link-roundups'); ?></small></em></li>
+				<li><code>#!IMAGE!#</code><em><small><?php _e( 'Used to determine the placement of the featured image, if available', 'link-roundups' ); ?></small></em></li>
 				</ul></blockquote>
 
 				<h4><?php _e( 'Link Styling', 'link-roundups' ); ?></h4>
 				<?php
-					echo '<p>' . __('You can add custom classes to your links by using the "class" attribute of the rounduplink shortcode.', 'link-roundups') . '</p>';
-					echo '<p>' . __('For example: <code>[rounduplink class="sponsored" ... ]</code>', 'link-roundups') . '</p>';
-					echo '<p>' . __('With a custom class in place, you can modify the display of certain links via your theme stylesheet.', 'link-roudnups') . '</p>'; ?>
+					echo '<p>' . __( 'You can add custom classes to your links by using the "class" attribute of the rounduplink shortcode.', 'link-roundups' ) . '</p>';
+					echo '<p>' . __( 'For example: <code>[rounduplink class="sponsored" ... ]</code>', 'link-roundups' ) . '</p>';
+					echo '<p>' . __( 'With a custom class in place, you can modify the display of certain links via your theme stylesheet.', 'link-roudnups' ) . '</p>';
+				?>
 			</div>
 
 		<p class="submit">
-			<input type="submit" class="button-primary" value="<?php _e( 'Save Changes', 'link-roundups' ) ?>" />
+			<input type="submit" class="button-primary" value="<?php _e( 'Save Changes', 'link-roundups' ); ?>" />
 		</p>
 	</form>
 </div>

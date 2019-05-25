@@ -30,7 +30,7 @@ if ( ! class_exists( 'MailChimp' ) && file_exists( __DIR__ . '/vendor/autoload.p
 	error_log(
 		sprintf(
 			// translators: %1$s is a URL.
-			__('Your installation of the Link Roundups Plugin is missing its vendor dependencies. Please visit %1$s for more information.', 'link-roundups'),
+			__( 'Your installation of the Link Roundups Plugin is missing its vendor dependencies. Please visit %1$s for more information.', 'link-roundups' ),
 			'https://github.com/INN/link-roundups/blob/136-update-wordpress-mailchimp-tools/docs/installation.md'
 		)
 	);
@@ -50,31 +50,30 @@ function link_roundups_init() {
 	/**
 	 * Saved Links
 	 */
-	require_once(__DIR__ . '/inc/saved-links/class-saved-links.php');
-	require_once(__DIR__ . '/inc/saved-links/class-saved-links-widget.php');
+	require_once __DIR__ . '/inc/saved-links/class-saved-links.php';
+	require_once __DIR__ . '/inc/saved-links/class-saved-links-widget.php';
 
 	/**
 	 * Link Roundups
 	 */
-	require_once(__DIR__ . '/inc/link-roundups/class-link-roundups.php');
-	require_once(__DIR__ . '/inc/link-roundups/class-link-roundups-editor.php');
-	require_once(__DIR__ . '/inc/link-roundups/class-link-roundups-widget.php');
+	require_once __DIR__ . '/inc/link-roundups/class-link-roundups.php';
+	require_once __DIR__ . '/inc/link-roundups/class-link-roundups-editor.php';
+	require_once __DIR__ . '/inc/link-roundups/class-link-roundups-widget.php';
 
 	/**
 	 * Save to Site Browser Bookmark Tool
 	 */
-	require_once(__DIR__ . '/inc/link-roundups/class-save-to-site-button.php');
+	require_once __DIR__ . '/inc/link-roundups/class-save-to-site-button.php';
 
 	/**
 	 * Add Backwards Compatability with argo-links
 	 */
-	require_once(__DIR__ . '/inc/compatibility.php');
+	require_once __DIR__ . '/inc/compatibility.php';
 
 	/**
 	 * Add compatibility filters for INN/Largo
 	 */
-	require_once(__DIR__ . '/inc/compatibility-largo.php');
-
+	require_once __DIR__ . '/inc/compatibility-largo.php';
 
 	/**
 	 * Initialize the plugin using its init() function
@@ -86,7 +85,7 @@ function link_roundups_init() {
 	/**
 	 * Include updates framework
 	 */
-	require_once( 'inc/updates/index.php' );
+	require_once 'inc/updates/index.php';
 
 	load_plugin_textdomain( 'link-roundups', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
 }
@@ -99,16 +98,22 @@ add_action( 'plugins_loaded', 'link_roundups_init' );
  */
 function link_roundups_enqueue_assets() {
 	$plugin_path = plugins_url( basename( __DIR__ ), __DIR__ );
-	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+	$suffix      = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 	wp_register_script(
-		'links-common', $plugin_path . '/js/links-common' . $suffix . '.js',
-		array( 'jquery', 'underscore', 'backbone' ), 0.3, true
+		'links-common',
+		$plugin_path . '/js/links-common' . $suffix . '.js',
+		array( 'jquery', 'underscore', 'backbone' ),
+		0.3,
+		true
 	);
 
 	wp_register_script(
-		'link-roundups', $plugin_path . '/js/lroundups' . $suffix . '.js',
-		array( 'links-common' ), 0.3, true
+		'link-roundups',
+		$plugin_path . '/js/lroundups' . $suffix . '.js',
+		array( 'links-common' ),
+		0.3,
+		true
 	);
 
 	wp_register_style( 'lroundups-admin', $plugin_path . '/css/lroundups-admin' . $suffix . '.css' );
@@ -119,7 +124,8 @@ function link_roundups_enqueue_assets() {
 		wp_enqueue_style( 'lroundups-admin' );
 	}
 
-	if ($screen->base == 'roundup_page_link-roundups-options')
-		wp_enqueue_script('link-roundups');
+	if ( $screen->base == 'roundup_page_link-roundups-options' ) {
+		wp_enqueue_script( 'link-roundups' );
+	}
 }
 add_action( 'admin_enqueue_scripts', 'link_roundups_enqueue_assets' );

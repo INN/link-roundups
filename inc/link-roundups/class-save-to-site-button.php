@@ -17,14 +17,14 @@
  *
  * @since 0.3
  */
-if ( !defined('ABSPATH') ) {
+if ( ! defined( 'ABSPATH' ) ) {
 
 	// Load WordPress
 	define( 'WP_USE_THEMES', false );
-	require_once( '../../../wp-admin/admin.php' );
+	require_once '../../../wp-admin/admin.php';
 
 	// Generate URL redirect
-	$URL = parse_url( $_SERVER['REQUEST_URI'] );
+	$URL    = parse_url( $_SERVER['REQUEST_URI'] );
 	$newURL = admin_url( 'post-new.php?' . $URL['query'] );
 
 	// Header redirect
@@ -46,7 +46,7 @@ class Save_To_Site_Button {
 	 * @since 0.3
 	 */
 	public static function init() {
-		if ( isset( $_GET[ 'u' ] ) ) {
+		if ( isset( $_GET['u'] ) ) {
 			add_action( 'load-post-new.php', array( __CLASS__, 'load' ) );
 			add_action( 'load-post.php', array( __CLASS__, 'load' ) );
 		}
@@ -71,7 +71,7 @@ class Save_To_Site_Button {
 		$shortcut_link = '';
 
 		if (
-			version_compare( get_bloginfo('version'), '4.9', '<' )
+			version_compare( get_bloginfo( 'version' ), '4.9', '<' )
 			&& function_exists( 'get_shortcut_link' )
 		) {
 			$shortcut_link = htmlspecialchars( get_shortcut_link() );
@@ -100,12 +100,12 @@ class Save_To_Site_Button {
 	 * @since 0.3
 	 */
 	function load() {
-		$meta = $_POST['_meta'];
-		$links = $_POST['_links'];
+		$meta   = $_POST['_meta'];
+		$links  = $_POST['_links'];
 		$images = $_POST['_images'];
 		$embeds = $_POST['_embeds'];
 
-		self::$url = isset( $_GET[ 'u' ] ) ? esc_url( $_GET[ 'u' ] ) : '';
+		self::$url = isset( $_GET['u'] ) ? esc_url( $_GET['u'] ) : '';
 		self::$url = wp_kses( urldecode( self::$url ), null );
 
 		// Default title
@@ -113,34 +113,34 @@ class Save_To_Site_Button {
 		if ( ! empty( $meta['og:title'] ) ) {
 			self::$title = $meta['og:title'];
 		} else {
-			self::$title = isset( $_POST[ 't' ] ) ? trim( strip_tags( html_entity_decode( stripslashes( $_POST[ 't' ] ), ENT_QUOTES ) ) ) : '';
+			self::$title = isset( $_POST['t'] ) ? trim( strip_tags( html_entity_decode( stripslashes( $_POST['t'] ), ENT_QUOTES ) ) ) : '';
 		}
 
 		$selection = '';
-		if ( ! empty( $_POST[ 's' ] ) ) {
-			$selection = str_replace( '&apos;', "'", stripslashes( $_POST[ 's' ] ) );
+		if ( ! empty( $_POST['s'] ) ) {
+			$selection = str_replace( '&apos;', "'", stripslashes( $_POST['s'] ) );
 			$selection = '<blockquote>' . trim( htmlspecialchars( html_entity_decode( $selection, ENT_QUOTES ) ) ) . '</blockquote>';
 		}
 
 		// Default description
 		self::$description = '';
-		if ( !empty( $selection ) ) {
+		if ( ! empty( $selection ) ) {
 			self::$description = $selection;
-		} else if( !empty($meta['og:description']) ) {
+		} elseif ( ! empty( $meta['og:description'] ) ) {
 			self::$description = $meta['og:description'];
 		}
 
 		// Default source
 		self::$source = '';
-		if( !empty($meta['og:site_name']) ) {
+		if ( ! empty( $meta['og:site_name'] ) ) {
 			self::$source = $meta['og:site_name'];
-		} else if( self::$url ) {
-			$url = parse_url(self::$url);
+		} elseif ( self::$url ) {
+			$url          = parse_url( self::$url );
 			self::$source = $url['host'];
 		}
 
 		self::$imgUrl = '';
-		if( ! empty( $meta['og:image'] ) ) {
+		if ( ! empty( $meta['og:image'] ) ) {
 			self::$imgUrl = $meta['og:image'];
 		}
 
@@ -162,7 +162,7 @@ class Save_To_Site_Button {
 		 * @param type  $var Description.
 		 */
 		add_filter( 'default_title', array( __CLASS__, 'default_title' ) );
-		add_filter( 'default_link_url', array( __CLASS__, 'default_link' ));
+		add_filter( 'default_link_url', array( __CLASS__, 'default_link' ) );
 		add_filter( 'default_link_description', array( __CLASS__, 'default_description' ) );
 		add_filter( 'default_link_source', array( __CLASS__, 'default_source' ) );
 		add_filter( 'show_admin_bar', '__return_false' );
