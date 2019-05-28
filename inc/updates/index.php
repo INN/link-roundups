@@ -27,16 +27,16 @@ function lroundups_perform_update() {
 		 *  · argolinkroundups → roundups
 		 *  · argolinks → rounduplink
 		 * - Migrate Plugin Options
-		 *		 All argo_link_* and link_roundups_* dropped in favor of lroundups_*
-		 *		 --------------------------------------------------------
-		 *		'argo_link_roundups_custom_url'
-		 * 		'argo_link_roundups_custom_html'
-		 * 		'link_roundups_custom_name_singular'
-		 * 		'link_roundups_custom_name_plural'
-		 * 		'argo_link_roundups_use_mailchimp_integration'
-		 * 		'argo_link_roundups_mailchimp_api_key'
-		 * 		'argo_link_mailchimp_template'
-		 * 		'argo_link_mailchimp_list'
+		 *       All argo_link_* and link_roundups_* dropped in favor of lroundups_*
+		 *       --------------------------------------------------------
+		 *      'argo_link_roundups_custom_url'
+		 *      'argo_link_roundups_custom_html'
+		 *      'link_roundups_custom_name_singular'
+		 *      'link_roundups_custom_name_plural'
+		 *      'argo_link_roundups_use_mailchimp_integration'
+		 *      'argo_link_roundups_mailchimp_api_key'
+		 *      'argo_link_mailchimp_template'
+		 *      'argo_link_mailchimp_list'
 		 * ------------------------------------------------------ */
 		do_action( 'lroundups_update_0.3', lroundups_version(), get_option( 'lroundups_version' ) );
 
@@ -50,7 +50,7 @@ function lroundups_perform_update() {
 		 *  · lr_source → lr_source
 		 *  · lr_img → lr_img
 		 * ------------------------------------------------------ */
-		do_action( 'lroundups_update_0.3.2', lroundups_version(), get_option('lroundups_version') );
+		do_action( 'lroundups_update_0.3.2', lroundups_version(), get_option( 'lroundups_version' ) );
 
 		// Set version.
 		update_option( 'lroundups_version', lroundups_version() );
@@ -65,7 +65,7 @@ function lroundups_perform_update() {
  * @since 0.3
  */
 function lroundups_version() {
-	if( is_admin() ) {
+	if ( is_admin() ) {
 		$plugin = get_plugin_data( plugin_dir_path( LROUNDUPS_PLUGIN_FILE ) . '/link-roundups.php' );
 		return $plugin['Version'];
 	}
@@ -76,6 +76,7 @@ function lroundups_version() {
 /**
  * Checks if updates need to be run.
  * Get's lroundups version from db and compares with value in plugin file
+ *
  * @since 0.3
  *
  * @return boolean if updates need to be run
@@ -116,24 +117,26 @@ function lroundups_need_updates() {
  * @since 0.3
  */
 function lroundups_update_admin_notice() {
-	if ( lroundups_need_updates() && !( isset( $_GET['page'] ) && $_GET['page'] == 'update-lroundups' ) ) {
-	?>
+	if ( lroundups_need_updates() && ! ( isset( $_GET['page'] ) && $_GET['page'] == 'update-lroundups' ) ) {
+		?>
 	<div class="update-nag" style="display: block;">
-		<p><?php
-			if ( current_user_can( 'update_plugins' ) ) {
-				printf(
-					__('Link Roundups has been updated! IMPORTANT: Please <a href="%s">click here</a> to run a required database upgrade.', 'link-roundups'),
-					admin_url('index.php?page=update-lroundups')
-				);
-			} else {
-				printf(
-					__('Link Roundups has been updated! IMPORTANT: Please contact your site administrator to run a required database upgrade.', 'link-roundups'),
-					admin_url('index.php?page=update-lroundups')
-				);
-			}
-		?></p>
+		<p>
+		<?php
+		if ( current_user_can( 'update_plugins' ) ) {
+			printf(
+				__( 'Link Roundups has been updated! IMPORTANT: Please <a href="%s">click here</a> to run a required database upgrade.', 'link-roundups' ),
+				admin_url( 'index.php?page=update-lroundups' )
+			);
+		} else {
+			printf(
+				__( 'Link Roundups has been updated! IMPORTANT: Please contact your site administrator to run a required database upgrade.', 'link-roundups' ),
+				admin_url( 'index.php?page=update-lroundups' )
+			);
+		}
+		?>
+		</p>
 	</div>
-	<?php
+		<?php
 	}
 }
 add_action( 'admin_notices', 'lroundups_update_admin_notice' );
@@ -145,16 +148,20 @@ add_action( 'admin_notices', 'lroundups_update_admin_notice' );
  */
 function lroundups_register_update_page() {
 	$parent_slug = null;
-	$page_title = __( 'Update Link Roundups', 'link-roundups' );
-	$menu_title = __( 'Update Link Roundups', 'link-roundups' );
-	$capability = 'edit_theme_options';
-	$menu_slug = 'update-lroundups';
-	$function = 'lroundups_update_page_view';
+	$page_title  = __( 'Update Link Roundups', 'link-roundups' );
+	$menu_title  = __( 'Update Link Roundups', 'link-roundups' );
+	$capability  = 'edit_theme_options';
+	$menu_slug   = 'update-lroundups';
+	$function    = 'lroundups_update_page_view';
 
 	if ( lroundups_need_updates() ) {
 		add_submenu_page(
-			$parent_slug, $page_title, $menu_title,
-			$capability, $menu_slug, $function
+			$parent_slug,
+			$page_title,
+			$menu_title,
+			$capability,
+			$menu_slug,
+			$function
 		);
 	}
 }
@@ -165,7 +172,8 @@ add_action( 'admin_menu', 'lroundups_register_update_page' );
  *
  * @since 0.3
  */
-function lroundups_update_page_view() { ?>
+function lroundups_update_page_view() {
+	?>
 	<style type="text/css">
 		.lroundups-update-message {
 			max-width: 700px;
@@ -201,9 +209,14 @@ function lroundups_update_page_view() { ?>
 	</style>
 	<div class="wrap">
 		<div id="icon-tools" class="icon32"></div>
-		<h2><?php _e ( 'Link Roundups Database Update', 'link-roundups' ); ?></h2>
+		<h2><?php _e( 'Link Roundups Database Update', 'link-roundups' ); ?></h2>
 		<div class="lroundups-update-message">
-			<p><?php _e( 'Link Roundups plugin has been updated to version', 'link-roundups' ); echo " " . lroundups_version(); ?>.
+			<p>
+			<?php
+			_e( 'Link Roundups plugin has been updated to version', 'link-roundups' );
+			echo ' ' . lroundups_version();
+			?>
+			.
 
 			<p><?php _e( 'This update will migrate <strong>Argo Links</strong> and <strong>Argo Link Roundups</strong> to the new <strong>Saved Links</strong> and <strong>Link Roundups</strong> formats respectively.', 'link-roundups' ); ?></p>
 			<p><?php _e( 'This process will restore previous Argo Links and Argo Link Roundups posts to your site.', 'link-roundups' ); ?></p>
@@ -216,7 +229,7 @@ function lroundups_update_page_view() { ?>
 			<p>
 		</div>
 	</div>
-<?php
+	<?php
 }
 
 /**
@@ -227,10 +240,14 @@ function lroundups_update_page_view() { ?>
  * @global $_GET
  */
 function lroundups_update_page_enqueue_js() {
-	if ( isset( $_GET['page'] ) && $_GET['page'] == 'update-lroundups') {
+	if ( isset( $_GET['page'] ) && $_GET['page'] == 'update-lroundups' ) {
 		wp_enqueue_script(
-			'lroundups_update_page', plugins_url( '/js/update.js', LROUNDUPS_PLUGIN_FILE),
-			array( 'jquery' ), false, 1 );
+			'lroundups_update_page',
+			plugins_url( '/js/update.js', LROUNDUPS_PLUGIN_FILE ),
+			array( 'jquery' ),
+			false,
+			1
+		);
 	}
 }
 add_action( 'admin_enqueue_scripts', 'lroundups_update_page_enqueue_js' );
@@ -241,35 +258,43 @@ add_action( 'admin_enqueue_scripts', 'lroundups_update_page_enqueue_js' );
  * @since 0.3
  */
 function lroundups_ajax_update_database() {
-	if (!current_user_can('activate_plugins')) {
-		print json_encode( array(
-			'status' 	=> __( 'An error occurred.', 'link-roundups' ),
-			'success' 	=> false
-		));
+	if ( ! current_user_can( 'activate_plugins' ) ) {
+		print json_encode(
+			array(
+				'status'  => __( 'An error occurred.', 'link-roundups' ),
+				'success' => false,
+			)
+		);
 		wp_die();
 	}
 
-	if (!lroundups_need_updates()) {
-		print json_encode( array(
-			'status' 	=> __( 'Finished. No update was required.', 'link-roundups' ),
-			'success' 	=> false
-		));
+	if ( ! lroundups_need_updates() ) {
+		print json_encode(
+			array(
+				'status'  => __( 'Finished. No update was required.', 'link-roundups' ),
+				'success' => false,
+			)
+		);
 		wp_die();
 	}
 
 	$ret = lroundups_perform_update();
-	if (!empty($ret)) {
+	if ( ! empty( $ret ) ) {
 		$message = __( 'Thank you -- the update is complete.', 'link-roundups' );
-		print json_encode( array(
-			'status' 	=> $message,
-			'success' 	=> true
-		));
+		print json_encode(
+			array(
+				'status'  => $message,
+				'success' => true,
+			)
+		);
 		wp_die();
 	} else {
-		print json_encode( array(
-			'status' 	=> __( 'There was a problem applying the update. Please try again.', 'link-roundups' ),
-			'success' 	=> false
-		));
+		print json_encode(
+			array(
+				'status'  => __( 'There was a problem applying the update. Please try again.', 'link-roundups' ),
+				'success' => false,
+			)
+		);
 		wp_die();
 	}
 }
@@ -280,4 +305,4 @@ add_action( 'wp_ajax_lroundups_ajax_update_database', 'lroundups_ajax_update_dat
  * Update functions.
  * ------------------------------------------------------ */
 
-include_once( __DIR__ . '/functions.php' );
+require_once __DIR__ . '/functions.php';
