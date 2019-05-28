@@ -155,13 +155,13 @@ class SavedLinks {
 		global $post;
 		$custom = get_post_custom( $post->ID );
 
-		if ( isset( $custom['lr_url'][0] ) ) {
+		if ( isset( $custom ) && isset( $custom['lr_url'] ) && isset( $custom['lr_url'][0] ) ) {
 			$link_url = $custom['lr_url'][0];
 		} else {
 			$link_url = apply_filters( 'default_link_url', '' );
 		}
 
-		if ( isset( $custom['lr_desc'][0] ) ) {
+		if ( isset( $custom ) && isset( $custom['lr_desc'] ) && isset( $custom['lr_desc'][0] ) ) {
 			$link_description = $custom['lr_desc'][0];
 		} else {
 			$link_description = apply_filters( 'default_link_description', '' );
@@ -304,11 +304,15 @@ class SavedLinks {
 		switch ( $column ) {
 
 			case 'description':
-				echo $custom['lr_desc'][0];
+				if ( isset( $custom['lr_desc'] ) && isset( $custom['lr_desc'][0] ) ) {
+					echo $custom['lr_desc'][0];
+				}
 				break;
 
 			case 'url':
-				echo $custom['lr_url'][0];
+				if ( isset( $custom['lr_url'] ) && isset( $custom['lr_url'][0] ) ) {
+					echo $custom['lr_url'][0];
+				}
 				break;
 
 			case 'link-tags':
