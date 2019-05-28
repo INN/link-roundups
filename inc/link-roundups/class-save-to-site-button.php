@@ -97,13 +97,15 @@ class Save_To_Site_Button {
 	/**
 	 * Sets up default values for new Saved Link.
 	 *
+	 * These values are all static properties; I think that works because this instance of this class is only valid within this page load.
+	 *
 	 * @since 0.3
 	 */
-	function load() {
-		$meta   = $_POST['_meta'];
-		$links  = $_POST['_links'];
-		$images = $_POST['_images'];
-		$embeds = $_POST['_embeds'];
+	public static function load() {
+		$meta   = isset( $_POST['_meta'] ) ? $_POST['_meta'] : array();
+		$links  = isset( $_POST['_links'] ) ? $_POST['_links'] : null;
+		$images = isset( $_POST['_images'] ) ? $_POST['_images'] : null;
+		$embeds = isset( $_POST['_embeds'] ) ? $_POST['_embeds'] : null;
 
 		self::$url = isset( $_GET['u'] ) ? esc_url( $_GET['u'] ) : '';
 		self::$url = wp_kses( urldecode( self::$url ), null );
@@ -148,7 +150,6 @@ class Save_To_Site_Button {
 		 * Default Link Roundups Values for Custom Meta
 		 *
 		 * Register default title, link URL, link description and link source.
-		 * Used within popup so hides the Admin Bar
 		 *
 		 * @since x.x.x
 		 *
@@ -165,6 +166,7 @@ class Save_To_Site_Button {
 		add_filter( 'default_link_url', array( __CLASS__, 'default_link' ) );
 		add_filter( 'default_link_description', array( __CLASS__, 'default_description' ) );
 		add_filter( 'default_link_source', array( __CLASS__, 'default_source' ) );
+		// attempt to hide the Toolbar in the backend, probably fails in newer WordPress versions.
 		add_filter( 'show_admin_bar', '__return_false' );
 	}
 
