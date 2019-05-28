@@ -40,6 +40,10 @@ For other installation methods, [see this plugin's installation methods on GitHu
 
 == Changelog ==
 
+= 1.0.1 =
+
+This release contains minor bug fixes for the 1.0.1 release.
+
 = 1.0.0 =
 
 - Tested up to WordPress 5.2 and PHP 7.3
