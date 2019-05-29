@@ -1,492 +1,356 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the link-roundups package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# Copyright (C) 2019 INN Labs
+# This file is distributed under the same license as the Link Roundups plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: link-roundups 0.4.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-03 15:03-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Project-Id-Version: Link Roundups 1.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/link-roundups\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"POT-Creation-Date: 2019-05-29T16:03:17+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.2.0\n"
+"X-Domain: link-roundups\n"
 
-#: inc/link-roundups/class-link-roundups-widget.php:13
-msgid "Link Roundups Widget"
+#. Plugin Name of the plugin
+msgid "Link Roundups"
 msgstr ""
 
-#: inc/link-roundups/class-link-roundups-widget.php:51
-msgid ""
-"<p class=\"error\"><strong>You don't have any recent links or the Link "
-"Roundups plugin is not active.</strong></p>"
+#. Plugin URI of the plugin
+msgid "https://github.com/INN/link-roundups"
 msgstr ""
 
-#: inc/link-roundups/class-link-roundups-widget.php:83
-#: inc/saved-links/class-saved-links-widget.php:122
-msgid "Title:"
+#. Description of the plugin
+msgid "Use Link Roundups to aggregate links and create roundup posts. Mailchimp API integration and browser bookmark tool. Formerly argo-links from NPR's Project Argo."
 msgstr ""
 
-#: inc/link-roundups/class-link-roundups-widget.php:88
-#: inc/saved-links/class-saved-links-widget.php:127
-msgid "Number of posts to show:"
+#. Author of the plugin
+msgid "INN Labs"
 msgstr ""
 
-#: inc/link-roundups/class-link-roundups-widget.php:93
-msgid "Limit to category: "
+#. Author URI of the plugin
+msgid "http://labs.inn.org/"
 msgstr ""
 
-#: inc/link-roundups/class-link-roundups-widget.php:94
-msgid "None (all categories)"
-msgstr ""
-
-#: inc/link-roundups/class-link-roundups-widget.php:97
-msgid "More Link"
-msgstr ""
-
-#: inc/link-roundups/class-link-roundups-widget.php:97
-#: inc/saved-links/class-saved-links-widget.php:148
-msgid ""
-"If you would like to add a more link at the bottom of the widget, add the "
-"link text and url here."
-msgstr ""
-
-#: inc/link-roundups/class-link-roundups-widget.php:99
-#: inc/saved-links/class-saved-links-widget.php:150
-msgid "Link text:"
-msgstr ""
-
-#: inc/link-roundups/class-link-roundups-widget.php:104
-#: inc/saved-links/class-saved-links-widget.php:155
-#: inc/saved-links/class-saved-links.php:175
-msgid "URL:"
-msgstr ""
-
-#: inc/saved-links/class-saved-links-list-table.php:51
-msgid "Send to Editor"
-msgstr ""
-
-#: inc/saved-links/class-saved-links-list-table.php:58
-msgid "Date Range:"
-msgstr ""
-
-#: inc/saved-links/class-saved-links-list-table.php:60
-msgid "Today"
-msgstr ""
-
-#: inc/saved-links/class-saved-links-list-table.php:61
-msgid "This Week"
-msgstr ""
-
-#: inc/saved-links/class-saved-links-list-table.php:62
-msgid "This Month"
-msgstr ""
-
-#: inc/saved-links/class-saved-links-list-table.php:63
-msgid "This Year"
-msgstr ""
-
-#: inc/saved-links/class-saved-links-list-table.php:64
-msgid "Show All"
-msgstr ""
-
-#: inc/saved-links/class-saved-links-list-table.php:262
-#, php-format
-msgid "Select %s"
-msgstr ""
-
-#: inc/saved-links/class-saved-links-widget.php:12
+#: inc/saved-links/class-saved-links-widget.php:13
 msgid "Show your most recently saved links in a sidebar widget"
 msgstr ""
 
-#: inc/saved-links/class-saved-links-widget.php:14
+#: inc/saved-links/class-saved-links-widget.php:15
 msgid "Saved Links Widget"
 msgstr ""
 
-#: inc/saved-links/class-saved-links-widget.php:22
-#: inc/saved-links/class-saved-links-widget.php:110
+#: inc/saved-links/class-saved-links-widget.php:27
+#: inc/saved-links/class-saved-links-widget.php:164
 msgid "Recent Links"
 msgstr ""
 
-#: inc/saved-links/class-saved-links-widget.php:68
-#: inc/saved-links/class-saved-links.php:681
+#: inc/saved-links/class-saved-links-widget.php:95
+#: inc/saved-links/class-saved-links.php:769
 msgid "Source: "
 msgstr ""
 
-#: inc/saved-links/class-saved-links-widget.php:87
-msgid ""
-"<p class=\"error\"><strong>You don't have any recent links or the link "
-"roundups plugin is not active.</strong></p>"
+#: inc/saved-links/class-saved-links-widget.php:122
+msgid "You don't have any recent Saved Links saved."
 msgstr ""
 
-#: inc/saved-links/class-saved-links-widget.php:133
+#: inc/saved-links/class-saved-links-widget.php:176
+#: inc/link-roundups/class-link-roundups-widget.php:93
+msgid "Title:"
+msgstr ""
+
+#: inc/saved-links/class-saved-links-widget.php:181
+#: inc/link-roundups/class-link-roundups-widget.php:98
+msgid "Number of posts to show:"
+msgstr ""
+
+#: inc/saved-links/class-saved-links-widget.php:187
 msgid "Open links in new window"
 msgstr ""
 
-#: inc/saved-links/class-saved-links-widget.php:138
+#: inc/saved-links/class-saved-links-widget.php:192
 msgid "Excerpt Length (# of Sentences):"
 msgstr ""
 
-#: inc/saved-links/class-saved-links-widget.php:145
+#: inc/saved-links/class-saved-links-widget.php:199
 msgid "Show featured images?"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:72
-#: inc/saved-links/class-saved-links.php:84
+#: inc/saved-links/class-saved-links-widget.php:202
+#: inc/link-roundups/class-link-roundups-widget.php:118
+msgid "If you would like to add a more link at the bottom of the widget, add the link text and url here."
+msgstr ""
+
+#: inc/saved-links/class-saved-links-widget.php:205
+#: inc/link-roundups/class-link-roundups-widget.php:120
+msgid "Link text:"
+msgstr ""
+
+#: inc/saved-links/class-saved-links-widget.php:210
+#: inc/saved-links/class-saved-links.php:180
+#: inc/link-roundups/class-link-roundups-widget.php:125
+msgid "URL:"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:75
+#: inc/saved-links/class-saved-links.php:87
 msgid "Saved Links"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:73
+#: inc/saved-links/class-saved-links.php:76
 msgid "Saved Link"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:74
-#: inc/saved-links/class-saved-links.php:75
+#: inc/saved-links/class-saved-links.php:77
+#: inc/saved-links/class-saved-links.php:78
 msgid "New Saved Link"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:76
+#: inc/saved-links/class-saved-links.php:79
 msgid "Edit"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:77
+#: inc/saved-links/class-saved-links.php:80
 msgid "Edit Saved Link"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:78
+#: inc/saved-links/class-saved-links.php:81
 msgid "View"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:79
+#: inc/saved-links/class-saved-links.php:82
 msgid "View Saved Link"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:80
+#: inc/saved-links/class-saved-links.php:83
 msgid "Search Saved Links"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:81
+#: inc/saved-links/class-saved-links.php:84
 msgid "No Saved Links found"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:82
+#: inc/saved-links/class-saved-links.php:85
 msgid "No Saved Links found in Trash"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:121
+#: inc/saved-links/class-saved-links.php:125
 msgid "Saved Link Tags"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:122
+#: inc/saved-links/class-saved-links.php:126
 msgid "Saved Link Tag"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:136
+#: inc/saved-links/class-saved-links.php:140
 msgid "Link Information"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:180
+#: inc/saved-links/class-saved-links.php:185
 msgid "Description:"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:190
+#: inc/saved-links/class-saved-links.php:199
 msgid "Source:"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:195
+#: inc/saved-links/class-saved-links.php:204
 msgid "Import featured image:"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:198
+#: inc/saved-links/class-saved-links.php:207
 msgid "Import as feature image"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:271
+#: inc/saved-links/class-saved-links.php:285
 msgid "Link Title"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:272
+#: inc/saved-links/class-saved-links.php:286
 msgid "Author"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:273
+#: inc/saved-links/class-saved-links.php:287
 msgid "URL"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:274
+#: inc/saved-links/class-saved-links.php:288
 msgid "Description"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:275
+#: inc/saved-links/class-saved-links.php:289
 msgid "Tags"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:276
+#: inc/saved-links/class-saved-links.php:290
 msgid "Date"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:325
-#: inc/saved-links/class-saved-links.php:326
+#: inc/saved-links/class-saved-links.php:346
+#: inc/saved-links/class-saved-links.php:347
+#: inc/saved-links/class-saved-links.php:358
+#: inc/saved-links/class-saved-links.php:359
 msgid "Add Browser Bookmark"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:346
-msgid "Add Save to Site Bookmark to Your Web Browser"
+#: inc/saved-links/class-saved-links.php:380
+msgid "Enable Save to Site bookmarklet for your site"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:351
-#: inc/saved-links/class-saved-links.php:362
+#: inc/saved-links/class-saved-links.php:384
+#: inc/saved-links/class-saved-links.php:438
+#: inc/saved-links/class-saved-links.php:449
 msgid "Save to Site"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:352
-msgid ""
-"Save to Site is a tool that lets you send Saved Links to your WordPress "
-"Dashboard while browsing the web."
+#: inc/saved-links/class-saved-links.php:385
+#: inc/saved-links/class-saved-links.php:439
+msgid "Save to Site is a tool that lets you send Saved Links to your WordPress Dashboard while browsing the web."
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:353
-msgid ""
-"Click the Save to Site bookmark and a new WordPress window will popup, "
-"attempting to prefill Title, URL and Source information."
+#: inc/saved-links/class-saved-links.php:413
+msgid "Please contact your site administrator to have this plugin installed."
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:357
+#: inc/saved-links/class-saved-links.php:433
+msgid "Add Save to Site Bookmark to Your Web Browser"
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:440
+msgid "Click the Save to Site bookmark and a new WordPress window will popup, attempting to prefill Title, URL and Source information."
+msgstr ""
+
+#: inc/saved-links/class-saved-links.php:444
 msgid "Install Save to Site"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:358
+#: inc/saved-links/class-saved-links.php:445
 msgid "Browser Bookmarklet"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:359
-msgid ""
-"Drag the Save to Site bookmarklet below to your web browser's Bookmarks "
-"Toolbar.<br /><em>If you can't drag, click the Clipboard.</em>"
+#: inc/saved-links/class-saved-links.php:446
+msgid "Drag the Save to Site bookmarklet below to your web browser's Bookmarks Toolbar.<br /><em>If you can't drag, click the Clipboard.</em>"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:365
+#: inc/saved-links/class-saved-links.php:452
 msgid "Copy Save to Site bookmarklet code"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:371
-msgid ""
-"If you can&#8217;t drag the bookmarklet to your bookmarks, copy the "
-"following code and create a new bookmark. Paste the code into the new "
-"bookmark&#8217;s URL field."
+#: inc/saved-links/class-saved-links.php:458
+msgid "If you can&#8217;t drag the bookmarklet to your bookmarks, copy the following code and create a new bookmark. Paste the code into the new bookmark&#8217;s URL field."
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:378
+#: inc/saved-links/class-saved-links.php:465
 msgid "Direct link (best for mobile and tablets)"
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:379
-msgid ""
-"Follow the link to open Save to Site. Then add it to your device&#8217;s "
-"bookmarks or home screen."
+#: inc/saved-links/class-saved-links.php:466
+msgid "Follow the link to open Save to Site. Then add it to your device&#8217;s bookmarks or home screen."
 msgstr ""
 
-#: inc/saved-links/class-saved-links.php:382
+#: inc/saved-links/class-saved-links.php:469
 msgid "Open Save to Site"
 msgstr ""
 
-#: inc/saved-links/class-wp-list-table-clone.php:143
-msgid "List View"
+#: inc/saved-links/class-saved-links-list-table.php:61
+msgid "Send to Editor"
 msgstr ""
 
-#: inc/saved-links/class-wp-list-table-clone.php:144
-msgid "Excerpt View"
+#: inc/saved-links/class-saved-links-list-table.php:69
+msgid "Date Range:"
 msgstr ""
 
-#: inc/saved-links/class-wp-list-table-clone.php:313
-msgid "No items found."
+#: inc/saved-links/class-saved-links-list-table.php:93
+msgid "Create new Saved Link"
 msgstr ""
 
-#: inc/saved-links/class-wp-list-table-clone.php:439
-msgid "Select bulk action"
+#: inc/link-roundups/class-link-roundups-widget.php:14
+msgid "Link Roundups Widget"
 msgstr ""
 
-#: inc/saved-links/class-wp-list-table-clone.php:441
-msgid "Bulk Actions"
+#: inc/link-roundups/class-link-roundups-widget.php:19
+msgid "Recent Link Roundups"
 msgstr ""
 
-#: inc/saved-links/class-wp-list-table-clone.php:451
-msgid "Apply"
+#: inc/link-roundups/class-link-roundups-widget.php:58
+msgid "<p class=\"error\"><strong>You don't have any recent links or the Link Roundups plugin is not active.</strong></p>"
 msgstr ""
 
-#: inc/saved-links/class-wp-list-table-clone.php:501
-msgid "Show more details"
+#: inc/link-roundups/class-link-roundups-widget.php:103
+msgid "Limit to category: "
 msgstr ""
 
-#: inc/saved-links/class-wp-list-table-clone.php:556
-msgid "Filter by date"
+#: inc/link-roundups/class-link-roundups-widget.php:108
+msgid "None (all categories)"
 msgstr ""
 
-#: inc/saved-links/class-wp-list-table-clone.php:558
-msgid "All dates"
+#: inc/link-roundups/class-link-roundups-widget.php:118
+msgid "More Link"
 msgstr ""
 
-#: inc/saved-links/class-wp-list-table-clone.php:571
-#, php-format
-msgid "%1$s %2$d"
+#. translators: %1$s is a WordPress admin-page URL.
+#: inc/updates/index.php:128
+msgid "Link Roundups has been updated! IMPORTANT: Please <a href=\"%1$s\">click here</a> to run a required database upgrade."
 msgstr ""
 
-#: inc/saved-links/class-wp-list-table-clone.php:623
-#, php-format
-msgid "%s comment"
-msgid_plural "%s comments"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/saved-links/class-wp-list-table-clone.php:624
-#, php-format
-msgid "%s approved comment"
-msgid_plural "%s approved comments"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/saved-links/class-wp-list-table-clone.php:625
-#, php-format
-msgid "%s pending comment"
-msgid_plural "%s pending comments"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/saved-links/class-wp-list-table-clone.php:630
-#: inc/saved-links/class-wp-list-table-clone.php:642
-msgid "No comments"
+#: inc/updates/index.php:133
+msgid "Link Roundups has been updated! IMPORTANT: Please contact your site administrator to run a required database upgrade."
 msgstr ""
 
-#: inc/saved-links/class-wp-list-table-clone.php:642
-msgid "No approved comments"
-msgstr ""
-
-#: inc/saved-links/class-wp-list-table-clone.php:723
-#: inc/saved-links/class-wp-list-table-clone.php:1287
-#, php-format
-msgid "%s item"
-msgid_plural "%s items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/saved-links/class-wp-list-table-clone.php:758
-msgid "First page"
-msgstr ""
-
-#: inc/saved-links/class-wp-list-table-clone.php:768
-msgid "Previous page"
-msgstr ""
-
-#: inc/saved-links/class-wp-list-table-clone.php:775
-#: inc/saved-links/class-wp-list-table-clone.php:778
-msgid "Current Page"
-msgstr ""
-
-#: inc/saved-links/class-wp-list-table-clone.php:784
-#, php-format
-msgctxt "paging"
-msgid "%1$s of %2$s"
-msgstr ""
-
-#: inc/saved-links/class-wp-list-table-clone.php:791
-msgid "Next page"
-msgstr ""
-
-#: inc/saved-links/class-wp-list-table-clone.php:801
-msgid "Last page"
-msgstr ""
-
-#: inc/saved-links/class-wp-list-table-clone.php:1011
-msgid "Select All"
-msgstr ""
-
-#: inc/updates/index.php:115
-#, php-format
-msgid ""
-"Link Roundups has been updated! IMPORTANT: Please <a href=\"%s\">click here</"
-"a> to run a required database upgrade."
-msgstr ""
-
-#: inc/updates/index.php:131 inc/updates/index.php:132
+#: inc/updates/index.php:152
+#: inc/updates/index.php:153
 msgid "Update Link Roundups"
 msgstr ""
 
-#: inc/updates/index.php:187
+#: inc/updates/index.php:213
 msgid "Link Roundups Database Update"
 msgstr ""
 
-#: inc/updates/index.php:189
+#: inc/updates/index.php:217
 msgid "Link Roundups plugin has been updated to version"
 msgstr ""
 
-#: inc/updates/index.php:191
-msgid ""
-"This update will migrate <strong>Argo Links</strong> and <strong>Argo Link "
-"Roundups</strong> to the new <strong>Saved Links</strong> and <strong>Link "
-"Roundups</strong> formats respectively."
+#: inc/updates/index.php:222
+msgid "This update will migrate <strong>Argo Links</strong> and <strong>Argo Link Roundups</strong> to the new <strong>Saved Links</strong> and <strong>Link Roundups</strong> formats respectively."
 msgstr ""
 
-#: inc/updates/index.php:192
-msgid ""
-"This process will restore previous Argo Links and Argo Link Roundups posts "
-"to your site."
+#: inc/updates/index.php:223
+msgid "This process will restore previous Argo Links and Argo Link Roundups posts to your site."
 msgstr ""
 
-#: inc/updates/index.php:193
-msgid ""
-"<strong>NOTE:</strong> instances of the \"Argo Links Widget\" will "
-"<strong>NOT</strong> be migrated during the update. Replace instances of "
-"\"Argo Links Widget\" with \"Saved Links Widget\" after updating."
+#: inc/updates/index.php:224
+msgid "<strong>NOTE:</strong> instances of the \"Argo Links Widget\" will <strong>NOT</strong> be migrated during the update. Replace instances of \"Argo Links Widget\" with \"Saved Links Widget\" after updating."
 msgstr ""
 
-#: inc/updates/index.php:195
+#: inc/updates/index.php:226
 msgid "Please run the following update function."
 msgstr ""
 
-#: inc/updates/index.php:197
+#: inc/updates/index.php:228
 msgid "Update the database!"
 msgstr ""
 
-#: inc/updates/index.php:229
+#: inc/updates/index.php:265
 msgid "An error occurred."
 msgstr ""
 
-#: inc/updates/index.php:237
+#: inc/updates/index.php:275
 msgid "Finished. No update was required."
 msgstr ""
 
-#: inc/updates/index.php:245
+#: inc/updates/index.php:284
 msgid "Thank you -- the update is complete."
 msgstr ""
 
-#: inc/updates/index.php:253
+#: inc/updates/index.php:295
 msgid "There was a problem applying the update. Please try again."
 msgstr ""
 
-#: node_modules/grunt-pot/test/fixtures/some-file.php:3
-msgid "I'm a translatable string."
-msgstr ""
-
-#: node_modules/grunt-pot/test/fixtures/some-other-file.php:4
-msgid "Me too"
-msgstr ""
-
-#: node_modules/grunt-pot/test/fixtures/some-other-file.php:7
-#, php-format
-msgid "I have %d apple"
-msgid_plural "I have %d apples"
-msgstr[0] ""
-msgstr[1] ""
-
-#. / TRANSLATORS: This should be translated as a shorthand for YEAR-MONTH-DAY using 4, 2 and 2 digits.
-#: node_modules/grunt-pot/test/fixtures/some-other-file.php:16
-msgid "yyyy-mm-dd"
+#. translators: %1$s is a URL.
+#: link-roundups.php:33
+msgid "Your installation of the Link Roundups Plugin is missing its vendor dependencies. Please visit %1$s for more information."
 msgstr ""
 
 #: templates/options.php:2
@@ -497,120 +361,87 @@ msgstr ""
 msgid "Documentation"
 msgstr ""
 
-#: templates/options.php:10
-#, php-format
-msgid ""
-"Read about these settings and using this plugin in <a href=\"%s\">the "
-"documentation on GitHub</a>."
+#. translators: %1$s is a link to https://github.com/INN/link-roundups/tree/master/doc
+#: templates/options.php:11
+msgid "Read about these settings and using this plugin in <a href=\"%1$s\">the documentation on GitHub</a>."
 msgstr ""
 
-#: templates/options.php:15 templates/options.php:21
+#: templates/options.php:16
+#: templates/options.php:22
 msgid "Rename Link Roundups"
 msgstr ""
 
-#: templates/options.php:15 templates/options.php:60
+#: templates/options.php:16
+#: templates/options.php:65
 msgid "Custom HTML for Displaying Links"
 msgstr ""
 
-#: templates/options.php:22
+#: templates/options.php:23
 msgid "You might call it a Daily Digest. Recap. Team Newsletter. Etc."
 msgstr ""
 
-#: templates/options.php:25
-#, php-format
-msgid ""
-"Modify the Post Type Name displayed in the WordPress Dashboard Menus and "
-"Pages and the Post Type Slug (<a href=\"%s\">learn more</a>) used in the "
-"public URL for each Link Roundup post."
+#. translators: %1$s is a link to the definition of the term "post slug" at http://codex.wordpress.org/Glossary#Post_Slug.
+#: templates/options.php:27
+msgid "Modify the Post Type Name displayed in the WordPress Dashboard Menus and Pages and the Post Type Slug (<a href=\"%1$s\">learn more</a>) used in the public URL for each Link Roundup post."
 msgstr ""
 
-#: templates/options.php:29
+#: templates/options.php:31
 msgid "Custom Name"
 msgstr ""
 
-#: templates/options.php:30
+#: templates/options.php:32
 msgid "Singular (Default: Link Roundup)"
 msgstr ""
 
-#: templates/options.php:32
+#: templates/options.php:34
 msgid "Plural (Default: Link Roundups)"
 msgstr ""
 
-#: templates/options.php:35
+#: templates/options.php:37
 msgid "Custom URL Slug"
 msgstr ""
 
-#: templates/options.php:36
+#: templates/options.php:38
 msgid "Current URL Slug for Link Roundups:"
 msgstr ""
 
-#: templates/options.php:51
-msgid ""
-"Must be lowercase with no spaces or special characters -- dashes allowed."
+#: templates/options.php:55
+msgid "Must be lowercase with no spaces or special characters -- dashes allowed."
 msgstr ""
 
-#: templates/options.php:54
-#, php-format
-msgid ""
-"<strong>IMPORTANT</strong>: Whenever you define a new Custom URL Slug, you "
-"<strong>must</strong> also update your <a href=\"%s\"><strong>Permalink "
-"Settings</strong></a>."
+#. translators: %1$s is a link to the WordPress admin permalink options page.
+#: templates/options.php:59
+msgid "<strong>IMPORTANT</strong>: Whenever you define a new Custom URL Slug, you <strong>must</strong> also update your <a href=\"%1$s\"><strong>Permalink Settings</strong></a>."
 msgstr ""
 
-#: templates/options.php:61
+#: templates/options.php:66
 msgid "Modify the display and style of Saved Links."
 msgstr ""
 
-#: templates/options.php:69
-msgid ""
-"The following tags will be replaced with the URL, Title, Description, and "
-"Source automatically when the Saved Link is pushed into the Post Editor."
+#: templates/options.php:74
+msgid "The following tags will be replaced with the URL, Title, Description, and Source automatically when the Saved Link is pushed into the Post Editor."
 msgstr ""
 
-#: templates/options.php:75
+#: templates/options.php:80
 msgid "Intended for the paragraph wrapper"
 msgstr ""
 
-#: templates/options.php:76
+#: templates/options.php:81
 msgid "Used to determine the placement of the featured image, if available"
 msgstr ""
 
-#: templates/options.php:79
+#: templates/options.php:84
 msgid "Link Styling"
 msgstr ""
 
-#: templates/options.php:81
-msgid ""
-"You can add custom classes to your links by using the \"class\" attribute of "
-"the rounduplink shortcode."
-msgstr ""
-
-#: templates/options.php:82
-msgid "For example: <code>[rounduplink class=\"sponsored\" ... ]</code>"
-msgstr ""
-
-#: templates/options.php:83
-msgid ""
-"With a custom class in place, you can modify the display of certain links "
-"via your theme stylesheet."
+#: templates/options.php:86
+msgid "You can add custom classes to your links by using the \"class\" attribute of the rounduplink shortcode."
 msgstr ""
 
 #: templates/options.php:87
+msgid "For example: <code>[rounduplink class=\"sponsored\" ... ]</code>"
+msgstr ""
+
+#: templates/options.php:93
 msgid "Save Changes"
-msgstr ""
-
-#: vendor/inn/wordpress-mailchimp-tools/inc/admin/class-mailchimp-settings.php:44
-msgid "MailChimp API Settings"
-msgstr ""
-
-#: vendor/inn/wordpress-mailchimp-tools/inc/admin/class-mailchimp-settings.php:50
-msgid "MailChimp API Key"
-msgstr ""
-
-#: vendor/inn/wordpress-mailchimp-tools/templates/settings.php:2
-msgid "MailChimp Tools"
-msgstr ""
-
-#: vendor/inn/wordpress-mailchimp-tools/templates/settings.php:9
-msgid "Find your MailChimp API Key"
 msgstr ""

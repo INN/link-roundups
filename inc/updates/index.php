@@ -124,7 +124,8 @@ function lroundups_update_admin_notice() {
 		<?php
 		if ( current_user_can( 'update_plugins' ) ) {
 			printf(
-				__( 'Link Roundups has been updated! IMPORTANT: Please <a href="%s">click here</a> to run a required database upgrade.', 'link-roundups' ),
+				// translators: %1$s is a WordPress admin-page URL.
+				__( 'Link Roundups has been updated! IMPORTANT: Please <a href="%1$s">click here</a> to run a required database upgrade.', 'link-roundups' ),
 				admin_url( 'index.php?page=update-lroundups' )
 			);
 		} else {

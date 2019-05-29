@@ -7,7 +7,8 @@
 
 	<?php
 		printf(
-			'<p>' . __( 'Read about these settings and using this plugin in <a href="%s">the documentation on GitHub</a>.', 'link-roundups' ) . '</p>',
+			// translators: %1$s is a link to https://github.com/INN/link-roundups/tree/master/doc
+			'<p>' . __( 'Read about these settings and using this plugin in <a href="%1$s">the documentation on GitHub</a>.', 'link-roundups' ) . '</p>',
 			'https://github.com/INN/link-roundups/tree/master/docs'
 		);
 		?>
@@ -22,7 +23,8 @@
 				<p><?php _e( 'You might call it a Daily Digest. Recap. Team Newsletter. Etc.', 'link-roundups' ); ?></p> 
 				<?php
 					printf(
-						'<p>' . __( 'Modify the Post Type Name displayed in the WordPress Dashboard Menus and Pages and the Post Type Slug (<a href="%s">learn more</a>) used in the public URL for each Link Roundup post.', 'link-roundups' ) . '</p>',
+						// translators: %1$s is a link to the definition of the term "post slug" at http://codex.wordpress.org/Glossary#Post_Slug.
+						'<p>' . __( 'Modify the Post Type Name displayed in the WordPress Dashboard Menus and Pages and the Post Type Slug (<a href="%1$s">learn more</a>) used in the public URL for each Link Roundup post.', 'link-roundups' ) . '</p>',
 						'http://codex.wordpress.org/Glossary#Post_Slug'
 					);
 					?>
@@ -53,7 +55,8 @@
 				<p><?php _e( 'Must be lowercase with no spaces or special characters -- dashes allowed.', 'link-roundups' ); ?></p>
 				<?php
 					printf(
-						'<p>' . __( '<strong>IMPORTANT</strong>: Whenever you define a new Custom URL Slug, you <strong>must</strong> also update your <a href="%s"><strong>Permalink Settings</strong></a>.', 'link-roundups' ) . '</p>',
+						// translators: %1$s is a link to the WordPress admin permalink options page.
+						'<p>' . __( '<strong>IMPORTANT</strong>: Whenever you define a new Custom URL Slug, you <strong>must</strong> also update your <a href="%1$s"><strong>Permalink Settings</strong></a>.', 'link-roundups' ) . '</p>',
 						admin_url( '/options-permalink.php' )
 					);
 					?>
