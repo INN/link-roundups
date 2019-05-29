@@ -4,7 +4,7 @@ Donate link: https://inn.org/donate
 Tags: newsletters, mailchimp, links, curation, aggregation
 Requires at least: 4.2
 Tested up to: 5.2
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 5.6
@@ -39,6 +39,13 @@ For other installation methods, [see this plugin's installation methods on GitHu
 [Read more about installing plugins here](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
 == Changelog ==
+
+= 1.0.1 =
+
+This release contains minor bug fixes for the 1.0.1 release.
+
+- Fixes a syntax error discovered via static analysis that blocked wordpress.org release of version 1.0.0. Pull request [#171](https://github.com/INN/link-roundups/pull/171) for issue [#170](https://github.com/INN/link-roundups/issues/170).
+- Fixes a number of [WordPress code standards](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards#rulesets) issues and undefined variables. Pull request [#175](https://github.com/INN/link-roundups/pull/175) for issues [#174](https://github.com/INN/link-roundups/issues/174) and [#169](https://github.com/INN/link-roundups/issues/169).
 
 = 1.0.0 =
 

@@ -3,7 +3,7 @@
 A WordPress plugin to make it easy to collect links from around the web, turn them into roundup posts and streamline the production of daily/weekly roundup newsletters using MailChimp. Built and maintained by [INN Labs](https://labs.inn.org).
 
 **Requires at least:** 4.1  
-**Tested up to:** 5.2  
+**Tested up to:** 5.2.1  
 **Stable tag:** See https://github.com/INN/link-roundups/releases
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
@@ -30,7 +30,7 @@ For information on the development status of this plugin, check the [development
 
 If you'd like to contribute to the project, please see our [contributing guidelines](contributing.md).
 
-This plugin depends on [INN/wordpress-mailchimp-tools](https://github.com/INN/wordpress-mailchimp-tools), as well as some components imported via composer. 
+This plugin depends on [INN/wordpress-mailchimp-tools](https://github.com/INN/wordpress-mailchimp-tools), as well as some other components imported via `composer`. For more details, see `composer.json`.
 
 ## Contributors:
 

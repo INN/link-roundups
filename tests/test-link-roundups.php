@@ -6,15 +6,15 @@ class LinkRoundupsFunctionsTests extends WP_UnitTestCase {
 		parent::setUp();
 
 		// Set up global $post object
-		$this->savedlinks_post = $this->factory->post->create(array('post_type' => 'roundup'));
+		$this->savedlinks_post = $this->factory->post->create( array( 'post_type' => 'roundup' ) );
 		global $post;
 		$this->tmp_post = $post;
-		$post = get_post($this->savedlinks_post);
-		setup_postdata($post);
+		$post           = get_post( $this->savedlinks_post );
+		setup_postdata( $post );
 
 		// Mimic the post edit page
-		set_current_screen('post');
-		$screen = get_current_screen();
+		set_current_screen( 'post' );
+		$screen            = get_current_screen();
 		$screen->post_type = 'roundup';
 	}
 
@@ -28,8 +28,8 @@ class LinkRoundupsFunctionsTests extends WP_UnitTestCase {
 		link_roundups_enqueue_assets();
 
 		global $wp_styles, $wp_scripts;
-		$this->assertTrue(!empty($wp_scripts->registered['link-roundups']));
-		$this->assertTrue(!empty($wp_styles->registered['lroundups-admin']));
+		$this->assertTrue( ! empty( $wp_scripts->registered['link-roundups'] ) );
+		$this->assertTrue( ! empty( $wp_styles->registered['lroundups-admin'] ) );
 	}
 
 }
