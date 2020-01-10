@@ -633,7 +633,7 @@ class SavedLinks {
 			return $content;
 		}
 
-		return self::get_excerpt();
+		return self::get_excerpt( $post );
 	}
 
 	/**
